@@ -8,10 +8,10 @@ Trek-It makes it convenient to find a guide and design a custom itinerary with t
 
 ## Tech Stack
 Trek-It uses the MERN stack, which is popular tech stack for building scaleable web apps with javascript.
-> M: MongoDb
-> E: Express
-> R: React. However, trek-it uses NEXT.js, which is a framework built on top of React
-> N: Node runtime
+- **M:** MongoDB
+- **E:** Express
+- **R:** React (Trek-it uses Next.js, a framework built on top of React)
+- **N:** Node.js runtime
 
 Along with these, Trek-It will also implements a recommendation system using `Pinecone` vector database. 
 
