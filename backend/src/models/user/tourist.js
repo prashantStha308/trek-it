@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import User from "./user.js";
 
-const touristSchema = User.discriminator('tourist', new mongoose.Schema({
+const Tourist = User.discriminator('tourist', new mongoose.Schema({
 	interests:{
 		type: [String],
 		validate:{
@@ -11,7 +11,7 @@ const touristSchema = User.discriminator('tourist', new mongoose.Schema({
 	},
 	wishlist:{
 		type: [mongoose.Schema.Types.ObjectId],
-		ref: "Packages",
+		ref: "Package",
 		default: [],
 	},
 	preferredLanguages:{
@@ -19,4 +19,6 @@ const touristSchema = User.discriminator('tourist', new mongoose.Schema({
 		default: [],
 	}
 
-}))
+}));
+
+export default Tourist;
