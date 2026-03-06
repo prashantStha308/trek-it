@@ -1,0 +1,30 @@
+{
+	"name": "treck-it-backend",
+	"version": "1.0.0",
+	"description": "Backend layer for the Treck-It project",
+	"keywords": [
+		"backend",
+		"treck-it",
+		"final-year-project"
+	],
+	"license": "ISC",
+	"author": "Central Campus of Technology, Dharan - TU affiliated college. Batch 2079 students: Jasmine Adhikari, Nikesh Dhimal and Prashant Shrestha",
+	"type": "module",
+	"main": "server.js",
+	"scripts": {
+		"test": "nodemon ./src/server.js",
+		"dev": "nodemon ./src/server.js",
+		"run": "nodemon ./src/server.js"
+	},
+	"dependencies": {
+		"bcrypt": "^6.0.0",
+		"cors": "^2.8.6",
+		"dotenv": "^17.2.3",
+		"express": "^5.2.1",
+		"mongoose": "^9.2.4",
+		"validator": "^13.15.26"
+	},
+	"devDependencies": {
+		"nodemon": "^3.1.11"
+	}
+}
