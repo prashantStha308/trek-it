@@ -9,12 +9,14 @@ This folder is divided into three sub-folders, each responsible for a certain ca
 │ │ ├── conversation.js
 │ │ └── message.js
 │ ├── core
-│ │ ├── availability.js
 │ │ ├── booking.js
 │ │ ├── package.js
 │ │ └── payment.js
 │ ├── model.js
 │ ├── README.md
+│ ├── requests
+│ │ ├── collabRequest.js
+│ │ └── customRequest.js
 │ └── user
 │     ├── admin.js
 │     ├── guide.js
@@ -27,6 +29,9 @@ Models required for the conversation and messaging functionality.
 
 ## core
 The core business models of the application.
+
+## requests
+Models for custom package request and collaboration request.
 
 ## user
 Models for all user roles. Built using Mongoose discriminators, all roles share a base schema defined in `user.js`, with role-specific fields extended in `admin.js`, `guide.js`, and `tourist.js`. All documents are stored in a single `users` collection, identified by a `role` field.
