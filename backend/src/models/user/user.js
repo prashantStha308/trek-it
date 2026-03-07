@@ -97,12 +97,11 @@ userSchema.index({ 'location.country': 1 });
 userSchema.index({ 'location.state': 1 });
 
 // mongoose middlewares
-userSchema.pre('save', (next)=>{
+userSchema.pre('save', function(next){
 	this.languages = this.languages.map(lang => lang.trim().toLowerCase());
 	if(this.interests){
 		this.interests = this.interests.map(lang => lang.trim().toLowerCase());
 	}
-
 	next();
 })
 

@@ -17,8 +17,9 @@ const Tourist = User.discriminator('tourist', new mongoose.Schema({
 	preferredLanguages:{
 		type: [String],
 		default: [],
-	}
-
+	},
 }));
+
+Tourist.index({interests: 1});
 
 export default Tourist;
