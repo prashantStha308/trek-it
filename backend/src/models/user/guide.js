@@ -8,6 +8,10 @@ const Guide = User.discriminator('guide', new mongoose.Schema({
 			validator: (v) => Array.isArray(v) && v.length > 0,
 			message: "Guides must pick up at least one region"
 		}
+	},
+	collaborations:{
+		type: [mongoose.Schema.Types.ObjectId],
+		ref: "Package"
 	}
 }));
 

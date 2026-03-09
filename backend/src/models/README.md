@@ -3,20 +3,21 @@ To keep data predictable, Mongoose ORM is used to define data structures.
 This folder is divided into three sub-folders, each responsible for a certain category of model.
 
 ## Folder Structure
-```bash 
+```
 ├── models
 │ ├── chat
-│ │ ├── conversation.js
-│ │ └── message.js
+│ │   ├── conversation.js
+│ │   └── message.js
 │ ├── core
-│ │ ├── booking.js
-│ │ ├── package.js
-│ │ └── payment.js
+│ │   ├── booking.js
+│ │   ├── package.js
+│ │   └── payment.js
+│ │	  └── review.js
 │ ├── model.js
 │ ├── README.md
 │ ├── requests
-│ │ ├── collabRequest.js
-│ │ └── customRequest.js
+│ │   ├── collabRequest.js
+│ │   └── customRequest.js
 │ └── user
 │     ├── admin.js
 │     ├── guide.js
