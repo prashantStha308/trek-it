@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 
 const reviewSchema = new mongoose.Schema({
-	tourist:{
+	reviewer:{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',
 		required: true
@@ -10,6 +10,11 @@ const reviewSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',
 		default: null
+	},
+	booking:{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Booking',
+		default: null		
 	},
 	package:{
 		type: mongoose.Schema.Types.ObjectId,
@@ -39,10 +44,9 @@ const reviewSchema = new mongoose.Schema({
 })
 
 // Indexes
-reviewSchema.index({rating: 1});
-reviewSchema.index({guide: 1});
-reviewSchema.index({package: 1});
-reviewSchema.index({tourist: 1});
+reviewSchema.index({ booking: 1 }, { unique: true });
+reviewSchema.index({ guide: 1 });
+reviewSchema.index({ rating: 1 });
 
 
 
