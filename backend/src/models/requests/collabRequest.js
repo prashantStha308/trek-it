@@ -22,6 +22,8 @@ const collabRequestSchema = new mongoose.Schema({
 		type: Boolean,
 		default: false
 	}
+},{
+	timestamps: true
 });
 
 const CollabRequest = mongoose.model('CollabRequest', collabRequestSchema);

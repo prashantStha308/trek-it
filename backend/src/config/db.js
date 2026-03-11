@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
-
+import {MONGODB_CONN_STRING} from "./env.config.js";
 
 const connectDb = async()=>{
     try {
         console.log("Connnecting to mongodb");
-        const conn = await mongoose.connect(process.env.MONGODB_URI)
+        const conn = await mongoose.connect(MONGODB_CONN_STRING)
         console.log(`Successfully connected to ${conn.connection.host}`);
     } catch (error) {
         console.log("MongoDB not connected. Error: ", error.messsage);

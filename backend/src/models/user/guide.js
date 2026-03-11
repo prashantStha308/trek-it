@@ -12,6 +12,15 @@ const Guide = User.discriminator('guide', new mongoose.Schema({
 	collaborations:{
 		type: [mongoose.Schema.Types.ObjectId],
 		ref: "Package"
+	},
+	specialities:{
+		type: [String],
+		trim: true,
+		default: []
+	},
+	packageCount: {
+		type: Number,
+		default: 0,
 	}
 }));
 
