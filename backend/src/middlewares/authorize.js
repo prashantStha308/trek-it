@@ -2,7 +2,7 @@ import { JWT_SECRET } from "../config/env.config.js";
 import jwt from "jsonwebtoken";
 import User from "../models/user/user.model.js";
 
-const authorize = (allowedRoles) => {
+const authorize = (allowedRoles = []) => {
    return async ( req , res , next ) => {
       try {
          const authHeader = req.headers['authorization'];
@@ -18,8 +18,7 @@ const authorize = (allowedRoles) => {
             throw new Error(403, 'Invalid or expired token');
          }
 
-
-         if (allowedRoles && !allowedRoles.includes(decodedData.role)) {
+         if (allowedRoles.length > 0 && !allowedRoles.includes(decodedData.role)) {
             throw new Error(403, `Access denied. Required roles: ${allowedRoles.join(', ')}`);
          }
 

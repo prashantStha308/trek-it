@@ -21,10 +21,14 @@ const Guide = User.discriminator('guide', new mongoose.Schema({
 	packageCount: {
 		type: Number,
 		default: 0,
+	},
+	isVerified:{
+		type: Boolean,
+		default: false
 	}
 }));
 
-Guide.index({region: 1});
+Guide.index({regions: 1});
 
 Guide.pre('save',function(next){
 	// some code

@@ -40,6 +40,20 @@ const userSchema = new mongoose.Schema({
 			message: "Password must contain uppercase, lowercase, number and symbol"
 		}
 	},
+	profilePicture:{
+		src:{
+			type: String,
+			validate:{
+				validator: (v) => validator.isUrl(v),
+				message: "User.profilePicture.src must be a valid URL"
+			},
+			default: "set a link to default profile pic"
+		},
+		publicId:{
+			type: String,
+			default: ""
+		}
+	}
 	role:{
 		type: String,
 		required: true,
@@ -104,6 +118,16 @@ userSchema.pre('save', function(next){
 	}
 	next();
 })
+
+userSchema.pre('findOneAndUpdate', function(next) {
+	const update = this.getUpdate();
+
+	if(update.languages){
+		update.languages = update.languages.map(l => l.trim().toLowerCase());
+	}
+
+	next();
+});
 
 
 const User = mongoose.model('User', userSchema);
