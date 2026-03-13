@@ -11,7 +11,7 @@ import {
 	checkExistingUserByEmail,
 } from "../../utils/request.helper.js";
 
-export const createUserService = async (body, Model) => {
+export const createUserService = async (body, Model, file) => {
 	validateObject(body, ["name", "email", "password", "gender", "age", "location"]);
 	await checkExistingUserByEmail(body.email);
 
