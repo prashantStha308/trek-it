@@ -29,7 +29,7 @@ userRouter.post("/login", login);
 userRouter.get("/all",getAllUsers );
 
 // UPDATE
-userRouter.put("/", authorize([]),  updateUser);
+userRouter.put("/", authorize([]), bufferUpload.single("profilePicture"),  updateUser);
 
 //DELETE
 userRouter.delete("/", authorize([]),  deleteUser);

@@ -1,3 +1,12 @@
+/**
+ * @file Authorize Middleware
+ * @description middleware responsible for authorizing access to controllers along with attactching user data to req header
+ *
+ * @author Prashant Shrestha
+ * @created March 2, 2026
+ */
+
+
 import { JWT_SECRET } from "../config/env.config.js";
 import jwt from "jsonwebtoken";
 import User from "../models/user/user.model.js";

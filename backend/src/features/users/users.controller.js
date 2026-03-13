@@ -12,7 +12,7 @@ import {
 // TODO: Add uplodaing assets service when user create account, for their profile picture, if they've set it. 
 
 export const createTourist = async (req, res) => {
-	const tourist =  await createUserService(req.body, Tourist);
+	const tourist =  await createUserService(req.body, Tourist, req.file);
 
 	res.status(201).json({
 		success: true,
@@ -22,7 +22,7 @@ export const createTourist = async (req, res) => {
 };
 
 export const createGuide = async (req, res) => {
-	const guide =  await createUserService(req.body, Guide);
+	const guide =  await createUserService(req.body, Guide, req.file);
 
 	res.status(201).json({
 		success: true,
@@ -70,7 +70,8 @@ export const updateUser = async (req, res) => {
 
 	const user = await updateUserService(
 		req.user._id,
-		req.body
+		req.body,
+		req.file
 	);
 
 	res.status(200).json({

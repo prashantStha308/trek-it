@@ -9,13 +9,23 @@ import {
 	validateObject,
 	validatePassword,
 	checkExistingUserByEmail,
+	uploadProfilePicture,
+	updateProfilePicture,
+	deleteProfilePicture
 } from "../../utils/request.helper.js";
+
 
 export const createUserService = async (body, Model, file) => {
 	validateObject(body, ["name", "email", "password", "gender", "age", "location"]);
 	await checkExistingUserByEmail(body.email);
 
 	const hashedPassword = await bcrypt.hash(body.password, 10);
+
+	if(file){
+		const imgRef = await uploadProfilePicture(file);
+		body.profilePicture.src = imgRef.src;
+		body.profilePicture.publicId = imgRef.publicId;
+	}
 
 	const user = await Model.create({
 		...body,
@@ -68,22 +78,37 @@ export const getUserByIdService = async(id) => {
 	return user;
 }
 
-export const updateUserService = async(id, body) => {
+export const updateUserService = async (id, body, file) => {
+
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		throw new Error("Invalid user ID");
 	}
 
-	if(body.role){
+	if (body.role) {
 		throw new Error("User role cannot be changed");
 	}
 
-	const user = await User.findByIdAndUpdate(id, body, {new: true, runValidators: true}).select("-password").lean();
-	if(!user){
+	const user = await User.findById(id);
+
+	if (!user) {
 		throw new Error("User not found");
 	}
 
+	Object.assign(user, body);
+	if (file) {
+
+		const res = await updateProfilePicture( user.profilePicture?.publicId,file );
+
+		user.profilePicture = {
+			src: res.secure_url,
+			publicId: res.public_id
+		};
+	}
+
+	await user.save();
+
 	return user;
-}
+};
 
 export const deleteUserService = async (id) => {
 	if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -91,6 +116,7 @@ export const deleteUserService = async (id) => {
 	}
 
 	const user = await User.findByIdAndDelete(id);
+	await deleteProfilePicture(user.profilePicture.publicId);
 
 	return user;
 }

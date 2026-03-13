@@ -1,15 +1,27 @@
 import bcrypt from "bcrypt";
 import {User, Guide, Tourist, Admin} from "../models/user/index.js"
+import {
+	deleteFromCloudinary,
+	uploadToCloudinary,
+} from "./cloudinary.services.js"
 
-export const validateObject = (object, validationArray = []) => {
-	if (!object || typeof object !== 'object' || Array.isArray(object)) {
+/**
+ * Validates Object Keys.
+ *
+ * @param {Object} targetObject - File buffer received from multer.
+ * @param {string[]} validationArray - Array of Strings that contains all the keys that the targetObject must resolve
+ * @returns {boolean} True if the object is valid
+ * @throws {Error} if validation is failed
+ */
+export const validateObject = (targetObject, validationArray = []) => {
+	if (!targetObject || typeof targetObject !== 'object') {
 		throw new Error('Invalid input: expected a non-null object');
 	}
 
-	const objectKeys = Object.keys(object);
+	const objectKeys = Object.keys(targetObject);
 	const missingKeys = validationArray.filter(key => !objectKeys.includes(key));
 	const emptyKeys = validationArray.filter(key => {
-		const val = object[key];
+		const val = targetObject[key];
 		return val === null || val === undefined || val === '';
 	});
 
@@ -53,4 +65,35 @@ export const getModelByRole = (role) => {
 	}
 
 	return model;
+}
+
+export const updateProfilePicture = async(publicId, file)=>{
+		
+	const [
+		deleteRes,
+		uploadRes
+	] = await Promise.allSettled([
+		deleteProfilePicture(publicId),
+		uploadProfilePicture(file)	
+	]);
+
+	return uploadRes;
+}
+
+export const uploadProfilePicture = async(file) =>{
+	return uploadToCloudinary(file.buffer, "profilePicture", "image") 
+}
+
+export const uploadDocs = async(file, docType) =>{
+	return uploadToCloudinary(file.buffer, "doc", "auto") 
+}
+
+
+export const deleteProfilePicture = async(publicId) =>{
+	return deleteFromCloudinary(publicId, "image"); 
+}
+
+
+export const deleteDocs = async(publicId) =>{
+	return deleteFromCloudinary(publicId, "auto"); 
 }
