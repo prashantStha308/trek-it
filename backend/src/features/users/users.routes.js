@@ -11,7 +11,7 @@ import {
 	getAllUsers, getUserById,
 	updateUser,
 	deleteUser
-} from "./user.controller.js";
+} from "./users.controller.js";
 
 const userRouter = express.Router();
 

@@ -6,10 +6,11 @@
  * @created March 2, 2026
  */
 
-
-import { JWT_SECRET } from "../config/env.config.js";
 import jwt from "jsonwebtoken";
-import User from "../models/user/user.model.js";
+import { JWT_SECRET } from "../config/env.config.js";
+
+import ApiError from "../utils/ApiError.js";
+import User from "../models/user/user.js";
 
 const authorize = (allowedRoles = []) => {
    return async ( req , res , next ) => {
@@ -24,11 +25,11 @@ const authorize = (allowedRoles = []) => {
          try{
             decodedData = jwt.verify(token, JWT_SECRET);
          }catch(e){
-            throw new Error(403, 'Invalid or expired token');
+            throw new ApiError(403, 'Invalid or expired token');
          }
 
          if (allowedRoles.length > 0 && !allowedRoles.includes(decodedData.role)) {
-            throw new Error(403, `Access denied. Required roles: ${allowedRoles.join(', ')}`);
+            throw new ApiError(403, `Access denied. Required roles: ${allowedRoles.join(', ')}`);
          }
 
          const user = await User.findOne({_id: decodedData.id})
@@ -37,7 +38,7 @@ const authorize = (allowedRoles = []) => {
          .exec();
 
          if (!user) {
-            throw new Error(401, 'User not found');
+            throw new ApiError(401, 'User not found');
          }
 
          req.user = user;

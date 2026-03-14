@@ -5,14 +5,18 @@ import { JWT_SECRET } from "../../config/env.config.js";
 // Models
 import { User } from "../../models/user/index.js";
 // helpers
+import ApiError from "../../utils/ApiError.js";
 import {
 	validateObject,
 	validatePassword,
 	checkExistingUserByEmail,
-	uploadProfilePicture,
 	updateProfilePicture,
-	deleteProfilePicture
 } from "../../utils/request.helper.js";
+
+import {
+	uploadProfilePicture,
+	deleteProfilePicture
+} from "../../utils/cloudinary.services.js"
 
 
 export const createUserService = async (body, Model, file) => {
@@ -45,7 +49,7 @@ export const loginService = async(body) => {
 
     const user = await User.findOne({ email });
     if (!user) {
-        throw new Error(404, 'Unregistered Email');
+        throw new ApiError(404, 'Unregistered Email');
     }
 
     await validatePassword(body.password , user.password);
@@ -70,10 +74,14 @@ export const getAllUsersService = async ( Model = User, limit = 10, page = 1 ) =
 
 export const getUserByIdService = async(id) => {
 	if (!mongoose.Types.ObjectId.isValid(id)) {
-		throw new Error("Invalid user ID");
+		throw new ApiError("Invalid user ID");
 	}
 
 	const user = await User.findById(id).select('-password').lean();
+
+	if(!user){
+		throw new ApiError("User not found");
+	}
 
 	return user;
 }
@@ -81,17 +89,17 @@ export const getUserByIdService = async(id) => {
 export const updateUserService = async (id, body, file) => {
 
 	if (!mongoose.Types.ObjectId.isValid(id)) {
-		throw new Error("Invalid user ID");
+		throw new ApiError("Invalid user ID");
 	}
 
 	if (body.role) {
-		throw new Error("User role cannot be changed");
+		throw new ApiError("User role cannot be changed");
 	}
 
 	const user = await User.findById(id);
 
 	if (!user) {
-		throw new Error("User not found");
+		throw new ApiError("User not found");
 	}
 
 	Object.assign(user, body);
@@ -112,7 +120,7 @@ export const updateUserService = async (id, body, file) => {
 
 export const deleteUserService = async (id) => {
 	if (!mongoose.Types.ObjectId.isValid(id)) {
-		throw new Error("Invalid user ID");
+		throw new ApiError("Invalid user ID");
 	}
 
 	const user = await User.findByIdAndDelete(id);

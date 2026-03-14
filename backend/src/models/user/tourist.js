@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import User from "./user.js";
 
-const Tourist = User.discriminator('tourist', new mongoose.Schema({
+
+const touristSchema = new mongoose.Schema({
 	interests:{
 		type: [String],
 		default: []
@@ -15,8 +16,10 @@ const Tourist = User.discriminator('tourist', new mongoose.Schema({
 		type: [String],
 		default: [],
 	},
-}));
+});
 
-Tourist.index({interests: 1});
+touristSchema.index({interests: 1});
+
+const Tourist = User.discriminator('tourist', touristSchema);
 
 export default Tourist;

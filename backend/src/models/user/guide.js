@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import User from "./user.js";
 
-const Guide = User.discriminator('guide', new mongoose.Schema({
+
+const guideSchema =  new mongoose.Schema({
 	regions:{
 		type: [String],
 		validate:{
@@ -26,14 +27,13 @@ const Guide = User.discriminator('guide', new mongoose.Schema({
 		type: Boolean,
 		default: false
 	}
-}));
+});
 
-Guide.index({regions: 1});
+guideSchema.index({regions: 1});
+guideSchema.index({specialities: 1});
+guideSchema.index({isVerified: 1});
 
-Guide.pre('save',function(next){
-	// some code
 
-	next();
-})
+const Guide = User.discriminator('guide', guideSchema);
 
 export default Guide;

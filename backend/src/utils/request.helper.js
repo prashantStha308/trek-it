@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
-import {User, Guide, Tourist, Admin} from "../models/user/index.js"
+import {User, Guide, Tourist, Admin} from "../models/user/index.model.js"
 import {
-	deleteFromCloudinary,
-	uploadToCloudinary,
+	uploadProfilePicture,
+	deleteProfilePicture
 } from "./cloudinary.services.js"
 
 /**
@@ -74,26 +74,8 @@ export const updateProfilePicture = async(publicId, file)=>{
 		uploadRes
 	] = await Promise.allSettled([
 		deleteProfilePicture(publicId),
-		uploadProfilePicture(file)	
+		uploadProfilePicture(file)
 	]);
 
 	return uploadRes;
-}
-
-export const uploadProfilePicture = async(file) =>{
-	return uploadToCloudinary(file.buffer, "profilePicture", "image") 
-}
-
-export const uploadDocs = async(file, docType) =>{
-	return uploadToCloudinary(file.buffer, "doc", "auto") 
-}
-
-
-export const deleteProfilePicture = async(publicId) =>{
-	return deleteFromCloudinary(publicId, "image"); 
-}
-
-
-export const deleteDocs = async(publicId) =>{
-	return deleteFromCloudinary(publicId, "auto"); 
 }

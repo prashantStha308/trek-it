@@ -59,3 +59,21 @@ export const deleteFromCloudinary = async ( publicId , resourceType ) => {
         return false;
     }
 }
+
+
+export const uploadProfilePicture = async(file) =>{
+    return uploadToCloudinary(file.buffer, "profilePicture", "image") 
+}
+
+export const uploadDocs = async(file, docType) =>{
+    return uploadToCloudinary(file.buffer, "doc", "auto") 
+}
+
+
+export const deleteProfilePicture = async(publicId) =>{
+    return deleteFromCloudinary(publicId, "image"); 
+}
+
+export const deleteDocs = async(publicId) =>{
+    return deleteFromCloudinary(publicId, "auto"); 
+}
