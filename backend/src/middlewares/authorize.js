@@ -10,7 +10,7 @@ import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../config/env.config.js";
 
 import ApiError from "../utils/ApiError.js";
-import User from "../models/user/user.js";
+import User from "../models/user/user.model.js";
 
 const authorize = (allowedRoles = []) => {
    return async ( req , res , next ) => {

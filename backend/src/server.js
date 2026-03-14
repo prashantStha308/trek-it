@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(errorHandeler);
 
 // routes
-app.use('/api/user', userRouter);
+app.use('/api/user.model', userRouter);
 
 app.listen(PORT, () => {
     console.log(`Server running on: http://localhost:${process.env.PORT}`);

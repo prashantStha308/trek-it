@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import User from "./user.js";
+import User from "./user.model.js";
 
 
 const guideSchema =  new mongoose.Schema({

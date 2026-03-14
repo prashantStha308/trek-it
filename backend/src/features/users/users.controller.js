@@ -1,4 +1,4 @@
-import { User, Guide, Tourist, Admin } from "../../models/user/index.js";
+import { User, Guide, Tourist, Admin } from "../../models/user/index.model.js";
 
 import {
 	createUserService,

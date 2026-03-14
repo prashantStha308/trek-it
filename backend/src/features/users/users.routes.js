@@ -21,7 +21,7 @@ const userRouter = express.Router();
 // by default, go for tourist
 userRouter.post("/new", bufferUpload.single("profilePicture"),createTourist);
 
-userRouter.post("/new/guide", bufferUpload.single("profilePicture"), createGuide);
+userRouter.post("/new/guide.model", bufferUpload.single("profilePicture"), createGuide);
 
 userRouter.post("/login", login);
 
