@@ -13,8 +13,6 @@ Trek-It uses the MERN stack, a popular tech stack for building scaleable web app
 - **R:** React (Trek-it uses Next.js, a framework built on top of React)
 - **N:** Node.js runtime
 
-Along with these, Trek-It will also implements a `recommendation system` using `Pinecone` vector database. 
-And, to enable `end to end conversation` between guides and tourists `socket.io` will also be used.
 
 ## Folder Structure
 Trek-It will be a mono-repo and will adopt a `feature/function based folder structure` on both frontend and backend. 
