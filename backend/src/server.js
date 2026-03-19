@@ -5,7 +5,7 @@ import {createServer} from "node:http";
 // configs
 import connectDb from './config/db.js';
 import {PORT} from "./config/env.config.js";
-import initSocket from "./features/chat/chat.gateway.js";
+import initSocket from "./config/socket.config.js";
 // Middlewares
 import errorHandeler from "./middlewares/errorHandeler.js"
 // routes

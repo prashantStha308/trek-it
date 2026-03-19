@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 // Models
-import Conversation from "../../models/chat/conversation.model";
+import Conversation from "../../models/chat/conversation.model.js";
 import Message from "../../models/chat/message.model.js";
 import { User } from "../../models/user/index.model.js";
 // Utils

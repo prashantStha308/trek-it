@@ -2,7 +2,7 @@ import express from "express";
 // Config
 import {bufferUpload} from "../../config/multer.config.js";
 // Middlewares
-import authorize from "../../middlewares/authorize.js";
+import {authorize} from "../../middlewares/authorize.js";
 
 // Controller
 import {

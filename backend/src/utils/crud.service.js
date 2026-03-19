@@ -12,8 +12,7 @@ export const getById = async(Model, id) => {
 		throw new Error("Invalid ID");
 	}
 
-	const doc = await Model.findById(id).lean();
-
+	const doc = await Model.findById(id).select("-password").lean();
 	if (!doc) {
 		throw new Error("Resource not found");
 	}

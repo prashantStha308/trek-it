@@ -1,3 +1,3 @@
-export const function requiredError(prop){
+export const requiredError = (prop)=> {
 	return `${prop} is required`;
 }
