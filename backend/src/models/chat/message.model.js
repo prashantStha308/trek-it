@@ -9,11 +9,8 @@ const messageSchema = new mongoose.Schema({
 	},
 	sender:{
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User'
-	},
-	receiver:{
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User'
+		ref: 'User',
+		required: true
 	},
 	isEdited:{
 		type: Boolean,
@@ -23,9 +20,9 @@ const messageSchema = new mongoose.Schema({
 		type: Boolean,
 		default: false
 	},
-	fileUrl:{
-		type: String,
-		default: ""
+	files:{
+		type: [String],
+		default: []
 	},
 	content:{
 		type: String,

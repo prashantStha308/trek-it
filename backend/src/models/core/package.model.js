@@ -88,8 +88,11 @@ const packageSchema = new mongoose.Schema({
 	thumbnail:{
 		type: String,
 		deafult: ""
+	},
+	requiresPermit: {
+		type: Boolean,
+		deafult: false
 	}
-
 
 }, { timestamps: true });
 

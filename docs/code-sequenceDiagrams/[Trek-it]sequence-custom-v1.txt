@@ -1,0 +1,32 @@
+title Tourist Books a Custom Package - Trek-It - v1
+actor Tourist
+participant Frontend
+participant Booking
+participant Chat
+participant Payment
+actor Guide
+Tourist-> Frontend: Browse guides
+Frontend-> Booking: GET/guides
+Booking->> Frontend : return guides
+Tourist -> Frontend: Select Guide
+Frontend-> Booking: GET/guides/:id
+Booking->> Frontend : return guide
+Tourist-> Frontend: Click on\n"Request Custom Package"
+Frontend ->> Tourist: Display request form
+Tourist -> Frontend: Submit form
+Frontend -> Booking: POST/custom
+Booking-> Guide: Send custom package request
+Guide ->> Booking: Accept request
+Booking ->> Frontend: Request Accepted
+Frontend ->> Tourist: Notify User
+Frontend -> Chat: Initialize Chat Connection
+Booking->> Frontend: Send payment request
+Tourist -> Frontend: Initialize payment
+Frontend -> Payment: POST/payment/init
+Payment ->> Frontend: Return checkout_url
+Frontend ->> Frontend: Redirect page
+Tourist -> Payment: Complete payment
+Payment->> Booking: Payment confirmed
+Booking -> Guide: Notify confirmation
+Booking->> Frontend: Registration complete
+Frontend ->> Tourist: Return invoice

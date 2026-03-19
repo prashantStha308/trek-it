@@ -1,0 +1,30 @@
+title Tourist Books a Package - Trek-It
+actor Tourist
+participant Frontend
+participant Booking
+participant Payment
+actor Guide
+
+Tourist -> Frontend: Browse Packages
+Frontend -> Booking: GET/packages
+Booking ->> Frontend: return packages
+
+Tourist -> Frontend: Select Package
+Frontend -> Booking: GET/package/:id
+Booking ->> Frontend: return package
+
+Tourist -> Frontend: Click "Book Now"
+Frontend -> Booking: POST/booking
+Booking ->> Booking: Create booking (status: pending_payment)
+Booking ->> Frontend: Return booking details
+
+Tourist -> Frontend: Initialize payment
+
+Frontend -> Payment: POST/payment/init
+Payment ->> Frontend: Return checkout_url
+Frontend ->> Frontend: Redirect page
+Tourist -> Payment: Complete payment
+Payment->> Booking: Payment confirmed
+Booking -> Guide: Notify confirmation
+Booking->> Frontend: Registration complete
+Frontend ->> Tourist: Return invoice 

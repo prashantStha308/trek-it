@@ -1,0 +1,10 @@
+title Trek-It - Guide Creates Package
+actor Guide
+participant Frontend
+participant Booking
+Guide -> Frontend: Click\n"New Package"
+Frontend ->> Guide: Display Form
+Guide -> Frontend: Submit Form
+Frontend -> Booking: POST/packages
+Booking ->> Frontend: Return package
+Frontend ->> Guide: Notify creation success

@@ -7,14 +7,10 @@ const conversationSchema = new mongoose.Schema({
 		ref: 'User',
 		required: true
 	}],
-	lasMessage:{
+	lastMessage:{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Message',
 		default: ""
-	},
-	lasMessageAt:{
-		type: Date,
-		deafult: null
 	},
 	conversationName:{
 		type: String,

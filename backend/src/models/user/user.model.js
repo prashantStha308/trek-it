@@ -101,6 +101,10 @@ const userSchema = new mongoose.Schema({
 			lowercase: true
 		}
 	},
+	isOnline:{
+		type: Boolean,
+		default: false
+	},
 }, options);
 
 // indexes

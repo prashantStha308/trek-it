@@ -23,7 +23,7 @@ const bookingSchema = new mongoose.Schema({
 		enum:{
 			values: ["fixed", "custom"],
 			message: "{VALUE} is not a valid type"
-		}
+		},
 		required: true
 	},
 	customRequest:{
@@ -36,7 +36,7 @@ const bookingSchema = new mongoose.Schema({
 		enum:{
 			values: ["pending", "confirmed", "cancelled", "completed"],
 			message: "{VALUE} is not a valid status"
-		}
+		},
 		required: true,
 		default: "pending"
 	},
