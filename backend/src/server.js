@@ -30,7 +30,7 @@ app.use('/api/user.model', userRouter);
 const httpServer = createServer(app);
 initSocket(httpServer);
 
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
     console.log(`Server running on: http://localhost:${process.env.PORT}`);
     connectDb();
 })

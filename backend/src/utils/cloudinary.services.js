@@ -11,7 +11,8 @@
 
 import { Readable } from "stream";
 import cloudinary from "../config/cloudinary.config.js";
-
+// helpers
+import {validateFileExt} from "./generic.helper.js";
 
 /**
  * Uploads a file buffer to Cloudinary.
@@ -66,7 +67,9 @@ export const uploadProfilePicture = async(file) =>{
 }
 
 export const uploadDocs = async(file, docType) =>{
-    return uploadToCloudinary(file.buffer, "doc", "auto") 
+    validateFileExt(file);
+
+    return uploadToCloudinary(file.buffer, "doc", "raw") 
 }
 
 
