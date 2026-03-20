@@ -6,13 +6,29 @@ Trek-It makes it convenient to find a guide and design a custom itinerary with t
 
 **[Visit Us(will add link later)](https://www.loremipsum.com)**
 
-## Tech Stack
-Trek-It uses the MERN stack, a popular tech stack for building scaleable web apps with javascript.
-- **M:** MongoDB
-- **E:** Express
-- **R:** React (Trek-it uses Next.js, a framework built on top of React)
-- **N:** Node.js runtime
+# Features
+Upon completion, trek-it is expected to provide the following features:
+- Guide Booking
+- Content-based recommendation
+- Payment integrations with escrow
+- Real-time encrypted chat service
+- Package Creation from guide's side
 
+# Sequence Diagrams
+Tourist books a package
+![Sequence-package-v1](docs/sequenceDiagrams/[Trek-It]Sequence-package-v1.png)
 
-## Folder Structure
-Trek-It will be a mono-repo and will adopt a `feature/function based folder structure` on both frontend and backend. 
+Tourist Requests a Custom package - version 1
+![Sequence-custom-v1](docs/sequenceDiagrams/[Trek-It]Sequence-custom-v1.png)
+
+Tourist Requests a Custom package - version 1
+![Sequence-custom-v2](docs/sequenceDiagrams/[Trek-It]Sequence-custom-v2.png)
+
+Tourist Payment Process
+![Sequence-payment-v1](docs/sequenceDiagrams/[Trek-It]Sequence-payment-v1.png)
+
+Guide gets verified
+![Sequence-guide-verify](docs/sequenceDiagrams/[Trek-It]Sequence-guide-verify.png)
+
+Guide creates a package
+![Sequence-package-create](docs/sequenceDiagrams/[Trek-It]Sequence-package-create.png)
