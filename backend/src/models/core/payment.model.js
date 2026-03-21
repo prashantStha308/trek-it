@@ -2,20 +2,33 @@ import mongoose from "mongoose";
 import {requiredError} from "../../utils/model.helper.js";
 
 const paymentSchema = new mongoose.Schema({
-	tourist:{
+	paidBy:{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
-	},
-	guide:{
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User'
-	},
-	package:{
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Package'
 	},
 	booking:{
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Booking'
+		ref: 'Booking',
+		required: true
+	},
+	status:{
+		type: String,
+		enum:{
+			values: ["pending", "confirmed", "conflict"],
+			message: "${VALUE} is not an appropriate value"
+		}
+		required: true
+	},
+	amount: {
+		type: Number,
+		required: true
+	},
+	transactionId:{
+		type: String,
+		required: true
+	},
+	method:{
+		type: String,
+		required: true
 	}
 });

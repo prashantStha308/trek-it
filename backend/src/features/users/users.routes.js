@@ -6,8 +6,6 @@ import {authorize} from "../../middlewares/authorize.js";
 
 // Controller
 import {
-	createTourist, createGuide,
-	login,
 	getAllUsers, getUserById,
 	updateUser,
 	deleteUser
@@ -17,16 +15,8 @@ const userRouter = express.Router();
 
 // api/user
 
-// POST
-// by default, go for tourist
-userRouter.post("/new", bufferUpload.single("profilePicture"),createTourist);
-
-userRouter.post("/new/guide.model", bufferUpload.single("profilePicture"), createGuide);
-
-userRouter.post("/login", login);
-
 // GET
-userRouter.get("/all",getAllUsers );
+userRouter.get("/",getAllUsers );
 
 // UPDATE
 userRouter.put("/", authorize([]), bufferUpload.single("profilePicture"),  updateUser);

@@ -10,6 +10,8 @@ import initSocket from "./config/socket.config.js";
 import errorHandeler from "./middlewares/errorHandeler.js"
 // routes
 import userRouter from "./features/users/users.routes.js"
+import authR from "./features/auth/auth.routes.js"
+
 
 
 // app
@@ -20,12 +22,14 @@ app.use(cors({}));
 app.use(express.json({limit: '16kb'}));
 app.use(express.urlencoded({ extended: true }));
 
+// routes
+app.use('/api/users', userRouter);
+app.use('/api/auth', authR);
+
+
+
 // Keep at end
 app.use(errorHandeler);
-
-// routes
-app.use('/api/user.model', userRouter);
-
 
 const httpServer = createServer(app);
 initSocket(httpServer);

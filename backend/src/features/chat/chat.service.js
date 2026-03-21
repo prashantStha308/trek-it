@@ -6,12 +6,13 @@ import { User } from "../../models/user/index.model.js";
 // Utils
 import ApiError from "../../utils/ApiError.js";
 
-export const createConversation = async (participants = []) => {
+
+export const createConversation = async (participants = [], type = "direct") => {
     if (participants.length < 2) {
         throw new Error("A conversation must have at least 2 participants");
     }
 
-    const newConversation = await Conversation.create({ participants });
+    const newConversation = await Conversation.create({ participants, type });
     return newConversation;
 }
 

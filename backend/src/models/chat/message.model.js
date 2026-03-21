@@ -31,7 +31,7 @@ const messageSchema = new mongoose.Schema({
 	type:{
 		type: String,
 		enum:{
-			values: ["text", "file", "image", "link"],
+			values: ["text", "file", "image"],
 			message: "{VALUE} is not a valid message type"
 		},
 		deafult: "text"

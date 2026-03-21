@@ -56,7 +56,7 @@ export const socketAuth = async (socket, next) => {
     try {
       // extract cookie that are sent from frontend
       // make sure to set cookie from express
-        const cookies = cookie(socket.handshake.auth.cookie);
+        const cookies = cookie.parse(socket.handshake.headers.cookie);
         const token = cookies.token;
 
         if (!token) return next(new ApiError(401, 'Unauthorized'));

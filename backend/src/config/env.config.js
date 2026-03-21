@@ -1,5 +1,16 @@
-import {config} from "dotenv";
-config();
+import { config } from "dotenv";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+if (process.env.NODE_ENV === "production") {
+    console.log("Running in Production mode");
+    config({ path: join(__dirname, "../../.env") });
+} else {
+    console.log("Running in Development mode");
+    config({ path: join(__dirname, "../../dev.env") });
+}
 
 export const PORT = process.env.PORT;
 export const MONGODB_CONN_STRING = process.env.MONGODB_CONN_STRING;

@@ -43,11 +43,11 @@ const userSchema = new mongoose.Schema({
 	profilePicture:{
 		src:{
 			type: String,
+			required: false,
 			validate:{
-				validator: (v) => validator.isUrl(v),
+				validator: (v) => validator.isURL(v),
 				message: "User.profilePicture.src must be a valid URL"
 			},
-			default: "set a link to default profile pic"
 		},
 		publicId:{
 			type: String,
@@ -81,11 +81,12 @@ const userSchema = new mongoose.Schema({
 		max: 80,
 	},
 	languages: {
-		type: [String],
-		validate:{
-			validator: (v) => Array.isArray(v) &&  v.length >= 1,
-			message: "At least one language is required to be set"
-		}
+	    type: [String],
+	    required: false,
+	    validate: {
+	        validator: (v) => !v || v.length === 0 || v.every(l => typeof l === 'string'),
+	        message: "At least one language is required to be set"
+	    }
 	},
 	location: {
 		country: {
@@ -115,22 +116,22 @@ userSchema.index({ 'location.country': 1 });
 userSchema.index({ 'location.state': 1 });
 
 // mongoose middlewares
-userSchema.pre('save', function(next){
-	this.languages = this.languages.map(lang => lang.trim().toLowerCase());
-	if(this.interests){
-		this.interests = this.interests.map(lang => lang.trim().toLowerCase());
-	}
-	next();
+userSchema.pre('save', async function(){
+    if(this.languages && this.languages.length > 0){
+        this.languages = this.languages.map(lang => lang.trim().toLowerCase());
+    }
+    if(this.interests && this.interests.length > 0){
+        this.interests = this.interests.map(i => i.trim().toLowerCase());
+    }
+    console.log("Before next");
 })
 
-userSchema.pre('findOneAndUpdate', function(next) {
+userSchema.pre('findOneAndUpdate',async function(next) {
 	const update = this.getUpdate();
 
 	if(update.languages){
 		update.languages = update.languages.map(l => l.trim().toLowerCase());
 	}
-
-	next();
 });
 
 

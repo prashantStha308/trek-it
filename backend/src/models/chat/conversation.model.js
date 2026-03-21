@@ -10,11 +10,19 @@ const conversationSchema = new mongoose.Schema({
 	lastMessage:{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Message',
-		default: ""
+		default: null
 	},
 	conversationName:{
 		type: String,
-		deafult: ""
+		default: ""
+	},
+	type:{
+		type: String,
+		enum:{
+			values: ["direct", "group"],
+			message: "conversation.type can either be direct or group"
+		},
+		default: "direct"
 	}
 });
 

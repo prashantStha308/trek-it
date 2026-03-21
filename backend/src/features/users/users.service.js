@@ -12,54 +12,9 @@ import {
 	checkExistingUserByEmail,
 	updateProfilePicture,
 } from "../../utils/request.helper.js";
+import { deleteProfilePicture } from "../../utils/cloudinary.services.js"
 
-import {
-	uploadProfilePicture,
-	deleteProfilePicture
-} from "../../utils/cloudinary.services.js"
-
-
-export const createUserService = async (body, Model, file) => {
-	validateObject(body, ["name", "email", "password", "gender", "age", "location"]);
-	await checkExistingUserByEmail(body.email);
-
-	const hashedPassword = await bcrypt.hash(body.password, 10);
-
-	if(file){
-		const imgRef = await uploadProfilePicture(file);
-		body.profilePicture.src = imgRef.src;
-		body.profilePicture.publicId = imgRef.publicId;
-	}
-
-	const user = await Model.create({
-		...body,
-		role: role,
-		password: hashedPassword
-	});
-
-	return {
-		id: user._id,
-		name: user.name,
-		email: user.email
-	};
-};
-
-export const loginService = async(body) => {
-    const email = body.email;
-
-    const user = await User.findOne({ email });
-    if (!user) {
-        throw new ApiError(404, 'Unregistered Email');
-    }
-
-    await validatePassword(body.password , user.password);
-    const token = jwt.sign({ id: user._id , role: user.role }, JWT_SECRET, {
-        expiresIn: '30d',
-    });
-
-    return {_id: user._id, token};
-}
-
+// -----------------------------------------------------------------------------------------------------
 
 export const getAllUsersService = async ( Model = User, limit = 10, page = 1 ) => {
 
@@ -87,7 +42,6 @@ export const getUserByIdService = async(id) => {
 }
 
 export const updateUserService = async (id, body, file) => {
-
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		throw new ApiError("Invalid user ID");
 	}
@@ -114,7 +68,6 @@ export const updateUserService = async (id, body, file) => {
 	}
 
 	await user.save();
-
 	return user;
 };
 

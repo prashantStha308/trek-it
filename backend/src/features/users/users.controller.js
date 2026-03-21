@@ -1,8 +1,8 @@
 import { User, Guide, Tourist, Admin } from "../../models/user/index.model.js";
 
+import {getModelByRole} from "../../utils/request.helper.js"
+
 import {
-	createUserService,
-	loginService,
 	getAllUsersService,
 	getUserByIdService,
 	updateUserService,

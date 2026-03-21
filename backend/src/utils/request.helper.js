@@ -4,6 +4,7 @@ import {
 	uploadProfilePicture,
 	deleteProfilePicture
 } from "./cloudinary.services.js"
+import ApiError from "./ApiError.js";
 
 /**
  * Validates Object Keys.
@@ -15,7 +16,7 @@ import {
  */
 export const validateObject = (targetObject, validationArray = []) => {
 	if (!targetObject || typeof targetObject !== 'object') {
-		throw new Error('Invalid input: expected a non-null object');
+		throw new ApiError(400,'Invalid input: expected a non-null object');
 	}
 
 	const objectKeys = Object.keys(targetObject);
@@ -26,11 +27,11 @@ export const validateObject = (targetObject, validationArray = []) => {
 	});
 
 	if (missingKeys.length > 0) {
-		throw new Error(`Missing required fields: ${missingKeys.join(', ')}`);
+		throw new ApiError(400,`Missing required fields: ${missingKeys.join(', ')}`);
 	}
 
 	if (emptyKeys.length > 0) {
-		throw new Error(`Fields cannot be empty: ${emptyKeys.join(', ')}`);
+		throw new ApiError(400,`Fields cannot be empty: ${emptyKeys.join(', ')}`);
 	}
 
 	return true;
@@ -39,7 +40,7 @@ export const validateObject = (targetObject, validationArray = []) => {
 export const checkExistingUserByEmail = async (email) => {
 	const existingUser = await User.findOne({ email });
 	if (existingUser) {
-		throw new Error("Email already in use");
+		throw new ApiError(400,"Email already in use");
 	}
 };
 

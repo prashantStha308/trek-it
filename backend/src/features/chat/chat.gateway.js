@@ -3,11 +3,13 @@ export default function chatGateway(io, socket) {
 
     const joinChat = (chatId) => {
         socket.join(chatId);
+        socket.data.currentChat = chatId;
         console.log(`Socket ${socket.id}, User: ${user._id} joined Chat: ${chatId}`);
     };
 
-    const leaveChat = (chatId) => {
+    const leaveChat = () => {
         socket.leave(chatId);
+        socket.data.currentChat = null;
         console.log(`Socket ${socket.id}, User: ${user._id} left Chat: ${chatId}`);
     };
 
@@ -16,8 +18,8 @@ export default function chatGateway(io, socket) {
         io.to(chatId).emit("user:disconnect", user._id);
     };
 
-    const emitToChat = (chatId, event, data) => {
-        io.to(chatId).emit(event, data);
+    const emitToChat = ( event, data) => {
+        io.to(socket.data.currentChat).emit(event, data);
     };
 
     const emitToSocket = (event, data) => {
