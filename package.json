@@ -4,7 +4,8 @@
   "description": " Search, Book, Customize. **Trek-it.**",
   "main": "index.js",
   "scripts": {
-    "start": "echo 'hello'"
+    "dev": "NODE_ENV=development concurrently \"cd backend && pnpm run dev\" \"cd frontend && pnpm run dev\"",
+    "start": "NODE_ENV=production concurrently \"cd backend && pnpm run dev\" \"cd frontend && pnpm run dev\""
   },
   "repository": {
     "type": "git",
@@ -13,7 +14,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "modules",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/prashantStha308/trek-it/issues"
   },
