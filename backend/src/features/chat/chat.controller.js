@@ -42,13 +42,15 @@ function chatController(io, socket) {
     };
 
     const createChat = async (data) => {
-        const { participants=[], type = "direct" } = data
+        const { participants=[], type = "direct" } = JSON.parse(data)
         console.log("Passed: ",data);
+        console.log("Passed: ",participants);
 
 		if (!participants.every(id => mongoose.Types.ObjectId.isValid(id))) {
 		    throw new Error("Invalid participant");
 		}
         const conversation = await createConversation(participants,type);
+        console.log(conversation);
 
         gateway.joinChat(conversation._id);
         gateway.emitToSocket("chat:created", { conversation });
