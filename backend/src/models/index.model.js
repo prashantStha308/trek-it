@@ -1,7 +1,7 @@
 // import all models here and export from here
 
 // Chat
-import Conversation from "./chat/conversation.model.js"
+import Chat from "./chat/chat.model.js"
 import Message from "./chat/message.model.js"
 
 // Core
@@ -23,7 +23,7 @@ import {
 } from "./user/index.model.js";
 
 export {
-	Conversation,
+	Chat,
 	Message,
 
 	Booking,

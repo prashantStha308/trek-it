@@ -36,7 +36,15 @@ export const socketAuth = async (socket, next) => {
     }
 };
 
-export const jsonParse = ([event, ...args], next) => {
-    args[0] = typeof args[0] === "string" ? JSON.parse(args[0]) : args[0];
-    next();
+/**
+ * @describe Parses to a JavaScript Object if the received data is a valid JSON, else passes an error to the next function
+ **/
+export const jsonParse = (args, next) => {
+    try {
+        args[1] = typeof args[1] === "string" ? JSON.parse(args[1]) : args[1];
+        console.log("middleware: ", args[1])
+        next();
+    } catch (e) {
+        next(new Error("Invalid JSON"));
+    }
 }

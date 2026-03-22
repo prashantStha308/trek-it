@@ -15,9 +15,10 @@ const initSocket = (httpServer) => {
     });
 
     io.use(socketAuth);
-    io.use(jsonParse);
 
     io.on("connection", (socket)=>{
+
+        socket.use(jsonParse);
         chatEvents(io,socket);
 
         socket.on("disconnect", ()=>{

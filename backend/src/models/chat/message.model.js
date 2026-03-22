@@ -28,10 +28,17 @@ const messageSchema = new mongoose.Schema({
 		type: String,
 		default: ""
 	},
-	readAt:{
-		type: Date,
-		deafult: null
-	}
+	readBy:[{
+		reader:{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'User',
+			default: null
+		},
+		readAt:{
+			type: Date,
+			deafult: null
+		}
+	}],
 },{
 	timestamps: true
 });
