@@ -8,6 +8,7 @@ import ApiError from "../../utils/ApiError.js";
 
 
 export const createConversation = async (participants = [], type = "direct") => {
+    console.log("in service: ", participants);
     if (participants.length < 2) {
         throw new Error("A conversation must have at least 2 participants");
     }

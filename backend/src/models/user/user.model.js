@@ -126,7 +126,7 @@ userSchema.pre('save', async function(){
     console.log("Before next");
 })
 
-userSchema.pre('findOneAndUpdate',async function(next) {
+userSchema.pre('findOneAndUpdate', async function(next) {
 	const update = this.getUpdate();
 
 	if(update.languages){

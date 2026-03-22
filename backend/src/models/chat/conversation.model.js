@@ -27,11 +27,10 @@ const conversationSchema = new mongoose.Schema({
 });
 
 // By default, set the conversationName to the list of participants. This only runs in creation and never after.
-conversationSchema.pre('save', function(next){
+conversationSchema.pre('save', async function(next){
 	if(this.isNew){
 		this.conversationName = this.participants.join(", ");
 	}
-	next();
 })
 
 const Conversation = mongoose.model('Conversation', conversationSchema);
