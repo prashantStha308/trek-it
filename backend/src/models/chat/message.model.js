@@ -2,7 +2,7 @@ import mongoose from "mongoose"
 import {requiredError} from "../../utils/model.helper.js";
 
 const messageSchema = new mongoose.Schema({
-	conversation:{
+	chat:{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Conversation',
 		required: true
@@ -27,14 +27,6 @@ const messageSchema = new mongoose.Schema({
 	content:{
 		type: String,
 		default: ""
-	},
-	type:{
-		type: String,
-		enum:{
-			values: ["text", "file", "image"],
-			message: "{VALUE} is not a valid message type"
-		},
-		deafult: "text"
 	},
 	readAt:{
 		type: Date,

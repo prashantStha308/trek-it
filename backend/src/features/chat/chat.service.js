@@ -1,38 +1,38 @@
 import mongoose from "mongoose";
 // Models
-import Conversation from "../../models/chat/conversation.model.js";
+import Chat from "../../models/chat/Chat.model.js";
 import Message from "../../models/chat/message.model.js";
 import { User } from "../../models/user/index.model.js";
 // Utils
 import ApiError from "../../utils/ApiError.js";
 
 
-export const createConversation = async (participants = [], type = "direct") => {
+export const createChat = async (participants = [], type = "direct") => {
     console.log("in service: ", participants);
     if (participants.length < 2) {
-        throw new Error("A conversation must have at least 2 participants");
+        throw new Error("A Chat must have at least 2 participants");
     }
 
-    const newConversation = await Conversation.create({ participants, type });
-    return newConversation;
+    const newChat = await Chat.create({ participants, type });
+    return newChat;
 }
 
-export const addParticipantToConversation = async (participantId, conversationId) => {
-    if (!mongoose.Types.ObjectId.isValid(conversationId) || !mongoose.Types.ObjectId.isValid(participantId)) {
+export const addParticipantToChat = async (participantId, chatId) => {
+    if (!mongoose.Types.ObjectId.isValid(chatId) || !mongoose.Types.ObjectId.isValid(participantId)) {
         throw new Error(404, "Invalid Participant Id OR Conversation Id ");
     }
 
-    const conversationRes = await Conversation.findById(conversationId);
+    const chatRes = await Chat.findById(conversationId);
 
-    if (conversationRes.participants.find(participant => participant._id === participantId)) {
+    if (chatRes.participants.find(participant => participant._id === participantId)) {
         // even though an error, it isn't destructive, so sent a 200 code instead.
         throw new ApiError(200, "Participants already exists");
     }
 
-    conversationRes.participants = [...conversationRes.participants, participantId];
-    conversationRes.save();
+    chatRes.participants = [...chatRes.participants, participantId];
+    chatRes.save();
 
-    return conversationRes;
+    return chatRes;
 }
 
 /**

@@ -1,5 +1,8 @@
 import {Server} from "socket.io";
-import {socketAuth} from "../middlewares/authorize.js";
+import {
+    socketAuth,
+    jsonParse,
+} from "../middlewares/chat.middleware.js";
 import chatEvents from "../features/chat/chat.events.js";
 
 const initSocket = (httpServer) => {
@@ -12,6 +15,7 @@ const initSocket = (httpServer) => {
     });
 
     io.use(socketAuth);
+    io.use(jsonParse);
 
     io.on("connection", (socket)=>{
         chatEvents(io,socket);
