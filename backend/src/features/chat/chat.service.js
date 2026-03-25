@@ -5,6 +5,13 @@ import Message from "../../models/chat/message.model.js";
 import { User } from "../../models/user/index.model.js";
 // Utils
 import ApiError from "../../utils/ApiError.js";
+import {
+
+} from "../../utils/cloudinary.services.js";
+import {
+    getAll,
+} from "../../utils/crud.service.js";
+
 
 
 export const createChatService = async (participants = [], type = "direct") => {
@@ -35,12 +42,14 @@ export const addParticipantService = async (participantId, chatId) => {
     return chatRes;
 }
 
-export const saveMessageService = async (messageObj) => {
+export const sendMessageService = async (messageObj) => {
     if (messageObj === null || messageObj.content === null || messageObj.content.trim() === "") {
         throw new ApiError(404, "Message cannot be empty");
     }
 
     const newMessage = await Message.create(messageObj);
+
+    console.log("Sending Message: ", messageObj);
     return newMessage;
 }
 
@@ -56,23 +65,46 @@ export const updateMessageService = async({messageId, content})=>{
 }
 
 
-export const joinConversationService = async(chatId, userId)=>{
+export const readService = async (chatId, userId)=>{
+    await Chat.updateOne({
+        _id: chatId, "participants.user": userId
+    },{
+        $set:{"participants.$.lastSeen": Date.now() }
+    });
+}
+
+
+export const joinChatService = async(chatId, userId)=>{
     if (!mongoose.Types.ObjectId.isValid(chatId) || !mongoose.Types.ObjectId.isValid(userId)) {
+        throw new ApiError(400,"Invalid chatId OR userId");
+    }
+
+    const chat = await Chat.findById(chatId);
+    if(!chat) throw new ApiError(404, "Chat not found");
+
+    const userNotInChat = !chat.participants.find((person) => person._id.toString() == userId.toString());
+
+    const promises = [
+        userNotInChat ? addParticipantService(userId, chatId) : Promise.resolve(),
+        readService(chatId, userId),
+        getAll(Message, { filter: { chat: chatId } }),
+    ];
+
+    const [, , messages] = await Promise.allSettled(promises);
+    console.log("Joined chat");
+
+    return messages.value;
+}
+
+export const deleteMessageService = async(chatId, messageId)=>{
+    if (!mongoose.Types.ObjectId.isValid(chatId) || !mongoose.Types.ObjectId.isValid(messageId)) {
         throw new Error("Invalid chatId OR userId");
     }
-    let chat = await Chat.findById(chatId);
-    if(!chat) throw new ApiError(404, "Chat not found");
-    
-    let promises = [];
-    if (!chat.participants.find((person) => person._id.toString() == userId.toString())) {
-        promises.push(addParticipantService(userId, chatId));
-    }
-    if(chat.lastMessage){
-        const lastMessage = await Message.findById(chat.lastMessage);
-        if(lastMessage){
-            lastMessage.readBy = [...lastMessage.readBy, { reader: userId, readAt: Date.now() }];
-            promises.push(lastMessage.save());
-        }
-    }
-    await Promise.allSettled(promises);
+
+    const targetMsg = await Message.findByIdAndDelete(messageId);
+    if(!targetMsg) throw new ApiError(404, "Message not found");
+
+    console.log("Deleted message");
+    return targetMsg;
 }
+

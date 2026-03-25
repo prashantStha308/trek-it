@@ -1,45 +1,34 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-// configs
-import { JWT_SECRET } from "../../config/env.config.js";
 // Models
 import { User } from "../../models/user/index.model.js";
 // helpers
 import ApiError from "../../utils/ApiError.js";
 import {
-	validateObject,
-	validatePassword,
-	checkExistingUserByEmail,
 	updateProfilePicture,
 } from "../../utils/request.helper.js";
-import { deleteProfilePicture } from "../../utils/cloudinary.services.js"
+import { deleteImage } from "../../utils/cloudinary.services.js"
 
 // -----------------------------------------------------------------------------------------------------
 
-export const getAllUsersService = async ( Model = User, limit = 10, page = 1 ) => {
+// export const getAllUsersService = async ( Model = User, limit = 10, page = 1 ) => {
 
-	const users = await Model.find({})
-		.skip((page - 1) * limit)
-		.limit(limit)
-		.select("-password")
-		.lean();
+// 	const users = await getAll(User, {
+// 		limit, page,
+// 		select: "-password",
+// 		filter:{role}
+// 	});
 
-	return users;
-};
+// 	return users;
+// };
 
-export const getUserByIdService = async(id) => {
-	if (!mongoose.Types.ObjectId.isValid(id)) {
-		throw new ApiError("Invalid user ID");
-	}
+// export const getUserByIdService = async(id) => {
+// 	if (!mongoose.Types.ObjectId.isValid(id)) throw new ApiError("Invalid user ID");
 
-	const user = await User.findById(id).select('-password').lean();
+// 	const user = await User.findById(id).select('-password').lean();
+// 	if(!user) throw new ApiError("User not found");
 
-	if(!user){
-		throw new ApiError("User not found");
-	}
+// 	return user;
+// }
 
-	return user;
-}
 
 export const updateUserService = async (id, body, file) => {
 	if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -77,7 +66,7 @@ export const deleteUserService = async (id) => {
 	}
 
 	const user = await User.findByIdAndDelete(id);
-	await deleteProfilePicture(user.profilePicture.publicId);
+	await deleteImage(user.profilePicture.publicId);
 
 	return user;
 }

@@ -20,25 +20,18 @@ const messageSchema = new mongoose.Schema({
 		type: Boolean,
 		default: false
 	},
-	files:{
-		type: [String],
-		default: []
+	type:{
+		type: String,
+		enum:{
+			values: ["text", "image", "file"],
+			message: "Value must be one of the listed: text, image or file"
+		},
+		default: "text"
 	},
 	content:{
 		type: String,
 		default: ""
 	},
-	readBy:[{
-		reader:{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'User',
-			default: null
-		},
-		readAt:{
-			type: Date,
-			deafult: null
-		}
-	}],
 },{
 	timestamps: true
 });

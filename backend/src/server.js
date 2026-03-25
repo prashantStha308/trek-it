@@ -7,11 +7,10 @@ import connectDb from './config/db.js';
 import {PORT} from "./config/env.config.js";
 import initSocket from "./config/socket.config.js";
 // Middlewares
-import errorHandeler from "./middlewares/errorHandeler.js"
+import {errorHandler} from "./middlewares/errorHandler.js"
 // routes
 import userRouter from "./features/users/users.routes.js"
 import authR from "./features/auth/auth.routes.js"
-
 
 
 // app
@@ -29,7 +28,7 @@ app.use('/api/auth', authR);
 
 
 // Keep at end
-app.use(errorHandeler);
+app.use(errorHandler);
 
 const httpServer = createServer(app);
 initSocket(httpServer);

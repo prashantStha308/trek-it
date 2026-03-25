@@ -15,14 +15,16 @@ import cloudinary from "../config/cloudinary.config.js";
 import {validateFileExt} from "./generic.helper.js";
 
 /**
- * Uploads a file buffer to Cloudinary.
+ * @description Uploads a file buffer to Cloudinary.
  *
- * @param {Buffer} fileBuffer - File buffer received from multer.
- * @param {string} folder - Cloudinary folder where file will be stored.
- * @param {string} resourceType - Type of resource (image, video, raw, auto), defaults to auto.
- * @returns {Promise<Object>} Cloudinary response object containing URL and public ID.
+ * @param {Buffer} fileBuffer - The file buffer to upload from Multer.
+ * @param {Object} options - Upload options.
+ * @param {string} [options.folder="profilePicture"] - The Cloudinary folder where the file will be stored.
+ * @param {('image'|'video'|'raw'|'auto')} [options.resourceType='auto'] - The type of resource being uploaded.
+ * @returns {Promise<{url: string, public_id: string, [key: string]: any}>} Resolves with Cloudinary response object containing URL, public ID, and other metadata.
+ * @throws {Error} Throws an error if upload fails.
  */
-export const uploadToCloudinary = (fileBuffer, folder = "profilePicture", resourceType = 'auto') => {
+export const uploadToCloudinary = (fileBuffer, {folder = "profilePicture", resourceType = 'auto'}) => {
     return new Promise((resolve, reject) => {
         const stream = Readable.from(fileBuffer);
 
@@ -62,8 +64,8 @@ export const deleteFromCloudinary = async ( publicId , resourceType ) => {
 }
 
 
-export const uploadProfilePicture = async(file) =>{
-    return uploadToCloudinary(file.buffer, "profilePicture", "image") 
+export const uploadImage = async(file) =>{
+    return uploadToCloudinary(file.buffer, {folder: "profilePicture", type: "image"}) 
 }
 
 export const uploadDocs = async(file, docType) =>{
@@ -73,7 +75,7 @@ export const uploadDocs = async(file, docType) =>{
 }
 
 
-export const deleteProfilePicture = async(publicId) =>{
+export const deleteImage = async(publicId) =>{
     return deleteFromCloudinary(publicId, "image"); 
 }
 

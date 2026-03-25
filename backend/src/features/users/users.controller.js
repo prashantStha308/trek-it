@@ -1,13 +1,14 @@
 import { User, Guide, Tourist, Admin } from "../../models/user/index.model.js";
-
-import {getModelByRole} from "../../utils/request.helper.js"
-
+// Services
 import {
-	getAllUsersService,
-	getUserByIdService,
 	updateUserService,
 	deleteUserService
 } from "./users.service.js";
+// Helpers
+import {
+	getAll,
+	getById
+} from "../../utils/crud.service.js";
 
 // TODO: Add uplodaing assets service when user create account, for their profile picture, if they've set it. 
 
@@ -44,10 +45,11 @@ export const login = async(req, res) => {
 export const getAllUsers = async(req, res) => {
 	let {limit, page, role} = req.query;
 
-	limit = Math.max(1, parseInt(limit));
-	page = Math.max(1, parseInt(page));
-
-	const users = await getAllUsersService(getModelByRole(role), limit, page);
+	const users = await getAll(User, {
+		limit, page,
+		select: "-password",
+		filter:{role}
+	});
 
 	res.status(200).json({
 		success: true,
@@ -57,7 +59,9 @@ export const getAllUsers = async(req, res) => {
 }
 
 export const getUserById = async(req,res) => {
-	const user = await getUserByIdService(req.params.id);
+	const user = await getById(User, req.params.id, {
+		select: "-password"
+	});
 
 	res.status(200).json({
 		success: true,

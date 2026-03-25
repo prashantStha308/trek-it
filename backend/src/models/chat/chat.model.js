@@ -23,7 +23,11 @@ const chatSchema = new mongoose.Schema({
 			message: "Chat.type can either be direct or group"
 		},
 		default: "direct"
-	}
+	},
+	lastSeen:[{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User'
+	}]
 });
 
 // By default, set the ChatName to the list of participants. This only runs in creation and never after.
