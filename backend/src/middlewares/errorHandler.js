@@ -8,10 +8,7 @@ export const errorHandler = (err, req, res, next) => {
 
 export const chatAsyncHandler = (socket, fn) => async (data) => {
     try {
-    	console.log("running func");
     	await fn(data);
-
-    	console.log("func has executed");
     } catch(err) {
     	console.log("Error occured", err);
         socket.emit("chat:error", { message: err.message });

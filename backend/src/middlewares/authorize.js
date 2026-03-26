@@ -20,7 +20,7 @@ export const authorize = (allowedRoles = []) => {
          if (!token ) {
             return res.sendStatus(401);
          }
-         
+
          let decodedData;
          try{
             decodedData = jwt.verify(token, JWT_SECRET);

@@ -24,8 +24,8 @@ export const getAll = async (Model, {
 	populate,
 } = {}) => {
 
-	limit = math.max(parseInt(limit), 10);
-	page = math.max(parseInt(page), 1);
+	limit = Math.max(parseInt(limit), 10);
+	page = Math.max(parseInt(page), 1);
 
 	let query = Model.find(filter)
 		.skip((page - 1) * limit)

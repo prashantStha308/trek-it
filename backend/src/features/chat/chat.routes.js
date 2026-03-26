@@ -18,7 +18,7 @@ chatR.post('/file', authorize(), bufferUpload.single("chatImg"), uploadFile);
 chatR.get('/', authorize(), getUserChats)
 
 // ----------------------------------- Dynamic Routes -----------------------------------
-chatR.get('/chat/:chatId', authorize(), getAllMessages);
+chatR.get('/messages/:chatId', authorize(), getAllMessages);
 
 
 

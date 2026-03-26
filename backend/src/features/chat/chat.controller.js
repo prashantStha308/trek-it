@@ -9,11 +9,15 @@ import {
 import ApiError from "../../utils/ApiError.js";
 import ApiResponse from "../../utils/ApiResponse.js";
 
+// --------------------------------------------------------------------------------
+
 export const uploadFile = async (req, res) => {
+    console.log("insie uploadFile")
     const file = req.file;
     if (!file) return;
 
-    const fileRes = await uploadImage(file.buffer);
+    const fileRes = await uploadImage(file, "chatImg");
+    console.log("insie uploadFile 2")
     
     return ApiResponse.success(res, {
         status: 200,
