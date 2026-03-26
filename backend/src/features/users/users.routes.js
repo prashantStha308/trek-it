@@ -11,20 +11,20 @@ import {
 	deleteUser
 } from "./users.controller.js";
 
-const userRouter = express.Router();
+const userR = express.Router();
 
 // api/user
 
 // GET
-userRouter.get("/",getAllUsers );
+userR.get("/",getAllUsers );
 
 // UPDATE
-userRouter.put("/", authorize([]), bufferUpload.single("profilePicture"),  updateUser);
+userR.put("/", authorize([]), bufferUpload.single("profilePicture"),  updateUser);
 
 //DELETE
-userRouter.delete("/", authorize([]),  deleteUser);
+userR.delete("/", authorize([]),  deleteUser);
 
 // dymaic routes
-userRouter.get("/:id", getUserById);
+userR.get("/:id", getUserById);
 
-export default userRouter;
+export default userR;

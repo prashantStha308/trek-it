@@ -1,4 +1,4 @@
-import ApiError from "./ApiError";
+import ApiError from "./ApiError.js";
 
 /**
  * @description Retrieves Many Data from MongoDb for a specific Model
@@ -24,8 +24,8 @@ export const getAll = async (Model, {
 	populate,
 } = {}) => {
 
-	const limit = math.max(parseInt(limit), 1);
-	const page = math.max(parseInt(page), 1);
+	limit = math.max(parseInt(limit), 10);
+	page = math.max(parseInt(page), 1);
 
 	let query = Model.find(filter)
 		.skip((page - 1) * limit)

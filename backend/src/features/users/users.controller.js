@@ -5,6 +5,7 @@ import {
 	deleteUserService
 } from "./users.service.js";
 // Helpers
+import ApiResponse from "../../utils/ApiResponse.js";
 import {
 	getAll,
 	getById
@@ -15,7 +16,7 @@ import {
 export const createTourist = async (req, res) => {
 	const tourist =  await createUserService(req.body, Tourist, req.file);
 
-	res.status(201).json({
+	ApiResponse.success(201, {
 		success: true,
 		message: "Tourist registered successfully",
 		data: tourist
@@ -35,13 +36,13 @@ export const createGuide = async (req, res) => {
 export const login = async(req, res) => {
 	const loginData = await loginService(req.body);
 
-	res.status(200).json({
+	return ApiResponse.success(200, {
 		success: true,
 		message: "Sent login details",
 		data: loginData
 	})
 }
-
+	
 export const getAllUsers = async(req, res) => {
 	let {limit, page, role} = req.query;
 
@@ -51,7 +52,7 @@ export const getAllUsers = async(req, res) => {
 		filter:{role}
 	});
 
-	res.status(200).json({
+	return ApiResponse.success(res,{
 		success: true,
 		message: "Acquired all users' datas",
 		data: users
@@ -63,7 +64,7 @@ export const getUserById = async(req,res) => {
 		select: "-password"
 	});
 
-	res.status(200).json({
+	return ApiResponse.success(200, {
 		success: true,
 		message: "Acquired User's data",
 		data: user
@@ -71,14 +72,13 @@ export const getUserById = async(req,res) => {
 }
 
 export const updateUser = async (req, res) => {
-
 	const user = await updateUserService(
 		req.user._id,
 		req.body,
 		req.file
 	);
 
-	res.status(200).json({
+	return ApiResponse.success(200,{
 		success: true,
 		message: "User updated successfully",
 		data: user
@@ -88,7 +88,7 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async(req, res) => {
 	const user = await deleteUserService(req.user._id);
 
-	res.status(200).json({
+	return ApiResponse.success(200,{
 		success: true,
 		message: "User deleted successfully",
 		data: user
