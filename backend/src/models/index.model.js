@@ -1,7 +1,7 @@
 // import all models here and export from here
 
 // Chat
-import Conversation from "./chat/conversation.model.js"
+import Chat from "./chat/chat.model.js"
 import Message from "./chat/message.model.js"
 
 // Core
@@ -15,13 +15,15 @@ import collabRequest from "./requests/collabRequest.model.js"
 import customRequest from "./requests/customRequest.model.js"
 
 // User
-import Guide from "./user/guide.model.js";
-import Tourist from "./user/tourist.model.js";
-
-// import Admin from "./user/admin.model.js";
+import {
+	User,
+	Guide,
+	Tourist,
+	Admin
+} from "./user/index.model.js";
 
 export {
-	Conversation,
+	Chat,
 	Message,
 
 	Booking,
@@ -32,8 +34,8 @@ export {
 	collabRequest,
 	customRequest,
 
+	User,
 	Guide,
 	Tourist,
-	
-	// Admin,
+	Admin,
 }

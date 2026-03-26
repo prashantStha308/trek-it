@@ -14,7 +14,7 @@ import {
 } from "../../utils/request.helper.js";
 
 import {
-	uploadProfilePicture,
+	uploadImage,
 } from "../../utils/cloudinary.services.js"
 
 // -----------------------------------------------------------------------------------------
@@ -26,7 +26,7 @@ export const createUserService = async (body, Model, file) => {
 	const hashedPassword = await bcrypt.hash(body.password, 10);
 
 	if(file){
-		const imgRef = await uploadProfilePicture(file);
+		const imgRef = await uploadImage(file);
 		body.profilePicture.src = imgRef.src;
 		body.profilePicture.publicId = imgRef.publicId;
 	}

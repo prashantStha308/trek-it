@@ -18,7 +18,7 @@ export default function chatGateway(io, socket) {
         io.to(chatId).emit("user:disconnect", user._id);
     };
 
-    const emitToChat = ( event, data) => {
+    const emitToChat = (event, data) => {
         io.to(socket.data.currentChat).emit(event, data);
     };
 
@@ -26,11 +26,20 @@ export default function chatGateway(io, socket) {
         socket.emit(event, data);
     };
 
+    const getAllActiveUserIds = async ()=>{
+        const socketsInRoom = await io.in(chatId).fetchSockets();
+        const activeUserIds = socketsInRoom.map(s => s.data.user._id);
+
+        return activeUserIds;
+    }
+
+
     return {
         joinChat,
         leaveChat,
         handleDisconnect,
         emitToChat,
         emitToSocket,
+        getAllActiveUserIds
     };
 }
