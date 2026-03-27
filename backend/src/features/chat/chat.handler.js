@@ -11,6 +11,7 @@ import {
     readService,
     joinChatService,
     deleteMessageService,
+    updateMessageService
 } from "./chat.service.js";
 
 function chatHandler(io, socket) {
@@ -63,27 +64,16 @@ function chatHandler(io, socket) {
         gateway.emitToChat("chat:messageReceived", messageRes);
     };
 
-    const sendFile = async(file)=>{
-        console.log("File received");
-        console.log("File: ", file)
-
-        gateway.emitToChat("chat:fileReceived");
-    }
-
-    const sendImage = async(image)=>{
-        console.log("Image received");
-        console.log("Image: ", image)
-
-        gateway.emitToChat("chat:fileReceived");
-    }
-
     const readLatest = async ()=>{
         await readService(socket.data.currentChat, userId);
     }
 
     const updateMessage = async(data)=>{
         const {messageId, content} = data;
-        // update this
+        await updateMessageService(data);
+        
+        gateway.emitToChat("chat:updated", {messageId,content});
+        gateway.emitToSocket("chat:singleUpdated", data);
     }
 
     const deleteMessage = async({messageId}) => {
