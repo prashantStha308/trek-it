@@ -1,5 +1,8 @@
 import {Server} from "socket.io";
-import {socketAuth} from "../middlewares/authorize.js";
+import {
+    socketAuth,
+    jsonParse,
+} from "../middlewares/chat.middleware.js";
 import chatEvents from "../features/chat/chat.events.js";
 
 const initSocket = (httpServer) => {
@@ -9,11 +12,21 @@ const initSocket = (httpServer) => {
             methods: ["GET", "POST"],
             credentials: true,
         },
+        maxBufferSize: 1e8,
     });
 
     io.use(socketAuth);
 
     io.on("connection", (socket)=>{
+        console.log("connected:", socket.id, socket.data.user);
+
+        // Handle middleware errors
+        socket.on("error", (err) => {
+            console.log("Error occured:", err);
+            socket.emit("chat:error", { message: err.message });
+        });
+
+        socket.use(jsonParse);
         chatEvents(io,socket);
 
         socket.on("disconnect", ()=>{

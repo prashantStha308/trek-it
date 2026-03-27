@@ -16,7 +16,7 @@ const paymentSchema = new mongoose.Schema({
 		enum:{
 			values: ["pending", "confirmed", "conflict"],
 			message: "${VALUE} is not an appropriate value"
-		}
+		},
 		required: true
 	},
 	amount: {
@@ -32,3 +32,7 @@ const paymentSchema = new mongoose.Schema({
 		required: true
 	}
 });
+
+const Payment = mongoose.model('Payment', paymentSchema);
+
+export default Payment;

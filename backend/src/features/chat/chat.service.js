@@ -1,49 +1,110 @@
 import mongoose from "mongoose";
 // Models
-import Conversation from "../../models/chat/conversation.model.js";
+import Chat from "../../models/chat/chat.model.js";
 import Message from "../../models/chat/message.model.js";
 import { User } from "../../models/user/index.model.js";
 // Utils
 import ApiError from "../../utils/ApiError.js";
+import {
+
+} from "../../utils/cloudinary.services.js";
+import {
+    getAll,
+} from "../../utils/crud.service.js";
 
 
-export const createConversation = async (participants = [], type = "direct") => {
+
+export const createChatService = async (participants = [], type = "direct") => {
     console.log("in service: ", participants);
     if (participants.length < 2) {
-        throw new Error("A conversation must have at least 2 participants");
+        throw new Error("A Chat must have at least 2 participants");
     }
 
-    const newConversation = await Conversation.create({ participants, type });
-    return newConversation;
+    const newChat = await Chat.create({ participants, type });
+    return newChat;
 }
 
-export const addParticipantToConversation = async (participantId, conversationId) => {
-    if (!mongoose.Types.ObjectId.isValid(conversationId) || !mongoose.Types.ObjectId.isValid(participantId)) {
+export const addParticipantService = async (participantId, chatId) => {
+    if (!mongoose.Types.ObjectId.isValid(chatId) || !mongoose.Types.ObjectId.isValid(participantId)) {
         throw new Error(404, "Invalid Participant Id OR Conversation Id ");
     }
 
-    const conversationRes = await Conversation.findById(conversationId);
+    const chatRes = await Chat.findById(conversationId);
 
-    if (conversationRes.participants.find(participant => participant._id === participantId)) {
+    if (chatRes.participants.find(participant => participant._id === participantId)) {
         // even though an error, it isn't destructive, so sent a 200 code instead.
         throw new ApiError(200, "Participants already exists");
     }
 
-    conversationRes.participants = [...conversationRes.participants, participantId];
-    conversationRes.save();
+    chatRes.participants = [...chatRes.participants, participantId];
+    chatRes.save();
 
-    return conversationRes;
+    return chatRes;
 }
 
-/**
- * @param {{content: String, sender: mongoose.Types.ObjectId, conversationId: mongoose.Types.ObjectId, files: String[]}} messageObj 
- * @returns {Message}
- */
-export const saveMessageToDb = async (messageObj) => {
+export const sendMessageService = async (messageObj) => {
     if (messageObj === null || messageObj.content === null || messageObj.content.trim() === "") {
         throw new ApiError(404, "Message cannot be empty");
     }
 
     const newMessage = await Message.create(messageObj);
+
+    console.log("Sending Message: ", messageObj);
     return newMessage;
 }
+
+export const updateMessageService = async({messageId, content})=>{
+    const targetMsg = await Message.findById(messageId);
+
+    if(!targetMsg){
+        throw new ApiError(404, "Message not found");
+    }
+
+    targetMsg.content = content;
+    await targetMsg.save();
+}
+
+
+export const readService = async (chatId, userId)=>{
+    await Chat.updateOne({
+        _id: chatId, "participants.user": userId
+    },{
+        $set:{"participants.$.lastSeen": Date.now() }
+    });
+}
+
+
+export const joinChatService = async(chatId, userId)=>{
+    if (!mongoose.Types.ObjectId.isValid(chatId) || !mongoose.Types.ObjectId.isValid(userId)) {
+        throw new ApiError(400,"Invalid chatId OR userId");
+    }
+
+    const chat = await Chat.findById(chatId);
+    if(!chat) throw new ApiError(404, "Chat not found");
+
+    const userNotInChat = !chat.participants.find((person) => person._id.toString() == userId.toString());
+
+    const promises = [
+        userNotInChat ? addParticipantService(userId, chatId) : Promise.resolve(),
+        readService(chatId, userId),
+        getAll(Message, { filter: { chat: chatId } }),
+    ];
+
+    const [, , messages] = await Promise.allSettled(promises);
+    console.log("Joined chat");
+
+    return messages.value;
+}
+
+export const deleteMessageService = async(chatId, messageId)=>{
+    if (!mongoose.Types.ObjectId.isValid(chatId) || !mongoose.Types.ObjectId.isValid(messageId)) {
+        throw new Error("Invalid chatId OR userId");
+    }
+
+    const targetMsg = await Message.findByIdAndDelete(messageId);
+    if(!targetMsg) throw new ApiError(404, "Message not found");
+
+    console.log("Deleted message");
+    return targetMsg;
+}
+
