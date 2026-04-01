@@ -10,7 +10,7 @@ import {
     validateChatBody,
     validateChatQuery,
     validateChatParams
-} from "../../middlewares/validation"
+} from "../../middlewares/validation/index.js"
 import validate from "../../middlewares/validate.middleware.js";
 
 const chatR = express.Router();

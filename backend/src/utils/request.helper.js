@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import {User, Guide, Tourist, Admin} from "../models/user/index.model.js"
+import {User, Guide, Tourist, Admin} from "../models/index.js"
 import {
 	uploadImage,
 	deleteImage

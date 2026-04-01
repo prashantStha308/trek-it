@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 // configs
 import { JWT_SECRET } from "../../config/env.config.js";
 // Models
-import { User } from "../../models/user/index.model.js";
+import { User } from "../../models/index.js";
 // helpers
 import ApiError from "../../utils/ApiError.js";
 import {

@@ -1,11 +1,7 @@
 import mongoose from "mongoose";
-import Chat from "../../models/chat/chat.model.js";
-import Message from "../../models/chat/message.model.js";
 import ApiError from "../../utils/ApiError.js";
-import { getById } from "../../utils/crud.service.js";
 import chatGateway from "./chat.gateway.js";
 import {
-    addParticipantService,
     createChatService,
     sendMessageService,
     readService,

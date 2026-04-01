@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import User from "./user.model.js";
+import {User} from "./user.model.js";
 
 
 const touristSchema = new mongoose.Schema({
@@ -20,6 +20,4 @@ const touristSchema = new mongoose.Schema({
 
 touristSchema.index({interests: 1});
 
-const Tourist = User.discriminator('tourist', touristSchema);
-
-export default Tourist;
+export const Tourist = User.discriminator('tourist', touristSchema);

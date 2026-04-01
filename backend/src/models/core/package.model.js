@@ -101,5 +101,5 @@ packageSchema.index({ regions: 1 });
 packageSchema.index({ type: 1 });
 packageSchema.index({ startingPrice: 1 });
 
-export default mongoose.model("Package", packageSchema);
+export const Package = mongoose.model("Package", packageSchema);
 

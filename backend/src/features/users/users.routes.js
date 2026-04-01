@@ -4,9 +4,10 @@ import {bufferUpload} from "../../config/multer.config.js";
 // Middlewares
 import { authorize } from "../../middlewares/authorize.js";
 import {
+	validateUserBody,
 	validateUserQuery,
 	validateUserParams
-} from "../../middlewares/validation"
+} from "../../middlewares/validation/index.js"
 import validate from "../../middlewares/validate.middleware.js";
 // Controller
 import {

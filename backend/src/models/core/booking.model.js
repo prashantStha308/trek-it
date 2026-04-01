@@ -72,6 +72,4 @@ bookingSchema.index({ date: 1 });
 // hooks
 
 // model
-const Booking = mongoose.model('Booking', bookingSchema);
-
-export default Booking;
+export const Booking = mongoose.model('Booking', bookingSchema);

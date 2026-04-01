@@ -1,4 +1,4 @@
-import { User, Guide, Tourist, Admin } from "../../models/user/index.model.js";
+import { User, Guide, Tourist, Admin } from "../../models/index.js";
 // Services
 import {
 	updateUserService,

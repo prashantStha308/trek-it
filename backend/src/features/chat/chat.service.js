@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
 // Models
-import Chat from "../../models/chat/chat.model.js";
-import Message from "../../models/chat/message.model.js";
-import { User } from "../../models/user/index.model.js";
+import {User, Chat, Message} from "../../models/index.js";
 // Utils
 import ApiError from "../../utils/ApiError.js";
 import {

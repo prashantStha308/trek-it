@@ -1,6 +1,4 @@
-import { User, Guide, Tourist, Admin } from "../../models/user/index.model.js";
-
-import {getModelByRole} from "../../utils/request.helper.js"
+import { User, Guide, Tourist, Admin } from "../../models/index.js";
 
 import {
 	createUserService,

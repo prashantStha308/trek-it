@@ -9,7 +9,7 @@ import {
 	validateTouristBody,
 	validateGuideBody,
 	validateLoginBody
-} from "../../middlewares/validation"
+} from "../../middlewares/validation/index.js"
 
 const authR = express.Router();
 
