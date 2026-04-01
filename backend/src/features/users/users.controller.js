@@ -13,36 +13,6 @@ import {
 
 // TODO: Add uplodaing assets service when user create account, for their profile picture, if they've set it. 
 
-export const createTourist = async (req, res) => {
-	const tourist =  await createUserService(req.body, Tourist, req.file);
-
-	ApiResponse.success(201, {
-		success: true,
-		message: "Tourist registered successfully",
-		data: tourist
-	});
-};
-
-export const createGuide = async (req, res) => {
-	const guide =  await createUserService(req.body, Guide, req.file);
-
-	res.status(201).json({
-		success: true,
-		message: "Guide registered successfully",
-		data: guide
-	});
-};
-
-export const login = async(req, res) => {
-	const loginData = await loginService(req.body);
-
-	return ApiResponse.success(200, {
-		success: true,
-		message: "Sent login details",
-		data: loginData
-	})
-}
-	
 export const getAllUsers = async(req, res) => {
 	let {limit, page, role} = req.query;
 

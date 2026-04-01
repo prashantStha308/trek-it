@@ -26,6 +26,7 @@ import {validateFileExt} from "./generic.helper.js";
  */
 export const uploadToCloudinary = (file, {folder = "profilePicture", resourceType = 'auto'}) => {
     return new Promise((resolve, reject) => {
+        validateFileExt(file);
 
         const fileBuffer = file.buffer;
         const stream = Readable.from(fileBuffer);
@@ -70,22 +71,16 @@ export const deleteFromCloudinary = async ( publicId , resourceType ) => {
 
 // ---------------------------------------------------------------------
 
-export const uploadImage = async(file, folder="image") =>{
-    validateFileExt(file);
-    return await uploadToCloudinary(file, {folder, type: "image"}) 
-}
+export const uploadImage = async(file, folder="image") => await uploadToCloudinary(file, {folder, type: "image"}) 
 
-export const uploadDocs = async(file, docType) =>{
-    validateFileExt(file);
+export const uploadDoc = async(file, docType = "raw") => await uploadToCloudinary(file, "docs", docType) 
 
-    return await uploadToCloudinary(file, "doc", "raw") 
-}
+export const uploadImages = async (files, folder = "image") => await Promise.allSettled([uploadImage(files[0], folder), uploadImage(files[1], folder)])
 
 
-export const deleteImage = async(publicId) =>{
-    return await deleteFromCloudinary(publicId, "image"); 
-}
+export const uploadDocs = async (files, docType = "raw") => await Promise.allSettled([uploadDoc(files[0], docType), uploadDoc(files[1], docType)])
 
-export const deleteDocs = async(publicId) =>{
-    return await deleteFromCloudinary(publicId, "auto"); 
-}
+
+export const deleteImage = async(publicId) =>await deleteFromCloudinary(publicId, "image")
+
+export const deleteDocs = async(publicId) => await deleteFromCloudinary(publicId, "auto")
