@@ -2,8 +2,12 @@ import express from "express";
 // Config
 import {bufferUpload} from "../../config/multer.config.js";
 // Middlewares
-import {authorize} from "../../middlewares/authorize.js";
-
+import { authorize } from "../../middlewares/authorize.js";
+import {
+	validateUserQuery,
+	validateUserParams
+} from "../../middlewares/validation"
+import validate from "../../middlewares/validate.middleware.js";
 // Controller
 import {
 	getAllUsers, getUserById,
@@ -11,20 +15,20 @@ import {
 	deleteUser
 } from "./users.controller.js";
 
-const userR = express.Router();
 
 // api/user
+const userR = express.Router();
 
 // GET
-userR.get("/",getAllUsers );
+userR.get("/", validateUserQuery, validate, getAllUsers );
 
 // UPDATE
-userR.put("/", authorize([]), bufferUpload.single("profilePicture"),  updateUser);
+userR.put("/", authorize, validateUserBody, validate, bufferUpload.single("profilePicture"),  updateUser);
 
 //DELETE
-userR.delete("/", authorize([]),  deleteUser);
+userR.delete("/", authorize, deleteUser);
 
-// dymaic routes
-userR.get("/:id", getUserById);
+// dynamic routes
+userR.get("/:userId", validateUserParams, validate, getUserById);
 
 export default userR;
