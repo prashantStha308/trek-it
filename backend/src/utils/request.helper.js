@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
-import {User, Guide, Tourist, Admin} from "../models/index.js"
+import path from "node:path";
+import {User, Guide, Tourist, Admin, Booking} from "../models/index.js"
 import {
 	uploadImage,
 	deleteImage
@@ -7,34 +8,54 @@ import {
 import ApiError from "./ApiError.js";
 
 /**
- * Validates Object Keys.
+ * Validates the keys and values of an object against a list of allowed fields.
  *
- * @param {Object} targetObject - File buffer received from multer.
- * @param {string[]} validationArray - Array of Strings that contains all the keys that the targetObject must resolve
- * @returns {boolean} True if the object is valid
- * @throws {Error} if validation is failed
+ * @param {Object} targetObject - The object to validate (typically req.body).
+ * @param {string[]} validationArray - Fields to validate against. In default mode, all fields are required. In update mode, at least one must be present.
+ * @param {Object} [options={}] - Optional configuration.
+ * @param {boolean} [options.isUpdate=false] - If true, validates as a partial update (at least one valid field required instead of all).
+ * @returns {boolean} True if the object is valid.
+ * @throws {ApiError} If validation fails (missing fields, empty values, or no valid fields in update mode).
  */
-export const validateObject = (targetObject, validationArray = []) => {
-	if (!targetObject || typeof targetObject !== 'object') {
-		throw new ApiError(400,'Invalid input: expected a non-null object');
-	}
+export const validateObject = (targetObject, validationArray = [], { isUpdate = false } = {}) => {
+    if (!targetObject || typeof targetObject !== 'object') {
+        throw new ApiError(400, 'Invalid input: expected a non-null object');
+    }
 
-	const objectKeys = Object.keys(targetObject);
-	const missingKeys = validationArray.filter(key => !objectKeys.includes(key));
-	const emptyKeys = validationArray.filter(key => {
-		const val = targetObject[key];
-		return val === null || val === undefined || val === '';
-	});
+    if (isUpdate) {
+        const hasValidField = Object.keys(targetObject).some(k => validationArray.includes(k));
+        if (!hasValidField) {
+            throw new ApiError(400, `At least one of [${validationArray.join(', ')}] is required`);
+        }
 
-	if (missingKeys.length > 0) {
-		throw new ApiError(400,`Missing required fields: ${missingKeys.join(', ')}`);
-	}
+        const emptyKeys = Object.keys(targetObject).filter(key => {
+            const val = targetObject[key];
+            return validationArray.includes(key) && (val === null || val === undefined || val === '');
+        });
 
-	if (emptyKeys.length > 0) {
-		throw new ApiError(400,`Fields cannot be empty: ${emptyKeys.join(', ')}`);
-	}
+        if (emptyKeys.length > 0) {
+            throw new ApiError(400, `Fields cannot be empty: ${emptyKeys.join(', ')}`);
+        }
 
-	return true;
+        return true;
+    }
+
+    const objectKeys = Object.keys(targetObject);
+    const missingKeys = validationArray.filter(key => !objectKeys.includes(key));
+    const emptyKeys = validationArray.filter(key => {
+        const val = targetObject[key];
+        return val === null || val === undefined || val === '';
+    });
+
+    if (missingKeys.length > 0) {
+        throw new ApiError(400, `Missing required fields: ${missingKeys.join(', ')}`);
+    }
+
+    if (emptyKeys.length > 0) {
+        throw new ApiError(400, `Fields cannot be empty: ${emptyKeys.join(', ')}`);
+    }
+
+    return true;
 };
 
 export const checkExistingUserByEmail = async (email) => {
@@ -51,23 +72,6 @@ export const validatePassword = async (receivedPassword , userPassword) => {
     }
 }
 
-export const getModelByRole = (role) => {
-	let model;
-
-	switch(model){
-		case "tourist":
-			model = Tourist;
-			break;
-		case "guide":
-			model = Guide;
-			break;
-		default:
-			model = User
-	}
-
-	return model;
-}
-
 export const updateProfilePicture = async(publicId, file)=>{
 		
 	const [
@@ -79,4 +83,37 @@ export const updateProfilePicture = async(publicId, file)=>{
 	]);
 
 	return uploadRes;
+}
+
+export const validateFileExt = (file)=>{
+	 const allowedExtensions = [
+		// images
+		".png", ".jpeg", ".jpg", ".webp",
+		// documents
+		".pdf", ".txt",
+		".doc", ".docx",
+		".ppt", ".pptx",
+		".xls", ".xlsx"
+	];
+
+	 const ext = path.extname(file.originalname).toLowerCase();
+
+	if (!allowedExtensions.includes(ext)) {
+		throw new Error("Invalid files type");
+	}
+}
+
+export const checkValidBooking = async (touristId, { packageId, guideId }) => {
+    const query = { tourist: touristId };
+
+    if (packageId) query.package = packageId;
+    if (guideId) query.guide = guideId;
+
+    const booking = await Booking.findOne(query).lean();
+
+    if (!booking) {
+        throw new ApiError(400, "User has not booked a tour with this guide or package.");
+    }
+
+    return true;
 }

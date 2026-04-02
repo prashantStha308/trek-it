@@ -26,6 +26,16 @@ const guideSchema =  new mongoose.Schema({
 	isVerified:{
 		type: Boolean,
 		default: false
+	},
+	review: {
+		type: [mongoose.Schema.Types.ObjectId],
+		ref: "Review"
+	},
+	rating: {
+		type: Number,
+		min: 0,
+		max: 5,
+		default: 0
 	}
 });
 

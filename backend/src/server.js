@@ -12,6 +12,7 @@ import {errorHandler} from "./middlewares/errorHandler.js"
 import userR from "./features/users/users.routes.js"
 import authR from "./features/auth/auth.routes.js"
 import chatR from "./features/chat/chat.routes.js"
+import reviewR from "./features/reviews/reviews.routes.js";
 
 
 // app
@@ -23,9 +24,10 @@ app.use(express.json({limit: '16kb'}));
 app.use(express.urlencoded({ extended: true }));
 
 // routes
-app.use('/api/users', userR);
+app.use('/api/user', userR);
 app.use('/api/auth', authR);
 app.use('/api/chat', chatR);
+app.use('/api/review', reviewR);
 
 
 // Keep at end

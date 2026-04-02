@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import ApiError from "./ApiError.js";
 
 /**
@@ -58,7 +59,7 @@ export const getAll = async (Model, {
 export const getById = async (Model, id, {
 	select = "-password",
 	populate
-}) => {
+} = {}) => {
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		throw new ApiError(400,"Invalid ID");
 	}

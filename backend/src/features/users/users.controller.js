@@ -14,16 +14,16 @@ import {
 // TODO: Add uplodaing assets service when user create account, for their profile picture, if they've set it. 
 
 export const getAllUsers = async(req, res) => {
-	let {limit, page, role} = req.query;
+	let {limit, page, ...filter} = req.query;
 
 	const users = await getAll(User, {
 		limit, page,
 		select: "-password",
-		filter:{role}
+		filter
 	});
 
-	return ApiResponse.success(res,{
-		success: true,
+	return ApiResponse.success(res, {
+		status: 200,
 		message: "Acquired all users' datas",
 		data: users
 	})
@@ -34,8 +34,8 @@ export const getUserById = async(req,res) => {
 		select: "-password"
 	});
 
-	return ApiResponse.success(200, {
-		success: true,
+	return ApiResponse.success(res, {
+		status: 200,
 		message: "Acquired User's data",
 		data: user
 	})
@@ -48,8 +48,8 @@ export const updateUser = async (req, res) => {
 		req.file
 	);
 
-	return ApiResponse.success(200,{
-		success: true,
+	return ApiResponse.success(res,{
+		status: 200,
 		message: "User updated successfully",
 		data: user
 	});
@@ -58,8 +58,8 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async(req, res) => {
 	const user = await deleteUserService(req.user._id);
 
-	return ApiResponse.success(200,{
-		success: true,
+	return ApiResponse.success(res,{
+		status: 200,
 		message: "User deleted successfully",
 		data: user
 	});

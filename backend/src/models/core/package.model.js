@@ -79,7 +79,7 @@ const packageSchema = new mongoose.Schema({
 		type: Number,
 		min: 0,
 		max: 5,
-		deafult: 0
+		default: 0
 	},
 	images:{
 		type: [String],
@@ -87,11 +87,11 @@ const packageSchema = new mongoose.Schema({
 	},
 	thumbnail:{
 		type: String,
-		deafult: ""
+		default: ""
 	},
 	requiresPermit: {
 		type: Boolean,
-		deafult: false
+		default: false
 	}
 
 }, { timestamps: true });

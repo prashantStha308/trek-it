@@ -24,7 +24,7 @@ const userR = express.Router();
 userR.get("/", validateUserQuery, validate, getAllUsers );
 
 // UPDATE
-userR.put("/", authorize, validateUserBody, validate, bufferUpload.single("profilePicture"),  updateUser);
+userR.patch("/", authorize, validateUserBody, validate, bufferUpload.single("profilePicture"),  updateUser);
 
 //DELETE
 userR.delete("/", authorize, deleteUser);
