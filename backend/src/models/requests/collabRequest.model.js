@@ -26,6 +26,4 @@ const collabRequestSchema = new mongoose.Schema({
 	timestamps: true
 });
 
-const CollabRequest = mongoose.model('CollabRequest', collabRequestSchema);
-
-export default CollabRequest;
+export const CollabRequest = mongoose.model('CollabRequest', collabRequestSchema);

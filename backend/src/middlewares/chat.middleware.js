@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../config/env.config.js";
 import cookie from "cookie";
 import ApiError from "../utils/ApiError.js";
-import {User} from "../models/index.model.js";
+import {User} from "../models/index.js";
 
 // Authorization for socket
 export const socketAuth = async (socket, next) => {

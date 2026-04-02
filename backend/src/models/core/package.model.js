@@ -79,7 +79,7 @@ const packageSchema = new mongoose.Schema({
 		type: Number,
 		min: 0,
 		max: 5,
-		deafult: 0
+		default: 0
 	},
 	images:{
 		type: [String],
@@ -87,11 +87,11 @@ const packageSchema = new mongoose.Schema({
 	},
 	thumbnail:{
 		type: String,
-		deafult: ""
+		default: ""
 	},
 	requiresPermit: {
 		type: Boolean,
-		deafult: false
+		default: false
 	}
 
 }, { timestamps: true });
@@ -101,5 +101,5 @@ packageSchema.index({ regions: 1 });
 packageSchema.index({ type: 1 });
 packageSchema.index({ startingPrice: 1 });
 
-export default mongoose.model("Package", packageSchema);
+export const Package = mongoose.model("Package", packageSchema);
 

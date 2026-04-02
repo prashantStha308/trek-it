@@ -1,4 +1,4 @@
-import { User, Guide, Tourist, Admin } from "../../models/user/index.model.js";
+import { User, Guide, Tourist, Admin } from "../../models/index.js";
 // Services
 import {
 	updateUserService,
@@ -13,47 +13,17 @@ import {
 
 // TODO: Add uplodaing assets service when user create account, for their profile picture, if they've set it. 
 
-export const createTourist = async (req, res) => {
-	const tourist =  await createUserService(req.body, Tourist, req.file);
-
-	ApiResponse.success(201, {
-		success: true,
-		message: "Tourist registered successfully",
-		data: tourist
-	});
-};
-
-export const createGuide = async (req, res) => {
-	const guide =  await createUserService(req.body, Guide, req.file);
-
-	res.status(201).json({
-		success: true,
-		message: "Guide registered successfully",
-		data: guide
-	});
-};
-
-export const login = async(req, res) => {
-	const loginData = await loginService(req.body);
-
-	return ApiResponse.success(200, {
-		success: true,
-		message: "Sent login details",
-		data: loginData
-	})
-}
-	
 export const getAllUsers = async(req, res) => {
-	let {limit, page, role} = req.query;
+	let {limit, page, ...filter} = req.query;
 
 	const users = await getAll(User, {
 		limit, page,
 		select: "-password",
-		filter:{role}
+		filter
 	});
 
-	return ApiResponse.success(res,{
-		success: true,
+	return ApiResponse.success(res, {
+		status: 200,
 		message: "Acquired all users' datas",
 		data: users
 	})
@@ -64,8 +34,8 @@ export const getUserById = async(req,res) => {
 		select: "-password"
 	});
 
-	return ApiResponse.success(200, {
-		success: true,
+	return ApiResponse.success(res, {
+		status: 200,
 		message: "Acquired User's data",
 		data: user
 	})
@@ -78,8 +48,8 @@ export const updateUser = async (req, res) => {
 		req.file
 	);
 
-	return ApiResponse.success(200,{
-		success: true,
+	return ApiResponse.success(res,{
+		status: 200,
 		message: "User updated successfully",
 		data: user
 	});
@@ -88,8 +58,8 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async(req, res) => {
 	const user = await deleteUserService(req.user._id);
 
-	return ApiResponse.success(200,{
-		success: true,
+	return ApiResponse.success(res,{
+		status: 200,
 		message: "User deleted successfully",
 		data: user
 	});

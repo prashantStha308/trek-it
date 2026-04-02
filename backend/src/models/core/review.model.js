@@ -1,4 +1,7 @@
 import mongoose from "mongoose"
+import { Package } from "./package.model.js";
+import { Guide } from "../user/guide.model.js";
+
 
 const reviewSchema = new mongoose.Schema({
 	reviewer:{
@@ -11,11 +14,6 @@ const reviewSchema = new mongoose.Schema({
 		ref: 'User',
 		default: null
 	},
-	booking:{
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Booking',
-		default: null		
-	},
 	package:{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Package',
@@ -25,7 +23,7 @@ const reviewSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	description:{
+	content:{
 		type: String,
 		required: true,
 	},
@@ -36,7 +34,16 @@ const reviewSchema = new mongoose.Schema({
 		required: true
 	},
 	images:{
-		type: [String],
+		type: [{
+			src: {
+				type: String,
+				default: ""
+			},
+			publicId: {
+				type: String,
+				default: ""
+			}
+		}],
 		default: []
 	}
 },{
@@ -44,12 +51,32 @@ const reviewSchema = new mongoose.Schema({
 })
 
 // Indexes
-reviewSchema.index({ booking: 1 }, { unique: true });
 reviewSchema.index({ guide: 1 });
 reviewSchema.index({ rating: 1 });
 
+const updateRelated = async (doc) => {
+    if (!doc) return;
+
+    const target = doc.package 
+        ? { Model: Package, field: "package" } 
+        : { Model: Guide, field: "guide" };
+
+    const id = doc[target.field];
+
+    const stats = await Review.aggregate([
+        { $match: { [target.field]: id } },
+        { $group: { _id: null, avg: { $avg: "$rating" }, count: { $sum: 1 } } }
+    ]);
+
+    await target.Model.findByIdAndUpdate(id, {
+        averageRating: stats[0]?.avg ?? 0,
+        reviewCount: stats[0]?.count ?? 0,
+    });
+};
+
+reviewSchema.post('findOneAndDelete', updateRelated)
+reviewSchema.post('findOneAndUpdate', updateRelated)
 
 
-const Review = mongoose.model('Review', reviewSchema);
+export const Review = mongoose.model('Review', reviewSchema);
 
-export default Review;

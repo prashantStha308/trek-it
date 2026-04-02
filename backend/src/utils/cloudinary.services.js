@@ -26,6 +26,7 @@ import {validateFileExt} from "./generic.helper.js";
  */
 export const uploadToCloudinary = (file, {folder = "profilePicture", resourceType = 'auto'}) => {
     return new Promise((resolve, reject) => {
+        validateFileExt(file);
 
         const fileBuffer = file.buffer;
         const stream = Readable.from(fileBuffer);
@@ -70,22 +71,39 @@ export const deleteFromCloudinary = async ( publicId , resourceType ) => {
 
 // ---------------------------------------------------------------------
 
-export const uploadImage = async(file, folder="image") =>{
-    validateFileExt(file);
-    return await uploadToCloudinary(file, {folder, type: "image"}) 
+// formats the response
+const returnRes = async (promise) => {
+    const res = await promise;
+    return { publicId: res.publicId, src: res.src };
 }
 
-export const uploadDocs = async(file, docType) =>{
-    validateFileExt(file);
-
-    return await uploadToCloudinary(file, "doc", "raw") 
+export const uploadImage = async (image, folder = "image") => {
+    return await returnRes(uploadToCloudinary(image, { folder, type: "image" }));
 }
 
 
-export const deleteImage = async(publicId) =>{
-    return await deleteFromCloudinary(publicId, "image"); 
+export const uploadDoc = async (file, docType = "raw") => {
+    return await returnRes(uploadToCloudinary(file, { folder: "docs", type: docType }));
+} 
+
+export const uploadImages = async (images, folder = "image") => {
+    const response = await Promise.allSettled(images.map(image => uploadImage(image, folder)));
+
+    return response
+        .filter(res => res.status == "fulfilled")
+        .map(res => res.value);
 }
 
-export const deleteDocs = async(publicId) =>{
-    return await deleteFromCloudinary(publicId, "auto"); 
+
+export const uploadDocs = async (files, docType = "raw") => {
+    const response = await Promise.allSettled(files.map(file => uploadDoc(file, docType)));
+
+    return response
+        .filter(res => res.status == "fulfilled")
+        .map(res => res.value);
 }
+
+
+export const deleteImage = async(publicId) =>await deleteFromCloudinary(publicId, "image")
+
+export const deleteDocs = async(publicId) => await deleteFromCloudinary(publicId, "auto")

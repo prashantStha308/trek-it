@@ -20,5 +20,4 @@ const customRequestSchema = new mongoose.Schema({
 	}
 });
 
-const CustomRequest = mongoose.model('CustomRequest', customRequestSchema);
-export default CustomRequest;
+export const CustomRequest = mongoose.model('CustomRequest', customRequestSchema);

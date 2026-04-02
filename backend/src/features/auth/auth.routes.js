@@ -5,17 +5,22 @@ import {
 	createGuide,
 	login,
 } from "./auth.controller.js";
+import {
+	validateTouristBody,
+	validateGuideBody,
+	validateLoginBody
+} from "../../middlewares/validation/index.js"
 
 const authR = express.Router();
 
 // api/auth
 // POST
 // by default, go for tourist
-authR.post("/", bufferUpload.single("profilePicture"),createTourist);
+authR.post("/", validateTouristBody, bufferUpload.single("profilePicture"),createTourist);
 
-authR.post("/guide", bufferUpload.single("profilePicture"), createGuide);
+authR.post("/guide", validateGuideBody, bufferUpload.single("profilePicture"), createGuide);
 
-authR.post("/login", login);
+authR.post("/login", validateLoginBody, login);
 
 
 export default authR;

@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import Chat from "../../models/chat/chat.model.js";
-import Message from "../../models/chat/message.model.js";
+import {Chat, Message} from "../../models/index.js";
 // utils and helpers
 import { uploadImage } from "../../utils/cloudinary.services.js";
 import {

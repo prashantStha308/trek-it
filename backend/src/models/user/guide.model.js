@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import User from "./user.model.js";
+import {User} from "./user.model.js";
 
 
 const guideSchema =  new mongoose.Schema({
@@ -26,6 +26,16 @@ const guideSchema =  new mongoose.Schema({
 	isVerified:{
 		type: Boolean,
 		default: false
+	},
+	review: {
+		type: [mongoose.Schema.Types.ObjectId],
+		ref: "Review"
+	},
+	rating: {
+		type: Number,
+		min: 0,
+		max: 5,
+		default: 0
 	}
 });
 
@@ -34,6 +44,4 @@ guideSchema.index({specialities: 1});
 guideSchema.index({isVerified: 1});
 
 
-const Guide = User.discriminator('guide', guideSchema);
-
-export default Guide;
+export const Guide = User.discriminator('guide', guideSchema);
