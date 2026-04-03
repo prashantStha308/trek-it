@@ -81,10 +81,16 @@ const packageSchema = new mongoose.Schema({
 		max: 5,
 		default: 0
 	},
-	images:{
-		type: [String],
-		default: []
-	},
+	images: [{
+		src: {
+			type: String,
+			default: ""
+		},
+		publicId: {
+			type: String,
+			default: ""
+		}
+	}],
 	thumbnail:{
 		type: String,
 		default: ""
@@ -100,6 +106,7 @@ packageSchema.index({ guide: 1 });
 packageSchema.index({ regions: 1 });
 packageSchema.index({ type: 1 });
 packageSchema.index({ startingPrice: 1 });
+
 
 export const Package = mongoose.model("Package", packageSchema);
 

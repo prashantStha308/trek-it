@@ -41,7 +41,7 @@ export const updateReviewService = async (body, reviewId) => {
     validateObject(body, ["title", "content", "rating"], {isUpdate: true});
 
     const review = await Review.findByIdAndUpdate(
-        reviewId,
+        new reviewId,
         { $set: body },
         { new: true, runValidators: true }
     ).lean();
