@@ -23,4 +23,4 @@ authR.post("/guide", validateGuideBody, bufferUpload.single("profilePicture"), c
 authR.post("/login", validateLoginBody, login);
 
 
-export default authR;
+export {authR};
