@@ -32,4 +32,4 @@ userR.delete("/", authorize, deleteUser);
 // dynamic routes
 userR.get("/:userId", validateUserParams, validate, getUserById);
 
-export default userR;
+export {userR};

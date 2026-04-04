@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 // Models
 import {
     Review,
+    Booking
 } from "../../models/index.js";
 // utils and helpers
 import {
@@ -15,33 +16,46 @@ import ApiError from "../../utils/ApiError.js";
 
 
 export const createReviewService = async (body, reviewer, files) => {
-    validateObject(body, ["title", "content", "rating"]);
+    // validateObject(body, ["title", "content", "rating"]);
     
-    if ( (!body.guide && !body.package) || (body.guide && body.package) ) {
-        throw new ApiError(400, "review body must any and only one of ['guide', 'package'].");
+    // if ( (!body.guide && !body.package) || (body.guide && body.package) ) {
+    //     throw new ApiError(400, "review body must any and only one of ['guide', 'package'].");
+    // }
+    // const query = body.guide ? {guideId: body.guide} : {packageId: body.package}
+    // await checkValidBooking(reviewer, query);
+
+    const [booking, review] = await Promise.all(
+        [Booking.findOne({ _id: body.booking, tourist: reviewer, status: 'completed' }),
+        Review.findOne({ reviewer, booking: body.booking, })]
+    );
+
+    if (!booking) {
+        throw new ApiError(400, "User is not eligible to post a review. Tourist not found in booking's user list")
     }
-    const query = body.guide ? {guideId: body.guide} : {packageId: body.package}
-    await checkValidBooking(reviewer, query);
+
+    if (review) {
+        throw new ApiError(400, "Cannot create duplicate review");
+    }
     
     let images = [];
     if (files?.length) {
         images = await uploadImages(files);
     }
 
-    const review = await Review.create({
+    const newReview = await Review.create({
         reviewer,
         ...body,
         images
     });
 
-    return review;
+    return newReview;
 }
 
 export const updateReviewService = async (body, reviewId) => {
-    validateObject(body, ["title", "content", "rating"], {isUpdate: true});
+    // validateObject(body, ["title", "content", "rating"], {isUpdate: true});
 
     const review = await Review.findByIdAndUpdate(
-        new reviewId,
+        reviewId,
         { $set: body },
         { new: true, runValidators: true }
     ).lean();

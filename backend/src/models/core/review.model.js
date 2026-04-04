@@ -61,8 +61,9 @@ const reviewSchema = new mongoose.Schema({
 })
 
 // Indexes
-reviewSchema.index({ guide: 1 });
 reviewSchema.index({ rating: 1 });
+reviewSchema.index({ booking: 1, reviewer: 1 },  {unique: true});
+
 
 const updateRelated = async (doc) => {
     if (!doc) return;

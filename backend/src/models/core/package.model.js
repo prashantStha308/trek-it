@@ -95,6 +95,10 @@ const packageSchema = new mongoose.Schema({
 		type: String,
 		default: ""
 	},
+	verified: {
+		type: Boolean,
+		default: false
+	},
 	requiresPermit: {
 		type: Boolean,
 		default: false

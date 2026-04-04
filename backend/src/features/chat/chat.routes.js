@@ -28,4 +28,4 @@ chatR.get('/messages/:chatId', authorize, validateChatParams, validate, getAllMe
 
 
 
-export default chatR;
+export {chatR};

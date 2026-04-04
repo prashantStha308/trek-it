@@ -6,14 +6,9 @@ import {createServer} from "node:http";
 import connectDb from './config/db.js';
 import {PORT} from "./config/env.config.js";
 import initSocket from "./config/socket.config.js";
+import routers from "./config/route.config.js";
 // Middlewares
 import {errorHandler} from "./middlewares/errorHandler.js"
-// routes
-import userR from "./features/users/users.routes.js"
-import authR from "./features/auth/auth.routes.js"
-import chatR from "./features/chat/chat.routes.js"
-import reviewR from "./features/reviews/reviews.routes.js";
-
 
 // app
 const app = express();
@@ -24,11 +19,13 @@ app.use(express.json({limit: '16kb'}));
 app.use(express.urlencoded({ extended: true }));
 
 // routes
-app.use('/api/user', userR);
-app.use('/api/auth', authR);
-app.use('/api/chat', chatR);
-app.use('/api/review', reviewR);
-
+// Apply all the routes in ./config/route.config.js
+/*
+    routers = [{base: '/api/__', router: ExpressRouterObject}]
+*/
+routers.forEach(route => {
+    app.use(route.base, route.router)
+});
 
 // Keep at end
 app.use(errorHandler);

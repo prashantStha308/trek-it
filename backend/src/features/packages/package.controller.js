@@ -5,9 +5,20 @@ import {
     getById
 } from "../../utils/crud.service.js";
 import ApiResponse from "../../utils/ApiResponse.js";
+import {
+    createPackageService,
+    deletePackageService,
+    updatePackageService
+} from "./package.service.js";
 
 export const createPackage = async (req, res) => {
+    const pkg = await createPackageService(req.body, req.user._id, req.files);
     
+    ApiResponse.success(res, {
+        status: 200,
+        data: pkg,
+        message: "Package created Successfully. Currently being verified"
+    })
 }
 
 export const getAllPacakages = async (req, res) => {
@@ -42,11 +53,21 @@ export const getPackageById = async (req, res) => {
 }
 
 export const updatePackage = async (req, res) => {
-    
+    const pkg = await updatePackageService(req.body, req.params.packageId, req.body, req.files);
+
+    ApiResponse.success(res, {
+        data: pkg,
+        message: "Package updated successfully"
+    });
 }
 
 export const deletePacakage = async (req, res) => {
-    
+    const pkg = await deletePackageService(req.params.packageId);
+
+    ApiResponse.success(res, {
+        data: pkg,
+        message: "Package deleted successfully"
+    })
 }
 
 
