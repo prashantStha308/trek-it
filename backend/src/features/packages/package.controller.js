@@ -61,7 +61,7 @@ export const updatePackage = async (req, res) => {
     });
 }
 
-export const deletePackage = async (req, res) => {
+export const deletePacakage = async (req, res) => {
     const pkg = await deletePackageService(req.params.packageId);
 
     ApiResponse.success(res, {
