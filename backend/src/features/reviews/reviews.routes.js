@@ -4,6 +4,7 @@ import {authorize} from "../../middlewares/authorize.js";
 import validate from "../../middlewares/validate.middleware.js";
 import {
     validateReviewBody,
+    validateReviewBodyPatch,
     validateReviewQuery,
     validateReviewParams,
 } from "../../middlewares/validation/index.js";
@@ -24,10 +25,10 @@ reviewR.get('/', validateReviewQuery, validate, getAllReviews);
 
 reviewR.delete('/:reviewId', authorize(['tourist', 'admin']), validateReviewParams, validate, deleteReview);
 
-reviewR.patch('/:reviewId', authorize(['tourist']), validateReviewParams, validate, updateReview)
+reviewR.patch('/:reviewId', authorize(['tourist']), validateReviewParams, validateReviewBodyPatch, validate, updateReview)
 
 // Dynamic
 reviewR.get('/:reviewId', validateReviewParams, validate, getReviewById);
 
 
-export default reviewR;
+export {reviewR};

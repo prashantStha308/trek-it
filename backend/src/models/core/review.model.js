@@ -9,16 +9,26 @@ const reviewSchema = new mongoose.Schema({
 		ref: 'User',
 		required: true
 	},
-	guide:{
+	booking: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User',
-		default: null
+		ref: 'Booking',
 	},
-	package:{
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Package',
-		default: null
-	},
+	// clear these later.
+	/*
+		Instead of binding review to either guide ot package, it would be better to bind with booking.
+		What this solves?
+		- Well, on first thought, it becomes easier to identify whih guide tourist had hired when a package was started... need ti think on this
+	*/
+	// guide:{
+	// 	type: mongoose.Schema.Types.ObjectId,
+	// 	ref: 'User',
+	// 	default: null
+	// },
+	// package:{
+	// 	type: mongoose.Schema.Types.ObjectId,
+	// 	ref: 'Package',
+	// 	default: null
+	// },
 	title:{
 		type: String,
 		required: true,
@@ -51,8 +61,9 @@ const reviewSchema = new mongoose.Schema({
 })
 
 // Indexes
-reviewSchema.index({ guide: 1 });
 reviewSchema.index({ rating: 1 });
+reviewSchema.index({ booking: 1, reviewer: 1 },  {unique: true});
+
 
 const updateRelated = async (doc) => {
     if (!doc) return;
