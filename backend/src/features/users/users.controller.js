@@ -30,7 +30,7 @@ export const getAllUsers = async(req, res) => {
 }
 
 export const getUserById = async(req,res) => {
-	const user = await getById(User, req.params.id, {
+	const user = await getById(User, req.params.userId, {
 		select: "-password"
 	});
 
