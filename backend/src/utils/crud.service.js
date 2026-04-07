@@ -58,21 +58,22 @@ export const getAll = async (Model, {
 
 export const getById = async (Model, id, {
 	select = "-password",
-	populate
+	populate,
+	filter = {}
 } = {}) => {
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		throw new ApiError(400,"Invalid ID");
 	}
 
-	let query = Model.findById(id)
+	let query = Model.findOne({ _id: id, ...filter });
 	
-	if(select) query = query.select(select);
-	if(populate) query = query.populate(populate);
+	if (select) query = query.select(select);
+	if (populate) query = query.populate(populate);
 	
 	const doc = await query.lean();
 
 	if (!doc) {
-		throw new ApiError(404,"Resource not found");
+		throw new ApiError(404,`${Model.toString()} not found`);
 	}
 
 	return doc;
