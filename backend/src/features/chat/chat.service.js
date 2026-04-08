@@ -1,15 +1,8 @@
 import mongoose from "mongoose";
 // Models
-import {User, Chat, Message} from "../../models/index.js";
+import {Chat, Message} from "../../models/index.js";
 // Utils
 import ApiError from "../../utils/ApiError.js";
-import {
-
-} from "../../utils/cloudinary.services.js";
-import {
-    getAll,
-} from "../../utils/crud.service.js";
-
 
 
 export const createChatService = async (participants = [], type = "direct") => {
@@ -62,15 +55,13 @@ export const updateMessageService = async({messageId, content})=>{
     await targetMsg.save();
 }
 
-
 export const readService = async (chatId, userId)=>{
     await Chat.updateOne({
-        _id: chatId, "participants.user": userId
+        _id: chatId, participants: userId
     },{
         $set:{"participants.$.lastSeen": Date.now() }
     });
 }
-
 
 export const joinChatService = async(chatId, userId)=>{
     if (!mongoose.Types.ObjectId.isValid(chatId) || !mongoose.Types.ObjectId.isValid(userId)) {
@@ -82,16 +73,25 @@ export const joinChatService = async(chatId, userId)=>{
 
     const userNotInChat = !chat.participants.find((person) => person._id.toString() == userId.toString());
 
-    const promises = [
-        userNotInChat ? addParticipantService(userId, chatId) : Promise.resolve(),
-        readService(chatId, userId),
-        getAll(Message, { filter: { chat: chatId } }),
-    ];
-
-    const [, , messages] = await Promise.allSettled(promises);
+    if (userNotInChat) {
+        await addParticipantService(userId, chatId);
+    }
     console.log("Joined chat");
 
-    return messages.value;
+    return chat;
+}
+
+export const leaveChatService = async (chatId, userId) => {
+    if (!mongoose.Types.ObjectId.isValid(chatId) || !mongoose.Types.ObjectId.isValid(userId)) {
+        throw new ApiError(400,"Invalid chatId OR userId");
+    }
+
+    const updatedChat = await Chat.updateOne(
+        { _id: chatId },
+        { $pull: { participants: userId } }
+    );
+
+    return updatedChat.modifiedCount;
 }
 
 export const deleteMessageService = async(chatId, messageId)=>{
