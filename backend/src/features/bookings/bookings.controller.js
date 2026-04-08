@@ -12,6 +12,9 @@ export const createBooking = async (req, res) => {
 }
 
 export const getAllBooking = async (req, res) => {
+
+    console.log("getALlbnooking")
+
     const loggedInUser = req.user;
     const { limit, page, ...filter } = req.query;
     
