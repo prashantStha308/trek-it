@@ -21,6 +21,8 @@ export const sendNotificationService = async (event, recipient, {
 }) => {
     const io = getIo();
 
+    console.log("emitting event:", event, "to:", recipient.toString());
+
     const notification = await Notification.create({
         recipient,
         title,

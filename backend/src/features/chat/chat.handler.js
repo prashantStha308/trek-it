@@ -40,7 +40,6 @@ function chatHandler(io, socket) {
 
     const createChat = async (data) => {
         const { participants=[], type = "direct" } = data;
-        console.log(data);
 
 		if (!participants.every(id => mongoose.Types.ObjectId.isValid(id))) {
 		    throw new Error("Invalid participant");
@@ -49,7 +48,6 @@ function chatHandler(io, socket) {
         participants = [...participants, socket.data.user._id];
 
         const chat = await createChatService(participants,type);
-        console.log();
 
         gateway.joinChat(chat);
         gateway.emitToSocket("chat:created", { chat });
@@ -83,8 +81,8 @@ function chatHandler(io, socket) {
 
         await Promise.all(
             recipients.map(recipient =>
-                sendNotificationService(NOTIFICATION_EVENTS.message_received, recipient, {
-                    title: NOTIFICATION_TITLE.message_received,
+                sendNotificationService(NOTIFICATION_EVENTS.messageReceived, recipient, {
+                    title: NOTIFICATION_TITLE.messageReceived,
                     meta: { chatId, messageId: messageRes._id }
                 })
             )
@@ -112,7 +110,7 @@ function chatHandler(io, socket) {
     return {
     	join,leave,
     	createChat,
-        sendMessage, sendFile, sendImage,
+        sendMessage,
         readLatest,
         updateMessage, deleteMessage,
     };
