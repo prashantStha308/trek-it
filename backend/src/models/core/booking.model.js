@@ -1,7 +1,6 @@
 import mongoose from "mongoose"
 import {requiredError} from "../../utils/model.helper.js";
-import { BOOKING_STATUS } from "../../middlewares/validation/constants.validation.js";
-
+import { BOOKING_STATUS } from "../../constants/booking.constant.js";
 
 const bookingSchema = new mongoose.Schema({
 	tourist:{

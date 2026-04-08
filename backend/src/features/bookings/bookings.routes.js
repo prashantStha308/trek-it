@@ -19,8 +19,8 @@ import {
 
 const bookingR = express.Router();
 
-bookingR.get('/', validateBookingQuery, validate, authorize, getAllBooking);
-bookingR.get('/:bookingId', validateBookingParams, validateBookingQuery, validate, authorize, getBookingById);
+bookingR.get('/', validateBookingQuery, validate, authorize(), getAllBooking);
+bookingR.get('/:bookingId', validateBookingParams, validateBookingQuery, validate, authorize(), getBookingById);
 
 bookingR.post('/', validateBookingBody, validate, authorize(['admin']), createBooking);
 

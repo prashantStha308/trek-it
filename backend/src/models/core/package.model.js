@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import {requiredError} from "../../utils/model.helper.js";
-import { PACKAGE_TYPES } from "../../middlewares/validation/constants.validation.js";
-
+import { PACKAGE_TYPES } from "../../constants/package.constant.js";
 
 const packageSchema = new mongoose.Schema({
 	name: {

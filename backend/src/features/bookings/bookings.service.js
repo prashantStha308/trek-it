@@ -3,7 +3,7 @@ import { Booking } from "../../models/index.js";
 import {
     BOOKING_STATUS_ENUM,
     ROLE_ENUM,
-} from "../../middlewares/validation/constants.validation.js";
+} from '../../constants/constants.js';
 import ApiError from "../../utils/ApiError.js";
 
 export const createBookingService = async (guide, tourist, body) => {

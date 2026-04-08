@@ -7,11 +7,11 @@ export const errorHandler = (err, req, res, next) => {
 	})
 }
 
-export const chatAsyncHandler = (socket, fn) => async (data) => {
+export const socketErrorHandler = (socket, fn) => async (data) => {
     try {
     	await fn(data);
     } catch(err) {
     	console.log("Error occured", err);
-        socket.emit("chat:error", { message: err.message });
+        socket.emit("socket:error", { message: err.message });
     }
 }

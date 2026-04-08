@@ -1,10 +1,9 @@
 import mongoose from "mongoose"
-import {requiredError} from "../../utils/model.helper.js";
 
 const messageSchema = new mongoose.Schema({
 	chat:{
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Conversation',
+		ref: 'Chat',
 		required: true
 	},
 	sender:{

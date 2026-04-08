@@ -4,7 +4,7 @@ import ApiError from "./ApiError.js";
 /**
  * @description Retrieves Many Data from MongoDb for a specific Model
  * 
- * @param {import("mongoose").Model} Model - The mongoose model that is to be retrived 
+ * @param {mongoose.Model} Model - The mongoose model that is to be retrived 
  * @param {Object} [options]
  * @param {number} [options.limit=10] - Max number of docs to return 
  * @param {number} [options.page=1] - index 1 based pagination value 
@@ -45,7 +45,7 @@ export const getAll = async (Model, {
 /**
  * @description Retrieves a single document by ID for a given Mongoose model.
  *
- * @param {import("mongoose").Model} Model - The Mongoose model to query.
+ * @param {mongoose.Model} Model - The Mongoose model to query.
  * @param {string} id - ID of the target document.
  * @param {Object} [options]
  * @param {string|Object} [options.select="-password"] - Fields to include or exclude.
@@ -77,4 +77,52 @@ export const getById = async (Model, id, {
 	}
 
 	return doc;
+}
+
+/**
+ * @description Deletes a document by ID from the given Mongoose model.
+ *
+ * @param {mongoose.Model} Model - The Mongoose model to delete from.
+ * @param {string} id - The ID of the document to delete.
+ * @param {Object} [filter={}] - Additional filter conditions alongside the ID.
+ * @param {Function} [callback] - Optional cleanup function called after successful deletion.
+ * @returns {Promise<Object>} The result of the delete operation.
+ * @throws {ApiError} 400 - If the provided ID is not a valid ObjectId.
+ * @throws {ApiError} 404 - If no document matching the ID and filter is found.
+ */
+export const deleteById = async (Model, id, filter = {}, callback) => {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        throw new ApiError(400, "Invalid ID");
+    }
+
+    const result = await Model.deleteOne({ _id: id, ...filter });
+
+    if (result.deletedCount === 0) {
+        throw new ApiError(404, `${Model.modelName} not found`);
+    }
+
+    if (callback) await callback();
+
+    return result;
+}
+
+/**
+ * Deletes multiple documents from the given Mongoose model matching the filter.
+ *
+ * @param {mongoose.Model} Model - The Mongoose model to delete from.
+ * @param {Object} [filter={}] - Filter conditions to match documents for deletion.
+ * @param {Function} [callback] - Optional cleanup function called after successful deletion.
+ * @returns {Promise<Object>} The result of the delete operation, including deletedCount.
+ */
+export const deleteBulk = async (Model, filter = {}, callback) => {
+
+	if (Object.keys(filter).length === 0) {
+        throw new ApiError(400, "Filter cannot be empty for bulk delete");
+	}
+	
+    const result = await Model.deleteMany(filter);
+
+    if (callback) await callback();
+
+    return result;
 }
