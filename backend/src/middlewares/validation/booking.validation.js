@@ -1,5 +1,5 @@
 import { body, query } from 'express-validator';
-import { PACKAGE_TYPES, BOOKING_STATUS } from './constants.validation.js';
+import { PACKAGE_TYPES, BOOKING_STATUS } from '../../constants/constants.js';
 import { mongoIdParam } from './validation.helpers.js';
 
 export const validateBookingBody = [

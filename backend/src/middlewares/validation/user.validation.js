@@ -1,5 +1,5 @@
 import { body, query } from 'express-validator';
-import { ROLES, GENDERS } from './constants.validation.js';
+import { ROLES, GENDERS } from '../../constants/user.constant.js';
 import { trimEscapeOptional, mongoIdParam } from './validation.helpers.js';
 
 export const validateUserBody = [
