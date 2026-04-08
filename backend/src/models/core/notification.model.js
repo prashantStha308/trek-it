@@ -9,11 +9,11 @@ const notificationSchema = new mongoose.Schema({
     },
     title: {
         type: String,
-        required: [true, ()=> requiredError("notification.type")]
+        required: [true, ()=> requiredError("notification.title")]
     },
     message: {
         type: String,
-        required: [true, ()=> requiredError("notification.message")]
+        default: ""
     },
     link: {
         type: String,

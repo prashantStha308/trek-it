@@ -12,8 +12,8 @@ function chatEvents(io, socket){
 	socket.on("chat:read", socketErrorHandler(socket, handler.readLatest));
 	
 	socket.on("chat:send", socketErrorHandler(socket, handler.sendMessage));
-	socket.on("chat:sendFile", socketErrorHandler(socket, handler.sendMessage));
-	socket.on("chat:sendImage", socketErrorHandler(socket, handler.sendMessage));
+	// socket.on("chat:sendFile", socketErrorHandler(socket, handler.sendMessage));
+	// socket.on("chat:sendImage", socketErrorHandler(socket, handler.sendMessage));
 
 	socket.on("chat:update", socketErrorHandler(socket, handler.updateMessage));
 
