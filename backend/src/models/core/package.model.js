@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import {requiredError} from "../../utils/model.helper.js";
-
+import { PACKAGE_TYPES } from "../../constants/package.constant.js";
 
 const packageSchema = new mongoose.Schema({
 	name: {
@@ -45,10 +45,10 @@ const packageSchema = new mongoose.Schema({
 	type: {
 		type: String,
 		enum: {
-			values: ["fixed", "custom"],
-			message: "{VALUE} must be either 'fixed' or 'custom'"
+			values: PACKAGE_TYPES,
+			message: `{VALUE} must be one of [${PACKAGE_TYPES.join(" ,")}]`
 		},
-		default: "fixed"
+		default: PACKAGE_TYPES[0]
 	},
 	startingPrice: {
 		type: Number,
@@ -70,10 +70,6 @@ const packageSchema = new mongoose.Schema({
 		spotsTotal: { type: Number, required: [true, () => requiredError("Package.dates.spotsTotal")] },
 		spotsLeft: { type: Number, required: [true, () => requiredError("Package.dates.spotsLeft")] },
 		isOpen: { type: Boolean, default: true }
-	}],
-	reviews:[{
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Review'
 	}],
 	rating:{
 		type: Number,

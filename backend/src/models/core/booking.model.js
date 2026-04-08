@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 import {requiredError} from "../../utils/model.helper.js";
-
+import { BOOKING_STATUS } from "../../constants/booking.constant.js";
 
 const bookingSchema = new mongoose.Schema({
 	tourist:{
@@ -18,14 +18,6 @@ const bookingSchema = new mongoose.Schema({
 		ref: 'Package',
 		required: true
 	},
-	type:{
-		type: String,
-		enum:{
-			values: ["fixed", "custom"],
-			message: "{VALUE} is not a valid type"
-		},
-		required: true
-	},
 	customRequest:{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'CustomRequest',
@@ -34,11 +26,11 @@ const bookingSchema = new mongoose.Schema({
 	status:{
 		type: String,
 		enum:{
-			values: ["pending", "confirmed", "cancelled", "completed"],
-			message: "{VALUE} is not a valid status"
+			values: BOOKING_STATUS,
+			message: `{VALUE} must be one of [${BOOKING_STATUS.join(" ,")}]`
 		},
 		required: true,
-		default: "pending"
+		default: BOOKING_STATUS[0]
 	},
 	date:{
 		type: Date,

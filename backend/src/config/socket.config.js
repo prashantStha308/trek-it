@@ -3,7 +3,12 @@ import {
     socketAuth,
     jsonParse,
 } from "../middlewares/chat.middleware.js";
+import {
+    setIo
+} from "../utils/io.socket.js";
+
 import chatEvents from "../features/chat/chat.events.js";
+import notificationEvents from "../features/notifications/notification.events.js";
 
 const initSocket = (httpServer) => {
     const io = new Server(httpServer, {
@@ -23,17 +28,19 @@ const initSocket = (httpServer) => {
         // Handle middleware errors
         socket.on("error", (err) => {
             console.log("Error occured:", err);
-            socket.emit("chat:error", { message: err.message });
+            socket.emit("socket:error", { message: err.message });
         });
 
         socket.use(jsonParse);
-        chatEvents(io,socket);
+        chatEvents(io, socket);
+        notificationEvents(io, socket);
 
         socket.on("disconnect", ()=>{
             console.log('Client disconnected:', socket.id);
         })
     })
 
+    setIo(io);
     return io;
 }
 

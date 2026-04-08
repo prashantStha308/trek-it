@@ -1,7 +1,7 @@
 import { body, query } from 'express-validator';
 
 import { User } from '../../models/index.js';
-import { CHAT_TYPES } from './constants.validation.js';
+import { CHAT_TYPES } from '../../constants/chat.constant.js';
 import { mongoIdParam } from './validation.helpers.js';
 import { validateBasicQuery } from "./user.validation.js";
 

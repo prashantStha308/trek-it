@@ -6,7 +6,7 @@ import {createServer} from "node:http";
 import connectDb from './config/db.js';
 import {PORT} from "./config/env.config.js";
 import initSocket from "./config/socket.config.js";
-import routers from "./config/route.config.js";
+import {routers} from "./config/route.config.js";
 // Middlewares
 import {errorHandler} from "./middlewares/errorHandler.js"
 

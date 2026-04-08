@@ -11,23 +11,24 @@ import {
 import validate from "../../middlewares/validate.middleware.js";
 // Controller
 import {
-	getAllUsers, getUserById,
+	getAllUsers, getUserById, getMe,
 	updateUser,
 	deleteUser
 } from "./users.controller.js";
 
 
-// api/user
+// api/users
 const userR = express.Router();
 
 // GET
-userR.get("/", validateUserQuery, validate, getAllUsers );
+userR.get("/", validateUserQuery, validate, getAllUsers);
+userR.get("/me", authorize(), getMe );
 
 // UPDATE
-userR.patch("/", authorize, validateUserBody, validate, bufferUpload.single("profilePicture"),  updateUser);
+userR.patch("/", authorize(), validateUserBody, validate, bufferUpload.single("profilePicture"),  updateUser);
 
 //DELETE
-userR.delete("/", authorize, deleteUser);
+userR.delete("/", authorize(), deleteUser);
 
 // dynamic routes
 userR.get("/:userId", validateUserParams, validate, getUserById);

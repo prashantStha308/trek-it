@@ -29,8 +29,22 @@ export const getAllUsers = async(req, res) => {
 	})
 }
 
+
+export const getMe = async (req, res) => {
+	const user = req.user;
+
+	const me = await getById(User, user._id, {
+		select: "-password"
+	});
+	
+	return ApiResponse.success(res, {
+		data: me,
+		message: "Retrived your data successfully"
+	})
+}
+
 export const getUserById = async(req,res) => {
-	const user = await getById(User, req.params.id, {
+	const user = await getById(User, req.params.userId, {
 		select: "-password"
 	});
 

@@ -1,5 +1,5 @@
 import { body, query } from 'express-validator';
-import { PACKAGE_TYPES } from './constants.validation.js';
+import { PACKAGE_TYPES } from '../../constants/package.constant.js';
 import { trimEscapeOptional, mongoIdParam } from './validation.helpers.js';
 
 export const validatePackageBody = [
