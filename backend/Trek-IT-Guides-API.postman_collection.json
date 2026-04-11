@@ -1,0 +1,470 @@
+{
+  "info": {
+    "_postman_id": "trek-it-guides-api",
+    "name": "Trek-IT Guides API",
+    "description": "Complete API testing for Trek-IT Guides Feature",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "PUBLIC ROUTES",
+      "description": "Public endpoints - No authentication required",
+      "item": [
+        {
+          "name": "Get All Guides",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/guides?limit=10&page=1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "guides"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "disabled": false
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": false
+                },
+                {
+                  "key": "region",
+                  "value": "kathmandu",
+                  "disabled": true
+                },
+                {
+                  "key": "speciality",
+                  "value": "trekking",
+                  "disabled": true
+                },
+                {
+                  "key": "verified",
+                  "value": "true",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Get all guides with optional filters and pagination"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Verified Guides Only",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/guides/verified?limit=10&page=1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "guides",
+                "verified"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "disabled": false
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": false
+                }
+              ]
+            },
+            "description": "Get only verified guides with pagination"
+          },
+          "response": []
+        },
+        {
+          "name": "Search Guides",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/guides/search?q=mountain&limit=10&page=1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "guides",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "mountain",
+                  "disabled": false
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "disabled": false
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": false
+                }
+              ]
+            },
+            "description": "Search guides by name, speciality, or region"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Guides by Region",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/guides/region/kathmandu?limit=10&page=1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "guides",
+                "region",
+                "kathmandu"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "disabled": false
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": false
+                }
+              ]
+            },
+            "description": "Get guides by specific region"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Guides by Speciality",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/guides/speciality/trekking?limit=10&page=1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "guides",
+                "speciality",
+                "trekking"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "disabled": false
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": false
+                }
+              ]
+            },
+            "description": "Get guides by specific speciality"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Guide by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/guides/{{guide_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "guides",
+                "{{guide_id}}"
+              ]
+            },
+            "description": "Get a single guide by ID with populated collaborations and reviews"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Guide Statistics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/guides/{{guide_id}}/stats",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "guides",
+                "{{guide_id}}",
+                "stats"
+              ]
+            },
+            "description": "Get statistics for a guide (packages, reviews, rating)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "AUTHORIZED ROUTES",
+      "description": "Routes requiring authentication (Guide/Admin)",
+      "item": [
+        {
+          "name": "Update Guide Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Prashant Shrestha",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "age",
+                  "value": "28",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "gender",
+                  "value": "male",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "location",
+                  "value": "Kathmandu, Nepal",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "regions",
+                  "value": "[\"Kathmandu\", \"Pokhara\"]",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "specialities",
+                  "value": "[\"mountain\", \"adventure\"]",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "profilePicture",
+                  "type": "file",
+                  "src": [],
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/guides/{{guide_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "guides",
+                "{{guide_id}}"
+              ]
+            },
+            "description": "Update guide profile information and/or profile picture"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ADMIN ONLY ROUTES",
+      "description": "Routes requiring admin authorization",
+      "item": [
+        {
+          "name": "Get Unverified Guides",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/guides/admin/unverified?limit=10&page=1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "guides",
+                "admin",
+                "unverified"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "disabled": false
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": false
+                }
+              ]
+            },
+            "description": "Get guides pending verification (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Verify Guide",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/api/guides/admin/{{guide_id}}/verify",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "guides",
+                "admin",
+                "{{guide_id}}",
+                "verify"
+              ]
+            },
+            "description": "Verify a guide account (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Reject Guide Verification",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/api/guides/admin/{{guide_id}}/reject",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "guides",
+                "admin",
+                "{{guide_id}}",
+                "reject"
+              ]
+            },
+            "description": "Reject a guide's verification (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Guide",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {},
+            "url": {
+              "raw": "{{base_url}}/api/guides/admin/{{guide_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "guides",
+                "admin",
+                "{{guide_id}}"
+              ]
+            },
+            "description": "Delete a guide (Admin only)"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "auth_token",
+      "value": "your_guide_token_here",
+      "type": "string"
+    },
+    {
+      "key": "admin_token",
+      "value": "your_admin_token_here",
+      "type": "string"
+    },
+    {
+      "key": "guide_id",
+      "value": "your_guide_id_here",
+      "type": "string"
+    }
+  ]
+}
