@@ -65,3 +65,41 @@ export const deletePackageService = async (packageId) => {
     // TODO: Cascading deletes (bookings, reviews tied to this package)
     // should be handled by Mongoose post('findOneAndDelete') middleware
 };
+
+
+// Bookings related
+const getValidatedDateIndex = (date, targetPackage) => {
+    const normalizedDate = new Date(date).toISOString();
+
+    const targetDateIndex = targetPackage.dates.findIndex(d => 
+        new Date(d.date).toISOString() === normalizedDate
+    );
+
+    if (targetDateIndex === -1) throw new ApiError(404, "Date not available for this package");
+
+    return targetDateIndex;
+}
+
+export const validatePackageDateService = (date, groupSize, targetPackage) => {
+    const targetDateIndex = getValidatedDateIndex(date, targetPackage);
+    const packageDate = targetPackage.dates[targetDateIndex];
+
+    if (!packageDate.isOpen) throw new ApiError(400, "This date is closed for booking");
+    if (packageDate.spotsLeft < groupSize) throw new ApiError(400, "Not enough spots available");
+
+    return targetDateIndex;
+}
+
+export const getNextNDates = (startDate, n) => {
+    const dates = [];
+    const start = new Date(startDate);
+
+    for (let i = 0; i < n; i++) {
+        const d = new Date(start);
+        d.setDate(start.getDate() + i);
+        d.setHours(0, 0, 0, 0);
+        dates.push(d);
+    }
+
+    return dates;
+}
