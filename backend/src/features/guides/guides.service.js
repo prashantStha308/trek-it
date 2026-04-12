@@ -353,3 +353,82 @@ export const getUnverifiedGuidesService = async (limit = 10, page = 1) => {
         throw err;
     }
 };
+
+
+
+// Booking related
+const checkOverlappingDays = (targetGuide, pkgDates) => {
+    const bookedSet = new Set(
+        targetGuide.daysBooked.map(d => new Date(d).toISOString())
+    );
+
+    return pkgDates.some(date => bookedSet.has(new Date(date).toISOString()));
+}
+
+const selectCollaborator = async (availableGuides = [], pkg) => {
+    if (availableGuides.length === 0) return null;
+    if (availableGuides.length === 1) return availableGuides[0];
+
+    // use round robin algo for selection
+    const preSortedGuides = await Promise.all(
+        availableGuides.map(async (guide) => ({
+            guide,
+            count: await Booking.countDocuments({
+                guide: guide._id,
+                status: { $in: [BOOKING_STATUS_ENUM.pending, BOOKING_STATUS_ENUM.confirmed, BOOKING_STATUS_ENUM.completed] },
+                package: pkg._id
+            })
+        }))
+    );
+
+    const sortedGuides = preSortedGuides.sort((a, b) => a.count - b.count);
+    return sortedGuides[0].guide;
+}
+
+/**
+ * @description - Returns a guides to be assigned
+ * 
+ * @param {mongoose.Model('Package')} targetPackage - Package Object 
+ * @param {String[]} pkgDates - Array of alloted days in package
+ * @param {String} guideId - ObjectId String of selected guide (optional) 
+ * @returns {Promise< {mongoose.Model('Package')} >} - Returns guide to assign
+ * 
+ * @throws {ApiError} - 404, "Selected guide not found"
+ * @throws {ApiError} - 503, "Selected guide not available"
+ * @throws {ApiError} - 503, "No guides available"
+ */
+export const assignGuide = async (targetPackage, pkgDates, guideId) => {
+
+    // Validate selected guide
+    if (guideId) {
+        const targetGuide = await Guide.findById(guideId);
+        if (!targetGuide) throw new ApiError(404, "Selected guide not found");
+
+        if (checkOverlappingDays(targetGuide, pkgDates)) {
+            throw new ApiError(503, "Selected guide will be busy on targeted days");
+        }
+        return targetGuide;
+    }
+
+    const allGuides = [targetPackage.guide, ...targetPackage.collaborators];
+
+    // Get all the available guides among the collaborators and main guide of package
+    const availableGuides = await Guide.find({
+        _id: { $in: allGuides },
+        daysBooked: { $nin: pkgDates }
+    });
+
+    if (availableGuides.length === 0) throw new ApiError(503, "No guides currently available");
+
+    // Check if main guide is among avilable. If yes, mainGuide is given the highest priority.
+    const mainGuide = availableGuides.find(aGuide => 
+        aGuide._id.toString() === targetPackage.guide.toString()
+    )
+    if (mainGuide) return mainGuide;
+
+    // Select a guide from collaborators
+    const assigned = await selectCollaborator(availableGuides, targetPackage);
+    if (!assigned) throw new ApiError(503, "No guides currently available");
+
+    return assigned;
+}
