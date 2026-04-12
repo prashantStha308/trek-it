@@ -11,7 +11,8 @@ import {
     getGuideStatsService,
     deleteGuideService,
     searchGuidesService,
-    getUnverifiedGuidesService
+    getUnverifiedGuidesService,
+    toggleGuideAvailabilityService
 } from "./guides.service.js";
 
 // ============================================================================================
@@ -250,3 +251,13 @@ export const getUnverifiedGuides = async (req, res, next) => {
         next(err);
     }
 };
+
+
+export const toggleGuideAvailability = async (req, res) => {
+    await toggleGuideAvailabilityService(req.user._id);
+
+    return ApiResponse.success(res, {
+        data: null,
+        message: "Guide's availability has been toggeled"
+    });
+}

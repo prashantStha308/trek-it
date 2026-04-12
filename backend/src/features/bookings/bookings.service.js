@@ -4,8 +4,8 @@ import {
     BOOKING_STATUS_ENUM,
 } from '../../constants/constants.js';
 import {
-    validatePackageDateService,
-    getNextNDates
+    getNextNDates,
+    getTotalPrice,
 } from "../packages/package.service.js";
 import {
     assignGuide
@@ -20,7 +20,6 @@ export const createBookingService = async (touristId, body, { guideId } = {}) =>
     const targetPackage = await Package.findById(packageId);
     if (!targetPackage) throw new ApiError(404, "Package not found");
 
-    const targetDateIndex = validatePackageDateService(date, groupSize, targetPackage);
     const pkgDates = getNextNDates(date, targetPackage.daysAlloted);
 
     const targetGuide = await assignGuide(targetPackage, pkgDates, guideId);
@@ -33,15 +32,11 @@ export const createBookingService = async (touristId, body, { guideId } = {}) =>
         groupSize,
         customRequest,
         status: BOOKING_STATUS_ENUM.pending,
-        totalPrice: targetPackage.startingPrice * groupSize,
+        totalPrice: getTotalPrice(targetPackage, groupSize),
         payment: null
     });
 
-    // update spots and guide's booked days
-    targetPackage.dates[targetDateIndex].spotsLeft -= groupSize;
-    if (targetPackage.dates[targetDateIndex].spotsLeft === 0) {
-        targetPackage.dates[targetDateIndex].isOpen = false;
-    }
+    targetPackage.bookingCount += 1;
 
     targetGuide.daysBooked.push(...pkgDates);
 
