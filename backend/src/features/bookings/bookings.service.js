@@ -127,7 +127,7 @@ export const cancleBookingService = async (bookingId, user) => {
             { guide: user._id },
             { tourist: user._id }
         ],
-        status: {$nin: [BOOKING_STATUS_ENUM.cancelled, BOOKING_STATUS_ENUM.completed, BOOKING_STATUS_ENUM.rejected]}
+        status: {$nin: [BOOKING_STATUS_ENUM.cancelled, BOOKING_STATUS_ENUM.completed]}
     }).populate({
         path: "package",
         select: "_id name thumbnail startingPrice pricePerPerson"

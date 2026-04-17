@@ -383,7 +383,7 @@ const selectCollaborator = async (availableGuides = [], pkg) => {
             guide,
             count: await Booking.countDocuments({
                 guide: guide._id,
-                status: { $in: [BOOKING_STATUS_ENUM.accepted, BOOKING_STATUS_ENUM.completed] },
+                status: { $in: [BOOKING_STATUS_ENUM.confirmed, BOOKING_STATUS_ENUM.completed] },
                 package: pkg._id
             })
         }))
