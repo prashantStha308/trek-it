@@ -14,6 +14,8 @@ import {
     getBookingById,
     createBooking,
     setBookingStatus,
+    cancelBooking,
+    deleteBooking,
 } from "./bookings.controller.js";
 
 
@@ -22,8 +24,15 @@ const bookingR = express.Router();
 bookingR.get('/', validateBookingQuery, validate, authorize(), getAllBooking);
 bookingR.get('/:bookingId', validateBookingParams, validateBookingQuery, validate, authorize(), getBookingById);
 
-bookingR.post('/', validateBookingBody, validate, authorize(['admin']), createBooking);
+// create booking
+bookingR.post('/', validateBookingBody, validate, authorize(["admin", "tourist"]), createBooking);
 
-bookingR.patch('/:bookingId', validateBookingParams, validateBookingStatusBody, validateBookingQuery, validate, authorize(['admin']), setBookingStatus);
+// update booking status
+bookingR.patch('/cancle/:bookingId', validateBookingParams, validate, authorize(), setBookingStatus);
+bookingR.patch('/status/:bookingId', validateBookingParams, validateBookingStatusBody, validate, authorize([ 'tourist', 'guide', 'admin']), cancelBooking);
+
+// Delete booking
+bookingR.delete('/:bookingId', validateBookingParams, validate, authorize(["admin"]), deleteBooking);
+
 
 export {bookingR};

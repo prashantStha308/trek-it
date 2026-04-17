@@ -21,18 +21,49 @@ export const sendNotificationService = async (event, recipient, {
 }) => {
     const io = getIo();
 
+    console.log("emitting event:", event, "to:", recipient.toString());
+
     const notification = await Notification.create({
         recipient,
         title,
         message,
         link,
-        meta
+        meta: {...meta, event}
     })
 
-    io.to(recipient.toString()).emit(event, {notification});
+    // sends to client, but if offline, this fires nothing, but notificaiton is persisted in db
+    io.to(recipient.toString()).emit(event, { notification });
+    
     return notification;
 }
 
+
+/**
+ * @description - Broadcasts a notification to multiple recipients.
+ * 
+ * @param {String} event - Event to emit via socket 
+ * @param {String[]} recipients - Array of recipient user ObjectIds
+ * @param {Object} content
+ * @param {string} content.title - Title of the notification
+ * @param {string} [content.message=""] - Notification message
+ * @param {string} [content.link=""] - Optional redirect link
+ * @param {Object} [content.meta={}] - Additional metadata. For example, can have objectId of related datas 
+ * @returns {Promise<Object[]>} Array of created notification documents
+ * 
+ * @example await broadcastNotificationService("bookingCancelled", [guideId, touristId], {title: "Booking cancelled", message: "A booking has been cancelled ", meta:{ guideId, touristId, packageId, bookingId }})
+ * 
+ */
+export const broadcastNotificationService = async (event, recipients = [], {
+    title, message = "", link = "", meta = {}
+}) => {
+    const notifications = await Promise.all(
+        recipients.map(recipient =>
+            sendNotificationService(event, recipient, { title, message, link, meta })
+        )
+    );
+
+    return notifications;
+}
 
 export const deleteNotificationService = async (notificationId, recipient) => {
     const io = getIo();

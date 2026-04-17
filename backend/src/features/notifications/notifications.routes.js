@@ -4,13 +4,13 @@ import {
     deleteNotification,
     deleteBulkNotification
 } from "./notifications.controller.js";
-
+import { authorize } from "../../middlewares/authorize.js";
 
 const notificationR = express.Router();
 
-notificationR.get("/", getAllNotifications);
+notificationR.get("/", authorize(), getAllNotifications);
 
-notificationR.delete("/", deleteBulkNotification);
-notificationR.delete("/:notificationId", deleteNotification);
+notificationR.delete("/", authorize(), deleteBulkNotification);
+notificationR.delete("/:notificationId", authorize(), deleteNotification);
 
 export { notificationR };

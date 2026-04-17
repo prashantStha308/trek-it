@@ -5,16 +5,27 @@ import {
     getAll,
     getById
 } from "../../utils/crud.service.js";
-import { setBookingStatusService } from "./bookings.service.js";
+import {
+    createBookingService,
+    deleteBookingService,
+    setBookingStatusService,
+    cancleBookingService,
+} from "./bookings.service.js";
+
+
 
 export const createBooking = async (req, res) => {
-
+    // this function is executed in tourist's side
+    const booking = await createBookingService(req.user, req.body, { guideId: req.body.guideId });
+    
+    return ApiResponse.success(res, {
+        data: booking,
+        message: "Booking created successfully",
+        status: 201
+    })
 }
 
 export const getAllBooking = async (req, res) => {
-
-    console.log("getALlbnooking")
-
     const loggedInUser = req.user;
     const { limit, page, ...filter } = req.query;
     
@@ -60,16 +71,30 @@ export const setBookingStatus = async (req, res) => {
     const booking = await setBookingStatusService(req.params.bookingId, req.body.status);
 
     return ApiResponse.success(res, {
-        data: booking,
-        message: "Status updated"
+        data: booking._id,
+        message: `Status of booking id: ${booking._id} was updated to ${bookingStatus}`
     });
 }
 
-export const cancleBooking = async (req, res) => {
-    
+export const cancelBooking = async (req, res) => {
+    const booking = await cancleBookingService(req.params.bookingId, req.user);
+
+    return ApiResponse.success(res, {
+        message: `Booking: ${booking.name} has been cancelled`,
+        data: booking._id
+    });
 }
 
 // Booking shouldn't be edited
 // export const updateBooking = async (req, res) => {}
 
-// NEVER DELETE BOOKING
+export const deleteBooking = async (req, res) => {
+    // Only allowed to Admins
+
+    const bookingId = await deleteBookingService(req.params.bookingId);
+
+    return ApiResponse.success(res, {
+        data: bookingId,
+        message: `Booking id: ${bookingId} has been deleted`
+    })
+}
