@@ -73,6 +73,7 @@ function chatHandler(io, socket) {
 
         gateway.emitToSocket("chat:messageSent", messageRes);
         gateway.emitToChat("chat:messageReceived", messageRes);
+        gateway.emitToChat("chat:newMessage", messageRes);
 
         // handle sending notifications to other users
 

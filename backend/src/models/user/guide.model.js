@@ -27,6 +27,10 @@ const guideSchema =  new mongoose.Schema({
 		type: Boolean,
 		default: false
 	},
+	isAvailable: {
+		type: Boolean,
+		default: true	
+	},
 	rating: {
 		type: Number,
 		min: 0,

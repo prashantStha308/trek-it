@@ -21,6 +21,14 @@ export const createPackage = async (req, res) => {
     })
 }
 
+export const curatePackage = async (req,res) => {
+    // curate a custom package based on user's request
+}
+
+export const createCustomPackage = async (req, res) => {
+    // custom request created by guide after discussion with the tourist
+}
+
 export const getAllPacakages = async (req, res) => {
     const { limit, page, ...filter } = req.query;
     
@@ -53,7 +61,7 @@ export const getPackageById = async (req, res) => {
 }
 
 export const updatePackage = async (req, res) => {
-    const pkg = await updatePackageService(req.body, req.params.packageId, req.body, req.files);
+    const pkg = await updatePackageService( req.user._id, req.body, req.params.packageId, req.body, req.files);
 
     ApiResponse.success(res, {
         data: pkg,

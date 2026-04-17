@@ -6,40 +6,24 @@ import {
     getById
 } from "../../utils/crud.service.js";
 import {
-    sendNotificationService,
-    broadcastNotificationService
-} from "../notifications/notifications.service.js";
-import { createBookingService, setBookingStatusService } from "./bookings.service.js";
+    createBookingService,
+    deleteBookingService,
+    setBookingStatusService,
+    cancleBookingService,
+} from "./bookings.service.js";
+
+
 
 export const createBooking = async (req, res) => {
-    // this function is executed in user side
-    const [booking, targetPackage, targetGuide] = await createBookingService(req.user._id, req.body, { guideId: req.body.guideId });
+    // this function is executed in tourist's side
+    const booking = await createBookingService(req.user, req.body, { guideId: req.body.guideId });
     
-    await broadcastNotificationService("bookingCreated", [req.user._id, targetGuide._id], {
-        title: "Booking Created",
-        message: `Your booking for package: ${targetPackage.name} has been successfully booked. Connect with your guide: ${targetGuide.name} in chat.`,
-        meta: {
-            booking: booking._id,
-            guide: {
-                _id: targetGuide._id,
-                name: targetGuide.name,
-                profilePicture: targetGuide.profilePicture,
-            },
-            package: {
-                _id: targetPackage._id,
-                name: targetPackage.name,
-                thumbnail: targetPackage.thumbnail
-            }
-        }
-    });
-
     return ApiResponse.success(res, {
         data: booking,
         message: "Booking created successfully",
         status: 201
     })
 }
-
 
 export const getAllBooking = async (req, res) => {
     const loggedInUser = req.user;
@@ -84,35 +68,21 @@ export const getBookingById = async (req, res) => {
 }
 
 export const setBookingStatus = async (req, res) => {
-    const bookingStatus = req.body.status;
-    const booking = await setBookingStatusService(req.params.bookingId, bookingStatus);
-    const bookingParties = [booking.tourist, booking.guide]
-
-    // booking + Capilaize the first letter of the status
-    const event = "booking"+bookingStatus.charAt(0).toUpperCase() + bookingStatus.slice(1)
-
-    await broadcastNotificationService(event, bookingParties, {
-        title: `Booking ${bookingStatus}`,
-        message: `Your booking for package: ${booking.package} has moved to ${bookingStatus} stage.`,
-        meta: {
-            bookingId: booking._id,
-            packageId: booking.package,
-            touristId: bookingParties[0],
-            guideId: bookingParties[1],
-            status: bookingStatus
-        }
-    });
+    const booking = await setBookingStatusService(req.params.bookingId, req.body.status);
 
     return ApiResponse.success(res, {
-        data: booking,
+        data: booking._id,
         message: `Status of booking id: ${booking._id} was updated to ${bookingStatus}`
     });
 }
 
 export const cancelBooking = async (req, res) => {
-    req.body.status = "cancelled";
+    const booking = await cancleBookingService(req.params.bookingId, req.user);
 
-    return await setBookingStatus(req, res);
+    return ApiResponse.success(res, {
+        message: `Booking: ${booking.name} has been cancelled`,
+        data: booking._id
+    });
 }
 
 // Booking shouldn't be edited
@@ -121,10 +91,10 @@ export const cancelBooking = async (req, res) => {
 export const deleteBooking = async (req, res) => {
     // Only allowed to Admins
 
-    const booking = await Booking.findByIdAndDelete(req.params.bookingId);
+    const bookingId = await deleteBookingService(req.params.bookingId);
 
     return ApiResponse.success(res, {
-        data: booking._id,
-        message: `Booking id: ${booking._id} has been deleted`
+        data: bookingId,
+        message: `Booking id: ${bookingId} has been deleted`
     })
 }

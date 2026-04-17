@@ -55,26 +55,41 @@ const packageSchema = new mongoose.Schema({
 		min: [10, "Starting price must be at least 10"],
 		required: [true, () => requiredError("Package.startingPrice")]
 	},
+	pricePerPerson: {
+		type: Number,
+		min: 10,
+		required: [true, () => requiredError("Package.pricePerPerson")]
+	},
 	maxGroupSize: {
 		type: Number,
-		min: [1, "Group size must be at least 1"],
-		default: 1
+		required: [true, ()=> requiredError("Package.maxGroupSize")]
 	},
 	daysAlloted: {
 		type: Number,
 		min: [1, "Package.daysAlloted must be at least 1"],
 		required: [true, () => requiredError("Package.daysAlloted")],
 	},
-	dates: [{
-		date: { type: Date, required: [true, () => requiredError("Package.dates.date")] },
-		spotsTotal: { type: Number, required: [true, () => requiredError("Package.dates.spotsTotal")] },
-		spotsLeft: { type: Number, required: [true, () => requiredError("Package.dates.spotsLeft")] },
-		isOpen: { type: Boolean, default: true }
-	}],
+
+	/*
+		is it necessary to set dates? Need to re think on this model
+
+		This was removed as adhering to this would mean our model will abandon private guides and move to more shared/public package model.
+	*/
+	// dates: [{
+	// 	date: { type: Date, required: [true, () => requiredError("Package.dates.date")] },
+	// 	spotsTotal: { type: Number, required: [true, () => requiredError("Package.dates.spotsTotal")] },
+	// 	spotsLeft: { type: Number, required: [true, () => requiredError("Package.dates.spotsLeft")] },
+	// 	isOpen: { type: Boolean, default: true }
+	// }],
+
 	rating:{
 		type: Number,
 		min: 0,
 		max: 5,
+		default: 0
+	},
+	bookingCount: {
+		type: Number,
 		default: 0
 	},
 	images: [{

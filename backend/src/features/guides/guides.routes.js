@@ -13,7 +13,8 @@ import {
     getGuideStats,
     deleteGuide,
     searchGuides,
-    getUnverifiedGuides
+    getUnverifiedGuides,
+    toggleGuideAvailability,
 } from "./guides.controller.js";
 
 const guidesR = express.Router();
@@ -75,6 +76,9 @@ guidesR.put(
     authorize("admin"),
     rejectGuide
 );
+
+// toggle isAvailability
+guidesR.patch("/", authorize(["guide"]), toggleGuideAvailability);
 
 // DELETE guide
 // DELETE /api/guides/admin/:id

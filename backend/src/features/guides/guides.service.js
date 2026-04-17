@@ -256,10 +256,10 @@ export const getGuideStatsService = async (guideId) => {
 
         const guide = await Guide.findById(guideId)
             .populate("collaborations")
-            .populate("review");
+            .lean();
 
         if (!guide) {
-            throw new ApiError(404, "Guide not found");
+            throw new ApiError(404, "Guide not found")
         }
 
         const stats = {
@@ -354,7 +354,15 @@ export const getUnverifiedGuidesService = async (limit = 10, page = 1) => {
     }
 };
 
+export const toggleGuideAvailabilityService = async (guideId) => {
+    const targetGuide = await Guide.findById(guideId);
+    if (!targetGuide) throw new ApiError(404, "Guide not found");
 
+    targetGuide.isAvailable = !targetGuide.isAvailable;
+    await targetGuide.save();
+
+    return targetGuide;
+}
 
 // Booking related
 const checkOverlappingDays = (targetGuide, pkgDates) => {
@@ -375,7 +383,7 @@ const selectCollaborator = async (availableGuides = [], pkg) => {
             guide,
             count: await Booking.countDocuments({
                 guide: guide._id,
-                status: { $in: [BOOKING_STATUS_ENUM.pending, BOOKING_STATUS_ENUM.confirmed, BOOKING_STATUS_ENUM.completed] },
+                status: { $in: [BOOKING_STATUS_ENUM.confirmed, BOOKING_STATUS_ENUM.completed] },
                 package: pkg._id
             })
         }))
