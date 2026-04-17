@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "0542a97e-25c6-4ee8-8f16-6a343999f633",
+		"name": "ChatHttp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37979817",
+		"_collection_link": "https://nikesh-9008.postman.co/workspace/Trek-It~743423b1-7a5e-4c6d-b16b-e33266b5d79f/collection/37979817-0542a97e-25c6-4ee8-8f16-6a343999f633?action=share&source=collection_link&creator=37979817"
+	},
+	"item": [
+		{
+			"name": "Upload file",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YmVkNzJlMDZhZjAwZjhhMDI4OTI3ZSIsInJvbGUiOiJ0b3VyaXN0IiwiaWF0IjoxNzc0NTQxNzI1LCJleHAiOjE3NzcxMzM3MjV9.arAETC0ANG_5ROiTYvva1915jvg1U6s2sYO9Bt2uiZw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "chatImg",
+							"type": "file",
+							"src": "/home/popsy/Downloads/frieren.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/chat/file",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"chat",
+						"file"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Chats",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YmVkNzJlMDZhZjAwZjhhMDI4OTI3ZSIsInJvbGUiOiJ0b3VyaXN0IiwiaWF0IjoxNzc0NTQxNzI1LCJleHAiOjE3NzcxMzM3MjV9.arAETC0ANG_5ROiTYvva1915jvg1U6s2sYO9Bt2uiZw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/chat",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"chat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Chat messages",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YmVkNzJlMDZhZjAwZjhhMDI4OTI3ZSIsInJvbGUiOiJ0b3VyaXN0IiwiaWF0IjoxNzc0NTQxNzI1LCJleHAiOjE3NzcxMzM3MjV9.arAETC0ANG_5ROiTYvva1915jvg1U6s2sYO9Bt2uiZw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/chat/messages/:chatId",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"chat",
+						"messages",
+						":chatId"
+					],
+					"variable": [
+						{
+							"key": "chatId",
+							"value": "69c023afd55d06617f40b42b"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YmVkNzJlMDZhZjAwZjhhMDI4OTI3ZSIsInJvbGUiOiJ0b3VyaXN0IiwiaWF0IjoxNzc1NjYwMTI4LCJleHAiOjE3NzgyNTIxMjh9.9qGA5DyqxqZmS2ddf8onRbjeBFgRsnw1S06Vj2xI0p0",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

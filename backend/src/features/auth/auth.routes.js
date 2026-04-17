@@ -3,7 +3,7 @@ import {bufferUpload} from "../../config/multer.config.js";
 import {
 	createTourist,
 	createGuide,
-	login,
+	login, logout,
 } from "./auth.controller.js";
 import {
 	validateTouristBody,
@@ -21,6 +21,8 @@ authR.post("/", validateTouristBody, bufferUpload.single("profilePicture"),creat
 authR.post("/guide", validateGuideBody, bufferUpload.single("profilePicture"), createGuide);
 
 authR.post("/login", validateLoginBody, login);
+
+authR.post("/logout", logout);
 
 
 export {authR};
