@@ -255,11 +255,11 @@ export const getGuideStatsService = async (guideId) => {
         }
 
         const guide = await Guide.findById(guideId)
-            .populate("collaborations");
+            .populate("collaborations")
+            .lean();
 
         if (!guide) {
             throw new ApiError(404, "Guide not found")
-            .lean();
         }
 
         const stats = {
@@ -356,12 +356,12 @@ export const getUnverifiedGuidesService = async (limit = 10, page = 1) => {
 
 export const toggleGuideAvailabilityService = async (guideId) => {
     const targetGuide = await Guide.findById(guideId);
-
     if (!targetGuide) throw new ApiError(404, "Guide not found");
 
     targetGuide.isAvailable = !targetGuide.isAvailable;
-
     await targetGuide.save();
+
+    return targetGuide;
 }
 
 // Booking related

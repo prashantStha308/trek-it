@@ -3,6 +3,10 @@ import {requiredError} from "../../utils/model.helper.js";
 import { BOOKING_STATUS } from "../../constants/booking.constant.js";
 
 const bookingSchema = new mongoose.Schema({
+	name: {
+		type: String,
+		required: true
+	},
 	tourist:{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',

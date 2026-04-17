@@ -77,6 +77,7 @@ guidesR.put(
     rejectGuide
 );
 
+// toggle isAvailability
 guidesR.patch("/", authorize(["guide"]), toggleGuideAvailability);
 
 // DELETE guide

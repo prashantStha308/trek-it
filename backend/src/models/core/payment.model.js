@@ -6,6 +6,10 @@ const paymentSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
 	},
+	paidTo: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User'
+	},
 	booking:{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Booking',
