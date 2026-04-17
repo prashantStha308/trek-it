@@ -1,0 +1,218 @@
+{
+	"info": {
+		"_postman_id": "3094543a-e026-4fa9-9f78-8c2e031d8dc8",
+		"name": "Users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37979817",
+		"_collection_link": "https://nikesh-9008.postman.co/workspace/Trek-It~743423b1-7a5e-4c6d-b16b-e33266b5d79f/collection/37979817-3094543a-e026-4fa9-9f78-8c2e031d8dc8?action=share&source=collection_link&creator=37979817"
+	},
+	"item": [
+		{
+			"name": "GET ALL USERS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/users",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Guide",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"test guide\",\n    \"email\": \"testguide@gmail.com\",\n    \"password\": \"test\",\n    \"gender\": \"female\",\n    \"age\": 24,\n    \"regions\": [\"sagarmatha\", \"dharan\"],\n    \"location\": {\n        \"country\": \"france\",\n        \"state\": \"sonfock\"\n    },\n    \"specialities\": [\"trekkuing\", \"rafting\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/auth/guide",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"guide"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Tourist",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"test tourist\",\n    \"email\": \"test@gmail.com\",\n    \"password\": \"test\",\n    \"gender\": \"male\",\n    \"age\": 22,\n    \"location\": {\n        \"country\": \"france\",\n        \"state\": \"sonfock\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/auth/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"testguide@gmail.com\",\n    \"password\": \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/auth/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET USER BY ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/users/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "69bed72e06af00f8a028927e"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET ME",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/users/me",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YmVkNzJlMDZhZjAwZjhhMDI4OTI3ZSIsInJvbGUiOiJ0b3VyaXN0IiwiaWF0IjoxNzc0NTQxNzI1LCJleHAiOjE3NzcxMzM3MjV9.arAETC0ANG_5ROiTYvva1915jvg1U6s2sYO9Bt2uiZw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/auth/logout",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YmVkNzJlMDZhZjAwZjhhMDI4OTI3ZSIsInJvbGUiOiJ0b3VyaXN0IiwiaWF0IjoxNzc1NjYwMTI4LCJleHAiOjE3NzgyNTIxMjh9.9qGA5DyqxqZmS2ddf8onRbjeBFgRsnw1S06Vj2xI0p0",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
