@@ -1,8 +1,10 @@
 import React from 'react'
 import { PackageCard } from './PackageCard'
-import pkg from "../../../../data_store/mockPackage.js";
+// import pkg from "../../../../data_store/mockPackage.js";
 
 const PackageList = () => {
+
+    let pkg = [];
 
     return (
         <section

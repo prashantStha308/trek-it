@@ -12,7 +12,7 @@ export function SearchBar() {
             role="serach"
             onSubmit={handleSubmit}
             id="searchBar"
-            className="flex justify-between gap-5 bg-green-200 rounded-full py-4 px-8 text-sm w-lg  border border-transparent focus-within:border-green-700 transition-all ease-in-out duration-150 group "
+            className="flex justify-between gap-2 bg-green-200 rounded-full py-3 px-8 text-sm w-lg  border border-transparent focus-within:border-green-700 transition-all ease-in-out duration-150 group "
         >
             <label htmlFor="search" className="sr-only">
                 Search guides
@@ -20,14 +20,14 @@ export function SearchBar() {
 
             <input
                 id="search"
-                type="search"
+                type="text"
                 placeholder="Search by language, location, name..."
-                className="outline-none w-full bg-transparent"
+                className="outline-none text-base w-full bg-transparent text-neutral-900"
             />
             <button
                 aria-label="Submit search"
                 type="submit"
-                className="flex justify-between gap-2 cursor-pointer group/btn "
+                className="flex items-center justify-between gap-2 cursor-pointer group/btn"
             >
                 <div
                     className="bg-green-700 w-0.5 h-0 group-hover/btn:h-full group-focus-within:h-full transition-all ease-in-out duration-300 rounded-full"
