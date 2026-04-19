@@ -3,16 +3,19 @@
 import { ChevronDown } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { usePathname } from 'next/navigation';
 import { useState, useRef, useEffect } from "react"
 
 
 const PAGES = [
-    { name: "Home", href:"/"},
-    { name: "Explore", href:"/explore"},
-    { name: "Guides", href:"/guide"},
-    { name: "Bookings", href:"/booking"},
-    { name: "About", href:"/about"},
+    { name: "Home", href: "/" },
+    { name: "Explore", href: "/explore" },
+    { name: "Guides", href: "/guide" },
+    { name: "Bookings", href: "/booking" },
+    { name: "About", href: "/about" },
+    ...(process.env.NODE_ENV === "development" ? [{ name: "Test", href: "/test" }] : [])
 ]
+
 
 const Button = ({ text, variant = "outline" }) => (
     <button
@@ -25,8 +28,15 @@ const Button = ({ text, variant = "outline" }) => (
 
 export default function Navbar() {
     const [open, setOpen] = useState(false)
-    const [selectedPage, setSelectedPage] = useState("Home")
-    const dropdownRef = useRef(null)
+    const dropdownRef = useRef(null);
+    const path = usePathname();
+    const segments = path.split('/');
+    const current = segments[segments.length - 1];
+    const selectedPage = PAGES.find(p => p.href === `/${current}`)?.name ?? "Home";
+
+    const handleSelection = (page) => {
+        setOpen(false);
+    }
 
     useEffect(() => {
         const handler = (e) => {
@@ -34,6 +44,7 @@ export default function Navbar() {
                 setOpen(false)
             }
         }
+
         document.addEventListener("mousedown", handler)
         return () => document.removeEventListener("mousedown", handler)
     }, [])
@@ -62,19 +73,18 @@ export default function Navbar() {
                     {open && (
                         <ul className="absolute top-full left-0 mt-2 w-44 bg-white border border-black/10 rounded-xl shadow-lg overflow-hidden z-50">
                             {PAGES.map((page, index) => (
-                                <li
-                                    key={index}
-                                    onClick={() => { setSelectedPage(page.name); setOpen(false) }}
-                                    className={`px-4 py-2 text-sm cursor-pointer transition-colors
-                                        ${selectedPage === page.name
-                                            ? "bg-green-50 text-green-700 font-semibold"
-                                            : "hover:bg-gray-50"
-                                        }`}
-                                >
-                                    <Link href={page.href} >
+                                <Link href={page.href} key={index} >
+                                    <li
+                                        onClick={() => handleSelection(page)}
+                                        className={`px-4 py-2 text-sm cursor-pointer transition-colors
+                                            ${selectedPage === page.name
+                                                ? "bg-green-50 text-green-700 font-semibold"
+                                                : "hover:bg-gray-50"
+                                            }`}
+                                    >
                                         {page.name}
-                                    </Link>
-                                </li>
+                                    </li>
+                                </Link>
                             ))}
                         </ul>
                     )}

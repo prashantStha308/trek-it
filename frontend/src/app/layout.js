@@ -30,7 +30,11 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} `}
       >
         <Navbar />
-        {children}
+        <main
+          className="mt-14"
+        >
+          {children}
+        </main>
       </body>
     </html>
   );

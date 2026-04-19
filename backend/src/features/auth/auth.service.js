@@ -46,7 +46,7 @@ export const createUserService = async (body, Model, file) => {
 export const loginService = async(body) => {
     const email = body.email;
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select("-password");
     if (!user) {
         throw new ApiError(404, 'Unregistered Email');
     }
@@ -56,5 +56,5 @@ export const loginService = async(body) => {
         expiresIn: '30d',
     });
 
-    return {_id: user._id, token};
+    return {user, token};
 }

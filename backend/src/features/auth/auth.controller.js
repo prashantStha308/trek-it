@@ -28,12 +28,13 @@ export const createGuide = async (req, res) => {
 };
 
 export const login = async(req, res) => {
-	const loginData = await loginService(req.body);
+	const {user, token} = await loginService(req.body);
 
 	return ApiResponse.success(res, {
 		message: "Logged in successfully",
+		data: user,
 		before: [
-			ApiResponse.setCookie('token', loginData.token)
+			ApiResponse.setCookie('token', token)
 		]
 	});
 }
