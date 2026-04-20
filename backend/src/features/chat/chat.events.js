@@ -17,7 +17,7 @@ function chatEvents(io, socket){
 
 	socket.on("chat:update", socketErrorHandler(socket, handler.updateMessage));
 
-	// socket.on("chat:delete", handler.deleteMessage);
+	socket.on("chat:delete", handler.deleteMessage);
 
 }
 
