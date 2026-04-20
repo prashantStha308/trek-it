@@ -44,7 +44,7 @@ export const sendMessageService = async (messageObj) => {
     return newMessage;
 }
 
-export const updateMessageService = async({messageId, content})=>{
+export const updateMessageService = async({messageId, content, type})=>{
     const targetMsg = await Message.findById(messageId);
 
     if(!targetMsg){
@@ -52,6 +52,7 @@ export const updateMessageService = async({messageId, content})=>{
     }
 
     targetMsg.content = content;
+    if (type) targetMsg.type = type;
     await targetMsg.save();
 }
 
@@ -94,9 +95,9 @@ export const leaveChatService = async (chatId, userId) => {
     return updatedChat.modifiedCount;
 }
 
-export const deleteMessageService = async(chatId, messageId)=>{
-    if (!mongoose.Types.ObjectId.isValid(chatId) || !mongoose.Types.ObjectId.isValid(messageId)) {
-        throw new Error("Invalid chatId OR userId");
+export const deleteMessageService = async(messageId)=>{
+    if (!mongoose.Types.ObjectId.isValid(messageId)) {
+        throw new Error("Invalid messageId");
     }
 
     const targetMsg = await Message.findByIdAndDelete(messageId);
