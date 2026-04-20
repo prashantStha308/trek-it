@@ -9,6 +9,7 @@ import { useState, useRef, useEffect } from "react"
 
 const PAGES = [
     { name: "Home", href: "/" },
+    { name: "Chat", href: "/chat" },
     { name: "Explore", href: "/explore" },
     { name: "Guides", href: "/guide" },
     { name: "Bookings", href: "/booking" },
@@ -50,7 +51,7 @@ export default function Navbar() {
     }, [])
 
     return (
-        <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center bg-white/10 backdrop-blur-2xl py-2 px-9">
+        <header className=" flex justify-between items-center bg-white/10 backdrop-blur-2xl py-3 px-9">
 
             <div id="logo" className="flex gap-4 items-center">
                 <Link href={'/'}>

@@ -26,8 +26,8 @@ export const registerTourist = async (data) => {
   return res.data;
 }
 
-export const register = async (role="tourist", data) => {
+export const register = async (data, role="tourist") => {
   const res = role.toLowerCase() === "tourist" ? registerTourist(data) : registerGuide(data);
 
-  return res.data;
+  return res;
 }
