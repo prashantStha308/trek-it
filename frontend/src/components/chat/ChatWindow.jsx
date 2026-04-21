@@ -1,4 +1,3 @@
-import { useAuthStore } from "@/store/auth.store"
 
 export default function ChatWindow() {
     return (

@@ -34,7 +34,6 @@ export const chatActionSlice = (set, get) => ({
         const { emit } = useSocketStore.getState();
 
         // validate ownership in backend as well
-        get().validateUser(message._id);
         let obj = { content, messageId: message._id };
 
         const urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -51,7 +50,6 @@ export const chatActionSlice = (set, get) => ({
     deleteMessage: (message) => {
         const { emit } = useSocketStore.getState();
 
-        get().validateUser(message._id);
         emit("chat:delete", message._id);
     },
     

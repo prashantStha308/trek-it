@@ -1,12 +1,12 @@
 import axios from "axios";
 import { BASE_API } from "@/constants/config.constant";
 
-const axiosI = axios.create({
+const axiosInstance = axios.create({
     baseURL: BASE_API,
     withCredentials: true,
 })
 
-axiosI.interceptors.response.use((res) => res,
+axiosInstance.interceptors.response.use((res) => res,
     (error) => {
 
         if (!error.response) {
@@ -35,4 +35,4 @@ axiosI.interceptors.response.use((res) => res,
     }
 )
 
-export default axiosI;
+export default axiosInstance;

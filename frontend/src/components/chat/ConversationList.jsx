@@ -1,10 +1,6 @@
-import { useAuthStore } from "@/store/auth.store"
 
 
 export default function ConversationList() {
-
-    const isLoggedIn = useAuthStore(store => store.isLoggedIn);
-    const user = useAuthStore(store => store.user);
 
     return (
         <section

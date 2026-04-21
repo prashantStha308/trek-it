@@ -1,4 +1,4 @@
-import ChatSocketClient from "@/api/socket/ChatSocketClient";
+import ChatSocketClient from "@/config/ChatSocketClient";
 import Navbar from "@/components/layout/Navbar";
 
 export default function ChatLayout({ children }) {

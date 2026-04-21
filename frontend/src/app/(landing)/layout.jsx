@@ -9,7 +9,7 @@ export default function LandingLayout({ children }) {
                 <Navbar />
             </div>
 
-            <main className="mt-14">
+            <main className="mt-14 isolate">
                 {children}
             </main>
         </>

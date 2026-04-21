@@ -1,3 +1,5 @@
+"use client"
+
 import useSocketStore from "@/store/socket.store";
 import { useEffect } from "react";
 

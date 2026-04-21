@@ -1,3 +1,5 @@
+"use client"
+
 import useChatStore from "@/store/chat/chat.store";
 import { useEffect } from "react";
 
