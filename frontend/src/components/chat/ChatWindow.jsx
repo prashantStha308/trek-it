@@ -14,7 +14,7 @@ export default function ChatWindow({chat, messages, currentUser}) {
     return (
         <main
             id="chat-window"
-            className="flex-1 h-full flex flex-col justify-between gap-1 overflow-hidden"
+            className="flex-1 h-full w-full flex flex-col justify-between gap-1 overflow-hidden"
         >
             <ChatHeader user={recipitient} />
 

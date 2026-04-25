@@ -2,6 +2,7 @@ import { useGetMe } from "@/queries/auth.query"
 import Link from "next/link";
 import NavDropdown from "../layout/NavDropdown";
 import ThemeToggle from "../layout/ThemeToggle";
+import ChatTile from "./ChatTile";
 
 
 export default function ChatList({ chats, currentChat, messages, currentUser }) {
@@ -23,9 +24,7 @@ export default function ChatList({ chats, currentChat, messages, currentUser }) 
                 {/* make a list tile component */}
                 {
                     chats.map((item, index) => (
-                        <div key={index}>
-                            {item.name}
-                        </div>
+                        <ChatTile key={index} user={item} />
                     ))
                 }
             </section>

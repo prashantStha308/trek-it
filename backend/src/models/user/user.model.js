@@ -80,22 +80,14 @@ const userSchema = new mongoose.Schema({
 		min: 18,
 		max: 80,
 	},
-	languages: {
-	    type: [String],
-	    required: false,
-	    validate: {
-	        validator: (v) => !v || v.length === 0 || v.every(l => typeof l === 'string'),
-	        message: "At least one language is required to be set"
-	    }
-	},
-	location: {
+	address: {
 		country: {
 			type: String,
 			required: [true, 'Country is required'],
 			trim: true,
 			lowercase: true,
 		},
-		state: {
+		city: {
 			type: String,
 			required: false,
 			trim: true,

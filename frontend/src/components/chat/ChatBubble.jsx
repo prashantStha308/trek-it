@@ -2,7 +2,7 @@ export default function ChatBubble({ message, user }) {
     const isSender = message.sender._id == user._id
 
     return (
-        <article className={`flex max-w-1/2 ${isSender ? "justify-end" : "justify-start"}`}>
+        <article className={`flex max-w-full ${isSender ? "justify-end" : "justify-start"}`}>
             {!isSender && (
                 <div className="w-7 h-7 rounded-full bg-blue-100 text-blue-700 text-xs font-medium flex items-center justify-center mr-2 self-end shrink-0">
                     {message.sender.name[0]}

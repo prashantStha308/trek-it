@@ -12,7 +12,7 @@ export default function Chat() {
 
     const users = [alice, bob, cara]
 
-    const chat1 = { _id: "676f1a2b3c4d5e6f7a8b9c10", participants: [alice, bob], type: "direct" }
+    const chat1 = { _id: "676f1a2b3c4d5e6f7a8b9c10", participants: [alice, bob], type: "direct", name:"Testo ho ra" }
     const chat2 = { _id: "676f1a2b3c4d5e6f7a8b9c11", participants: [alice, bob, cara], type: "group", name: "Everest Trip Planning" }
 
     const chats = [chat1, chat2]
