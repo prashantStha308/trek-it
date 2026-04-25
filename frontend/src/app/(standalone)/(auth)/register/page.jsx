@@ -148,7 +148,7 @@ export default function Register() {
 
             </form>
 
-            <div className="hidden dark:lg:block absolute h-full w-sm dark:bg-teal-500/15 blur-3xl -z-10 right-20" />
+            <div className="hidden dark:block absolute h-full w-sm dark:bg-teal-500/15 blur-3xl -z-10 right-20" />
     
             <section id="register-image" className="hidden lg:flex relative isolate">
                 <Image src={"/assets/img/login-img.jpg"} alt="login-img" width={400} height={400}

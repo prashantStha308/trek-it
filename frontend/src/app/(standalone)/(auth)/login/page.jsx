@@ -9,6 +9,36 @@ import Link from "next/link";
 import { useState } from "react";
 
 
+
+const Header = () => {
+    
+    return (
+        <header
+            className="flex flex-col items-center gap-6"
+        >
+            <div
+                className="h-16 w-16 rounded-full "
+            >
+                <Image src={"/assets/svg/ico_1.svg"} alt="logo" width={100} height={100} />
+            </div>
+
+            <div
+            className="flex flex-col items-center gap-2"
+            >
+                <h1 className="text-text font-bold text-4xl text-center" > Welcome Back </h1>
+                <span className="text-center text-sm" >
+                    New to Trek-It?&nbsp;
+                    <Link href={"/register"}
+                        className="text-sm text-blue-500 hover:underline "
+                    >
+                        Sign Up here
+                    </Link>
+                </span>
+            </div>
+        </header>
+    )
+}
+
 export default function Login() {
     const [isPasswordReveled, setPasswordReveal] = useState(false);
 
@@ -19,16 +49,16 @@ export default function Login() {
     return (
         <section
             id="login-page"
-            className="flex flex-1 justify-between items-center relative overflow-hidden"
+            className="flex flex-1 justify-between items-center relative overflow-hidden h-full"
         >
             <section
                 id="login-image"
-                className="relative isolate"
+                className="relative isolate h-full object-cover hidden lg:block "
             >
                 <Image
                     src={"/assets/img/login-img.jpg"} alt="" width={400} height={400}
                     id="login-img"
-                    className="rounded-l-lg rounded-r-xs h-full z-10 "
+                    className="rounded-l-lg rounded-r-xs h-full z-10 object-cover "
                 />
             </section>
 
@@ -40,29 +70,9 @@ export default function Login() {
 
             <form
                 id="login-form"
-                className="flex flex-1 px-40 flex-col gap-10 "
+                className="flex flex-1 px-10 flex-col gap-10 "
             >
-                <header
-                    className="flex flex-col items-center gap-6"
-                >
-                    <div
-                        className="h-20 w-20 bg-secondary rounded-full "
-                    ></div>
-
-                    <div
-                    className="flex flex-col items-center gap-2"
-                    >
-                        <h1 className="text-text font-bold text-4xl text-center" > Welcome Back </h1>
-                        <span className="text-center text-sm" >
-                            New to Trek-It?&nbsp;
-                            <Link href={"/register"}
-                                className="text-sm text-blue-500 hover:underline "
-                            >
-                                Sign Up here
-                            </Link>
-                        </span>
-                    </div>
-                </header>
+                <Header />
 
                 <section
                     id="login-form-body"
