@@ -38,17 +38,17 @@ export const StaggeringBites = ({ top, bottom }) => {
             className="flex flex-col items-center gap-2"
             viewport={{ once: true }}
         >
-            <motion.span
-                className="text-3xl text-green-500 "
+            <span
+                className="text-3xl text-primary drop-shadow-2xl drop-shadow-primary"
             >
                 {top}
-            </motion.span>
+            </span>
 
-            <motion.span
-                className="text-3xl text-blue-500"
+            <span
+                className="text-3xl text-accent drop-shadow-2xl drop-shadow-accent"
             >
                 {bottom}
-            </motion.span>
+            </span>
         </motion.p> 
     )
 }
@@ -74,7 +74,7 @@ export const StaggeringHeroText = () => {
                     return (
                         <motion.button
                             key={index}
-                            className="flex justify-evenly gap-3 items-center uppercase text-green-100 border border-lime-300 underline bg-green-600 cursor-pointer leading-none px-2 rounded-sm m-0 font-semibold text-2xl shadow-[-3px_3px_5px_0px_var(--color-green-900)] transition-all ease-in duration-75"
+                            className="flex justify-evenly gap-3 items-center uppercase text-green-100  underline bg-primary cursor-pointer leading-none px-2 rounded-sm m-0 font-semibold text-2xl shadow-[-3px_3px_5px_0px_var(--color-green-900)] transition-all ease-in duration-75"
                             variants={{
                                 visible: { y: 0, transition: { delay: 0.5 * index, duration: 0.15, ease: "easeInOut" } },
                                 rest: { y: "180%", transition: { delay: 0 } },
@@ -98,7 +98,7 @@ export const StaggeringHeroText = () => {
                 return (
                     <motion.span
                         key={index}
-                        className="text-blue-500 uppercase transition-all ease-in duration-75"
+                        className="text-accent uppercase transition-all ease-in duration-75"
                         variants={{
                             visible: { y: 0, transition: { delay: 0.5 * index, duration: 0.15, ease: "easeInOut" } },
                             rest: { y: "180%", transition: { delay: 0 } },
@@ -143,8 +143,6 @@ export default function Home() {
                     <StaggeringHeroText />
 
                 <article
-                    initial="hidden"
-                    whileInView="visible"
                     className="absolute bottom-25 font-black flex justify-evenly w-full "
                 >
                     {

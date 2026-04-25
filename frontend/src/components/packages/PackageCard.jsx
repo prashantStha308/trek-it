@@ -19,7 +19,7 @@ export function PackageCard({ item }) {
 
             <div className="relative w-full h-44">
                 <Image
-                    src={item.thumbnail}
+                    src={item.thumbnail || null}
                     alt={item.name}
                     fill
                     className="object-cover"

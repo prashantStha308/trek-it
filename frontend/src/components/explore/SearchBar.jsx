@@ -12,7 +12,7 @@ export function SearchBar() {
             role="serach"
             onSubmit={handleSubmit}
             id="searchBar"
-            className="flex justify-between gap-2 bg-green-100 dark:bg-neutral-800 rounded-full py-3 px-8 text-sm w-lg  border border-transparent focus-within:border-green-700 dark:focus-within:border-neutral-600 text-neutral-200 transition-all ease-in-out duration-150 group "
+            className="flex justify-between gap-2 bg-green-100 dark:bg-neutral-800 rounded-full py-3 px-8 text-sm w-lg  border border-green-300 focus-within:border-green-700 dark:focus-within:border-neutral-600 text-neutral-200 transition-all ease-in-out duration-150 group "
         >
             <label htmlFor="search" className="sr-only">
                 Search guides

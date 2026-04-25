@@ -13,8 +13,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning >
-      <body className={` antialiased`}>
+    <html lang="en" suppressHydrationWarning >
+      <body className={` antialiased bg-background  `}>
         <ThemeProvider
           attribute="data-theme"
           defaultTheme="system"
@@ -22,11 +22,7 @@ export default function RootLayout({ children }) {
         >
           <QueryProvider>
             <SocketClient />
-            <div
-              className="px-10"
-            >
-              {children}
-            </div>
+            {children}
           </QueryProvider>
         </ThemeProvider>
       </body>

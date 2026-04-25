@@ -33,7 +33,7 @@ const chatSchema = new mongoose.Schema({
 // By default, set the ChatName to the list of participants. This only runs in creation and never after.
 chatSchema.pre('save', async function(next){
 	if(this.isNew){
-		this.chat = this.participants.join(", ");
+		this.name = this.participants.join(", ");
 	}
 })
 

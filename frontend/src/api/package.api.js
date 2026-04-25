@@ -1,7 +1,6 @@
 import axiosInstance from "../config/axios.config.js";
 import API_ROUTES from "./routes.js";
 
-
 export const getAllPackages = async (query = {}) => {
     const { limit = 10, page = 1, ...filter } = query
 

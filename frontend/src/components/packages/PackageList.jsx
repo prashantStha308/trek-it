@@ -11,7 +11,7 @@ const PackageList = ({label = "Packages", query, ...props}) => {
     }
 
     if (isError) {
-        return <h1>{error}</h1>
+        return <h1>{error?.message}</h1>
     }
 
     console.log(data);

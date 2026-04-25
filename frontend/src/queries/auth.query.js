@@ -9,7 +9,7 @@ import {
     login,
     register,
     logout
-} from "@/api/package.api";
+} from "@/api/auth.api";
 
 const QUERY_KEYS = {
     me: ["me"],
@@ -19,7 +19,8 @@ export const useGetMe = () => {
     return useQuery({
         queryKey: QUERY_KEYS.me,
         queryFn: () => getMe(),
-        retry: false
+        retry: false,
+        staleTime: Infinity
     })
 }
 
