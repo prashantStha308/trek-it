@@ -7,7 +7,7 @@ export const Button = ({ text, variant = "outline", type="button", handleClick }
     
     const variants = {
         primary: "border-primary/60 py-1 text-sm bg-primary/85 text-white hover:bg-primary",
-        form: "border-accent/60 dark:border-secondary/60 py-1 text-sm bg-accent/75 dark:bg-secondary/75 text-white hover:bg-primary/65",
+        form: "border-accent/60 dark:border-secondary/60 py-1 text-sm bg-primary/75 dark:bg-primary/65 text-white hover:dark:bg-secondary/75 hover:bg-accent/75",
         default: "border-primary/60 py-1 text-sm hover:bg-primary/85 hover:text-white",
     }
 

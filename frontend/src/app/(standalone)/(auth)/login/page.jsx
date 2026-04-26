@@ -25,11 +25,11 @@ const Header = () => {
             <div
             className="flex flex-col items-center gap-2"
             >
-                <h1 className="text-text font-bold text-4xl text-center" > Welcome Back </h1>
-                <span className="text-center text-sm" >
+                <h1 className="text-primary font-bold text-4xl text-center" > Welcome Back </h1>
+                <span className="text-center text-xs" >
                     New to Trek-It?&nbsp;
                     <Link href={"/register"}
-                        className="text-sm text-blue-500 hover:underline "
+                        className="text-xs text-blue-500 hover:underline "
                     >
                         Sign Up here
                     </Link>

@@ -46,7 +46,7 @@ export default function RegisterLevel1({handleNext, handleChange, formData}) {
                 className="flex flex-col items-center gap-2"
             >
                 <h1 className="text-text font-bold text-base xl:text-3xl text-center" >
-                    Join in for Adventure
+                    Join in for <span className="text-primary" >Adventure</span>
                 </h1>
                 <span className="text-center text-xs" >
                     Already have an account?&nbsp;
