@@ -23,8 +23,7 @@ export default function NavDropdown() {
 
     const path = usePathname();
     const segments = path.split('/');
-    const current = segments[segments.length - 1];
-    const selectedPage = PAGES.find(p => p.href === `/${current}`)?.name ?? "Home";
+    const selectedPage = PAGES.find(page => segments.includes(page.name?.toLowerCase()))?.name ?? "Home" ;
 
     useEffect(() => {
         const handler = (e) => {

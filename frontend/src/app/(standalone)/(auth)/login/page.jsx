@@ -2,12 +2,14 @@
 
 import { Button } from "@/components/ui/Button";
 import { TextInput } from "@/components/ui/Input";
+import { useGetMe, useLogin } from "@/queries/auth.query";
 import { Eye } from "lucide-react";
 import { Mail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-
+import { showToast } from "@/store/ui.store";
+import { useRouter } from "next/navigation";
 
 
 const Header = () => {
@@ -41,9 +43,32 @@ const Header = () => {
 
 export default function Login() {
     const [isPasswordReveled, setPasswordReveal] = useState(false);
+    const [formData, setFormData] = useState({
+        email: "",
+        password: ""
+    });
+
+    const login = useLogin();
+    const { data: me } = useGetMe();
+
+    const router = useRouter();
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    }
 
     const toggglePasswordVisibility = () => {
         setPasswordReveal(prev => !prev);
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        await login.mutateAsync(formData);
+        console.log("logged in")
+
+        router.push("/");
     }
 
     return (
@@ -70,7 +95,8 @@ export default function Login() {
 
             <form
                 id="login-form"
-                className="flex flex-1 px-10 flex-col gap-10 "
+                className="flex flex-1 px-10 flex-col gap-10"
+                onSubmit={handleSubmit}
             >
                 <Header />
 
@@ -83,6 +109,8 @@ export default function Login() {
                         label={"Email"}
                         name={"email"}
                         id={"email"}
+                        value={formData.email}
+                        handleChange={handleChange}
                         placeholder={"Enter your email..."}
                         sideItem={<Mail />}
                     />
@@ -92,6 +120,8 @@ export default function Login() {
                         label={"Password"}
                         name={"password"}
                         id={"password"}
+                        value={formData.password}
+                        handleChange={handleChange}
                         placeholder={"Enter your password..."}
                         sideItem={<Eye />}
                         callback={toggglePasswordVisibility}

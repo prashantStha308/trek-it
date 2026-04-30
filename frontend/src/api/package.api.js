@@ -14,9 +14,11 @@ export const getAllPackages = async (query = {}) => {
 
     return res.data.data
 }
+
+
 export const getPackageById = async (id) => {
     const res = await axiosInstance.get(API_ROUTES.PACKAGE.GET(id))
-    return res.data;
+    return res.data.data;
 }
 
 export const updatePackage = async () => {

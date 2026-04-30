@@ -16,7 +16,7 @@ import { useState } from "react";
 // liscense details
 
 
-export default function TouristLevel3({handleNext, handleChange, formData}) {
+export default function GuideLevel3({handleChange, formData}) {
 
 
     return (

@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import { useRef, useState, useEffect } from "react";
 import {motion} from "motion/react";
 
-export const TextInput = ({ type = "text", label = "label", placeholder, name, id, sideItem, callback, className, pattern, value, handleChange, required=false }) => {
+export const TextInput = ({ type = "text", label = "label", placeholder, name, id, sideItem, callback, pattern, value, handleChange, required=false }) => {
     return (
         <div
             className="flex flex-col gap-1 w-full"

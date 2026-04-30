@@ -17,8 +17,8 @@ export const validateUserBody = [
     body('age').isInt({ min: 18, max: 80 }).withMessage('age must be between 18 and 80'),
     body('languages').optional().isArray(),
     body('languages.*').trim().escape(),
-    body('location.country').trim().escape().notEmpty(),
-    body('location.state').optional().trim().escape(),
+    body('address.country').trim().escape().notEmpty(),
+    body('address.state').optional().trim().escape(),
 ];
 
 export const validateLoginBody = [

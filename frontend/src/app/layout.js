@@ -2,6 +2,7 @@ import SocketClient from "@/config/SocketClient";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import QueryProvider from "@/config/QueryProvider";
+import Toast from "@/components/ui/Toast";
 
 export const metadata = {
   title: {
@@ -22,6 +23,7 @@ export default function RootLayout({ children }) {
         >
           <QueryProvider>
             <SocketClient />
+            <Toast />
             {children}
           </QueryProvider>
         </ThemeProvider>

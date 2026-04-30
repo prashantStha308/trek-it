@@ -37,7 +37,7 @@ export const useLogin = () => {
 
 export const useRegister = () => {
     return useMutation({
-        mutationFn: ({ body, role }) => register(body, role),
+        mutationFn: ({body, role }) => register(body, role),
     })
 }
 

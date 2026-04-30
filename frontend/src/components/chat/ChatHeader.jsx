@@ -4,7 +4,7 @@ import { Search } from "lucide-react";
 export default function ChatHeader({user}) {
     return (
         <header
-            className="flex justify-between p-2 px-6 bg-accent/20 dark:bg-background-dark "
+            className="flex justify-between p-2 px-6 bg-accent/10 dark:bg-background-dark "
         >
             <section
                 id="chat-user"

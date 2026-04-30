@@ -1,16 +1,19 @@
 import Navbar from "@/components/layout/Navbar";
+import { AnimatePresence } from "motion/react";
 
 
 export default function StandardLayout({ children }) {
     return (
-        <section
-            className="flex flex-col gap-2 justify-between min-h-screen"
-        >
-            <Navbar />
+        <>
+            <div className="fixed top-0 left-0 right-0 z-50" >
+                <Navbar />
+            </div>
             
-            <main className="isolate w-full px-4 py-2 flex-1 flex flex-col">
-                {children}
-            </main>
-        </section>
+            <AnimatePresence>                
+                <main className="isolate w-full mt-16 px-4 py-2 flex-1 flex flex-col">
+                    {children}
+                </main>
+            </AnimatePresence>
+        </>
     )
 }

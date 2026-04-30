@@ -2,9 +2,7 @@
 
 import { Button } from "@/components/ui/Button";
 import { SelectInput, TextInput } from "@/components/ui/Input";
-import { Eye } from "lucide-react";
-import { Mail } from "lucide-react";
-import { FolderPen } from "lucide-react";
+import { Eye, Globe, Mail, FolderPen, MapPin } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -47,7 +45,7 @@ export default function RegisterLevel2({handleNext, handleChange, formData}) {
                 		placeholder={"Enter your country..."}
                 		handleChange={handleChange}
 	                    value={formData.address.country}
-                		// sideItem={}
+                		sideItem={<Globe size={16} />}
                 	/>
 
                 	<TextInput
@@ -58,7 +56,7 @@ export default function RegisterLevel2({handleNext, handleChange, formData}) {
                 		placeholder={"Enter your city..."}
                 		handleChange={handleChange}
 	                    value={formData.address.city}
-                		// sideItem={}
+                		sideItem={<MapPin size={16} />}
                 	/>
             </section>
             

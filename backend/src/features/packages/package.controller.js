@@ -12,6 +12,7 @@ import {
 } from "./package.service.js";
 
 export const createPackage = async (req, res) => {
+
     const pkg = await createPackageService(req.body, req.user._id, req.files);
     
     ApiResponse.success(res, {

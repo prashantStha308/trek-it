@@ -3,11 +3,20 @@ import Link from "next/link";
 import NavDropdown from "../layout/NavDropdown";
 import ThemeToggle from "../layout/ThemeToggle";
 import ChatTile from "./ChatTile";
+import useChatStore from "@/store/chat/chat.store";
+import { useShallow } from "zustand/shallow";
 
 
-export default function ChatList({ chats, currentChat, messages, currentUser }) {
+export default function ChatList() {
 
-    const { data:user, isLoading, isPending, isError, error } = useGetMe();
+    const { data: currentUser, isLoading, isPending, isError, error } = useGetMe();
+
+    console.log(currentUser);
+
+    const { chats, activeChatId, } = useChatStore(useShallow(store => ({
+        chats: store.chats,
+        activeChatId: store.activeChatId,
+    })));
 
     return (
         <section
@@ -23,8 +32,8 @@ export default function ChatList({ chats, currentChat, messages, currentUser }) 
             <section className="flex-1 flex flex-col gap-2">
                 {/* make a list tile component */}
                 {
-                    chats.map((item, index) => (
-                        <ChatTile key={index} user={item} />
+                    chats.keys?.map((key, index) => (
+                        <ChatTile key={index} user={chats[key]} />
                     ))
                 }
             </section>

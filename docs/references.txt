@@ -1,0 +1,25 @@
+
+// Word Files
+Requirement Defination:
+
+https://word.cloud.microsoft/open/onedrive/?docId=C29EC905AE876701%21s2b7a46cb489248c29e13917061016d4b&driveId=C29EC905AE876701
+
+
+System Design:
+
+https://word.cloud.microsoft/open/onedrive/?docId=C29EC905AE876701%21s009f176cd30f4f3eb9b13992ec072fcc&driveId=C29EC905AE876701
+
+
+// Reference Docs:
+
+1. Tourism in Nepal
+	- https://en.wikipedia.org/wiki/Tourism_in_Nepal
+
+2. Analyzing and Forecasting International Tourist Arrivals in Nepal: Trends, Patterns, and Future Prospects
+	-https://nepjol.info/index.php/ijorn/article/download/73153/55940/212701#:~:text=Tourism%20is%20a%20significant%20economic,of%20foreign%20income%20and%20revenue
+
+3. Tourism in Nepal 
+
+	"Nepal"s major tourist activities include wilderness and adventure activities such as mountain biking, bungee jumping, rock climbing and mountain climbing, trekking, hiking, bird watching, mountain flights, ultralight aircraft flights, paragliding and hot air ballooning over the mountains of the Himalaya, hiking and mountain biking, exploring the waterways by raft, kayak or canoe and jungle safaris especially in the Terai region."
+	- https://uk.nepalembassy.gov.np/pages/tourism-in-nepal/
+

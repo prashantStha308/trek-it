@@ -23,12 +23,19 @@ export const useGetAllPackages = ({
     })
 }
 
-export const useGetPackage = (id) => {
+export const useGetPackageById = (packageId) => {
+    const queryClient = useQueryClient();
+
+    const cachedPackage = queryClient.getQueriesData({ queryKey: ["packages"] })
+        .flatMap(([, data]) => data?.packages ?? [])
+        .find(pkg => pkg._id === packageId);
+
     return useQuery({
-        queryKey: ["package", id],
-        queryFn: () => getPackageById(id),
-        enabled: !!id,
-    })
+        queryKey: ["packages", packageId],
+        queryFn: () => getPackageById(packageId),
+        initialData: cachedPackage,
+        enabled: !!packageId,
+    });
 }
 
 export const useSearchQuery = (value) => {

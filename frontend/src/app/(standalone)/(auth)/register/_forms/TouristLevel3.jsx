@@ -8,7 +8,7 @@ import { FolderPen } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function TouristLevel3({handleNext, handleChange, formData}) {
+export default function TouristLevel3({handleChange, formData}) {
 
     const [selected, setSelected] = useState(formData.interests);
 

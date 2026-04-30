@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image";
+import {useRouter} from "next/navigation";
 import { useState } from "react";
 import { ChevronLeft } from "lucide-react";
 
@@ -10,6 +11,11 @@ import RegisterLevel2 from "./_forms/RegisterLevel2";
 import TouristLevel3 from "./_forms/TouristLevel3";
 import GuideLevel3 from "./_forms/GuideLevel3";
 
+// Queries
+import {useRegister} from "@/queries/auth.query";
+
+// Components
+import {showToast} from "@/store/ui.store";
 
 
 const Header = ({currentLevel, handleBack}) => {
@@ -18,11 +24,11 @@ const Header = ({currentLevel, handleBack}) => {
             className=" px-6 py-2 flex justify-between items-center w-full h-10 "
         >
             <button
-                className={`text-text/75 cursor-pointer p-2 hover:bg-secondary/20 rounded-full ${currentLevel !== 1 ? "opacity-100" : "opacity-0" }`}
+                className={`text-text cursor-pointer p-2 hover:bg-secondary/20 rounded-full ${currentLevel !== 1 ? "opacity-100" : "opacity-0" }`}
                 onClick={currentLevel !== 1 ? handleBack : undefined}
                 type={"button"}
             >
-                <ChevronLeft size={16} />
+                <ChevronLeft size={20} />
             </button>
 
             <h2 className="text-sm font-semibold text-text/75">
@@ -93,17 +99,20 @@ export default function Register() {
         specialities: []
     });
 
-    const handleSubmit = () => {
-        // code
+    const register = useRegister();
+    const router = useRouter();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const { role, ...body } = formData;
+
+        const res = await register.mutateAsync({ body, role });
+        router.push("/login");
     }
 
     const handleChange = ({ target: { name, value } }) => {
-
-        console.log(`${name}: ${value}`);
-
         if (name.includes(".")) {
             // handle nested object
-
             const [parent, child] = name.split(".");
             setFormData(prev => ({
                 ...prev,
@@ -112,7 +121,6 @@ export default function Register() {
 
         } else {
             // Normal values
-
             setFormData(prev => ({ ...prev, [name]: value }));
         }
     };
@@ -123,9 +131,7 @@ export default function Register() {
             return;
         }
 
-        if (currentLevel === 3) {
-            handleSubmit();
-        } else {
+        if (currentLevel !== 3) {
             setCurrentLevel(state => state >= 3 ? 3 : state + 1);
         }
     };
@@ -140,7 +146,10 @@ export default function Register() {
             id="register-page"
             className="flex flex-1 justify-between relative overflow-hidden h-full w-full "
         >
-            <form className="flex flex-1 flex-col h-full justify-between gap-8 min-w-0 py-6">
+            <form
+                className="flex flex-1 flex-col h-full justify-between gap-8 min-w-0 py-6"
+                onSubmit={handleSubmit}
+            >
                 <Header currentLevel={currentLevel} handleBack={handleBack} />
 
                 {/*<RegisterLevel1 />*/}

@@ -100,8 +100,8 @@ const userSchema = new mongoose.Schema({
 userSchema.index({ age: 1 });
 userSchema.index({ gender: 1 });
 userSchema.index({ languages: 1 });
-userSchema.index({ 'location.country': 1 });
-userSchema.index({ 'location.state': 1 });
+userSchema.index({ 'address.country': 1 });
+userSchema.index({ 'address.state': 1 });
 
 // mongoose middlewares
 userSchema.pre('save', async function(){

@@ -2,6 +2,7 @@
  * @param {Object} props
  * @param {string} props.text
  * @param {"primary" | "outline" | "form"} props.variant
+ * @param {Function} handleClick - onClick handler
  */
 export const Button = ({ text, variant = "outline", type="button", handleClick }) => {
     

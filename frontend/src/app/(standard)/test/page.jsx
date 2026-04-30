@@ -1,27 +1,20 @@
 "use client"
 
-import { getAllPackages } from "@/api/package.api"
-import PackageList from "@/components/packages/PackageList"
-import { useEffect, useState } from "react"
-
+import { Button } from "@/components/ui/Button"
+import Modal from "@/components/ui/Toast"
+import useUIStore from "@/store/ui.store"
 
 export default function Test() {
-    const [pkgs, setPkgs] = useState([]);
-
-    useEffect(() => {
-        const fetch = async () => {
-            const res = await getAllPackages();
-            console.log(res);
-            console.log(res.data.docs);
-
-            setPkgs(res.data.docs);
-        }
-        fetch();
-    }, []);
+    const showModal = useUIStore(store => store.showModal);
 
     return (
         <section>
-            <PackageList pkgs={pkgs} />       
+            <Modal />
+
+            {/* <Button text="Show modal" handleClick={() => {
+                console.log("Showing modal");
+                showModal({ message: "Test click", title: "Testing this Modal" })
+            }} /> */}
         </section>
     )
 }

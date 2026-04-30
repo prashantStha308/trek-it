@@ -13,14 +13,14 @@ const API_ROUTES = {
     AUTH: {
         LOGIN: "/auth/login",
         REGISTER_GUIDE: "/auth/guide",
-        REGISTER_TOURIST: "/auth/tourist",
-        ME: "/auth/me",
+        REGISTER_TOURIST: "/auth/",
         LOGOUT: "/auth/logout",
 	},
 	
     USER: {
         GET_ALL: (query) => resolveRoute('/users', null, query),
         GET: (id) => resolveRoute('/users', id),
+        ME: "/users/me",
         BASE: "/users"
 	},
 	

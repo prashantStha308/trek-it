@@ -1,8 +1,8 @@
-export default function ChatTile({ user, lastMessage, notReadCount }) {
+export default function ChatTile({ user, lastMessage, notReadCount, isActive = false }) {
     return (
         <article
             id={`chat-tile-${user?._id || ""}`}
-            className="px-3 py-3 rounded-md bg-white/5 w-full flex justify-between"
+            className={`px-3 py-3 rounded-md ${isActive && "bg-secondary/65"} w-full flex justify-between`}
         >
             <section
                 className="flex flex-col gap-1"
