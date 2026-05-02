@@ -20,19 +20,32 @@ import {
 // -----------------------------------------------------------------------------------------
 
 export const createUserService = async (body, Model, file) => {
-	validateObject(body, ["name", "email", "password", "gender", "age", "location"]);
 	await checkExistingUserByEmail(body.email);
 
+// for seeder, will remove later
+	if (!body.address && body['address.country']) {
+	    body.address = {
+	        country: body['address.country'],
+	        state: body['address.state'],
+	    };
+	}
+	console.log("Body: ", body);
+	console.log("body.address: ", body.address);
+
 	const hashedPassword = await bcrypt.hash(body.password, 10);
+	let profilePicture = {};
 
 	if(file){
 		const imgRef = await uploadImage(file);
-		body.profilePicture.src = imgRef.src;
-		body.profilePicture.publicId = imgRef.publicId;
+		console.log("User image Ref: ", imgRef);
+		
+		profilePicture.src = imgRef.src;
+		profilePicture.publicId = imgRef.publicId;
 	}
 
 	const user = await Model.create({
 		...body,
+		profilePicture,
 		password: hashedPassword
 	});
 

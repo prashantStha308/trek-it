@@ -1,105 +1,76 @@
 "use client"
 
-import { ChevronDown } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { usePathname } from 'next/navigation';
-import { useState, useRef, useEffect } from "react"
+import ThemeToggle from "./ThemeToggle";
+import { Button } from "../ui/Button";
+import NavDropdown from "./NavDropdown";
+import Image from "next/image";
+import Link from "next/link";
+import { Bell, MessageCircle } from "lucide-react";
+import {optimizeImageUrl} from "@/utils/utils.helper";
+
+import {useGetMe} from "@/queries/auth.query";
 
 
-const PAGES = [
-    { name: "Home", href: "/" },
-    { name: "Chat", href: "/chat" },
-    { name: "Explore", href: "/explore" },
-    { name: "Guides", href: "/guide" },
-    { name: "Bookings", href: "/booking" },
-    { name: "About", href: "/about" },
-    ...(process.env.NODE_ENV === "development" ? [{ name: "Test", href: "/test" }] : [])
-]
+function NavbarUserSect(){
 
+    const {data, isLoading, isError, error} = useGetMe();
 
-const Button = ({ text, variant = "outline" }) => (
-    <button
-        className={`border border-green-600/60 rounded-full px-4 py-1 text-sm cursor-pointer focus:outline-1 transition-colors
-            ${variant === "primary" ? "bg-green-600 text-white hover:bg-green-700" : "hover:bg-green-600/10 hover:text-green-700"}`}
-    >
-        {text}
-    </button>
-)
+    console.log("Navbar: ",data);
+
+    return(
+        <section
+            className={`flex items-center gap-4`}
+        >
+            <div className="flex text-text cursor-pointer hover:bg-secondary p-2 rounded-md" >
+                <ThemeToggle />
+            </div>
+            {
+                data ? 
+                <>
+                    <Link href={"/chat"} className="text-text  hover:bg-secondary p-2 rounded-md" >
+                        <MessageCircle  />
+                    </Link>
+
+                    <Link href={"/notification"} className="text-text hover:bg-secondary p-2 rounded-md" >
+                        <Bell size={25} />
+                    </Link>
+
+                    <div
+                        className="border-4 border-primary rounded-full cursor-pointer"
+                    >
+                        <Image 
+                          src={data.profilePicture.src} 
+                          unoptimized 
+                          alt={data.name} 
+                          width={40} 
+                          height={40}
+                          className="rounded-full object-cover object-center h-8 w-8 border-4 border-transparent"
+                        />
+                    </div>
+                </>
+                :
+                <>
+
+                    <Link href={"/login"} >
+                        <Button variant="outline"> Sign In </Button>
+                    </Link>
+
+                    <Link href={"/register"} >
+                        <Button variant="primary"> Sign Up </Button>
+                    </Link>
+                </>
+            }
+        </section>
+    )
+}
 
 export default function Navbar() {
-    const [open, setOpen] = useState(false)
-    const dropdownRef = useRef(null);
-    const path = usePathname();
-    const segments = path.split('/');
-    const current = segments[segments.length - 1];
-    const selectedPage = PAGES.find(p => p.href === `/${current}`)?.name ?? "Home";
-
-    const handleSelection = (page) => {
-        setOpen(false);
-    }
-
-    useEffect(() => {
-        const handler = (e) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-                setOpen(false)
-            }
-        }
-
-        document.addEventListener("mousedown", handler)
-        return () => document.removeEventListener("mousedown", handler)
-    }, [])
 
     return (
-        <header className=" flex justify-between items-center bg-white/10 backdrop-blur-2xl py-3 px-9">
+        <header className=" flex justify-between items-center bg-secondary/35 dark:bg-secondary/15 backdrop-blur-3xl py-3 px-9 z-50">
+            <NavDropdown />
 
-            <div id="logo" className="flex gap-4 items-center">
-                <Link href={'/'}>
-                    <Image src="/assets/svg/ico_1.svg" alt="trek-it-logo" width={30} height={30} aria-hidden={true} />
-                </Link>
-
-                <nav aria-label="Site navigation" ref={dropdownRef} className="relative flex items-center gap-1">
-                    <button
-                        onClick={() => setOpen((prev) => !prev)}
-                        className="flex items-center gap-1 text-lg font-medium cursor-pointer relative group pb-0.5"
-                    >
-                        Trek-It
-                        <ChevronDown
-                            size={18}
-                            className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-                        />
-                        <span className="absolute bottom-0 left-0 h-0.5 bg-green-500 w-0 group-hover:w-full transition-all duration-200 rounded-full" />
-                    </button>
-
-                    {open && (
-                        <ul className="absolute top-full left-0 mt-2 w-44 bg-white border border-black/10 rounded-xl shadow-lg overflow-hidden z-50">
-                            {PAGES.map((page, index) => (
-                                <Link href={page.href} key={index} >
-                                    <li
-                                        onClick={() => handleSelection(page)}
-                                        className={`px-4 py-2 text-sm cursor-pointer transition-colors
-                                            ${selectedPage === page.name
-                                                ? "bg-green-50 text-green-700 font-semibold"
-                                                : "hover:bg-gray-50"
-                                            }`}
-                                    >
-                                        {page.name}
-                                    </li>
-                                </Link>
-                            ))}
-                        </ul>
-                    )}
-                </nav>
-
-                <span aria-hidden={true} className="text-sm text-gray-500 bg-black/5 px-3 py-0.5 rounded-full">
-                    {selectedPage}
-                </span>
-            </div>
-
-            <div className="flex items-center gap-3">
-                <Button text="Sign In" />
-                <Button text="Sign Up" />
-            </div>
+            <NavbarUserSect />
 
         </header>
     )

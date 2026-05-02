@@ -1,8 +1,17 @@
 import mongoose from "mongoose";
-import {User} from "./user.model.js";
+import { User } from "./user.model.js";
+import validator from "validator"; 
 
 
-const guideSchema =  new mongoose.Schema({
+const guideSchema = new mongoose.Schema({
+	languages: {
+		type: [String],
+		required: false,
+		validate: {
+			validator: (v) => !v || v.length === 0 || v.every(l => typeof l === 'string'),
+			message: "At least one language is required to be set"
+		}
+	},
 	regions:{
 		type: [String],
 		validate:{

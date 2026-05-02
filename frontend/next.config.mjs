@@ -2,6 +2,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   /* config options here */
+ reactStrictMode: false,
   images: {
     remotePatterns: [
       {
@@ -11,7 +12,11 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "randomuser.me"
-      }
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com"
+      },
     ]
   }
 };

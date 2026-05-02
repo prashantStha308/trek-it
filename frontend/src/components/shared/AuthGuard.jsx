@@ -1,14 +1,19 @@
-import { useAuthStore } from "@/store/auth.store";
+"use client"
+
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function AuthGuard({ children }) {
     
-    const { isLoggedIn } = useAuthStore(store => store.isLoggedIn);
+    const queryClient = useQueryClient();
+    const user = queryClient.getQueryData(["me"]);
+
     const router = useRouter();
 
     // enable this later on
 
-    // if (!isLoggedIn) {
+    // if (!user) {
+    //     // prompt a model to display no login error later
     //     router.push("/login") //create login page later
     // }
 

@@ -80,22 +80,14 @@ const userSchema = new mongoose.Schema({
 		min: 18,
 		max: 80,
 	},
-	languages: {
-	    type: [String],
-	    required: false,
-	    validate: {
-	        validator: (v) => !v || v.length === 0 || v.every(l => typeof l === 'string'),
-	        message: "At least one language is required to be set"
-	    }
-	},
-	location: {
+	address: {
 		country: {
 			type: String,
 			required: [true, 'Country is required'],
 			trim: true,
 			lowercase: true,
 		},
-		state: {
+		city: {
 			type: String,
 			required: false,
 			trim: true,
@@ -108,8 +100,8 @@ const userSchema = new mongoose.Schema({
 userSchema.index({ age: 1 });
 userSchema.index({ gender: 1 });
 userSchema.index({ languages: 1 });
-userSchema.index({ 'location.country': 1 });
-userSchema.index({ 'location.state': 1 });
+userSchema.index({ 'address.country': 1 });
+userSchema.index({ 'address.state': 1 });
 
 // mongoose middlewares
 userSchema.pre('save', async function(){
