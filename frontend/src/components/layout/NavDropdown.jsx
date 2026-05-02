@@ -39,7 +39,7 @@ export default function NavDropdown() {
     return (
         <div id="logo" className=" flex gap-4 items-center ">
             <Link href={'/'} className="hidden md:flex" >
-                <Image src="/assets/svg/ico_1.svg" alt="trek-it-logo" width={30} height={30} aria-hidden={true} />
+                <Image src="/assets/svg/ico_3.svg" alt="trek-it-logo" width={30} height={30} aria-hidden={true} />
             </Link>
             <nav aria-label="Site navigation" ref={dropdownRef} className="relative flex items-center gap-1">
                 <button
