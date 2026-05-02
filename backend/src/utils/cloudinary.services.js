@@ -21,7 +21,7 @@ import {validateFileExt} from "./generic.helper.js";
  * @param {Object} options - Upload options.
  * @param {string} [options.folder="profilePicture"] - The Cloudinary folder where the file will be stored.
  * @param {('image'|'video'|'raw'|'auto')} [options.resourceType='auto'] - The type of resource being uploaded.
- * @returns {Promise<{url: string, public_id: string, [key: string]: any}>} Resolves with Cloudinary response object containing URL, public ID, and other metadata.
+ * @returns {Promise<{src: string, public_id: string }>} Resolves with Cloudinary response object containing src and public ID.
  * @throws {Error} Throws an error if upload fails.
  */
 export const uploadToCloudinary = (file, {folder = "profilePicture", resourceType = 'auto'}) => {
@@ -35,7 +35,7 @@ export const uploadToCloudinary = (file, {folder = "profilePicture", resourceTyp
         const uploadStream = cloudinary.uploader.upload_stream(
             {
                 folder: folder,
-                type: 'private',
+                type: 'upload',
                 resource_type: resourceType
             },
             (error, res) => {
@@ -71,10 +71,10 @@ export const deleteFromCloudinary = async ( publicId , resourceType ) => {
 
 // ---------------------------------------------------------------------
 
-// formats the response
+// format the response
 const returnRes = async (promise) => {
     const res = await promise;
-    return { publicId: res.publicId, src: res.src };
+    return { publicId: res.public_id, src: res.secure_url  };
 }
 
 export const uploadImage = async (image, folder = "image") => {

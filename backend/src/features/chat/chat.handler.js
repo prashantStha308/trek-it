@@ -39,7 +39,7 @@ function chatHandler(io, socket) {
     };
 
     const createChat = async (data) => {
-        const { participants=[], type = "direct" } = data;
+        let { participants=[], type = "direct" } = data;
 
 		if (!participants.every(id => mongoose.Types.ObjectId.isValid(id))) {
 		    throw new Error("Invalid participant");
@@ -95,10 +95,11 @@ function chatHandler(io, socket) {
     }
 
     const updateMessage = async(data)=>{
-        const {messageId, content} = data;
+        const { messageId, content, type } = data;
+        // TODO: Authorization
         await updateMessageService(data);
         
-        gateway.emitToChat("chat:updated", {messageId,content});
+        gateway.emitToChat("chat:updated", data);
         gateway.emitToSocket("chat:updated", data);
     }
 

@@ -2,6 +2,7 @@
 import express from "express";
 import cors from 'cors';
 import {createServer} from "node:http";
+import cookieParser from "cookie-parser";
 // configs
 import connectDb from './config/db.js';
 import {PORT} from "./config/env.config.js";
@@ -14,9 +15,13 @@ import {errorHandler} from "./middlewares/errorHandler.js"
 const app = express();
 
 // Middlewares
-app.use(cors({}));
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true
+}));
 app.use(express.json({limit: '16kb'}));
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // routes
 // Apply all the routes in ./config/route.config.js

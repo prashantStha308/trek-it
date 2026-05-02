@@ -1,0 +1,215 @@
+{
+	"info": {
+		"_postman_id": "1d26d888-7b08-492f-a874-854fcaae75f5",
+		"name": "Packages",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37979817",
+		"_collection_link": "https://nikesh-9008.postman.co/workspace/Trek-It~743423b1-7a5e-4c6d-b16b-e33266b5d79f/collection/37979817-1d26d888-7b08-492f-a874-854fcaae75f5?action=share&source=collection_link&creator=37979817"
+	},
+	"item": [
+		{
+			"name": "GET ALL PACKAGES",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/packages",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"packages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET PACKAGE BY ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/packages/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"packages",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE PACKAGE",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/packages/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"packages",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE PACKAGE",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/packages/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"packages",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE PACKAGE",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Everest Base Camp",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "A classic trek through Khumbu region",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "regular",
+							"type": "text"
+						},
+						{
+							"key": "startingPrice",
+							"value": "1500",
+							"type": "text"
+						},
+						{
+							"key": "maxGroupSize",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "daysAlloted",
+							"value": "14",
+							"type": "text"
+						},
+						{
+							"key": "keywords",
+							"value": "[\"everest\", \"himalaya\", \"high-altitude\"]",
+							"type": "text"
+						},
+						{
+							"key": "activities",
+							"value": "[\"trekking\", \"hiking\", \"camping\"]",
+							"type": "text"
+						},
+						{
+							"key": "requiresPermit",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "dates",
+							"value": "[{\"date\":\"2026-05-01T00:00:00.000Z\",\"spotsTotal\":10,\"spotsLeft\":10},{\"date\":\"2026-06-01T00:00:00.000Z\",\"spotsTotal\":8,\"spotsLeft\":5}]",
+							"type": "text"
+						},
+						{
+							"key": "regions",
+							"value": "[\"Mt.Everest\", \"Sagarmatha\"]",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/packages/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"packages",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YmVkNzI5MDZhZjAwZjhhMDI4OTI3YiIsInJvbGUiOiJndWlkZSIsImlhdCI6MTc3NTY3MDAwMSwiZXhwIjoxNzc4MjYyMDAxfQ.rdgcAbMCgnLDFpWff0byhOlXCImdKZuE14m9oNxHehE",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

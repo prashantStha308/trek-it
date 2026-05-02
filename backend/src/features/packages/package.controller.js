@@ -12,6 +12,7 @@ import {
 } from "./package.service.js";
 
 export const createPackage = async (req, res) => {
+
     const pkg = await createPackageService(req.body, req.user._id, req.files);
     
     ApiResponse.success(res, {
@@ -35,7 +36,11 @@ export const getAllPacakages = async (req, res) => {
     const packages = await getAll(Package, {
         limit, page,
         filter,
-        sort:{ rating: -1 }
+        sort: { rating: -1 },
+        populate: [
+            { path: "guide", select: "_id name profilePicture languages specialities regions gender age location" },
+            { path: "collaborators", select: "_id name profilePicture languages specialities regions gender age location" }
+        ]
     });
 
     ApiResponse.success(res, {

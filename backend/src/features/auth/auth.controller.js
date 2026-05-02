@@ -5,13 +5,13 @@ import {
 	loginService,
 } from "./auth.service.js";
 
-// TODO: Add uplodaing assets service when user create account, for their profile picture, if they've set it. 
+import ApiResponse from "../../utils/ApiResponse.js";
 
 export const createTourist = async (req, res) => {
-	const tourist =  await createUserService(req.body, Tourist, req.file);
-
-	res.status(201).json({
-		success: true,
+	const tourist = await createUserService(req.body, Tourist, req.file);
+	
+	return ApiResponse.success(res, {
+		status: 201,
 		message: "Tourist registered successfully",
 		data: tourist
 	});
@@ -20,15 +20,33 @@ export const createTourist = async (req, res) => {
 export const createGuide = async (req, res) => {
 	const guide =  await createUserService(req.body, Guide, req.file);
 
-	res.status(201).json({
-		success: true,
+	return ApiResponse.success(res, {
 		message: "Guide registered successfully",
-		data: guide
+		data: guide,
+		status: 201
 	});
 };
 
 export const login = async(req, res) => {
-	const loginData = await loginService(req.body);
-	
-	res.cookie('token', loginData.token, {httpOnly: true}).status(200).json({success: true, message: "Sent login details", data: loginData});
+	const {user, token} = await loginService(req.body);
+
+	return ApiResponse.success(res, {
+		message: "Logged in successfully",
+		data: user,
+		before: [
+			ApiResponse.setCookie('token', token)
+		]
+	});
+}
+
+export const logout = async (req, res) => {
+
+	console.log("logout")
+
+	return ApiResponse.success(res, {
+		message: "Logged Out",
+		before: [
+			ApiResponse.clearCookie('token')
+		]
+	});
 }

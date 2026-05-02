@@ -1,8 +1,0 @@
-Requirement Defination:
-
-https://word.cloud.microsoft/open/onedrive/?docId=C29EC905AE876701%21s2b7a46cb489248c29e13917061016d4b&driveId=C29EC905AE876701
-
-
-System Design:
-
-https://word.cloud.microsoft/open/onedrive/?docId=C29EC905AE876701%21s009f176cd30f4f3eb9b13992ec072fcc&driveId=C29EC905AE876701
