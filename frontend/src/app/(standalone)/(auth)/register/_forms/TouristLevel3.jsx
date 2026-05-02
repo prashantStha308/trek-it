@@ -1,7 +1,10 @@
 "use client"
 
 import { Button } from "@/components/ui/Button";
-import { SelectInput, TextInput, ListBox } from "@/components/ui/Input";
+import TextInput from "@/components/input/TextInput";
+import SelectInput from "@/components/input/SelectInput";
+import ListBox from "@/components/input/ListBox";
+
 import { Eye } from "lucide-react";
 import { Mail } from "lucide-react";
 import { FolderPen } from "lucide-react";
@@ -56,7 +59,8 @@ export default function TouristLevel3({handleChange, formData}) {
             	/>
             </section>
             
-            <Button type={"submit"} text="Complete Registration" variant="form" />
+            <Button type={"submit"} variant="form" > Complete Registration </Button>
+
 
         </section>
     )

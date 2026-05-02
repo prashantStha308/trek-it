@@ -1,15 +1,17 @@
 "use client"
 
-import { Button } from "@/components/ui/Button";
-import { TextInput } from "@/components/ui/Input";
-import { useGetMe, useLogin } from "@/queries/auth.query";
-import { Eye } from "lucide-react";
-import { Mail } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+
+import { useGetMe, useLogin } from "@/queries/auth.query";
 import { showToast } from "@/store/ui.store";
-import { useRouter } from "next/navigation";
+
+import { Button } from "@/components/ui/Button";
+import TextInput from "@/components/input/TextInput";
+import { Eye, Mail } from "lucide-react";
+
 
 
 const Header = () => {
@@ -112,7 +114,7 @@ export default function Login() {
                         value={formData.email}
                         handleChange={handleChange}
                         placeholder={"Enter your email..."}
-                        sideItem={<Mail />}
+                        leftIcon={<Mail />}
                     />
 
                     <TextInput
@@ -123,11 +125,11 @@ export default function Login() {
                         value={formData.password}
                         handleChange={handleChange}
                         placeholder={"Enter your password..."}
-                        sideItem={<Eye />}
+                        leftIcon={<Eye />}
                         callback={toggglePasswordVisibility}
                     />
 
-                    <Button type={"submit"} text="Login" variant="form" />
+                    <Button type={"submit"} variant="form"> Login </Button>
 
                 </section>
 

@@ -10,7 +10,7 @@ export default function StandardLayout({ children }) {
             </div>
             
             <AnimatePresence>                
-                <main className="isolate w-full mt-16 px-4 py-2 flex-1 flex flex-col">
+                <main className="isolate h-full w-full mt-16 px-4 py-2 flex-1 flex flex-col">
                     {children}
                 </main>
             </AnimatePresence>

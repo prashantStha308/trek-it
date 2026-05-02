@@ -1,5 +1,20 @@
+// THis was built to make uslBuilder able to also parse arrays to query parameters
+export const toQueryString = (query = {})=>{
+    const params = new URLSearchParams();
+
+    Object.entries(query).forEach(([key, value])=>{
+        if(Array.isArray(value)){
+            value.forEach(val => params.append(key, val));
+        }else if(value !== undefined && value !== null){
+            params.append(key, value)
+        }
+    })
+
+    return params.toString();
+}
+
 export const urlBuilder = (base, query = {}) => {
-    const queryString = new URLSearchParams(query).toString();
+    const queryString = toQueryString(query);
     if (!queryString) return base;
     return `${base}?${queryString}`;
 };

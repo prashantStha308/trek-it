@@ -50,7 +50,7 @@ const Toast = () => {
                         }}
                     >
                         <div
-                            className="px-4 py-2 border border-border text-text rounded-lg bg-secondary/45 w-xs h-fit relative flex flex-col gap-4"
+                            className="px-4 py-2 border border-border text-text rounded-lg bg-secondary/75 backdrop-blur-3xl w-xs h-fit relative flex flex-col gap-4"
                         >
                             <header
                                 className="flex items-center justify-between"

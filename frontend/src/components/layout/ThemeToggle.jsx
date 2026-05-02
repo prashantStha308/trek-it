@@ -15,15 +15,11 @@ export default function ThemeToggle() {
 
   return (
     <button
+      className="p-0 m-0"
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
-      className={`p-1 transition-colors duration-200 rounded-md cursor-pointer ${
-        isDark
-          ? 'text-text-dark '
-          : 'text-text'
-      }`}
       aria-label="Toggle theme"
     >
-      {isDark ? <Sun size={18} /> : <Moon size={18} />}
+      {isDark ? <Sun /> : <Moon />}
     </button>
   );
 }

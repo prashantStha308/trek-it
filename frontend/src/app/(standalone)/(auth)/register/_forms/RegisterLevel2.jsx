@@ -1,8 +1,10 @@
 "use client"
 
 import { Button } from "@/components/ui/Button";
-import { SelectInput, TextInput } from "@/components/ui/Input";
-import { Eye, Globe, Mail, FolderPen, MapPin } from "lucide-react";
+import TextInput from "@/components/input/TextInput";
+import SelectInput from "@/components/input/SelectInput";
+
+import { Eye, Globe, Mail, FolderPen, MapPin, UserKey } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -33,6 +35,7 @@ export default function RegisterLevel2({handleNext, handleChange, formData}) {
                     ]}
                     handleChange={handleChange}
                     value={formData.role}
+                    leftIcon={<UserKey size={16} />}
                 />
 
 
@@ -45,7 +48,7 @@ export default function RegisterLevel2({handleNext, handleChange, formData}) {
                 		placeholder={"Enter your country..."}
                 		handleChange={handleChange}
 	                    value={formData.address.country}
-                		sideItem={<Globe size={16} />}
+                		leftIcon={<Globe size={16} />}
                 	/>
 
                 	<TextInput
@@ -56,11 +59,11 @@ export default function RegisterLevel2({handleNext, handleChange, formData}) {
                 		placeholder={"Enter your city..."}
                 		handleChange={handleChange}
 	                    value={formData.address.city}
-                		sideItem={<MapPin size={16} />}
+                		leftIcon={<MapPin size={16} />}
                 	/>
             </section>
             
-            <Button type={"button"} text="Next" variant="form" handleClick={handleNext} />
+            <Button type={"button"} variant="form" handleClick={handleNext} > Next </Button>
 
         </section>
     )

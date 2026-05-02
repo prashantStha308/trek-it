@@ -4,7 +4,7 @@
  * @param {"primary" | "outline" | "form"} props.variant
  * @param {Function} handleClick - onClick handler
  */
-export const Button = ({ text, variant = "outline", type="button", handleClick }) => {
+export const Button = ({ variant = "outline", type="button", onClick, children  }) => {
     
     const variants = {
         primary: "border-primary/60 py-1 text-sm bg-primary/85 text-white hover:bg-primary",
@@ -14,11 +14,11 @@ export const Button = ({ text, variant = "outline", type="button", handleClick }
 
     return (
         <button
-            className={`border rounded-lg px-4 cursor-pointer focus:outline-1 transition-colors ${variants[variant] ?? variants.default}`}
+            className={`border rounded-lg px-4 cursor-pointer focus:outline-1 transition-colors ${variants[variant] ?? variants.default} flex items-center justify-between gap-2`}
             type={type}
-            onClick={handleClick}
+            onClick={onClick}
         >
-            {text}
+            {children}
         </button>
     )
 }

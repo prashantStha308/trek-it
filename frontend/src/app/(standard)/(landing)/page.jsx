@@ -1,8 +1,8 @@
 "use client"
 
 import { SearchBar } from "@/components/explore/SearchBar";
-import PackageList from "@/components/packages/PackageList";
-import { useGetAllPackages } from "@/queries/package.queries";
+import PackageList from "@/components/package/PackageList";
+import { useGetAllPackages } from "@/queries/package.query";
 import Image from "next/image";
 import { motion, spring } from "motion/react";
 import { ChevronRight } from "lucide-react";
@@ -12,7 +12,7 @@ import { ChevronRight } from "lucide-react";
 const containerVarient = {
     hidden: {
         y:90,
-        opacity: 0.25,
+        opacity: 0,
     },
     visible: {
         y:0,
@@ -136,7 +136,7 @@ export default function Home() {
                     alt="hero-img"
                     fill
                     priority
-                    className="object-cover object-top mix-blend-color-burn"
+                    className="object-cover object-top "
                 />
 
 

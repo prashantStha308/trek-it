@@ -1,12 +1,15 @@
 "use client"
 
 import { Button } from "@/components/ui/Button";
-import { SelectInput, TextInput } from "@/components/ui/Input";
-import { Eye } from "lucide-react";
-import { Mail } from "lucide-react";
-import { FolderPen } from "lucide-react";
+import TextInput from "@/components/input/TextInput";
+import SelectInput from "@/components/input/SelectInput";
+import ListBox from "@/components/input/ListBox";
+
+import { Eye, Calendar, Mail, FolderPen } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+
+import {showToast} from "@/store/ui.store";
 
 
 
@@ -32,7 +35,10 @@ export default function RegisterLevel1({handleNext, handleChange, formData}) {
         if (!isValidString(formData.gender)) errors.push("Gender is required");
 
         if (errors.length > 0) {
-            // showModal(errors); // uncomment when modal ready
+            showToast({
+                title: "Errors in registration form",
+                message: errors
+            });
             return;
         }
 
@@ -67,7 +73,7 @@ export default function RegisterLevel1({handleNext, handleChange, formData}) {
                     name={"name"}
                     id={"name"}
                     placeholder={"Enter your name..."}
-                    sideItem={<FolderPen size={16} />}
+                    leftIcon={<FolderPen size={16} />}
                     handleChange={handleChange}
                     value={formData.name}
                     required={true}
@@ -79,7 +85,7 @@ export default function RegisterLevel1({handleNext, handleChange, formData}) {
                     name={"email"}
                     id={"email"}
                     placeholder={"Enter your email..."}
-                    sideItem={<Mail size={16} />}
+                    leftIcon={<Mail size={16} />}
                     handleChange={handleChange}
                     value={formData.email}
                     required={true}
@@ -91,7 +97,7 @@ export default function RegisterLevel1({handleNext, handleChange, formData}) {
                     name={"password"}
                     id={"password"}
                     placeholder={"Enter your password..."}
-                    sideItem={<Eye size={16} />}
+                    leftIcon={<Eye size={16} />}
                     handleChange={handleChange}
                     value={formData.password}
                     required={true}
@@ -106,7 +112,7 @@ export default function RegisterLevel1({handleNext, handleChange, formData}) {
                         name={"age"}
                         id={"age"}
                         placeholder={"Enter your age..."}
-                        sideItem={<Eye size={16} />}
+                        leftIcon={ <Calendar size={16} />}
                         handleChange={handleChange}
                         value={formData.age}
                         required={true}
@@ -124,12 +130,13 @@ export default function RegisterLevel1({handleNext, handleChange, formData}) {
                         handleChange={handleChange}
                         value={formData.gender}
                         required={true}
+                        leftIcon={<Eye size={16} />}
                     />
 
                 </div>
             </section>
 
-            <Button type={"button"} text="Next" variant="form" handleClick={handleSubmitPage} />
+            <Button type={"button"} variant="form" handleClick={handleSubmitPage} > Next </Button>
 
         </section>
     )

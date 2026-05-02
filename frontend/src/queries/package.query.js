@@ -23,6 +23,14 @@ export const useGetAllPackages = ({
     })
 }
 
+export const useFilteredPackageQuery = (filters = {})=>{
+    return useQuery({
+        queryKey: ["packages", filters],
+        queryFn: ()=> getAllPackages(filters),
+        enabled: !!filters,
+    })
+}
+
 export const useGetPackageById = (packageId) => {
     const queryClient = useQueryClient();
 

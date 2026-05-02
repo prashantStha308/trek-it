@@ -1,7 +1,11 @@
 "use client"
 
 import { Button } from "@/components/ui/Button";
-import { SelectInput, TextInput, ListBox } from "@/components/ui/Input";
+import TextInput from "@/components/input/TextInput";
+import SelectInput from "@/components/input/SelectInput";
+import ListBox from "@/components/input/ListBox";
+
+
 import { Eye } from "lucide-react";
 import { Mail } from "lucide-react";
 import { FolderPen } from "lucide-react";

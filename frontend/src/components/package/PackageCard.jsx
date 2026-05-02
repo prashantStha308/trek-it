@@ -3,6 +3,7 @@ import { Star } from "lucide-react";
 import { optimizeImageUrl } from "@/utils/utils.helper";
 import Link from "next/link";
 import { Button } from "../ui/Button";
+import Badge from "@/components/ui/Badge"
 
 const Pill = ({ text, variant = "green" }) => {
     const styles = {
@@ -18,10 +19,8 @@ const Pill = ({ text, variant = "green" }) => {
 
 export function PackageCard({ item }) {
 
-    console.log(item);
-
     return (
-        <article className="w-85 bg-secondary/16 rounded-xl border border-black/10 overflow-hidden">
+        <article className="w-96 bg-secondary/16 rounded-xl border border-black/10 overflow-hidden">
 
             <div className="relative w-full h-44">
                 <Image
@@ -62,13 +61,13 @@ export function PackageCard({ item }) {
 
                 <div className="flex flex-wrap gap-1.5">
                     {item.guide.languages.map((lang, i) => (
-                        <Pill key={i} text={lang} variant="green" />
+                        <Badge key={i} variant="green" > {lang} </Badge>
                     ))}
                 </div>
 
                 <div className="flex flex-wrap gap-1.5">
-                    {item.guide.regions.map((region, i) => (
-                        <Pill key={i} text={region} variant="teal" />
+                    {item.regions.map((region, i) => (
+                        <Badge key={i} variant="blue" > {region} </Badge>
                     ))}
                 </div>
 
@@ -85,10 +84,9 @@ export function PackageCard({ item }) {
                     <Link
                         href={`/explore/packages/${item._id}`}
                     >
-                        <Button text="Book Now" variant="primary" />
-                        {/* <button className="bg-green-700 hover:bg-green-800 transition-colors text-text text-xs px-4 py-2 rounded-full cursor-pointer">
-                            Book now
-                        </button> */}
+                        <Button variant="primary">
+                            Book Now 
+                        </Button>
                     </Link>
                 </div>
 
