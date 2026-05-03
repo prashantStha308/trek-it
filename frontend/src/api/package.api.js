@@ -9,7 +9,11 @@ export const getAllPackages = async (query = {}) => {
     return res.data.data
 }
 
-
+export const searchPackages = async (params) => {
+    const { name, ...rest } = params;
+    const res = await axiosInstance.get(API_ROUTES.PACKAGE.SEARCH({ query: name, ...rest }));
+    return res.data.data;
+}
 export const getPackageById = async (id) => {
     const res = await axiosInstance.get(API_ROUTES.PACKAGE.GET(id))
     return res.data.data;

@@ -8,7 +8,8 @@ import {
     getAllPackages,
     getPackageById,
     updatePackage,
-    deletePackage
+    deletePackage,
+    searchPackages
 } from "@/api/package.api";
 
  
@@ -46,11 +47,11 @@ export const useGetPackageById = (packageId) => {
     });
 }
 
-export const useSearchQuery = (value) => {
+export const useSearchQuery = (query) => {
     return useQuery({
-        queryKey: ["packageSearch", value],
-        queryFn: () => getAllPackages({ search: value }),
-        enabled: !!value,
+        queryKey: ["packageSearch", query],
+        queryFn: () => searchPackages(query),
+        enabled: !!(query?.name || query?.regions?.length || query?.activities?.length),
     })
 }
 

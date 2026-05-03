@@ -5,7 +5,7 @@ export const toQueryString = (query = {})=>{
     Object.entries(query).forEach(([key, value])=>{
         if(Array.isArray(value)){
             value.forEach(val => params.append(key, val));
-        }else if(value !== undefined && value !== null){
+        }else if(value !== undefined && value !== null && value !== ""){
             params.append(key, value)
         }
     })
@@ -50,6 +50,7 @@ const API_ROUTES = {
         CREATE: "/packages",
         UPDATE: (id) => resolveRoute('/packages', id),
         DELETE: (id) => resolveRoute('/packages', id),
+        SEARCH: (query)=> resolveRoute('/packages/search', null, query),
         BASE: "/packages"
 	},
 	

@@ -2,7 +2,8 @@ import { Package } from "../../models/index.js";
 
 import {
     getAll,
-    getById
+    getById,
+    createSearchController,
 } from "../../utils/crud.service.js";
 import ApiResponse from "../../utils/ApiResponse.js";
 import {
@@ -49,6 +50,20 @@ export const getAllPacakages = async (req, res) => {
     });
 }
 
+export const searchPackages = createSearchController(
+    Package,
+    ["name", "regions", "activities", "keywords"],
+    {
+        sort: { rating: -1 },
+        populate: [
+            { path: "guide", select: "_id name age gender profilePicture languages regions" }
+        ]
+    }
+)
+
+export const serachPackageInPriceRange = ()=>{
+    // make this later
+}
 
 export const getPackageById = async (req, res) => {
     const pkg = await getById(Package, req.params.packageId, {

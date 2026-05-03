@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import ApiError from "./ApiError.js";
+import ApiResponse from "./ApiResponse.js";
+
 
 /**
  * @description Retrieves Many Data from MongoDb for a specific Model
@@ -126,3 +128,39 @@ export const deleteBulk = async (Model, filter = {}, callback) => {
 
     return result;
 }
+
+/**
+ * @description - Creates a generic search controller for a given model
+ * 
+ * @param {mongoose.Model} Model - The mongoose model to search
+ * @param {String[]} fields - Fields to search against
+ * @param {Object} [options] - Additional getAll options (populate, select, sort etc.)
+ * @returns {Function} - Express controller function
+ */
+export const createSearchController = (Model, fields, options = {}) => {
+    return async (req, res) => {
+        const { query, limit, page } = req.query;
+
+        if (!query || query.trim() === "") {
+            throw new ApiError(400, "Search query is required");
+        }
+
+        const regex = { $regex: query, $options: "i" };
+
+        const filter = {
+            $or: fields.map(field => ({ [field]: regex }))
+        };
+
+        const results = await getAll(Model, {
+            limit,
+            page,
+            filter,
+            ...options
+        });
+
+        ApiResponse.success(res, {
+            data: results,
+            message: "Search results retrieved successfully"
+        });
+    };
+};
