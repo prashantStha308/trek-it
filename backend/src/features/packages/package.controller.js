@@ -3,12 +3,12 @@ import { Package } from "../../models/index.js";
 import {
     getAll,
     getById,
-    createSearchController,
 } from "../../utils/crud.service.js";
 import ApiResponse from "../../utils/ApiResponse.js";
 import {
     createPackageService,
     createCustomPackageService,
+    searchPackageService,
     deletePackageService,
     updatePackageService
 } from "./package.service.js";
@@ -57,16 +57,12 @@ export const getAllPacakages = async (req, res) => {
     });
 }
 
-export const searchPackages = createSearchController(
-    Package,
-    ["name", "regions", "activities", "keywords"],
-    {
-        sort: { rating: -1 },
-        populate: [
-            { path: "guide", select: "_id name age gender profilePicture languages regions" }
-        ]
-    }
-)
+export const searchPackages = async (req, res) => {
+    const pkg = await searchPackageService(req.query);
+    return ApiResponse.success(res,{
+        data: pkg,
+    })
+}
 
 export const serachPackageInPriceRange = ()=>{
     // make this later

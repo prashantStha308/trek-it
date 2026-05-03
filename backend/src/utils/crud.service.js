@@ -147,9 +147,12 @@ export const createSearchController = (Model, fields, options = {}) => {
 
         const regex = { $regex: query, $options: "i" };
 
-        const filter = {
-            $or: fields.map(field => ({ [field]: regex }))
-        };
+		const filter = query
+		    ? { $or: fields.map(field => ({ [field]: regex })) }
+		    : {};
+
+		if (req.query.regions) filter.regions = { $in: [].concat(req.query.regions) };
+		if (req.query.activities) filter.activities = { $in: [].concat(req.query.activities) };
 
         const results = await getAll(Model, {
             limit,

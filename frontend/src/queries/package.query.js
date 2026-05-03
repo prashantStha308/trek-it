@@ -51,7 +51,7 @@ export const useSearchQuery = (query) => {
     return useQuery({
         queryKey: ["packageSearch", query],
         queryFn: () => searchPackages(query),
-        enabled: !!(query?.name || query?.regions?.length || query?.activities?.length),
+        enabled: !!(query?.name?.length >= 2 || query?.regions?.length || query?.activities?.length),
     })
 }
 

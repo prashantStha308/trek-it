@@ -10,10 +10,15 @@ export const getAllPackages = async (query = {}) => {
 }
 
 export const searchPackages = async (params) => {
-    const { name, ...rest } = params;
-    const res = await axiosInstance.get(API_ROUTES.PACKAGE.SEARCH({ query: name, ...rest }));
+    const { name, regions, activities } = params;
+    const res = await axiosInstance.get(API_ROUTES.PACKAGE.SEARCH({ 
+        query: name || undefined,
+        regions, 
+        activities 
+    }));
     return res.data.data;
 }
+
 export const getPackageById = async (id) => {
     const res = await axiosInstance.get(API_ROUTES.PACKAGE.GET(id))
     return res.data.data;
