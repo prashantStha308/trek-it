@@ -107,6 +107,7 @@ export default function Register() {
         const { role, ...body } = formData;
 
         const res = await register.mutateAsync({ body, role });
+
         router.push("/login");
     }
 
@@ -127,7 +128,8 @@ export default function Register() {
 
     const handleNext = () => {
         if (currentLevel === 2 && formData.role.trim() === "") {
-            throw new Error("Please specify your role");
+            showToast({title: "Role not defined", message: "Please specify your role"});
+            // throw new Error("Please specify your role");
             return;
         }
 

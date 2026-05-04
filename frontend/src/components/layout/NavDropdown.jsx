@@ -39,7 +39,7 @@ export default function NavDropdown() {
     return (
         <div id="logo" className=" flex gap-4 items-center ">
             <Link href={'/'} className="hidden md:flex" >
-                <Image src="/assets/svg/ico_1.svg" alt="trek-it-logo" width={30} height={30} aria-hidden={true} />
+                <Image src="/assets/svg/ico_3.svg" alt="trek-it-logo" width={30} height={30} aria-hidden={true} />
             </Link>
             <nav aria-label="Site navigation" ref={dropdownRef} className="relative flex items-center gap-1">
                 <button
@@ -72,7 +72,7 @@ export default function NavDropdown() {
                 </DropdownMenu>
             </nav>
 
-            <span aria-hidden={true} className="text-xs md:text-sm cursor-pointer text-gray-500 dark:text-gray-300 bg-black/5 dark:bg-primary/15 px-3 py-0.5 rounded-full ">
+            <span aria-hidden={true} className="text-xs md:text-sm cursor-pointer text-text/65 bg-secondary/50  px-3 py-0.5 rounded-full ">
                 {selectedPage}
             </span>
         </div>

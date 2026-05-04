@@ -2,12 +2,13 @@ import { Package } from "../../models/index.js";
 
 import {
     getAll,
-    getById
+    getById,
 } from "../../utils/crud.service.js";
 import ApiResponse from "../../utils/ApiResponse.js";
 import {
     createPackageService,
     createCustomPackageService,
+    searchPackageService,
     deletePackageService,
     updatePackageService
 } from "./package.service.js";
@@ -56,6 +57,16 @@ export const getAllPacakages = async (req, res) => {
     });
 }
 
+export const searchPackages = async (req, res) => {
+    const pkg = await searchPackageService(req.query);
+    return ApiResponse.success(res,{
+        data: pkg,
+    })
+}
+
+export const serachPackageInPriceRange = ()=>{
+    // make this later
+}
 
 export const getPackageById = async (req, res) => {
     const pkg = await getById(Package, req.params.packageId, {

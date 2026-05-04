@@ -10,7 +10,7 @@ export default function ChatTile({ user, lastMessage, notReadCount, isActive = f
                 <h1
                     className="text-base font-medium"
                 >
-                    {user.name}
+                    {user?.name}
                 </h1>
                 <span
                     className="text-xs text-text/65"

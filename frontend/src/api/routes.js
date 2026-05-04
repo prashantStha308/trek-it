@@ -5,7 +5,7 @@ export const toQueryString = (query = {})=>{
     Object.entries(query).forEach(([key, value])=>{
         if(Array.isArray(value)){
             value.forEach(val => params.append(key, val));
-        }else if(value !== undefined && value !== null){
+        }else if(value !== undefined && value !== null && value !== ""){
             params.append(key, value)
         }
     })
@@ -40,8 +40,10 @@ const API_ROUTES = {
 	},
 	
 	GUIDE: {
-		GET_ALL: (query) => resolveRoute("guides", null, query),
+		GET_ALL: (query) => resolveRoute("/guides", null, query),
 		GET: (id) => resolveRoute("/guide", id),
+        SEARCH: (query) => resolveRoute("/guide/search", null, query),
+        BASE: "/guides"
 	},
 
     PACKAGE: {
@@ -50,6 +52,7 @@ const API_ROUTES = {
         CREATE: "/packages",
         UPDATE: (id) => resolveRoute('/packages', id),
         DELETE: (id) => resolveRoute('/packages', id),
+        SEARCH: (query)=> resolveRoute('/packages/search', null, query),
         BASE: "/packages"
 	},
 	
@@ -89,6 +92,11 @@ const API_ROUTES = {
     CHAT: {
         GET_ALL: (query) => resolveRoute('/chat', null, query),
         GET: (id) => resolveRoute('/chat', id),
+    },
+    META:{
+        REGIONS: (query) => resolveRoute("/meta/regions", null, query),
+        ACTIVITIES:(query) => resolveRoute("meta/activities", null, query),
+        SPECIALITIES: (query) => resolveRoute("meta/specialities", null, query),
     }
 }
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { useGetPackageById } from "@/queries/package.queries";
+import { useGetPackageById } from "@/queries/package.query";
 import { optimizeImageUrl } from "@/utils/utils.helper";
 import Image from "next/image";
 import { useParams } from "next/navigation";

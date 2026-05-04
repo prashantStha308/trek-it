@@ -9,6 +9,9 @@ export const getAllUsers = async (query) => {
 
 export const getUserById = async (id) => {
     const res = await axiosInstance.get(API_ROUTES.USER.GET(id))
+
+    console.log(res.data);
+
     return res.data;
 }
 
@@ -19,4 +22,16 @@ export const updateUser = async () => {
 
 export const deleteUser = async () => {
     const res = await axiosInstance.delete(API_ROUTES.USER.BASE)
+
+    return res.data;
+}
+
+export const searchGuides = async (query) => {
+    const { name, regions, specialities,  } = query;
+    const res = await axiosInstance.get(API_ROUTES.USER.SEARCH({ 
+        name: name || undefined,
+        regions, 
+        specialities 
+    }));
+    return res.data.data;
 }

@@ -5,6 +5,7 @@ import {
     getPackageById,
     updatePackage,
     deletePackage,
+    searchPackages,
     createCustomPackage,
 } from "./package.controller.js";
 import { parseFormFields } from "../../middlewares/package.middleware.js";
@@ -25,7 +26,10 @@ packageR.post('/', authorize(["guide", "admin"]), bufferUpload.array("packageIma
 packageR.post('/custom', authorize(["guide", "admin"]), bufferUpload.array("packageImage", 10), parseFormFields, validateCustomPackageMeta, validatePackageBody, validate, createCustomPackage);
 
 packageR.get('/', validatePackageQuery, validate, getAllPacakages);
+packageR.get('/search', validatePackageQuery, validate, searchPackages);
+
 packageR.get('/:packageId', validatePackageParams, validate, getPackageById);
+
 
 packageR.patch('/:packageId', authorize(["guide", "admin"]), validatePackageParams, validate, updatePackage);
 packageR.delete('/:packageId', authorize(["guide", "admin"]), validatePackageParams, validate, deletePackage);

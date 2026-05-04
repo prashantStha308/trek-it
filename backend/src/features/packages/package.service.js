@@ -6,7 +6,7 @@ import {
     User,
 } from "../../models/index.js";
 // utils and helpers
-import { } from "../../utils/request.helper.js";
+import {getAll} from "../../utils/crud.service.js"
 import {
     uploadImages
 } from "../../utils/cloudinary.services.js";
@@ -123,6 +123,43 @@ export const createCustomPackageService = async (guide, body, files) => {
 
     return newPackage;
 };
+
+
+export const searchPackageService = async(query)=>{
+
+    const { limit, page, name, sort, ...filters } = query;
+    const filter = {};
+
+    if (name) {
+        const regexOpt = {$regex: name, $options: "i"}
+
+        filter.$or = [
+            { name: regexOpt },
+            { description: regexOpt },
+            { keywords: regexOpt }
+        ];
+    }
+
+    Object.keys(filters).forEach((key) => {
+        const value = filters[key];
+        filter[key] = { $in: Array.isArray(value) ? value : [value] };
+    });
+
+
+    if (!name && Object.keys(filters).length === 0) {
+        throw new ApiError(400, "At least one search parameter is required");
+    }
+
+    return await getAll(Package, {
+        limit,
+        page,
+        filter,
+        sort: { rating: -1 },
+        populate: [
+            { path: "guide", select: "_id name profilePicture languages specialities regions gender age location" }
+        ]
+    });
+}
 
 export const updatePackageService = async (guideId, packageId, body, files) => {
     const targetPackage = await Package.findById(packageId);

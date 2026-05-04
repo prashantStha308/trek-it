@@ -1,5 +1,6 @@
 import Navbar from "@/components/layout/Navbar";
 import { AnimatePresence } from "motion/react";
+import Footer from "@/components/layout/Footer";
 
 
 export default function StandardLayout({ children }) {
@@ -14,6 +15,8 @@ export default function StandardLayout({ children }) {
                     {children}
                 </main>
             </AnimatePresence>
+
+            <Footer />
         </>
     )
 }
