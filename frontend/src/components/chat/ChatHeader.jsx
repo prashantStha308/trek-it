@@ -20,10 +20,10 @@ export default function ChatHeader({user}) {
                 >
                     <h1
                         className="font-medium text-text"
-                    >{user.name}</h1>
+                    >{user?.name}</h1>
                     <h2
                         className="text-xs text-text/75 capitalize"
-                    > {user.role} </h2>
+                    > {user?.role} </h2>
                 </article>
 
             </section>

@@ -5,10 +5,7 @@ import ChatHeader from "./ChatHeader";
 
 export default function ChatWindow({chat, messages, currentUser}) {
 
-    console.log(messages);
-
     const recipitient = chat.participants.find(person => person._id != currentUser._id);
-
     const { data:user } = useGetMe();
 
     return (

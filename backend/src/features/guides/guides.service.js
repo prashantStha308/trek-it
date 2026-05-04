@@ -305,37 +305,55 @@ export const deleteGuideService = async (guideId) => {
 
 // ============================================================================================
 // SEARCH GUIDES
-export const searchGuidesService = async (query, limit = 10, page = 1) => {
-    try {
-        if (!query || query.trim() === "") {
-            throw new ApiError(400, "Search query is required");
-        }
+export const searchGuidesService = async (query) => {
+    const { limit, page, name, minAge, maxAge, ...filters } = query;
 
-        const guides = await getAll(Guide, {
-            limit,
-            page,
-            filter: {
-                role: "guide",
-                isVerified: true,
-                $or: [
-                    { name: { $regex: query, $options: "i" } },
-                    { specialities: { $in: [new RegExp(query, "i")] } },
-                    { regions: { $in: [new RegExp(query, "i")] } }
-                ]
-            },
-            select: "-password",
-            populate: [
-                { path: "collaborations", select: "name description" },
-                { path: "review" }
-            ]
-        });
+    const filter = {
+        role: "guide",
+        isVerified: true
+    };
 
-        return guides;
-    } catch (err) {
-        throw err;
+    if (name) {
+        const regexOpt = { $regex: name, $options: "i" };
+
+        filter.$or = [
+            { name: regexOpt },
+            { specialities: { $elemMatch: regexOpt } },
+            { regions: { $elemMatch: regexOpt } }
+        ];
     }
-};
 
+    Object.keys(filters).forEach((key) => {
+        const value = filters[key];
+        if (value !== undefined && value !== null && value !== "") {
+            filter[key] = {
+                $in: Array.isArray(value) ? value : [value]
+            };
+        }
+    });
+
+    if (minAge || maxAge) {
+        filter.age = {};
+        if (minAge) filter.age.$gte = Number(minAge);
+        if (maxAge) filter.age.$lte = Number(maxAge);
+    }
+
+    if (!name && Object.keys(filters).length === 0 && !minAge && !maxAge) {
+        throw new ApiError(400, "At least one search parameter is required");
+    }
+
+    return await getAll(Guide, {
+        limit,
+        page,
+        filter,
+        select: "-password",
+        sort: { rating: -1 },
+        populate: [
+            { path: "collaborations", select: "name description gender age profilePicture" },
+            { path: "review" }
+        ]
+    });
+};
 // ============================================================================================
 // GET UNVERIFIED GUIDES (Admin only)
 export const getUnverifiedGuidesService = async (limit = 10, page = 1) => {

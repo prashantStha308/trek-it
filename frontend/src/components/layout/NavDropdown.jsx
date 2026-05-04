@@ -72,7 +72,7 @@ export default function NavDropdown() {
                 </DropdownMenu>
             </nav>
 
-            <span aria-hidden={true} className="text-xs md:text-sm cursor-pointer text-gray-500 dark:text-gray-300 bg-black/5 dark:bg-primary/15 px-3 py-0.5 rounded-full ">
+            <span aria-hidden={true} className="text-xs md:text-sm cursor-pointer text-text/65 bg-secondary/50  px-3 py-0.5 rounded-full ">
                 {selectedPage}
             </span>
         </div>

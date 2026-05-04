@@ -71,7 +71,7 @@ export default function SelectInput ({
                     onClick={handleOpen}
                     className="flex items-center justify-between flex-1 outline-none text-text/75 text-sm capitalize whitespace-nowrap gap-2 overflow-hidden"
                 >
-                    <span className="truncate">{value || "Select..."}</span>
+                    <span className="truncate">{value.label || "Select..."}</span>
                     <ChevronDown
                         size={16}
                         className={`transition-transform duration-150 shrink-0 ${open ? "rotate-180" : ""}`}
@@ -93,7 +93,7 @@ export default function SelectInput ({
                             key={option.value ?? index}
                             onClick={(e) => handleSelect(e, option)}
                             className={`px-6 py-2 text-sm cursor-pointer transition-colors ${
-                                value === option.value
+                                value.value === option.value
                                     ? "bg-primary/20 text-text font-medium"
                                     : "hover:bg-primary/15"
                             }`}

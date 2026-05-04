@@ -105,10 +105,10 @@ userSchema.index({ 'address.state': 1 });
 
 // mongoose middlewares
 userSchema.pre('save', async function(){
-    if(this.languages && this.languages.length > 0){
+    if(this.languages?.length > 0){
         this.languages = this.languages.map(lang => lang.trim().toLowerCase());
     }
-    if(this.interests && this.interests.length > 0){
+    if(this.interests?.length > 0){
         this.interests = this.interests.map(i => i.trim().toLowerCase());
     }
     console.log("Before next");

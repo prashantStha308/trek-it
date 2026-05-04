@@ -9,10 +9,10 @@ export const getAllPackages = async (query = {}) => {
     return res.data.data
 }
 
-export const searchPackages = async (params) => {
-    const { name, regions, activities } = params;
+export const searchPackages = async (query) => {
+    const { name, regions, activities } = query;
     const res = await axiosInstance.get(API_ROUTES.PACKAGE.SEARCH({ 
-        query: name || undefined,
+        name: name || undefined,
         regions, 
         activities 
     }));

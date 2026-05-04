@@ -131,9 +131,12 @@ export const searchPackageService = async(query)=>{
     const filter = {};
 
     if (name) {
+        const regexOpt = {$regex: name, $options: "i"}
+
         filter.$or = [
-            { name: { $regex: name, $options: "i" } },
-            { description: { $regex: name, $options: "i" } }
+            { name: regexOpt },
+            { description: regexOpt },
+            { keywords: regexOpt }
         ];
     }
 

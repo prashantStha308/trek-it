@@ -1,3 +1,9 @@
+// User 
+export * from "./user/user.model.js";
+export * from "./user/admin.model.js";
+export * from "./user/guide.model.js";
+export * from "./user/tourist.model.js";
+
 // Chat
 export * from "./chat/chat.model.js"
 export * from "./chat/message.model.js"
@@ -12,10 +18,3 @@ export * from "./core/notification.model.js"
 // Requests
 export * from "./requests/collabRequest.model.js"
 export * from "./requests/customRequest.model.js"
-
-// User
-export * from "./user/admin.model.js";
-export * from "./user/guide.model.js";
-export * from "./user/tourist.model.js";
-export * from "./user/user.model.js";
-

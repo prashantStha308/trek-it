@@ -40,8 +40,10 @@ const API_ROUTES = {
 	},
 	
 	GUIDE: {
-		GET_ALL: (query) => resolveRoute("guides", null, query),
+		GET_ALL: (query) => resolveRoute("/guides", null, query),
 		GET: (id) => resolveRoute("/guide", id),
+        SEARCH: (query) => resolveRoute("/guide/search", null, query),
+        BASE: "/guides"
 	},
 
     PACKAGE: {
@@ -90,6 +92,11 @@ const API_ROUTES = {
     CHAT: {
         GET_ALL: (query) => resolveRoute('/chat', null, query),
         GET: (id) => resolveRoute('/chat', id),
+    },
+    META:{
+        REGIONS: (query) => resolveRoute("/meta/regions", null, query),
+        ACTIVITIES:(query) => resolveRoute("meta/activities", null, query),
+        SPECIALITIES: (query) => resolveRoute("meta/specialities", null, query),
     }
 }
 
