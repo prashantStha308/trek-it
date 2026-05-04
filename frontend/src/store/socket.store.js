@@ -1,7 +1,7 @@
 // store/useSocketStore.js
 import { create } from "zustand";
 import { io } from "socket.io-client";
-import { BASE_API } from "@/constants/config.constant";
+import { BASE } from "@/constants/config.constant";
 
 
 const useSocketStore = create((set, get) => ({
@@ -12,7 +12,7 @@ const useSocketStore = create((set, get) => ({
 
 		if (get().socket) return;
 
-		const socket = io(BASE_API, {withCredentials: true});
+		const socket = io(BASE, {withCredentials: true});
 
 		socket.on("connect", () => set({ isConnected: true }));
 		socket.on("disconnect", () => set({ isConnected: false }));
