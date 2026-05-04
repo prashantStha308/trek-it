@@ -10,10 +10,12 @@ import {
 import chatEvents from "../features/chat/chat.events.js";
 import notificationEvents from "../features/notifications/notification.events.js";
 
+import { FRONTEND_URL } from "./env.config.js";
+
 const initSocket = (httpServer) => {
     const io = new Server(httpServer, {
         cors: {
-            origin: process.env.CLIENT_URL || "http://localhost:3000",
+            origin: FRONTEND_URL,
             methods: ["GET", "POST"],
             credentials: true,
         },
