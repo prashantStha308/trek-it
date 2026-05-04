@@ -14,6 +14,7 @@ if (process.env.NODE_ENV === "production") {
 
 export const PORT = process.env.PORT;
 export const MONGODB_CONN_STRING = process.env.MONGODB_CONN_STRING;
+export const FRONTEND_URL = process.env.FRONTEND_URL;
 
 export const JWT_SECRET = process.env.JWT_SECRET;
 export const JWT_REFRESH_TOKEN = process.env.JWT_REFRESH_TOKEN;
