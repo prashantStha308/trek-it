@@ -1,189 +1,142 @@
 "use client"
-import {motion, AnimatePresence} from "motion/react";
-import {useState} from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { SlidersHorizontal } from "lucide-react";
-import { useFilteredPackageQuery } from "@/queries/package.query";
 
 import SearchBar2 from "@/components/explore/SearchBar2";
-import SelectInput from "@/components/input/SelectInput";
-import {Button} from "@/components/ui/Button"
+import { PackageCard } from "@/components/package/PackageCard.jsx";
+import { FilterPanel } from "@/components/explore/FilterPanel.jsx";
+import { useExploreState, TABS } from "@/hooks/useExploreState";
 
-import {PackageCard} from "@/components/package/PackageCard.jsx"
+// Animation variants
+const container = {
+    hidden: {},
+    show: { transition: { staggerChildren: 0.05 } }
+};
 
+const childPackage = {
+    hidden: { y: 50 },
+    show: { y: 0 }
+};
 
-const FILTER_OPTIONS = [
-    {label: "Recommended", value: "recommended"},
-    {label: "Ascending", value: "ascending"},
-    {label: "Descending", value: "descending"},
-]
+const childGuide = {
+    hidden: { y: 50 },
+    show: { y: -36 }
+};
 
-const REGIONS = [
-    "Everest", "Annapurna", "Langtang", "Manaslu", "Mustang",
-    "Kanchenjunga", "Dhaulagiri", "Dolpo", "Rara", "Chitwan",
-];
-
-const ACTIVITIES = [
-    "trekking", "camping", "climbing", "rafting", "paragliding",
-    "cycling", "cultural", "wildlife", "photography", "yoga",
-];
-
-
-function FilterPill({ label, active, onClick }) {
-    return (
-        <button
-            onClick={onClick}
-            className={`text-xs px-3 py-1.5 rounded-full border transition-all duration-75 ease-in-out cursor-pointer whitespace-nowrap ${
-                active
-                    ? "bg-primary text-white border-primary"
-                    : "bg-secondary/75 text-text/70 border-black/10 hover:border-green-600 hover:text-primary"
-            }`}
-        >
-            {label}
-        </button>
-    );
-}
-
-
-function Filters({filter, setFilter}) {
-
-    const toggleFilter = (type, value) => {
-        setFilter(prev => {
-            const current = prev[type]; // "regions" or "activities"
-            const exists = current.includes(value);
-            return {
-                ...prev,
-                [type]: exists
-                    ? current.filter(item => item !== value)
-                    : [...current, value]
-            };
-        });
-    };
-
-    return (
-        <motion.section
-            initial={{ height: 0 }}
-            animate={{ height: "16rem" }}
-            exit={{ height: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="w-full flex flex-col gap-4 px-4 overflow-hidden relative"
-        >
-            <section
-                className="flex flex-col justify-start gap-2"
+// Sub component
+const SearchPanel = ({ search, onChange, showFilters, setShowFilters, filter, setFilter }) => (
+    <motion.section className="flex flex-col gap-8">
+        <div className="flex gap-4 items-center">
+            <SearchBar2 value={search} onChange={onChange} />
+            <button
+                className={`flex items-center gap-2 text-sm px-4 py-2 border rounded-lg cursor-pointer hover:border-primary ${
+                    showFilters ? "border-primary bg-primary text-white/75" : "border-secondary/75 bg-primary/15"
+                }`}
+                onClick={() => setShowFilters(prev => !prev)}
             >
-                <span className="text-text/65 text-xs pl-2" > Regions </span>
+                <SlidersHorizontal size={14} />
+                <span>Filters</span>
+            </button>
+        </div>
+        <AnimatePresence>
+            {showFilters && <FilterPanel filter={filter} setFilter={setFilter} />}
+        </AnimatePresence>
+    </motion.section>
+);
 
-                <div className="flex flex-wrap gap-2" >
-                    {REGIONS.map((item, index) => (
-                        <FilterPill
-                            key={index}
-                            label={item}
-                            active={filter.regions.includes(item)}
-                            onClick={() => toggleFilter("regions", item)}
-                        />
-                    ))}
-                </div>
-
-            </section>
-
-            <section
-                className="flex flex-col justify-start gap-2"
+const AnimatedTabWord = ({ word, variants, isActive }) => (
+    <motion.div
+        variants={container}
+        initial="hidden"
+        animate={isActive ? "show" : "hidden"}
+    >
+        {word.split("").map((char, index) => (
+            <motion.span
+                key={index}
+                variants={variants}
+                className="inline-block"
+                transition={{ type: "spring", stiffness: 80, damping: 10 }}
             >
-                <span className="text-text/65 text-xs pl-2" > Activities </span>
+                {char}
+            </motion.span>
+        ))}
+    </motion.div>
+);
 
-                <div className="flex flex-wrap gap-2" >
-                    {ACTIVITIES.map((item, index) => (
-                        <FilterPill
-                            key={index}
-                            label={item}
-                            active={filter.activities.includes(item)}
-                            onClick={() => toggleFilter("activities", item)}
-                        />
-                    ))}
-                </div>
-            </section>
+// Main Page
+export default function ExplorePage() {
+    const {
+        tab, handleTabChange,
+        currentSearch, handleSearchWords,
+        currentFilter, setCurrentFilter,
+        currentShowFilters, setCurrentShowFilters,
+        data, isLoading,
+    } = useExploreState();
 
-        </motion.section>
-    );
-}
+    return (
+        <section className="h-full flex flex-col items-center gap-20">
 
+            <section className="px-4 md:px-8 lg:px-16 w-7/12 mx-auto flex flex-col gap-8">
 
-export default function ExplorePage(){
-    const [page, setPage] = useState(1);
-    const [search, setSearch] = useState("");
-    const [showFilters, setShowFilters] = useState(false);
-    const [sortBy, setSortBy] = useState(FILTER_OPTIONS[0].value);
-
-    // filter states
-    const [filter, setFilter] = useState({regions: [], activities: []})
-    const {data, isLoading} = useFilteredPackageQuery(filter);
-
-    console.log(data)
-
-    return(
-        <section
-            className="h-full flex flex-col items-center gap-20"
-        >
-
-            {/*Search panel*/}
-            <section className="px-4 md:px-8 lg:px-16 w-7/12  mx-auto ">
+                {/* Header */}
                 <motion.header
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4 }}
-                    className="mb-8 "
                 >
-                    <h1 className="text-3xl font-semibold text-text mb-1">Explore Packages</h1>
+                    <h1 className="text-3xl font-semibold text-text flex items-center gap-2">
+                        Explore
+                        <div className="relative capitalize text-primary h-8 w-44 overflow-hidden">
+                            <AnimatedTabWord word={TABS.package} variants={childPackage} isActive={tab === TABS.package} />
+                            <AnimatedTabWord word={TABS.guide} variants={childGuide} isActive={tab === TABS.guide} />
+                        </div>
+                    </h1>
                     <p className="text-sm text-text/55">
-                        {isLoading ? "Loading..." : `${data?.total || 0} packages available`}
+                        {isLoading ? "Loading..." : `${data?.total || 0} ${tab}s available`}
                     </p>
                 </motion.header>
 
-                <motion.section className="flex flex-col gap-8 ">
-                    <div className="flex gap-4 items-center">
-                        <SearchBar2
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
-
-                        <button
-                            className={`flex items-center justify-between gap-2 cursor-pointer text-text/75 text-sm px-2 py-1 border rounded-lg hover:bg-primary hover:text-white/75 ${ showFilters ? "border-primary bg-primary text-white/75" : "border-secondary/75 bg-primary/15" }`}
-                            onClick={() => setShowFilters((prev) => !prev)}
-                        >
-                            <SlidersHorizontal size={14} />
-                            <span>
-                                Filters
-                            </span>
-                        </button>
-
-                        <SelectInput
-                            className="w-44"
-                            optionObjArray={FILTER_OPTIONS}
-                            value={sortBy}
-                            handleChange={(e) => setSortBy(e.target.value)}
-                        />
+                {/* Tabs */}
+                <motion.section
+                    className="w-full h-12 flex flex-col justify-end gap-1 overflow-hidden"
+                    initial={{ width: 0 }}
+                    animate={{ width: "100%" }}
+                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                >
+                    <div className="flex gap-2">
+                        {Object.keys(TABS).map(_tab => (
+                            <button
+                                key={_tab}
+                                onClick={() => handleTabChange(_tab)}
+                                className={`${tab === _tab ? "bg-primary/25" : ""} hover:bg-primary/15 px-4 py-2 rounded-lg cursor-pointer capitalize`}
+                            >
+                                {_tab}
+                            </button>
+                        ))}
                     </div>
-
-                    {/*filter section*/}
-                    <AnimatePresence>
-                        {showFilters && <Filters filter={filter} setFilter={setFilter} />} 
-                    </AnimatePresence>
-
+                    <div className="w-full h-0.5 bg-secondary rounded-full" />
                 </motion.section>
+
+                {/* Search and Filters */}
+                <SearchPanel
+                    search={currentSearch}
+                    onChange={handleSearchWords}
+                    showFilters={currentShowFilters}
+                    setShowFilters={setCurrentShowFilters}
+                    filter={currentFilter}
+                    setFilter={setCurrentFilter}
+                />
+
             </section>
 
-            {/*Render actual packages here*/}
-
-            <section
-                className="grid gap-14 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 w-full justify-items-center"
-            >
-                {
-                    isLoading ?
-                    <h1> Loading </h1>
-                    :
-                    data.docs.map((pkg, index)=> <PackageCard  key={index} item={pkg} /> )
+            {/* Results grid */}
+            <section className="grid gap-14 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 w-full justify-items-center">
+                {isLoading
+                    ? <h1>Loading</h1>
+                    : data?.docs?.map(item => <PackageCard key={item._id} item={item} />)
                 }
             </section>
 
         </section>
-    )
+    );
 }

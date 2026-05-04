@@ -12,14 +12,11 @@ import {useGetMe} from "@/queries/auth.query";
 
 
 function NavbarUserSect(){
-
     const {data, isLoading, isError, error} = useGetMe();
-
-    console.log("Navbar: ",data);
 
     return(
         <section
-            className={`flex items-center gap-4`}
+            className={`flex items-center gap-3`}
         >
             <div className="flex text-text cursor-pointer hover:bg-secondary p-2 rounded-md" >
                 <ThemeToggle />
@@ -28,23 +25,23 @@ function NavbarUserSect(){
                 data ? 
                 <>
                     <Link href={"/chat"} className="text-text  hover:bg-secondary p-2 rounded-md" >
-                        <MessageCircle  />
+                        <MessageCircle size={20} />
                     </Link>
 
                     <Link href={"/notification"} className="text-text hover:bg-secondary p-2 rounded-md" >
-                        <Bell size={25} />
+                        <Bell size={20} />
                     </Link>
 
                     <div
-                        className="border-4 border-primary rounded-full cursor-pointer"
+                        className="border-2 border-primary rounded-full cursor-pointer hover:bg-primary"
                     >
                         <Image 
-                          src={data.profilePicture.src} 
+                          src={data?.profilePicture?.src} 
                           unoptimized 
-                          alt={data.name} 
+                          alt={data?.name} 
                           width={40} 
                           height={40}
-                          className="rounded-full object-cover object-center h-8 w-8 border-4 border-transparent"
+                          className="rounded-full object-cover object-center h-6 w-6 border-3 border-transparent"
                         />
                     </div>
                 </>
@@ -67,7 +64,7 @@ function NavbarUserSect(){
 export default function Navbar() {
 
     return (
-        <header className=" flex justify-between items-center bg-secondary/35 dark:bg-secondary/15 backdrop-blur-3xl py-3 px-9 z-50">
+        <header className=" flex justify-between items-center bg-secondary/35 dark:bg-secondary/15 backdrop-blur-3xl py-2 px-9 z-50">
             <NavDropdown />
 
             <NavbarUserSect />

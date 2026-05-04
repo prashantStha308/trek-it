@@ -2,11 +2,13 @@ import { Package } from "../../models/index.js";
 
 import {
     getAll,
-    getById
+    getById,
 } from "../../utils/crud.service.js";
 import ApiResponse from "../../utils/ApiResponse.js";
 import {
     createPackageService,
+    createCustomPackageService,
+    searchPackageService,
     deletePackageService,
     updatePackageService
 } from "./package.service.js";
@@ -14,7 +16,7 @@ import {
 export const createPackage = async (req, res) => {
 
     const pkg = await createPackageService(req.body, req.user._id, req.files);
-    
+
     ApiResponse.success(res, {
         status: 200,
         data: pkg,
@@ -22,17 +24,23 @@ export const createPackage = async (req, res) => {
     })
 }
 
-export const curatePackage = async (req,res) => {
+export const curatePackage = async (req, res) => {
     // curate a custom package based on user's request
 }
 
 export const createCustomPackage = async (req, res) => {
-    // custom request created by guide after discussion with the tourist
+    const pkg = await createCustomPackageService(req.user, req.body, req.files);
+
+    ApiResponse.success(res, {
+        status: 201,
+        data: pkg,
+        message: "Custom package created successfully. The tourist and guide have been notified."
+    });
 }
 
 export const getAllPacakages = async (req, res) => {
     const { limit, page, ...filter } = req.query;
-    
+
     const packages = await getAll(Package, {
         limit, page,
         filter,
@@ -49,6 +57,16 @@ export const getAllPacakages = async (req, res) => {
     });
 }
 
+export const searchPackages = async (req, res) => {
+    const pkg = await searchPackageService(req.query);
+    return ApiResponse.success(res,{
+        data: pkg,
+    })
+}
+
+export const serachPackageInPriceRange = ()=>{
+    // make this later
+}
 
 export const getPackageById = async (req, res) => {
     const pkg = await getById(Package, req.params.packageId, {
@@ -66,7 +84,7 @@ export const getPackageById = async (req, res) => {
 }
 
 export const updatePackage = async (req, res) => {
-    const pkg = await updatePackageService( req.user._id, req.body, req.params.packageId, req.body, req.files);
+    const pkg = await updatePackageService(req.user._id, req.params.packageId, req.body, req.files);
 
     ApiResponse.success(res, {
         data: pkg,

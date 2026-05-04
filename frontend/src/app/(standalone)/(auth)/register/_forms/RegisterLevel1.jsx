@@ -136,7 +136,7 @@ export default function RegisterLevel1({handleNext, handleChange, formData}) {
                 </div>
             </section>
 
-            <Button type={"button"} variant="form" handleClick={handleSubmitPage} > Next </Button>
+            <Button type={"button"} variant="form" onClick={handleSubmitPage} > Next </Button>
 
         </section>
     )

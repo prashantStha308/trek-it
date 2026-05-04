@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import {requiredError} from "../../utils/model.helper.js";
+import { requiredError } from "../../utils/model.helper.js";
 import { PACKAGE_TYPES } from "../../constants/package.constant.js";
 
 const packageSchema = new mongoose.Schema({
@@ -8,7 +8,7 @@ const packageSchema = new mongoose.Schema({
 		required: [true, () => requiredError("Package.name")],
 		trim: true,
 	},
-	description:{
+	description: {
 		type: String,
 		required: [true, () => requiredError("Package.description")],
 	},
@@ -16,6 +16,16 @@ const packageSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',
 		required: [true, () => requiredError("Package.guide")],
+	},
+	tourist: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
+		default: null,
+	},
+	customRequest: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'CustomRequest',
+		default: null,
 	},
 	collaborators: [{
 		type: mongoose.Schema.Types.ObjectId,
@@ -62,7 +72,7 @@ const packageSchema = new mongoose.Schema({
 	},
 	maxGroupSize: {
 		type: Number,
-		required: [true, ()=> requiredError("Package.maxGroupSize")]
+		required: [true, () => requiredError("Package.maxGroupSize")]
 	},
 	daysAlloted: {
 		type: Number,
@@ -82,7 +92,7 @@ const packageSchema = new mongoose.Schema({
 	// 	isOpen: { type: Boolean, default: true }
 	// }],
 
-	rating:{
+	rating: {
 		type: Number,
 		min: 0,
 		max: 5,
@@ -102,7 +112,7 @@ const packageSchema = new mongoose.Schema({
 			default: ""
 		}
 	}],
-	thumbnail:{
+	thumbnail: {
 		type: String,
 		default: ""
 	},

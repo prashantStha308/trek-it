@@ -11,8 +11,6 @@ export default function ChatList() {
 
     const { data: currentUser, isLoading, isPending, isError, error } = useGetMe();
 
-    console.log(currentUser);
-
     const { chats, activeChatId, } = useChatStore(useShallow(store => ({
         chats: store.chats,
         activeChatId: store.activeChatId,
@@ -49,10 +47,10 @@ export default function ChatList() {
                     <h1
                         className="text-base font-medium"
                     >
-                        {currentUser.name}
+                        {currentUser?.name}
                     </h1>
                     <span className="capitalize text-sm font-light text-text/60" >
-                        {currentUser.role}
+                        {currentUser?.role}
                     </span>
                 </article>
             </footer>

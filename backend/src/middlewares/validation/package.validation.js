@@ -5,7 +5,7 @@ import { trimEscapeOptional, mongoIdParam } from './validation.helpers.js';
 export const validatePackageBody = [
     body('name').notEmpty().withMessage('name is required').trim().escape(),
     body('description').notEmpty().withMessage('description is required').trim(),
-    body('type').isIn(PACKAGE_TYPES).withMessage(`type must be one of: ${PACKAGE_TYPES.join(', ')}`),
+    body('type').optional().isIn(PACKAGE_TYPES).withMessage(`type must be one of: ${PACKAGE_TYPES.join(', ')}`),
     body('startingPrice').isFloat({ min: 10 }).withMessage('startingPrice must be at least 10'),
     body('maxGroupSize').optional().isInt({ min: 1 }),
     body('daysAlloted').isInt({ min: 1 }).withMessage('daysAlloted must be at least 1'),
@@ -20,6 +20,11 @@ export const validatePackageBody = [
     body('dates.*.date').isISO8601().withMessage('dates.*.date must be a valid date'),
     body('dates.*.spotsTotal').isInt({ min: 1 }),
     body('dates.*.spotsLeft').isInt({ min: 0 }),
+];
+
+export const validateCustomPackageMeta = [
+    body('tourist').optional().isMongoId().withMessage('tourist must be a valid MongoDB ObjectId'),
+    body('customRequest').optional().isMongoId().withMessage('customRequest must be a valid MongoDB ObjectId'),
 ];
 
 export const validatePackageQuery = [

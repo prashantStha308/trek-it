@@ -14,7 +14,7 @@ export const Button = ({ variant = "outline", type="button", onClick, children  
 
     return (
         <button
-            className={`border rounded-lg px-4 cursor-pointer focus:outline-1 transition-colors ${variants[variant] ?? variants.default} flex items-center justify-between gap-2`}
+            className={`border rounded-lg px-4 cursor-pointer focus:outline-1 transition-colors ${variants[variant] ?? variants.default} flex items-center justify-between gap-2 flex justify-center`}
             type={type}
             onClick={onClick}
         >

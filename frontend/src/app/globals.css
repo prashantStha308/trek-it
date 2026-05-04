@@ -11,7 +11,7 @@
   --color-primary-dark: #9dd926;
   --color-secondary-dark: #15426f;
   --color-accent-dark: #411ea9;
-  --color-background-dark: #030f11;
+  --color-background-dark: #050f0a;
   --color-text-dark: #f8fcee;
   --color-border-dark: #dddbff73;
 }
@@ -20,7 +20,7 @@
   --color-primary: #9dd926;
   --color-secondary: #15426f;
   --color-accent: #411ea9;
-  --color-background: #030f11;
+  --color-background: #050f0a;
   --color-text: #f8fcee;
   --color-border: #15426f;
 }

@@ -33,8 +33,8 @@ const PackageList = ({label = "Packages", query, ...props}) => {
             >
                 {
                     // pkgs.slice(0,4).map((p, index) => (
-                    data?.docs?.map((p, index) => (
-                        <PackageCard item={p} key={index} />
+                    data?.docs?.map((pkg, index) => (
+                        <PackageCard item={pkg} key={index} />
                     ))
                 }
             </section>

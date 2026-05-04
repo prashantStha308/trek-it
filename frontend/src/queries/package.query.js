@@ -8,34 +8,28 @@ import {
     getAllPackages,
     getPackageById,
     updatePackage,
-    deletePackage
+    deletePackage,
+    searchPackages
 } from "@/api/package.api";
 
- 
+
 export const useGetAllPackages = ({
     limit = 10,
     page = 1,
     ...filter
-} = {}) => {
+}, options = {}) => {
     return useQuery({
         queryKey: ["packages", { limit, page, ...filter }],
         queryFn: () => getAllPackages({ limit, page, ...filter }),
-    })
-}
-
-export const useFilteredPackageQuery = (filters = {})=>{
-    return useQuery({
-        queryKey: ["packages", filters],
-        queryFn: ()=> getAllPackages(filters),
-        enabled: !!filters,
-    })
+        ...options
+    });
 }
 
 export const useGetPackageById = (packageId) => {
     const queryClient = useQueryClient();
 
     const cachedPackage = queryClient.getQueriesData({ queryKey: ["packages"] })
-        .flatMap(([, data]) => data?.packages ?? [])
+        .flatMap(([, data]) => data?.docs ?? [])
         .find(pkg => pkg._id === packageId);
 
     return useQuery({
@@ -46,11 +40,11 @@ export const useGetPackageById = (packageId) => {
     });
 }
 
-export const useSearchQuery = (value) => {
+export const usePackageSearchQuery = (query) => {
     return useQuery({
-        queryKey: ["packageSearch", value],
-        queryFn: () => getAllPackages({ search: value }),
-        enabled: !!value,
+        queryKey: ["package" ,"search" ,query],
+        queryFn: () => searchPackages(query),
+        enabled: !!(query?.name?.length >= 2 || query?.regions?.length || query?.activities?.length),
     })
 }
 

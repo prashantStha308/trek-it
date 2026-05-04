@@ -39,13 +39,13 @@ export const StaggeringBites = ({ top, bottom }) => {
             viewport={{ once: true }}
         >
             <span
-                className="text-3xl text-primary drop-shadow-2xl drop-shadow-primary"
+                className="text-3xl text-primary drop-shadow-2xl drop-shadow-primary/55"
             >
                 {top}
             </span>
 
             <span
-                className="text-3xl text-accent drop-shadow-2xl drop-shadow-accent"
+                className="text-3xl text-accent drop-shadow-2xl drop-shadow-accent/55"
             >
                 {bottom}
             </span>
@@ -74,7 +74,7 @@ export const StaggeringHeroText = () => {
                     return (
                         <motion.button
                             key={index}
-                            className="flex justify-evenly gap-3 items-center uppercase text-green-100  underline bg-primary cursor-pointer leading-none rounded-sm m-0 font-semibold text-2xl shadow-[-3px_3px_5px_0px_var(--color-green-900)] transition-all ease-in duration-75 px-4 py-3"
+                            className="flex justify-evenly gap-3 items-center uppercase text-green-100 bg-primary cursor-pointer leading-none rounded-sm m-0 font-semibold text-2xl shadow-[-3px_3px_5px_0px_var(--color-green-900)] transition-all ease-in duration-75 px-4 py-3"
                             variants={{
                                 visible: { y: 0, transition: { delay: 0.5 * index, duration: 0.15, ease: "easeInOut" } },
                                 rest: { y: "180%", transition: { delay: 0 } },
