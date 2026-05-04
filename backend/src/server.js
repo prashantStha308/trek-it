@@ -5,7 +5,7 @@ import {createServer} from "node:http";
 import cookieParser from "cookie-parser";
 // configs
 import connectDb from './config/db.js';
-import {PORT} from "./config/env.config.js";
+import { PORT, FRONTEND_URL } from "./config/env.config.js";
 import initSocket from "./config/socket.config.js";
 import {routers} from "./config/route.config.js";
 // Middlewares
@@ -16,7 +16,7 @@ const app = express();
 
 // Middlewares
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: FRONTEND_URL,
     credentials: true
 }));
 app.use(express.json({limit: '16kb'}));
