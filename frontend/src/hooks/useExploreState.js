@@ -1,6 +1,9 @@
 import { useState, useRef } from "react";
 import { usePackageSearchQuery, useGetAllPackages } from "@/queries/package.query";
-import { useGuideSearchQuery, useGetAllGuides } from "@/queries/user.query";
+import { useGuideSearchQuery, useGetAllGuides } from "@/queries/guide.query";
+import { useGetRegions, useGetActivities, useGetSpecialities } from "@/queries/meta.query";
+
+
 
 const TABS = {
     package: "package",
@@ -66,6 +69,21 @@ export const useExploreState = () => {
         enabled: isGuideTab && !hasFilters
     });
 
+
+    // Meta
+    const { data: regions, isLoading: regionsLoading, isError: regionsIsError, error: regionsError } = useGetRegions();
+    const { data: activities, isLoading: activitiesLoading, isError: activitiesIsError, error: activitiesError } = useGetActivities({},{
+        enabled: isPackageTab
+    });
+    const { data: specialities, isLoading: specialitiesLoading, isError: specialitiesIsError, error: specialitiesError } = useGetSpecialities({},{ enabled: isGuideTab });
+
+    const metaData = {
+        regions,
+        ...(isPackageTab ? { activities } : { specialities })
+    }
+    const isMetaLoading = regionsLoading || (isPackageTab ? activitiesLoading : specialitiesLoading);
+
+
     const data = isPackageTab
         ? (hasFilters ? packageSearchData : allPackageData)
         : (hasFilters ? guideSearchData : allGuideData);
@@ -109,5 +127,8 @@ export const useExploreState = () => {
         // data
         data,
         isLoading,
+        // metdData
+        metaData,
+        isMetaLoading,
     };
 };

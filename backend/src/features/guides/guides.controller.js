@@ -213,23 +213,11 @@ export const deleteGuide = async (req, res, next) => {
 // ============================================================================================
 // SEARCH GUIDES
 export const searchGuides = async (req, res, next) => {
-    try {
-        const { q } = req.query;
-        const { limit = 10, page = 1 } = req.query;
-
-        const guides = await searchGuidesService(
-            q,
-            parseInt(limit),
-            parseInt(page)
-        );
-
-        ApiResponse.success(res, {
-            data: guides,
-            message: `Search results for '${q}' fetched successfully`
-        });
-    } catch (err) {
-        next(err);
-    }
+    const guides = await searchGuidesService(req.query);
+    ApiResponse.success(res, {
+        data: guides,
+        message: `Search results fetched successfully`
+    });
 };
 
 // ============================================================================================

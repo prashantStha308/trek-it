@@ -4,6 +4,7 @@ import { SlidersHorizontal } from "lucide-react";
 
 import SearchBar2 from "@/components/explore/SearchBar2";
 import { PackageCard } from "@/components/package/PackageCard.jsx";
+import GuideProfileCard from "@/components/guide/GuideProfileCard.jsx";
 import { FilterPanel } from "@/components/explore/FilterPanel.jsx";
 import { useExploreState, TABS } from "@/hooks/useExploreState";
 
@@ -24,7 +25,7 @@ const childGuide = {
 };
 
 // Sub component
-const SearchPanel = ({ search, onChange, showFilters, setShowFilters, filter, setFilter }) => (
+const SearchPanel = ({ search, onChange, showFilters, setShowFilters, filter, setFilter, tab }) => (
     <motion.section className="flex flex-col gap-8">
         <div className="flex gap-4 items-center">
             <SearchBar2 value={search} onChange={onChange} />
@@ -39,7 +40,7 @@ const SearchPanel = ({ search, onChange, showFilters, setShowFilters, filter, se
             </button>
         </div>
         <AnimatePresence>
-            {showFilters && <FilterPanel filter={filter} setFilter={setFilter} />}
+            {showFilters && <FilterPanel filter={filter} setFilter={setFilter} tab={tab} />}
         </AnimatePresence>
     </motion.section>
 );
@@ -62,6 +63,8 @@ const AnimatedTabWord = ({ word, variants, isActive }) => (
         ))}
     </motion.div>
 );
+
+
 
 // Main Page
 export default function ExplorePage() {
@@ -130,10 +133,13 @@ export default function ExplorePage() {
             </section>
 
             {/* Results grid */}
-            <section className="grid gap-14 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 w-full justify-items-center">
+            <section className={`grid gap-14 ${tab === "package" ? "grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5" : "grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6" } w-full justify-items-center`}>
                 {isLoading
                     ? <h1>Loading</h1>
-                    : data?.docs?.map(item => <PackageCard key={item._id} item={item} />)
+                    : tab === "package" ?
+                        data?.docs?.map(item => <PackageCard key={item._id} item={item} />)
+                        :
+                        data?.docs?.map(guide => <GuideProfileCard key={guide._id} guide={guide} />)
                 }
             </section>
 

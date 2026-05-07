@@ -23,10 +23,6 @@ export const getAllGuidesService = async (filters = {}, limit = 10, page = 1) =>
             page,
             filter: filterObject,
             select: "-password",
-            populate: [
-                { path: "collaborations", select: "name description" },
-                { path: "review" }
-            ],
             sort: { rating: -1 }
         });
 
@@ -306,12 +302,8 @@ export const deleteGuideService = async (guideId) => {
 // ============================================================================================
 // SEARCH GUIDES
 export const searchGuidesService = async (query) => {
-    const { limit, page, name, minAge, maxAge, ...filters } = query;
-
-    const filter = {
-        role: "guide",
-        isVerified: true
-    };
+    const { limit = 10, page = 1, name, minAge, maxAge, ...filters } = query;
+    let filter = {};
 
     if (name) {
         const regexOpt = { $regex: name, $options: "i" };
@@ -348,10 +340,6 @@ export const searchGuidesService = async (query) => {
         filter,
         select: "-password",
         sort: { rating: -1 },
-        populate: [
-            { path: "collaborations", select: "name description gender age profilePicture" },
-            { path: "review" }
-        ]
     });
 };
 // ============================================================================================

@@ -2,20 +2,9 @@ import Image from "next/image";
 import { Star } from "lucide-react";
 import { optimizeImageUrl } from "@/utils/utils.helper";
 import Link from "next/link";
-import { Button } from "../ui/Button";
+import { LinkButton } from "../ui/Button";
 import Badge from "@/components/ui/Badge"
 
-const Pill = ({ text, variant = "green" }) => {
-    const styles = {
-        green: "bg-green-100 text-green-800 hover:bg-green-200",
-        teal: "bg-teal-100 text-teal-800 hover:bg-teal-200",
-    };
-    return (
-        <span className={`text-xs px-3 py-0.5 capitalize rounded-full cursor-pointer ${styles[variant]}`}>
-            {text}
-        </span>
-    );
-};
 
 export function PackageCard({ item }) {
 
@@ -81,13 +70,13 @@ export function PackageCard({ item }) {
                             </span>
                         </p>
                     </div>
-                    <Link
+                    
+                    <LinkButton
                         href={`/explore/packages/${item?._id}`}
+                        variant="primary"
                     >
-                        <Button variant="primary">
-                            Book Now 
-                        </Button>
-                    </Link>
+                        Book Now 
+                    </LinkButton>
                 </div>
 
             </div>

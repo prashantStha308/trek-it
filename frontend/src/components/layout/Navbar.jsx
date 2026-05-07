@@ -1,7 +1,7 @@
 "use client"
 
 import ThemeToggle from "./ThemeToggle";
-import { Button } from "../ui/Button";
+import { LinkButton } from "../ui/Button";
 import NavDropdown from "./NavDropdown";
 import Image from "next/image";
 import Link from "next/link";
@@ -48,13 +48,13 @@ function NavbarUserSect(){
                 :
                 <>
 
-                    <Link href={"/login"} >
-                        <Button variant="outline"> Sign In </Button>
-                    </Link>
+                    <LinkButton href={"/login"} variant="outline" >
+                        Sign In
+                    </LinkButton>
 
-                    <Link href={"/register"} >
-                        <Button variant="primary"> Sign Up </Button>
-                    </Link>
+                    <LinkButton href={"/register"} variant="primary" >
+                        Sign Up
+                    </LinkButton>
                 </>
             }
         </section>

@@ -5,12 +5,10 @@ import {
 } from "@tanstack/react-query";
 
 import {
-    getAllUsers,
-    getUserById,
-    updateUser,
-    deleteUser,
+    getAllGuides,
+    getGuideById,
     searchGuides,
-} from "@/api/user.api";
+} from "@/api/guide.api";
 
 export const useGetAllGuides = ({
     limit = 10,
@@ -19,7 +17,7 @@ export const useGetAllGuides = ({
 }, options = {}) => {
     return useQuery({
         queryKey: ["guides", { limit, page, ...filter }],
-        queryFn: () => searchGuides({ limit, page, ...filter }),
+        queryFn: () => getAllGuides({ limit, page, ...filter }),
         ...options
     })
 }
@@ -43,7 +41,7 @@ export const useGetGuideById = (guideId) => {
 export const useGuideSearchQuery = (query) => {
     return useQuery({
         queryKey: ["guide" ,"search" ,query],
-        queryFn: () => searchPackages(query),
-        enabled: !!(query?.name?.length >= 2 || query?.regions?.length || query?.activities?.length),
+    queryFn: () => searchGuides(query),
+        enabled: !!(query?.name?.length >= 2 || query?.regions?.length || query?.specialitiies?.length),
     })
 }
