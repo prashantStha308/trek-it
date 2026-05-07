@@ -32,17 +32,17 @@ const API_ROUTES = {
         LOGOUT: "/auth/logout",
 	},
 	
-    USER: {
-        GET_ALL: (query) => resolveRoute('/users', null, query),
-        GET: (id) => resolveRoute('/users', id),
-        ME: "/users/me",
-        BASE: "/users"
-	},
+    // USER: {
+    //     GET_ALL: (query) => resolveRoute('/users', null, query),
+    //     GET: (id) => resolveRoute('/users', id),
+    //     ME: "/users/me",
+    //     BASE: "/users"
+	// },
 	
 	GUIDE: {
 		GET_ALL: (query) => resolveRoute("/guides", null, query),
-		GET: (id) => resolveRoute("/guide", id),
-        SEARCH: (query) => resolveRoute("/guide/search", null, query),
+		GET: (id) => resolveRoute("/guides", id),
+        SEARCH: (query) => resolveRoute("/guides/search", null, query),
         BASE: "/guides"
 	},
 

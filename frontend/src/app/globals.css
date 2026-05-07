@@ -16,6 +16,15 @@
   --color-border-dark: #dddbff73;
 }
 
+[data-theme="light"] {
+  --color-primary: #38ce27;
+  --color-accent: #3d77ff;
+  --color-secondary: #dddbff;
+  --color-background: #f7fbf8;
+  --color-text: #03160c;
+  --color-border: #dddbff;
+}
+
 [data-theme="dark"] {
   --color-primary: #9dd926;
   --color-secondary: #15426f;
@@ -26,6 +35,11 @@
 }
 
 @variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+body{
+    @apply bg-background;
+}
+
 
 * {
   transition: background-color 0.3s ease, border-color 0.3s ease,

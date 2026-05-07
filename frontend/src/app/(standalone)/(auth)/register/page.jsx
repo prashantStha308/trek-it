@@ -112,24 +112,29 @@ export default function Register() {
     }
 
     const handleChange = ({ target: { name, value } }) => {
+
+        console.log("HandleChange at register: ", {name, value})
+
         if (name.includes(".")) {
             // handle nested object
+            console.log("triggered object include");
             const [parent, child] = name.split(".");
             setFormData(prev => ({
-                ...prev,
-                [parent]: { ...prev[parent], [child]: value }
-            }));
+                    ...prev,
+                    [parent]: { ...prev[parent], [child]: value }
+                }));
 
         } else {
+            console.log("triggered normal include");
             // Normal values
             setFormData(prev => ({ ...prev, [name]: value }));
+
         }
     };
 
     const handleNext = () => {
         if (currentLevel === 2 && formData.role.trim() === "") {
             showToast({title: "Role not defined", message: "Please specify your role"});
-            // throw new Error("Please specify your role");
             return;
         }
 

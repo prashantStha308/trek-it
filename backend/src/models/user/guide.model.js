@@ -40,6 +40,15 @@ const guideSchema = new mongoose.Schema({
 		type: Boolean,
 		default: true	
 	},
+	isTrusted:{
+		type: Boolean,
+		default: false
+	},
+	trekCount:{
+		type: Number,
+		min: 0,
+		default: 0
+	},
 	rating: {
 		type: Number,
 		min: 0,

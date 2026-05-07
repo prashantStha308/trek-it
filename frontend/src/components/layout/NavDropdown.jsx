@@ -11,9 +11,9 @@ const PAGES = [
     { name: "Home", href: "/" },
     { name: "Chat", href: "/chat" },
     { name: "Explore", href: "/explore" },
-    { name: "Guides", href: "/guide" },
-    { name: "Bookings", href: "/booking" },
-    { name: "About", href: "/about" },
+    // { name: "Guides", href: "/guide" },
+    // { name: "Bookings", href: "/booking" },
+    // { name: "About", href: "/about" },
     ...(process.env.NODE_ENV === "development" ? [{ name: "Test", href: "/test" }] : [])
 ]
 

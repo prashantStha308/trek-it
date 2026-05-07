@@ -32,6 +32,10 @@ export default function SelectInput ({
     const handleSelect = (e, option) => {
         e.stopPropagation();
         setOpen(false);
+
+        console.log(e.target);
+        console.log(option);
+
         handleChange({ target: { name, value: option.value, label: option.label } });
     };
 
@@ -71,7 +75,7 @@ export default function SelectInput ({
                     onClick={handleOpen}
                     className="flex items-center justify-between flex-1 outline-none text-text/75 text-sm capitalize whitespace-nowrap gap-2 overflow-hidden"
                 >
-                    <span className="truncate">{value.label || "Select..."}</span>
+                    <span className="truncate">{value || "Select..."}</span>
                     <ChevronDown
                         size={16}
                         className={`transition-transform duration-150 shrink-0 ${open ? "rotate-180" : ""}`}

@@ -123,9 +123,9 @@ export default function RegisterLevel1({handleNext, handleChange, formData}) {
                         name={"gender"}
                         label={"Gender"}
                         optionObjArray={[
-                            { label: "Male", value: "male" },
-                            { label: "Female", value: "female" },
-                            { label: "Others", value: "others" },
+                            { label: "Male", value: "male"},
+                            { label: "Female", value: "female"},
+                            { label: "Others", value: "others"},
                         ]}
                         handleChange={handleChange}
                         value={formData.gender}
