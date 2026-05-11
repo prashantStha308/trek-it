@@ -39,13 +39,13 @@ export const StaggeringBites = ({ top, bottom }) => {
             viewport={{ once: true }}
         >
             <span
-                className="text-3xl text-primary drop-shadow-2xl drop-shadow-primary/55"
+                className="text-3xl text-primary "
             >
                 {top}
             </span>
 
             <span
-                className="text-3xl text-accent drop-shadow-2xl drop-shadow-accent/55"
+                className="text-3xl text-accent "
             >
                 {bottom}
             </span>
@@ -74,7 +74,7 @@ export const StaggeringHeroText = () => {
                     return (
                         <motion.button
                             key={index}
-                            className="flex justify-evenly gap-3 items-center uppercase text-green-100 bg-primary cursor-pointer leading-none rounded-sm m-0 font-semibold text-2xl shadow-[-3px_3px_5px_0px_var(--color-green-900)] transition-all ease-in duration-75 px-4 py-3"
+                            className="relative flex justify-evenly gap-3 items-center uppercase text-green-100 bg-primary hover:bg-primary/75 cursor-pointer leading-none rounded-sm m-0 font-semibold text-2xl transition-all ease-in duration-75 px-4 py-3"
                             variants={{
                                 visible: { y: 0, transition: { delay: 0.5 * index, duration: 0.15, ease: "easeInOut" } },
                                 rest: { y: "180%", transition: { delay: 0 } },
@@ -84,13 +84,12 @@ export const StaggeringHeroText = () => {
                                 ease: "easeInOut",
                             }}
                             whileHover={{
-                                boxShadow: "-1px 1px 0px 0px var(--color-green-900)",
                                 transition: { duration: 0.075, ease: "easeIn" } 
                             }}
                             onClick={() => document.getElementById("scrollHere").scrollIntoView({ behavior: "smooth" })}
                         >
                             {word}
-                            <ChevronRight size={25} strokeWidth={4} />
+                                <ChevronRight size={25} strokeWidth={4} />
                         </motion.button>
                     );
                 }
@@ -116,6 +115,8 @@ export const StaggeringHeroText = () => {
     );
 };
 
+
+// Main page
 export default function Home() {
     const packageQuery = useGetAllPackages({ limit: 8, page: 1 });
     
@@ -128,7 +129,7 @@ export default function Home() {
     return (
         <main
             id="home"
-            className="relative w-full min-h-screen pt-16 flex flex-col gap-24"
+            className="relative w-full min-h-screen pt-4 flex flex-col gap-10"
         >
             <section className="relative h-[90vh] overflow-hidden">
                 <Image
@@ -152,12 +153,12 @@ export default function Home() {
 
             </section>
 
-            <section
+{/*            <section
                 id="search-bar"
                 className="w-full flex justify-center"
             >
                 <SearchBar />
-            </section>
+            </section>*/}
 
             <PackageList label={"Package"} query={packageQuery} id="scrollHere" />
 

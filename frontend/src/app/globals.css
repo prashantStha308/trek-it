@@ -14,6 +14,9 @@
   --color-background-dark: #050f0a;
   --color-text-dark: #f8fcee;
   --color-border-dark: #dddbff73;
+
+
+  --font-ubuntu: "Ubuntu", sans-serif;
 }
 
 [data-theme="light"] {
@@ -28,7 +31,7 @@
 [data-theme="dark"] {
   --color-primary: #9dd926;
   --color-secondary: #15426f;
-  --color-accent: #411ea9;
+  --color-accent: #3d77ff;
   --color-background: #050f0a;
   --color-text: #f8fcee;
   --color-border: #15426f;
@@ -36,8 +39,14 @@
 
 @variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
+@font-face { font-family: "Ubuntu"; src: url("/fonts/ubuntu/Ubuntu-Light.ttf") format("truetype"); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: "Ubuntu"; src: url("/fonts/ubuntu/Ubuntu-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Ubuntu"; src: url("/fonts/ubuntu/Ubuntu-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Ubuntu"; src: url("/fonts/ubuntu/Ubuntu-Medium.ttf") format("truetype"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Ubuntu"; src: url("/fonts/ubuntu/Ubuntu-Bold.ttf") format("truetype"); font-weight: 700; font-style: normal; font-display: swap; }
+
 body{
-    @apply bg-background;
+    @apply bg-background font-ubuntu;
 }
 
 

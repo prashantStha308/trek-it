@@ -4,6 +4,7 @@ import { optimizeImageUrl } from "@/utils/utils.helper";
 import Link from "next/link";
 import { LinkButton } from "../ui/Button";
 import Badge from "@/components/ui/Badge"
+import Avatar from "@/components/ui/Avatar";
 
 
 export function PackageCard({ item }) {
@@ -37,14 +38,7 @@ export function PackageCard({ item }) {
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <div className="relative w-6 h-6 rounded-full overflow-hidden shrink-0">
-                        <Image
-                            src={optimizeImageUrl(item?.guide?.profilePicture?.src, 800)}
-                            alt={item?.guide?.name}
-                            fill
-                            className="object-cover"
-                        />
-                    </div>
+                    <Avatar src={item?.guide?.profilePicture?.src} alt={item?.guide?.name} size={"xs"} />
                     <span className="text-xs text-text/75">{item?.guide?.name}</span>
                 </div>
 

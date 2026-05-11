@@ -11,7 +11,8 @@ import { FolderPen } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function TouristLevel3({handleChange, formData}) {
+
+export default function TouristLevel3({handleChange, formData, listItems, isListLoading}) {
 
     const [selected, setSelected] = useState(formData.interests);
 
@@ -48,19 +49,9 @@ export default function TouristLevel3({handleChange, formData}) {
             	<ListBox
                     handleSelect = {toggleSelection}
                     selected={selected}
-    			    listItems = {[
-    	    			    	"list 1",
-    	    			    	"list 2",
-    	    			    	"list 3",
-    	    			    	"list 4",
-    	    			    	"list 5",
-    	    			    	"list 6",
-    	    			    ]}
+    			    listItems = { isListLoading ? [] : listItems }
             	/>
             </section>
-            
-            <Button type={"submit"} variant="form" > Complete Registration </Button>
-
 
         </section>
     )

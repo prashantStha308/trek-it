@@ -6,13 +6,15 @@ import NavDropdown from "./NavDropdown";
 import Image from "next/image";
 import Link from "next/link";
 import { Bell, MessageCircle } from "lucide-react";
-import {optimizeImageUrl} from "@/utils/utils.helper";
+import Avatar from "@/components/ui/Avatar";
 
-import {useGetMe} from "@/queries/auth.query";
+import {optimizeImageUrl} from "@/utils/utils.helper";
+import {useGetMe, useLogout} from "@/queries/auth.query";
 
 
 function NavbarUserSect(){
     const {data, isLoading, isError, error} = useGetMe();
+    const logout = useLogout();
 
     return(
         <section
@@ -28,22 +30,19 @@ function NavbarUserSect(){
                         <MessageCircle size={20} />
                     </Link>
 
-                    <Link href={"/notification"} className="text-text hover:bg-secondary p-2 rounded-md" >
+                    <Link href={"/notifications"} className="text-text hover:bg-secondary p-2 rounded-md" >
                         <Bell size={20} />
                     </Link>
 
                     <div
                         className="border-2 border-primary rounded-full cursor-pointer hover:bg-primary"
+                        onClick={ ()=> {
+                            logout.mutate()
+                        } }
                     >
-                        <Image 
-                          src={data?.profilePicture?.src} 
-                          unoptimized 
-                          alt={data?.name} 
-                          width={40} 
-                          height={40}
-                          className="rounded-full object-cover object-center h-6 w-6 border-3 border-transparent"
-                        />
+                        <Avatar src={data?.profilePicture?.src} alt={data?.name} size={"xs"} />
                     </div>
+
                 </>
                 :
                 <>

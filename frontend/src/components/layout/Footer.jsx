@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
+import HDivider from "./HDivider";
 
 const PAGES = [
     { name: "Home", href: "/" },
@@ -29,7 +30,7 @@ export default function Footer() {
         <footer className="bg-background border-t border-border text-text mt-20">
 
             {/* top accent line */}
-            <div className="h-0.5 bg-linear-to-r from-primary via-accent to-primary-dark" />
+            <HDivider />
 
             <div className="max-w-6xl mx-auto px-6 pt-8 pb-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
