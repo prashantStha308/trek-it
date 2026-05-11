@@ -41,8 +41,8 @@ const API_ROUTES = {
 	
 	GUIDE: {
 		GET_ALL: (query) => resolveRoute("/guides", null, query),
-		GET: (id) => resolveRoute("/guide", id),
-        SEARCH: (query) => resolveRoute("/guide/search", null, query),
+		GET: (id) => resolveRoute("/guides", id),
+        SEARCH: (query) => resolveRoute("/guides/search", null, query),
         BASE: "/guides"
 	},
 

@@ -2,10 +2,12 @@
 import { motion, AnimatePresence } from "motion/react";
 import { SlidersHorizontal } from "lucide-react";
 
-import SearchBar2 from "@/components/explore/SearchBar2";
+import SearchBar from "@/components/explore/SearchBar";
 import { PackageCard } from "@/components/package/PackageCard.jsx";
+import GuideProfileCard from "@/components/guide/GuideProfileCard.jsx";
 import { FilterPanel } from "@/components/explore/FilterPanel.jsx";
 import { useExploreState, TABS } from "@/hooks/useExploreState";
+
 
 // Animation variants
 const container = {
@@ -24,13 +26,13 @@ const childGuide = {
 };
 
 // Sub component
-const SearchPanel = ({ search, onChange, showFilters, setShowFilters, filter, setFilter }) => (
+const SearchPanel = ({ search, onChange, showFilters, setShowFilters, filter, setFilter, tab, metaData, isMetaLoading }) => (
     <motion.section className="flex flex-col gap-8">
         <div className="flex gap-4 items-center">
-            <SearchBar2 value={search} onChange={onChange} />
+            <SearchBar value={search} onChange={onChange} />
             <button
                 className={`flex items-center gap-2 text-sm px-4 py-2 border rounded-lg cursor-pointer hover:border-primary ${
-                    showFilters ? "border-primary bg-primary text-white/75" : "border-secondary/75 bg-primary/15"
+                    showFilters ? "border-primary bg-primary text-white/75" : "border-secondary/75 bg-primary/5"
                 }`}
                 onClick={() => setShowFilters(prev => !prev)}
             >
@@ -39,7 +41,7 @@ const SearchPanel = ({ search, onChange, showFilters, setShowFilters, filter, se
             </button>
         </div>
         <AnimatePresence>
-            {showFilters && <FilterPanel filter={filter} setFilter={setFilter} />}
+            {showFilters && <FilterPanel filter={filter} setFilter={setFilter} tab={tab} metaData={metaData} isMetaLoading={isMetaLoading} />}
         </AnimatePresence>
     </motion.section>
 );
@@ -63,6 +65,8 @@ const AnimatedTabWord = ({ word, variants, isActive }) => (
     </motion.div>
 );
 
+
+
 // Main Page
 export default function ExplorePage() {
     const {
@@ -71,6 +75,7 @@ export default function ExplorePage() {
         currentFilter, setCurrentFilter,
         currentShowFilters, setCurrentShowFilters,
         data, isLoading,
+        metaData, isMetaLoading,
     } = useExploreState();
 
     return (
@@ -84,7 +89,7 @@ export default function ExplorePage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4 }}
                 >
-                    <h1 className="text-3xl font-semibold text-text flex items-center gap-2">
+                    <h1 className="text-3xl font-semibold text-accent flex items-center gap-2">
                         Explore
                         <div className="relative capitalize text-primary h-8 w-44 overflow-hidden">
                             <AnimatedTabWord word={TABS.package} variants={childPackage} isActive={tab === TABS.package} />
@@ -108,7 +113,7 @@ export default function ExplorePage() {
                             <button
                                 key={_tab}
                                 onClick={() => handleTabChange(_tab)}
-                                className={`${tab === _tab ? "bg-primary/25" : ""} hover:bg-primary/15 px-4 py-2 rounded-lg cursor-pointer capitalize`}
+                                className={`${tab === _tab ? "bg-primary/25 text-accent font-semibold " : ""} hover:bg-primary/15 px-4 py-2 rounded-lg cursor-pointer capitalize`}
                             >
                                 {_tab}
                             </button>
@@ -125,15 +130,20 @@ export default function ExplorePage() {
                     setShowFilters={setCurrentShowFilters}
                     filter={currentFilter}
                     setFilter={setCurrentFilter}
+                    metaData={metaData} isMetaLoading={isMetaLoading}
+                    tab={tab}
                 />
 
             </section>
 
             {/* Results grid */}
-            <section className="grid gap-14 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 w-full justify-items-center">
+            <section className={`grid gap-14 ${tab === "package" ? "grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5" : "grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6" } w-full justify-items-center`}>
                 {isLoading
                     ? <h1>Loading</h1>
-                    : data?.docs?.map(item => <PackageCard key={item._id} item={item} />)
+                    : tab === "package" ?
+                        data?.docs?.map(item => <PackageCard key={item._id} item={item} />)
+                        :
+                        data?.docs?.map(guide => <GuideProfileCard key={guide._id} guide={guide} />)
                 }
             </section>
 

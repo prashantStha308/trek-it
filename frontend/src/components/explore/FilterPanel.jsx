@@ -1,5 +1,5 @@
 import {motion} from "motion/react";
-import { useGetRegions, useGetActivities } from "@/queries/meta.query";
+import { useExploreState, TABS } from "@/hooks/useExploreState";
 
 
 export const FilterPill = ({ label, active, onClick }) => {
@@ -27,19 +27,18 @@ export const FilterPillSkeleton = ()=>{
 }
 
 
-export const FilterPanel = ({filter, setFilter}) => {
+export const FilterPanel = ({filter, setFilter, tab}) => {
 
     // Queries
-    const { data: regions, isLoading: regionsLoading, isError: regionsIsError, error: regionsError } = useGetRegions();
-    const { data: activities, isLoading: activitiesLoading, isError: activitiesIsError, error: activitiesError } = useGetActivities();
+    const { metaData, isMetaLoading } = useExploreState();
 
-    console.log("regions res: ", regions);
-    console.log("activities res: ", activities);
+    // console.log("regions res: ", regions);
+    // console.log("activities res: ", activities);
 
 
     const toggleFilter = (type, value) => {
         setFilter(prev => {
-            const current = prev[type];
+            const current = prev[type] ?? []; 
             const exists = current.includes(value);
             return {
                 ...prev,
@@ -62,14 +61,14 @@ export const FilterPanel = ({filter, setFilter}) => {
                 <span className="text-text/65 text-xs pl-2">Regions</span>
                 <div className="flex flex-wrap gap-2">
                     {
-                        regionsLoading ? 
+                        isMetaLoading ? 
                         "Loading..." 
                         :
-                        regions.map((item, index) => (
+                        metaData.regions.map((item, index) => (
                             <FilterPill
                                 key={index}
                                 label={item}
-                                active={filter.regions.includes(item)}
+                                active={filter?.regions?.includes(item)}
                                 onClick={() => toggleFilter("regions", item)}
                             />
                         ))
@@ -78,18 +77,26 @@ export const FilterPanel = ({filter, setFilter}) => {
             </section>
 
             <section className="flex flex-col justify-start gap-2">
-                <span className="text-text/65 text-xs pl-2">Activities</span>
+                <span className="text-text/65 text-xs pl-2">
+                    {tab === TABS.package ? "Activities" : "Specialities"}
+                </span>
+
                 <div className="flex flex-wrap gap-2">
-                    {
-                        activitiesLoading ?
-                        "Loading..."
-                        :
-                        activities.map((item, index) => (
+                    {tab === TABS.package
+                        ? metaData?.activities?.slice(0,11).map((item, index) => (
                             <FilterPill
                                 key={index}
                                 label={item}
-                                active={filter.activities.includes(item)}
+                                active={filter?.activities?.includes(item)}
                                 onClick={() => toggleFilter("activities", item)}
+                            />
+                        ))
+                        : metaData?.specialities?.slice(0,11).map((item, index) => (
+                            <FilterPill
+                                key={index}
+                                label={item}
+                                active={filter?.specialities?.includes(item)}
+                                onClick={() => toggleFilter("specialities", item)}
                             />
                         ))
                     }

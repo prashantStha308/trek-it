@@ -1,155 +1,115 @@
 import Image from "next/image";
+import { Dot, HeartHandshake, Check } from "lucide-react";
 import { optimizeImageUrl } from "@/utils/utils.helper";
-import { Star } from "lucide-react";
+import { LinkButton } from "../ui/Button";
+import Badge from "@/components/ui/Badge"
+import Avatar from "@/components/ui/Avatar";
 
 
+export default function PackageCard({guide}){
 
-const RatingStar = ({ rating, size = 15 }) => {
-  // clamp rating between 0 and 5
-  const clamped = Math.max(0, Math.min(5, rating));
-  const fillPercent = (clamped / 5) * 100;
+    const isAvailable = guide?.isAvailable ?? false ;
+    const isTrusted = guide?.isTrusted ?? false;
+    const isVerified = guide?.isVerified ?? false;
+    const languages = guide?.languages.slice(0,4) ?? [];
+    const regions = guide?.regions.slice(0,4) ?? [];
 
-  return (
-    <div
-      className="relative inline-block"
-      style={{ width: size, height: size }}
-    >
-      {/* Empty star */}
-      <Star
-        size={size}
-        className="text-neutral-400"
-      />
+    return(
+        <section className="w-56 md:w-60 lg:w-64 xl:w-72 2xl:w-80 rounded-lg px-4 py-2 overflow-hidden flex flex-col rounded-t-lg">
 
-      {/* Filled part */}
-      <div
-        className="absolute top-0 left-0 overflow-hidden"
-        style={{ width: `${fillPercent}%` }}
-      >
-        <Star
-          size={size}
-          className="text-yellow-400 fill-yellow-400"
-        />
-      </div>
-    </div>
-  );
-};
+            <header className="relative w-full py-2 flex flex-col items-center gap-1 bg-secondary/75 rounded-t-lg border border-border border-b-transparent"  >
 
-const LanguageList = ({guide}) => {
-    return (
-        <div className='text-xs text-neutral-600 flex gap-1' >
-            {
-                guide.languages.length > 3 ?
-                    (
-                        <>
-                            { guide.languages.slice(0, 3).map((item, index) => (
-                                <span
-                                    key={index}
-                                    className='bg-neutral-300 rounded-full px-2 py-1 hover:bg-neutral-400 hover:text-neutral-700 cursor-pointer'
-                                >
-                                    {item }
-                                </span>
-                            ))}
-                            < span
-                                className='bg-neutral-300 rounded-full px-2 py-1 hover:bg-neutral-400 hover:text-neutral-700 cursor-pointer'
-                            >
-                            +{guide.languages.length - 3}
-                            </span>
-                        </>
-                    )
-                :
-
-                guide.languages.map((item, index) => (
-                    <span
-                        key={index}
-                        className='bg-neutral-300 rounded-full px-2 py-1 hover:bg-neutral-400 hover:text-neutral-700 cursor-pointer'
-                    >
-                        {item }
-                    </span>
-                ) )
-            }
-        </div>
-    )
-}
-
-
-const GuideProfileCard = () => {
-
-    const guide = {
-        _id: '69f2f8ef9f4ef64690da7aed',
-        name: 'Anita Shrestha',
-        email: 'guide31777531115539@trek.com',
-        profilePicture: {
-            src: 'https://res.cloudinary.com/dgcak4aqm/image/upload/v1777531118/image/u1kmdmag9ehiqbou2nqe.jpg',
-            publicId: 'image/u1kmdmag9ehiqbou2nqe'
-        },
-        role: 'guide',
-        gender: 'female',
-        age: 50,
-        address: { country: 'nepal' },
-        languages: [ 'english', 'nepali' ],
-        regions: [ 'Everest', 'Annapurna' ],
-        collaborations: [],
-        specialities: [],
-        packageCount: 0,
-        isVerified: false,
-        isAvailable: true,
-        rating: 0,
-        daysBooked: [],
-    }
-
-    return (
-        <div className="relative max-w-sm min-h-96 rounded-sm shadow-neutral-400 shadow-md ">
-
-            {/* Availability indicator */}
-            <div
-                className={` absolute top-4 left-4 w-4 h-4 rounded-full ${guide.isAvailable ? "bg-green-500" : "bg-red-500"}`}
-            ></div>
-            
-            <Image
-                src={ optimizeImageUrl(guide.profilePicture.src, 800) } alt={guide.name}
-                width={400}
-                height={400}
-                className="w-full h-72 aspect-video object-cover object-center"
-            />
-            <div className="px-6 py-4 flex flex-col gap-4 ">
-                
-                <div className='flex flex-col gap-1.5' >
-                    <div className='flex justify-between items-center gap-2' >
-                        
-                        <div className="font-semibold text-sm ">
-                            {guide.name} · { guide.gender ? guide?.gender.at(0)?.toUpperCase() : ""} · {guide.age}
-                            {/* {guide.name} · M · {guide.age} */}
+                <div className="flex justify-end w-full relative px-3" >
+                    <Badge variant={isAvailable ? "green" : "amber" } size={"xs"} >
+                        <div className="flex gap-1 items-center" >
+                            <div className={`${isAvailable ? "bg-primary" : "bg-red-500" } w-2 h-2 rounded-full `} />
+                            <span> {isAvailable ? "Available" : "Unavailable" } </span>
                         </div>
-                    </div>
-                    
-                    {/* Location and ratings */}
-                    <div className='text-xs font-medium text-neutral-600 flex justify-between items-center' >
-                        <div className=' ' >
-                            <span>📍</span> {guide.address.country}
-                        </div>
-
-                        <div className='flex flex-col items-center gap-0.5' >
-                            <RatingStar rating={guide.rating} size={18} />
-                            {guide.rating}
-                        </div>
-                    </div>
-                    
-                    <LanguageList guide={guide} />
+                    </Badge>               
                 </div>
 
-                <p className="text-gray-700 text-xs line-clamp-2">
-                    {guide.bio}
-                </p>
+                <Avatar
+                    src={guide?.profilePicture.src}
+                    alt={guide?.name || "Profile Picture"}
+                    size={"lg"}
+                />
 
-                <button
-                    className="inline-flex items-center text-white bg-blue-500 box-border border border-blue-500 hover:bg-white hover:text-blue-500 focus:ring-1 shadow-xs font-medium leading-5 rounded-md text-sm px-4 py-1.5 focus:outline-none cursor-pointer transition-all duration-100 ease-in-out "
-                >
-                    Book Guide
-                    <svg className="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 12H5m14 0-4 4m4-4-4-4"/></svg>
-                </button>
-            </div>
-        </div>
+                <div className="flex justify-start w-full relative px-3" >
+                {
+                    isTrusted && (
+                        <Badge variant="blue"  size={"xs"} >
+                            <div className="flex gap-1 items-center " >
+                                <HeartHandshake size={14} />
+                                <span> Trusted </span>
+                            </div>
+                        </Badge> 
+                    )
+                }
+                </div>
+            </header>
+
+            <section
+                className="bg-white dark:bg-slate-700/15 w-full min-h-24 flex flex-col gap-4 px-4 py-2 pb-4 rounded-b-lg border border-border border-t-transparent "
+            >
+                <article className="flex flex-col gap-1" >
+                    <div className="text-sm text-text flex items-center justify-between " >
+                        <span>{guide?.name}</span>
+
+                        {
+                            isVerified && (
+                                    <Badge variant="green"  size={"xs"} >
+                                        <Check size={13} />
+                                        <span>Verified</span>
+                                    </Badge> 
+                            )
+                        }
+                    </div>
+
+                    <div className="capitalize  text-xs text-text/75 flex items-center" >
+                        <span> {guide?.gender} </span>
+                        <Dot size={15}  />
+                        <span> {guide?.age} Yrs </span>
+                        <Dot size={15}  />
+                        <span> {guide?.address.country} </span>
+                    </div>
+                </article>
+
+                <article className="flex gap-1 flex-wrap" >
+                    {
+                        languages?.map((bdg, index)=>(
+                            <Badge key={index} variant={"green"} size={"xs"} > {bdg} </Badge>
+                        ))
+                    }
+
+                    {
+                        regions?.map((bdg, index)=>(
+                            <Badge key={index} variant={"blue"} size={"xs"} > {bdg} </Badge>
+                        ))
+                    }
+                </article>
+
+                <article className="flex justify-between items-center">
+                    <div className="flex flex-col items-center gap-0.5 bg-secondary/45 px-5 py-1 rounded-md ">
+                        <span className="text-[10px] text-text/60 uppercase tracking-wide">Ratings</span>
+                        <span className="text-xs font-medium">{guide?.rating}/5</span>
+                    </div>
+
+                    <div className="flex flex-col items-center gap-0.5 bg-secondary/45 px-5 py-1 rounded-md ">
+                        <span className="text-[10px] text-text/60 uppercase tracking-wide"> Treks </span>
+                        <span className="text-xs font-medium"> {guide?.trekCount} </span>
+                    </div>
+
+                </article>
+
+                <LinkButton
+                    variant="primary"
+                    href={`/explore/guide/${guide._id}`}
+                > 
+                    Visit Guide
+                </LinkButton> 
+
+            </section>
+
+        </section>
     )
 }
-
-export default GuideProfileCard

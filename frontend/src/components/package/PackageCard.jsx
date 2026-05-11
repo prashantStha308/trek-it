@@ -2,20 +2,10 @@ import Image from "next/image";
 import { Star } from "lucide-react";
 import { optimizeImageUrl } from "@/utils/utils.helper";
 import Link from "next/link";
-import { Button } from "../ui/Button";
+import { LinkButton } from "../ui/Button";
 import Badge from "@/components/ui/Badge"
+import Avatar from "@/components/ui/Avatar";
 
-const Pill = ({ text, variant = "green" }) => {
-    const styles = {
-        green: "bg-green-100 text-green-800 hover:bg-green-200",
-        teal: "bg-teal-100 text-teal-800 hover:bg-teal-200",
-    };
-    return (
-        <span className={`text-xs px-3 py-0.5 capitalize rounded-full cursor-pointer ${styles[variant]}`}>
-            {text}
-        </span>
-    );
-};
 
 export function PackageCard({ item }) {
 
@@ -48,14 +38,7 @@ export function PackageCard({ item }) {
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <div className="relative w-6 h-6 rounded-full overflow-hidden shrink-0">
-                        <Image
-                            src={optimizeImageUrl(item?.guide?.profilePicture?.src, 800)}
-                            alt={item?.guide?.name}
-                            fill
-                            className="object-cover"
-                        />
-                    </div>
+                    <Avatar src={item?.guide?.profilePicture?.src} alt={item?.guide?.name} size={"xs"} />
                     <span className="text-xs text-text/75">{item?.guide?.name}</span>
                 </div>
 
@@ -81,13 +64,13 @@ export function PackageCard({ item }) {
                             </span>
                         </p>
                     </div>
-                    <Link
+                    
+                    <LinkButton
                         href={`/explore/packages/${item?._id}`}
+                        variant="primary"
                     >
-                        <Button variant="primary">
-                            Book Now 
-                        </Button>
-                    </Link>
+                        Book Now 
+                    </LinkButton>
                 </div>
 
             </div>

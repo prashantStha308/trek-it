@@ -9,10 +9,10 @@ export default function AuthLayout({ children }) {
     return (
         <section
             id="auth-layout"
-            className="w-screen flex items-center justify-center min-h-screen h-screen max-h-screen"
+            className="w-screen flex items-center justify-center min-h-screen  flex justify-center items-center"
         >
             <AuthTransition routeKey={pathname}>
-                <div className="border border-border rounded-xl bg-secondary/15 h-[70dvh] w-dvw lg:h-[85dvh] lg:w-[70dvw]">
+                <div className="border border-border rounded-xl bg-white dark:bg-secondary/15 w-[80dvw] h-fit xl:h-[90dvh] ">
                     {children}
                 </div>
             </AuthTransition>

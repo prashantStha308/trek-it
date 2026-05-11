@@ -17,11 +17,6 @@ const packageSchema = new mongoose.Schema({
 		ref: 'User',
 		required: [true, () => requiredError("Package.guide")],
 	},
-	tourist: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User',
-		default: null,
-	},
 	customRequest: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'CustomRequest',

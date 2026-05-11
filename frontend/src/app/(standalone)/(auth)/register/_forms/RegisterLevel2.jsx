@@ -8,7 +8,7 @@ import { Eye, Globe, Mail, FolderPen, MapPin, UserKey } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function RegisterLevel2({handleNext, handleChange, formData}) {
+export default function RegisterLevel2({ handleChange, formData}) {
 
     return (
         <section className="flex flex-1 justify-between flex-col gap-5 px-6 sm:px-12 lg:px-20 gap-10 pb-10">
@@ -22,7 +22,7 @@ export default function RegisterLevel2({handleNext, handleChange, formData}) {
             </section>
 
             <section
-                className="flex flex-col gap-6"
+                className="flex flex-col gap-6 overflow-scroll"
             >
 
                 <SelectInput
@@ -36,6 +36,7 @@ export default function RegisterLevel2({handleNext, handleChange, formData}) {
                     handleChange={handleChange}
                     value={formData.role}
                     leftIcon={<UserKey size={16} />}
+                    className="w-full"
                 />
 
 
@@ -62,9 +63,6 @@ export default function RegisterLevel2({handleNext, handleChange, formData}) {
                 		leftIcon={<MapPin size={16} />}
                 	/>
             </section>
-            
-            <Button type={"button"} variant="form" onClick={handleNext} > Next </Button>
-
         </section>
     )
 }

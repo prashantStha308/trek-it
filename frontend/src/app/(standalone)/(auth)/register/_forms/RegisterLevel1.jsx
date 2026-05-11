@@ -20,33 +20,33 @@ const validatePassword = (password) =>{
     return passwordRegex.test(password);
 }
 
-export default function RegisterLevel1({handleNext, handleChange, formData}) {
+export default function RegisterLevel1({handleChange, formData}) {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
     const toggleVisibility = () => setIsPasswordVisible(state => !state);
 
-    const handleSubmitPage = () => {
-        const errors = [];
+    // const handleSubmitPage = () => {
+    //     const errors = [];
 
-        if (!isValidString(formData.name)) errors.push("Name is required");
-        if (!isValidString(formData.email)) errors.push("Email is required");
-        if (!validatePassword(formData.password)) errors.push("Invalid Password. Password requires atleast 8 characters, an upper case and lower case letter with atleast one number and special character");
-        if (formData.age <= 0) errors.push("Please enter a valid age");
-        if (!isValidString(formData.gender)) errors.push("Gender is required");
+    //     if (!isValidString(formData.name)) errors.push("Name is required");
+    //     if (!isValidString(formData.email)) errors.push("Email is required");
+    //     if (!validatePassword(formData.password)) errors.push("Invalid Password. Password requires atleast 8 characters, an upper case and lower case letter with atleast one number and special character");
+    //     if (formData.age <= 0) errors.push("Please enter a valid age");
+    //     if (!isValidString(formData.gender)) errors.push("Gender is required");
 
-        if (errors.length > 0) {
-            showToast({
-                title: "Errors in registration form",
-                message: errors
-            });
-            return;
-        }
+    //     if (errors.length > 0) {
+    //         showToast({
+    //             title: "Errors in registration form",
+    //             message: errors
+    //         });
+    //         return;
+    //     }
 
-        handleNext();
-    };
+    //     handleNext();
+    // };
 
     return (
-        <section className="flex flex-1 justify-between px-6  flex-col gap-5 ">
+        <section className="flex flex-1 justify-between px-6 flex-col gap-5 ">
 
             <section
                 className="flex flex-col items-center gap-2"
@@ -65,7 +65,7 @@ export default function RegisterLevel1({handleNext, handleChange, formData}) {
             </section>
 
             <section
-                className="flex flex-col gap-6"
+                className="flex flex-col gap-6 overflow-scroll"
             >
                 <TextInput
                     type={"text"}
@@ -123,9 +123,9 @@ export default function RegisterLevel1({handleNext, handleChange, formData}) {
                         name={"gender"}
                         label={"Gender"}
                         optionObjArray={[
-                            { label: "Male", value: "male" },
-                            { label: "Female", value: "female" },
-                            { label: "Others", value: "others" },
+                            { label: "Male", value: "male"},
+                            { label: "Female", value: "female"},
+                            { label: "Others", value: "others"},
                         ]}
                         handleChange={handleChange}
                         value={formData.gender}
@@ -135,9 +135,6 @@ export default function RegisterLevel1({handleNext, handleChange, formData}) {
 
                 </div>
             </section>
-
-            <Button type={"button"} variant="form" onClick={handleSubmitPage} > Next </Button>
-
         </section>
     )
 }

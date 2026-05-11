@@ -31,18 +31,16 @@ export default function GuideLevel3({handleChange, formData}) {
             <section
                 className="flex flex-col items-center gap-2"
             >
-                <h1 className="text-text font-bold text-lg lg:text-xl xl:text-3xl text-center" >
-                    Setup your guide details
+                <h1 className="text-text font-bold text-lg lg:text-xl xl:text-2xl text-center" >
+                    Setup your Guide Details
                 </h1>
             </section>
 
             <section
-                className="w-full h-52 2xl:h-72 flex flex-col gap-4 "
+                className="w-full h-52 2xl:h-72 flex flex-col gap-4  "
             >
 
             </section>
-            
-            <Button type={"submit"} text="Complete Registration" variant="form" />
 
         </section>
     )

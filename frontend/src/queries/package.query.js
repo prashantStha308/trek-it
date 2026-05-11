@@ -5,14 +5,23 @@ import {
 } from "@tanstack/react-query";
 
 import {
+    // GET
     getAllPackages,
     getPackageById,
+    searchPackages,
+
+    // POST
+    createPackage,
+    
+    // PUT
     updatePackage,
-    deletePackage,
-    searchPackages
+    
+    // DELETE
+    deletePackage,    
 } from "@/api/package.api";
 
 
+// GET
 export const useGetAllPackages = ({
     limit = 10,
     page = 1,
@@ -48,6 +57,16 @@ export const usePackageSearchQuery = (query) => {
     })
 }
 
+
+// POST
+export const useCreatePackage = ()=>{
+    return useMutation({
+        mutationFn: (body) => createPackage(body),
+    })
+}
+
+
+// PUT
 export const useUpdatePackage = () => {
     const queryClient = useQueryClient()
 
@@ -59,13 +78,15 @@ export const useUpdatePackage = () => {
     })
 }
 
+
+// DELETE
 export const useDeletePackage = () => {
     const queryClient = useQueryClient()
     
     return useMutation({
-        mutationFn: deletePackage,
+        mutationFn: (id) => deletePackage(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ["packages"]})
+            queryClient.invalidateQueries({queryKey: ["packages", id]})
         }
     })
 }
