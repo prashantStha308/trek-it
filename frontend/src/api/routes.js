@@ -32,12 +32,12 @@ const API_ROUTES = {
         LOGOUT: "/auth/logout",
 	},
 	
-    // USER: {
-    //     GET_ALL: (query) => resolveRoute('/users', null, query),
-    //     GET: (id) => resolveRoute('/users', id),
-    //     ME: "/users/me",
-    //     BASE: "/users"
-	// },
+    USER: {
+        GET_ALL: (query) => resolveRoute('/users', null, query),
+        GET: (id) => resolveRoute('/users', id),
+        ME: "/users/me",
+        BASE: "/users"
+	},
 	
 	GUIDE: {
 		GET_ALL: (query) => resolveRoute("/guides", null, query),

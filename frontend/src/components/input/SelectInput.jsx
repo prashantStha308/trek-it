@@ -65,7 +65,7 @@ export default function SelectInput ({
                     {label}:
                 </label>
             )}
-            <div className="flex items-center gap-2 border border-border focus-within:border-primary bg-primary/15 rounded-lg px-4 py-1 group ">
+            <div className="flex items-center gap-2 border border-border focus-within:border-primary bg-primary/5 rounded-lg px-4 py-1 group ">
                 {leftIcon && <LeftIcon leftIcon={leftIcon} /> }
 
                 <button

@@ -11,16 +11,20 @@ import {
     logout
 } from "@/api/auth.api";
 
-const QUERY_KEYS = {
-    me: ["me"],
-}
+import {showToast} from "@/store/ui.store";
+
 
 export const useGetMe = () => {
     return useQuery({
-        queryKey: QUERY_KEYS.me,
+        queryKey: ["me"],
         queryFn: () => getMe(),
         retry: false,
-        staleTime: Infinity
+        staleTime: Infinity,
+        gcTime: 0,
+        throwOnError: false,
+        onError: (err) => {
+            showToast({ message: err?.message, title: "Failed to Get User Data" })
+        }
     })
 }
 
@@ -29,15 +33,13 @@ export const useLogin = () => {
 
     return useMutation({
         mutationFn: login,
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: QUERY_KEYS.me })
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ["me"] });
+            showToast({message: data?.message  || "User logged in" , title: "Login Successfull"});
         },
-    })
-}
-
-export const useRegister = () => {
-    return useMutation({
-        mutationFn: ({body, role }) => register(body, role),
+        onError:(err)=>{
+            showToast({message: err?.message  || "Failed to login" , title: "Login Failure"});
+        }
     })
 }
 
@@ -46,8 +48,24 @@ export const useLogout = () => {
 
     return useMutation({
         mutationFn: logout,
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: QUERY_KEYS.me })
+        onSuccess: (data) => {
+            queryClient.setQueryData(["me"], null);
+            showToast({ message: data?.message || "User logged out" , title: "Logged out Successfully" });
+        },
+        onError:(err)=>{
+            showToast({message: err?.message  || "Failed to Logout" , title: "Logout Failure"});
+        }
+    })
+}
+
+export const useRegister = () => {
+    return useMutation({
+        mutationFn: ({body, role }) => register(body, role),
+        onSuccess: (data)=>{
+            showToast({message: data?.message , title: "Registration Successful" });
+        },
+        onError:(err)=>{
+            showToast({message: err?.message  || "Failed to register user" , title: "Registration Failure"});
         }
     })
 }

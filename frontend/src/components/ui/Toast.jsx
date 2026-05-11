@@ -3,7 +3,7 @@
 import useUIStore from "@/store/ui.store";
 import { X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import React from 'react'
+import {useRef} from 'react'
 
 
 const variants = {
@@ -21,6 +21,7 @@ const Toast = () => {
     const isToastOpen = useUIStore(store => store.isToastOpen);
     const toastData = useUIStore(store => store.toastData);
     const closeToast = useUIStore(store => store.closeToast);
+    const timeoutRef = useRef(null);
 
 
     return (
@@ -43,9 +44,8 @@ const Toast = () => {
                         }}
                         onAnimationComplete={(definition) => {
                             if (definition === "display") {
-                                setInterval(() => {
-                                    closeToast();
-                                }, 3000)
+                                clearTimeout(timeoutRef.current);
+                                timeoutRef.current = setTimeout(() => closeToast(), 3000);
                             }
                         }}
                     >

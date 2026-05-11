@@ -6,10 +6,6 @@ const collabRequestSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Package'
 	},
-	owner:{
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User'		
-	},
 	guide:{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'

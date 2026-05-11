@@ -26,7 +26,7 @@ export default function TextInput ({
             }
             
             <div
-                className="flex items-center gap-4 text-sm justify-between border border-border focus-within:border-primary bg-primary/15 rounded-lg px-4 py-1 overflow-y-hidden group"
+                className="flex items-center gap-4 text-sm justify-between border border-border focus-within:border-primary bg-primary/5 rounded-lg px-4 py-1 overflow-y-hidden group"
             >
                 {
                     leftIcon && <LeftIcon leftIcon={leftIcon} callback={callback} />

@@ -81,24 +81,26 @@ export const FilterPanel = ({filter, setFilter, tab}) => {
                     {tab === TABS.package ? "Activities" : "Specialities"}
                 </span>
 
-                {tab === TABS.package
-                    ? metaData?.activities?.map((item, index) => (
-                        <FilterPill
-                            key={index}
-                            label={item}
-                            active={filter?.activities?.includes(item)}
-                            onClick={() => toggleFilter("activities", item)}
-                        />
-                    ))
-                    : metaData?.specialities?.map((item, index) => (
-                        <FilterPill
-                            key={index}
-                            label={item}
-                            active={filter?.specialities?.includes(item)}
-                            onClick={() => toggleFilter("specialities", item)}
-                        />
-                    ))
-                }
+                <div className="flex flex-wrap gap-2">
+                    {tab === TABS.package
+                        ? metaData?.activities?.slice(0,11).map((item, index) => (
+                            <FilterPill
+                                key={index}
+                                label={item}
+                                active={filter?.activities?.includes(item)}
+                                onClick={() => toggleFilter("activities", item)}
+                            />
+                        ))
+                        : metaData?.specialities?.slice(0,11).map((item, index) => (
+                            <FilterPill
+                                key={index}
+                                label={item}
+                                active={filter?.specialities?.includes(item)}
+                                onClick={() => toggleFilter("specialities", item)}
+                            />
+                        ))
+                    }
+                </div>
             </section>
         </motion.section>
     );
