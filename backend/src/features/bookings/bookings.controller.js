@@ -72,7 +72,7 @@ export const setBookingStatus = async (req, res) => {
 
     return ApiResponse.success(res, {
         data: booking._id,
-        message: `Status of booking id: ${booking._id} was updated to ${bookingStatus}`
+        message: `Status of booking id: ${booking._id} was updated to ${req.body.status}`
     });
 }
 

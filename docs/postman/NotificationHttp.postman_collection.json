@@ -85,7 +85,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YmVkNzJlMDZhZjAwZjhhMDI4OTI3ZSIsInJvbGUiOiJ0b3VyaXN0IiwiaWF0IjoxNzc1NjYwMTI4LCJleHAiOjE3NzgyNTIxMjh9.9qGA5DyqxqZmS2ddf8onRbjeBFgRsnw1S06Vj2xI0p0",
+				"value": "{{guideToken}}",
 				"type": "string"
 			}
 		]

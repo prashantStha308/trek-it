@@ -43,7 +43,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": ""
+							"value": "69fce4ee83f3f3d3f619f660"
 						}
 					]
 				}
@@ -185,7 +185,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YmVkNzI5MDZhZjAwZjhhMDI4OTI3YiIsInJvbGUiOiJndWlkZSIsImlhdCI6MTc3NTY3MDAwMSwiZXhwIjoxNzc4MjYyMDAxfQ.rdgcAbMCgnLDFpWff0byhOlXCImdKZuE14m9oNxHehE",
+				"value": "{{guideToken}}",
 				"type": "string"
 			}
 		]

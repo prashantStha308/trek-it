@@ -6,7 +6,7 @@ export const validateBookingBody = [
     body('tourist').isMongoId().withMessage("tourist must be a valid MongoDB ObjectId"),
     body('guide').isMongoId().withMessage("tourist must be a valid MongoDB ObjectId"),
     body('customRequest').optional().isMongoId().withMessage("customRequest must be a valid MongoDB ObjectId"),
-    body('package').isMongoId().withMessage('package must be a valid MongoDB ObjectId'),
+    body('packageId').isMongoId().withMessage('package must be a valid MongoDB ObjectId'),
     body('type').isIn(PACKAGE_TYPES).withMessage(`type must be one of: ${PACKAGE_TYPES.join(', ')}`),
     body('date').isISO8601().withMessage('date must be a valid date'),
     body('groupSize').isInt({ min: 1 }).withMessage('groupSize must be at least 1'),
