@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import Badge from "@/components/ui/Badge";
 import { optimizeImageUrl } from "@/utils/utils.helper";
-import BookingForm from "./BookingForm";
+// import BookingForm from "./BookingForm";
 
 export default function BookingCard({ pkg }) {
     if (!pkg) return null;
@@ -31,7 +31,7 @@ export default function BookingCard({ pkg }) {
                 </div>
 
                 <div className="p-4">
-                    <BookingForm pkg={pkg} />
+                    {/*<BookingForm pkg={pkg} />*/}
                 </div>
             </div>
         </aside>

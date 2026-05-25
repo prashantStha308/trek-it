@@ -153,12 +153,6 @@ export default function Home() {
 
             </section>
 
-{/*            <section
-                id="search-bar"
-                className="w-full flex justify-center"
-            >
-                <SearchBar />
-            </section>*/}
 
             <PackageList label={"Package"} query={packageQuery} id="scrollHere" />
 
