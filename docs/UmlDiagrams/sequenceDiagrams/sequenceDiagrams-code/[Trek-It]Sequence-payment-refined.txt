@@ -1,0 +1,26 @@
+title Trek-It — Tourist Payment Process
+
+actor Tourist
+participant Frontend
+participant Payment Service
+participant Dodo (Gateway)
+actor Guide
+
+Tourist -> Frontend: Click "Pay Now"
+Frontend -> Payment Service: POST /payment/init {bookingId, amount}
+Payment Service -> Dodo (Gateway): Create payment request
+Dodo (Gateway) --> Payment Service: Return checkout_url
+Payment Service --> Frontend: Return checkout_url
+Frontend --> Tourist: Redirect to Dodo checkout page
+
+Tourist -> Dodo (Gateway): Complete payment
+Dodo (Gateway) --> Tourist: Redirect back with payment status
+
+Frontend -> Payment Service: Verify payment status
+Payment Service -> Dodo (Gateway): GET /payment/verify
+Dodo (Gateway) --> Payment Service: Payment confirmed
+
+Payment Service -> Payment Service: Hold funds in escrow
+Payment Service -> Guide: Notify: payment received for booking
+Payment Service --> Frontend: Booking confirmed
+Frontend --> Tourist: Display invoice 

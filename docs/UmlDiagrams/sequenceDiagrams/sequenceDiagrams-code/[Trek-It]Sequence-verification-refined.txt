@@ -1,0 +1,27 @@
+title Trek-It — Guide Registration and Verification
+
+actor Guide
+participant Frontend
+participant Auth Service
+actor Admin
+
+Guide -> Frontend: Click "Register as Guide"
+Frontend --> Guide: Display Registration Form
+Guide -> Frontend: Submit form (credentials, license, documents)
+Frontend -> Auth Service: POST /auth/register/guide
+Auth Service -> Auth Service: Create account (status: unverified)
+Auth Service --> Frontend: Return created account
+Frontend --> Guide: Notify — verification pending
+
+note over Admin: Admin reviews submissions
+Admin -> Frontend: Open guide verification panel
+Frontend -> Auth Service: GET /guides/unverified
+Auth Service --> Frontend: Return unverified guides list
+Admin -> Frontend: Approve guide
+Frontend -> Auth Service: PUT /guides/:id/verify
+Auth Service -> Auth Service: Update status → verified
+Auth Service --> Frontend: Return updated guide
+Frontend --> Admin: Notify, verification success
+
+Auth Service -> Frontend: Notify guide of approval
+Frontend --> Guide: Account verified, you can now create packages

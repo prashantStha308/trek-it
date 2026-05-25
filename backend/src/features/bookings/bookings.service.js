@@ -26,6 +26,8 @@ export const createBookingService = async (tourist, body, { guideId } = {}) => {
 
     const pkgDates = getNextNDates(date, targetPackage.daysAlloted);
 
+    console.log("Result of pkgDates: ",pkgDates)
+
     const targetGuide = await assignGuide(targetPackage, pkgDates, guideId);
 
     const booking = await Booking.create({
@@ -121,6 +123,8 @@ export const setBookingStatusService = async (bookingId, status) => {
 
 export const cancleBookingService = async (bookingId, user) => {
 
+    console.log("inside booknngServeice: ", user)
+
     const booking = await Booking.findOne({
         _id: bookingId,
         $or: [
@@ -132,6 +136,8 @@ export const cancleBookingService = async (bookingId, user) => {
         path: "package",
         select: "_id name thumbnail startingPrice pricePerPerson"
     });
+
+    console.log(booking);
 
     if (!booking) throw new ApiError(404, "Booking associated with provided Ids was not found");
 
@@ -157,7 +163,7 @@ export const cancleBookingService = async (bookingId, user) => {
     // set notification
     await broadcastNotificationService("notification:bookingCancelled", [booking.tourist, booking.guide], {
         title: `Booking Cancelled - ${booking.name}`,
-        message: `Booking for ${booking.package.name} has been cancelled on by ${req.user.role} : ${req.user._id}`,
+        message: `Booking for ${booking.package.name} has been cancelled on by ${user.role} : ${user._id}`,
         meta: {
             booking: {
                 _id: booking._id,
