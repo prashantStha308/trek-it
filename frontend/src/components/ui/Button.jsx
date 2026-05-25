@@ -21,7 +21,6 @@ export const Button = ({
       "border-primary/60 py-1 text-sm hover:bg-primary/85 hover:text-white",
   };
 
-<<<<<<< HEAD
     return (
         <button
             className={`border rounded-md px-4 cursor-pointer focus:outline-1 transition-colors ${variants[variant] ?? variants.default} flex items-center justify-between gap-2 flex justify-center ${className ? className : "w-full" } `}
@@ -32,30 +31,8 @@ export const Button = ({
         </button>
     )
 }
-=======
-  return (
-    <button
-      className={`border rounded-lg px-4 cursor-pointer focus:outline-1 transition-colors ${variants[variant] ?? variants.default} flex items-center justify-between gap-2 flex justify-center ${className ? className : "w-full"} ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
-    >
-      {children}
-    </button>
-  );
-};
->>>>>>> c003691 (Booking form)
 
-export const LinkButton = ({ variant = "default", href, children }) => {
-  const variants = {
-    primary:
-      "border-primary/60 py-1 text-sm bg-primary/85 text-white hover:bg-primary",
-    form: "border-accent/60 dark:border-secondary/60 py-1 text-sm bg-primary/75 dark:bg-primary/65 text-white hover:dark:bg-secondary/75 hover:bg-accent/75",
-    default:
-      "border-primary/60 py-1 text-sm hover:bg-primary/85 hover:text-white",
-  };
 
-<<<<<<< HEAD
 export const LinkButton = ({ variant = "default", size="sm" , href, children,  })=>{
     
     const sizes={
@@ -80,14 +57,3 @@ export const LinkButton = ({ variant = "default", size="sm" , href, children,  }
         </Link>
     )
 }
-=======
-  return (
-    <Link
-      href={href}
-      className={`border rounded-lg px-4 cursor-pointer focus:outline-1 transition-colors ${variants[variant] ?? variants.default} flex items-center justify-between gap-2 flex justify-center`}
-    >
-      {children}
-    </Link>
-  );
-};
->>>>>>> c003691 (Booking form)
