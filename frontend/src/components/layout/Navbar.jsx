@@ -9,12 +9,11 @@ import { Bell, MessageCircle } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
 
 import {optimizeImageUrl} from "@/utils/utils.helper";
-import {useGetMe, useLogout} from "@/queries/auth.query";
+import {useGetMe} from "@/queries/auth.query";
 
 
 function NavbarUserSect(){
     const {data, isLoading, isError, error} = useGetMe();
-    const logout = useLogout();
 
     return(
         <section
@@ -36,9 +35,6 @@ function NavbarUserSect(){
 
                     <div
                         className="border-2 border-primary rounded-full cursor-pointer hover:bg-primary"
-                        onClick={ ()=> {
-                            logout.mutate()
-                        } }
                     >
                         <Avatar src={data?.profilePicture?.src} alt={data?.name} size={"xs"} />
                     </div>

@@ -25,14 +25,14 @@ export const useGetAllGuides = ({
 export const useGetGuideById = (guideId) => {
     const queryClient = useQueryClient();
 
-    const cachedGuides = queryClient.getQueriesData({ queryKey: ["guides"] })
+    const cachedGuide = queryClient.getQueriesData({ queryKey: ["guides"] })
         .flatMap(([, data]) => data?.docs ?? [])
         .find(guide => guide._id === guideId);
 
     return useQuery({
         queryKey: ["guide", guideId],
         queryFn: () => getGuideById(guideId),
-        initialData: cachedGuides,
+        placeholderData: cachedGuide,
         enabled: !!guideId,
     });
 }

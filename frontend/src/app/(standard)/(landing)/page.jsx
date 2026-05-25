@@ -45,7 +45,7 @@ export const StaggeringBites = ({ top, bottom }) => {
             </span>
 
             <span
-                className="text-3xl text-accent "
+                className="text-xl text-accent "
             >
                 {bottom}
             </span>
@@ -121,9 +121,9 @@ export default function Home() {
     const packageQuery = useGetAllPackages({ limit: 8, page: 1 });
     
     const biteData = [
-        { top: "50K", bottom: "Guides" },
-        { top: "5K", bottom: "Packages" },
-        { top: "Over 30K", bottom: "Happy Customers" },
+        { top: "Search", bottom: "Packages and Destination" },
+        { top: "Customize", bottom: "Customize your Travel" },
+        { top: "Book", bottom: "Book your dream iteniry" },
     ]
 
     return (

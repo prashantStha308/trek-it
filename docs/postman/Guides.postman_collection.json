@@ -1,0 +1,129 @@
+{
+	"info": {
+		"_postman_id": "a9c94efb-4484-4aaf-9ee9-fbdb03c435ae",
+		"name": "Guides",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37979817",
+		"_collection_link": "https://nikesh-9008.postman.co/workspace/Trek-It~743423b1-7a5e-4c6d-b16b-e33266b5d79f/collection/37979817-a9c94efb-4484-4aaf-9ee9-fbdb03c435ae?action=share&source=collection_link&creator=37979817"
+	},
+	"item": [
+		{
+			"name": "GET ALL GUIDES",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/guides/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"guides",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Switch to Guide",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NjJlOTMzMmQzNDg0NjI0NTNhMjgzMyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzY4MTcxODA0LCJleHAiOjE3Njg3NzY2MDR9.NPxlSXD6KAvj2eBJwuN2n7pWK-BjdcIk1nWrPLC6p3E",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/bookings/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"bookings",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE Guide",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NjJlOTMzMmQzNDg0NjI0NTNhMjgzMyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzY4MTcyODQ4LCJleHAiOjE3Njg3Nzc2NDh9.rlBwD_CExO1so2y8F1y8-44-I_1-rH3odvLpcivp84k",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"isAvailable\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/guides/me",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"guides",
+						"me"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{guideToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

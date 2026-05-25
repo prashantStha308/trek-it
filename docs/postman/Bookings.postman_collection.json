@@ -50,6 +50,95 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "CREATE Booking",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tourist\": \"69fce61483f3f3d3f619f67f\",\n    \"guide\": \"69fce49a83f3f3d3f619f658\",\n    \"packageId\": \"69fce4ee83f3f3d3f619f660\",\n    \"type\": \"regular\",\n    \"date\": \"2026-05-23T00:00:00.000Z\",\n    \"groupSize\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/booking/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"booking",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Booking",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/booking/cancel/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"booking",
+						"cancel",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "6a11dd790860ee9e675d4995"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Booking Status",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"status\": \"active\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/booking/status/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"booking",
+						"status",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "6a11dd790860ee9e675d4995"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {
@@ -57,7 +146,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YmVkNzJlMDZhZjAwZjhhMDI4OTI3ZSIsInJvbGUiOiJ0b3VyaXN0IiwiaWF0IjoxNzc1NjYwMTI4LCJleHAiOjE3NzgyNTIxMjh9.9qGA5DyqxqZmS2ddf8onRbjeBFgRsnw1S06Vj2xI0p0",
+				"value": "{{guideToken}}",
 				"type": "string"
 			}
 		]

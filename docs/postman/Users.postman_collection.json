@@ -32,7 +32,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"test guide\",\n    \"email\": \"testguide@gmail.com\",\n    \"password\": \"test\",\n    \"gender\": \"female\",\n    \"age\": 24,\n    \"regions\": [\"sagarmatha\", \"dharan\"],\n    \"location\": {\n        \"country\": \"france\",\n        \"state\": \"sonfock\"\n    },\n    \"specialities\": [\"trekkuing\", \"rafting\"]\n}",
+					"raw": "{\n    \"name\": \"test guide\",\n    \"email\": \"testguide@gmail.com\",\n    \"password\": \"test\",\n    \"gender\": \"female\",\n    \"age\": 24,\n    \"regions\": [\"sagarmatha\", \"dharan\"],\n    \"address\": {\n        \"country\": \"france\",\n        \"state\": \"sonfock\"\n    },\n    \"specialities\": [\"trekkuing\", \"rafting\"]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -88,7 +88,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"testguide@gmail.com\",\n    \"password\": \"test\"\n}",
+					"raw": "{\n    \"email\": \"guide51778181402806@trek.com\",\n    \"password\": \"Password123!\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -188,7 +188,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YmVkNzJlMDZhZjAwZjhhMDI4OTI3ZSIsInJvbGUiOiJ0b3VyaXN0IiwiaWF0IjoxNzc1NjYwMTI4LCJleHAiOjE3NzgyNTIxMjh9.9qGA5DyqxqZmS2ddf8onRbjeBFgRsnw1S06Vj2xI0p0",
+				"value": "{{guideToken}}",
 				"type": "string"
 			}
 		]

@@ -4,6 +4,10 @@ import validator from "validator";
 
 
 const guideSchema = new mongoose.Schema({
+	aboutMe:{
+		type: String,
+		default: "Guide is an interesting person."
+	},
 	languages: {
 		type: [String],
 		required: false,

@@ -4,8 +4,8 @@
   "description": " Search, Book, Customize. **Trek-it.**",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development concurrently \"cd backend && pnpm run dev\" \"cd frontend && pnpm run dev\"",
-    "start": "NODE_ENV=production concurrently \"cd backend && pnpm run dev\" \"cd frontend && pnpm run dev\""
+    "dev": "cross-env NODE_ENV=development concurrently \"cd backend && pnpm run dev\" \"cd frontend && pnpm run dev\"",
+    "start": "cross-env NODE_ENV=production concurrently \"cd backend && pnpm run dev\" \"cd frontend && pnpm run dev\""
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/prashantStha308/trek-it#readme",
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0"
   }
 }

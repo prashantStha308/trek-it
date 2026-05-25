@@ -44,7 +44,6 @@ export const getGuideByIdService = async (id) => {
             select: "-password",
             populate: [
                 { path: "collaborations", select: "name description price regions" },
-                { path: "review" }
             ]
         });
 
