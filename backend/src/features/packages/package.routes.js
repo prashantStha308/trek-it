@@ -3,6 +3,7 @@ import {
     createPackage,
     getAllPacakages,
     getPackageById,
+    getAllCollaborators,
     updatePackage,
     deletePackage,
     searchPackages,
@@ -27,6 +28,8 @@ packageR.post('/custom', authorize(["guide", "admin"]), bufferUpload.array("pack
 
 packageR.get('/', validatePackageQuery, validate, getAllPacakages);
 packageR.get('/search', validatePackageQuery, validate, searchPackages);
+
+packageR.get('/collaborators/:packageId', validatePackageQuery, validate, getAllCollaborators);
 
 packageR.get('/:packageId', validatePackageParams, validate, getPackageById);
 

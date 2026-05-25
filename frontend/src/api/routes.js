@@ -49,6 +49,7 @@ const API_ROUTES = {
     PACKAGE: {
         GET_ALL: (query) => resolveRoute('/packages', null, query),
         GET: (id) => resolveRoute('/packages', id),
+        GET_COLLABORATORS: (pkgId) => resolveRoute('/packages/collaborators', pkgId),
         CREATE: "/packages",
         UPDATE: (id) => resolveRoute('/packages', id),
         DELETE: (id) => resolveRoute('/packages', id),

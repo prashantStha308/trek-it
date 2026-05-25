@@ -59,9 +59,6 @@ export function PackageCard({ item }) {
                         <p className="text-xs text-text/75">Starting from</p>
                         <p className="text-base font-medium text-text">
                             ${item?.startingPrice}{" "}
-                            <span className="text-xs font-normal text-neutral-500">
-                                / ${item?.pricePerPerson} pp
-                            </span>
                         </p>
                     </div>
                     

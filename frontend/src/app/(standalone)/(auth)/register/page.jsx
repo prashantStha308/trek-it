@@ -76,7 +76,7 @@ const Levels = ({currentLevel = 1, role = "", handleChange, formData, listItems,
 
 export default function Register() {
     
-    const [currentLevel, setCurrentLevel] = useState(3);
+    const [currentLevel, setCurrentLevel] = useState(1);
     const [formData, setFormData] = useState({
         // level 1
         name: "",
@@ -86,7 +86,7 @@ export default function Register() {
         age: "",
 
         // level 2
-        role: "guide",
+        role: "",
         address: {
             country: "",
             city: ""
