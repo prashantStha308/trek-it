@@ -12,10 +12,10 @@ export default function AuthGuard({ children }) {
 
     // enable this later on
 
-    // if (!user) {
-    //     // prompt a model to display no login error later
-    //     router.push("/login") //create login page later
-    // }
+    if (!user) {
+        // prompt a model to display no login error later
+        router.push("/login") //create login page later
+    }
 
     return children;
 }

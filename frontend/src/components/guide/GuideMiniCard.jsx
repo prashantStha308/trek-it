@@ -3,7 +3,7 @@ import {
 } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
 
-export default function GuideMiniCard({guide}){
+export default function GuideMiniCard({guide, role = "Lead Guide"}){
     return (
         <section
             className="w-full w-xs flex gap-10 justify-between items-center border border-secondary rounded-sm px-4 py-2"
@@ -18,7 +18,7 @@ export default function GuideMiniCard({guide}){
                         </h3>
                         {!guide?.isVerified && <BadgeCheck size={16} className="stroke-accent" />}
                     </div>
-                    <span className="text-text/75 text-xs leading-tight " > Lead Guide </span>
+                    <span className="text-text/75 text-xs leading-tight " > {role} </span>
                 </section>
             </section>
 
