@@ -58,12 +58,13 @@ const API_ROUTES = {
 	},
 	
     BOOKING: {
-        GET_ALL: (query) => resolveRoute('/bookings', null, query),
-        GET: (id) => resolveRoute('/bookings', id),
-        CREATE: "/bookings",
-        UPDATE: (id, query) => resolveRoute('/bookings', id, query),
-        CANCEL: (id) => resolveRoute("/bookings/cancel", id),
-        BASE: "/bookings"
+        GET_ALL: (query) => resolveRoute('/booking', null, query),
+        GET: (id) => resolveRoute('/booking', id),
+        GET_ACTIVE: (query) =>  resolveRoute('/booking/active', null, query),
+        CREATE: "/booking",
+        UPDATE: (id, query) => resolveRoute('/booking', id, query),
+        CANCEL: (id) => resolveRoute("/booking/cancel", id),
+        BASE: "/booking"
 	},
 	
     PAYMENT: {

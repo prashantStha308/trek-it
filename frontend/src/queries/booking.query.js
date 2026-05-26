@@ -1,6 +1,10 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { createBooking } from "@/api/booking.api";
+import {
+    createBooking,
+    getUserBookings,
+    getActiveBookings,
+} from "@/api/booking.api";
 import { showToast } from "@/store/ui.store";
 
 export const useCreateBooking = () => {
@@ -19,6 +23,8 @@ export const useCreateBooking = () => {
             });
         },
         onError: (error) => {
+
+            console.error(error)
             showToast({
                 title: "Booking failed",
                 message: error?.message || "Unable to create your booking right now."
@@ -26,3 +32,19 @@ export const useCreateBooking = () => {
         }
     });
 };
+
+export const useGetUserBookings = ({page = 1, limit = 10, ...filters} = {}, options) => {
+    return useQuery({
+        queryKey: ["booking", {page: 1, limit: 10, ...filters}],
+        queryFn: ()=> getUserBookings({page: 1, limit: 10, ...filters}),
+        ...options
+    })
+}
+
+export const useGetActiveBookings = ({page = 1, limit = 10, ...filters} = {}, options) => {
+    return useQuery({
+        queryKey: ["booking", {page: 1, limit: 10, ...filters}],
+        queryFn: ()=> getActiveBookings({page: 1, limit: 10, ...filters}),
+        ...options
+    })
+}

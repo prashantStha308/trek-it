@@ -33,11 +33,12 @@ function NavbarUserSect(){
                         <Bell size={20} />
                     </Link>
 
-                    <div
+                    <Link
+                        href={`/dashboard`}
                         className="border-2 border-primary rounded-full cursor-pointer hover:bg-primary"
                     >
                         <Avatar src={data?.profilePicture?.src} alt={data?.name} size={"xs"} />
-                    </div>
+                    </Link>
 
                 </>
                 :
