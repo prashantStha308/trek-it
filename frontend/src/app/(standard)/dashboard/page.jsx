@@ -39,7 +39,7 @@ function DashboardHero({user}){
 				</section>
 				
 				<textarea
-					className="text-sm text-text/85 resize-none w-sm"
+					className="text-sm text-text/85 resize-none w-sm outline-none caret-transparent"
 					value={user?.description || "User has not set a description"}
 					readOnly
 				></textarea>
