@@ -130,9 +130,19 @@ function BookingCard({ booking }) {
             {booking?.package?.daysAlloted} days
           </span>
         </div>
-        <LinkButton href={`/booking/${booking?._id}`} size="sm" variant="outline">
-          View details <ArrowRight size={12} />
-        </LinkButton>
+
+        <section className="flex items-center gap-6" >
+          
+          <LinkButton href={`/chat/${booking?.guide?._id}`} size="sm" variant="primary">
+            Chat with Guide 
+          </LinkButton>
+
+          <LinkButton href={`/booking/${booking?._id}`} size="sm" variant="outline">
+            View details <ArrowRight size={12} />
+          </LinkButton>
+
+        </section>
+
       </div>
     </motion.div>
   );
