@@ -11,6 +11,7 @@ import { authorize } from "../../middlewares/authorize.js";
 
 import {
     getAllBooking,
+    getActiveBookings,
     getBookingById,
     createBooking,
     setBookingStatus,
@@ -22,6 +23,7 @@ import {
 const bookingR = express.Router();
 
 bookingR.get('/', validateBookingQuery, validate, authorize(), getAllBooking);
+bookingR.get('/active', validateBookingQuery, validate, authorize(["guide", "admin"]), getActiveBookings);
 
 // create booking
 bookingR.post('/', validateBookingBody, validate, authorize(["admin", "tourist", "guide"]), createBooking);
