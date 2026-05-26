@@ -134,7 +134,7 @@ export default function PackagePage() {
                             Customize this package
                         </LinkButton>
 
-                        <LinkButton variant="primary" href={`/booking/${data._id}`} size={"lg"} >
+                        <LinkButton variant="primary" href={`/booking/create/${data._id}`} size={"lg"} >
                             Book Now!
                         </LinkButton>
 

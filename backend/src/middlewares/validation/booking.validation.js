@@ -6,7 +6,6 @@ export const validateBookingBody = [
     body('packageId').isMongoId().withMessage('packageId must be a valid MongoDB ObjectId'),
     body('date').isISO8601().withMessage('date must be a valid date'),
     body('groupSize').isInt({ min: 1 }).withMessage('groupSize must be at least 1'),
-    body('customRequest').optional().isMongoId().withMessage('customRequest must be a valid MongoDB ObjectId'),
     body('guideId').optional().isMongoId().withMessage('guideId must be a valid MongoDB ObjectId'),
 ];
 

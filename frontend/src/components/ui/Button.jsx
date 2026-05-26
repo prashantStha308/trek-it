@@ -17,13 +17,13 @@ export const Button = ({
     primary:
       "border-primary/60 py-1 text-sm bg-primary/85 text-white hover:bg-primary",
     form: "border-accent/60 dark:border-secondary/60 py-1 text-sm bg-primary/75 dark:bg-primary/65 text-white hover:dark:bg-secondary/75 hover:bg-accent/75",
-    default:
-      "border-primary/60 py-1 text-sm hover:bg-primary/85 hover:text-white",
+    default: "border-primary/60 py-1 text-sm hover:bg-primary/85 hover:text-white",
+      critical: " border-red-500/60 py-1 text-sm bg-red-500/85 hover:bg-white text-white hover:text-text"
   };
 
     return (
         <button
-            className={`border rounded-md px-4 cursor-pointer focus:outline-1 transition-colors ${variants[variant] ?? variants.default} flex items-center justify-between gap-2 flex justify-center ${className ? className : "w-full" } `}
+            className={`border rounded-md px-4 cursor-pointer focus:outline-1 transition-colors ${variants[variant] ?? variants.default} flex items-center justify-center gap-2 flex ${className ? className : "w-full" } `}
             type={type}
             onClick={onClick}
         >

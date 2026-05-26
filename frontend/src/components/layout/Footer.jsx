@@ -10,9 +10,6 @@ const PAGES = [
     { name: "Home", href: "/" },
     { name: "Chat", href: "/chat" },
     { name: "Explore", href: "/explore" },
-    { name: "Guides", href: "/guide" },
-    { name: "Bookings", href: "/booking" },
-    { name: "About", href: "/about" },
 ];
 
 export default function Footer() {
