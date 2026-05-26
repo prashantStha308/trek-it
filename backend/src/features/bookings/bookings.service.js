@@ -24,6 +24,16 @@ export const createBookingService = async (tourist, body, { guideId } = {}) => {
     const targetPackage = await Package.findById(packageId);
     if (!targetPackage) throw new ApiError(404, "Package not found");
 
+    // check if user has booked any other package
+    const existingBooking = await Booking.exists({
+        tourist: tourist._id,
+        status: { $nin: [BOOKING_STATUS_ENUM.expired, BOOKING_STATUS_ENUM.completed, BOOKING_STATUS_ENUM.cancelled] }
+    });
+
+    if (existingBooking) {
+        throw new ApiError(400, "User already has an active booking");
+    }
+
     const pkgDates = getNextNDates(date, targetPackage.daysAlloted);
 
     console.log("Result of pkgDates: ",pkgDates)
@@ -123,8 +133,6 @@ export const setBookingStatusService = async (bookingId, status) => {
 
 export const cancleBookingService = async (bookingId, user) => {
 
-    console.log("inside booknngServeice: ", user)
-
     const booking = await Booking.findOne({
         _id: bookingId,
         $or: [
@@ -134,12 +142,27 @@ export const cancleBookingService = async (bookingId, user) => {
         status: {$nin: [BOOKING_STATUS_ENUM.cancelled, BOOKING_STATUS_ENUM.completed]}
     }).populate({
         path: "package",
-        select: "_id name thumbnail startingPrice pricePerPerson"
+        select: "_id name thumbnail startingPrice pricePerPerson daysAlloted"
     });
 
-    console.log(booking);
-
     if (!booking) throw new ApiError(404, "Booking associated with provided Ids was not found");
+
+    const assignGuide = await Guide.findById(booking.guide);
+
+    // remove booked dates from guide
+    const bookedDates = getNextNDates(
+        booking.date,
+        booking.package.daysAlloted
+    );
+
+    assignGuide.daysBooked = assignGuide.daysBooked.filter(
+        bookedDay => !bookedDates.some(
+            targetDay => new Date(targetDay).getTime() === new Date(bookedDay).getTime()
+        )
+    );
+
+    await assignGuide.save();
+
 
     // handle payment/refund/punish
     switch (user.role) {

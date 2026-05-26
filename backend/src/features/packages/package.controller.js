@@ -1,4 +1,5 @@
 import { Package } from "../../models/index.js";
+import { Guide } from "../../models/index.js";
 
 import {
     getAll,
@@ -81,6 +82,25 @@ export const getPackageById = async (req, res) => {
         message: "Package retrived successfully"
     });
 
+}
+
+export const getAllCollaborators = async(req, res)=>{
+    const {packageId} = req.params;
+    const { limit, page, ...filter } = req.query;
+
+    filter["collaborations"] = packageId;
+
+    const collaborators = await getAll(Guide, {
+        limit, page,
+        filter,
+        sort: { rating: -1 },
+        select: "_id name profilePicture languages specialities regions gender age location isVerified isTrusted"
+    });
+
+    ApiResponse.success(res, {
+        data: collaborators,
+        message: "Collaborators retrived successfully"
+    });
 }
 
 export const updatePackage = async (req, res) => {

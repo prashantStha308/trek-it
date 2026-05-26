@@ -4,6 +4,8 @@ const nextConfig = {
   /* config options here */
  reactStrictMode: false,
   images: {
+    loader: 'custom',
+    loaderFile: './config/imgLoader.js',
     remotePatterns: [
       {
         protocol: "https",

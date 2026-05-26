@@ -24,6 +24,11 @@ export const getPackageById = async (id) => {
     return res.data.data;
 }
 
+export const getPackageCollaborators = async(pkgId) => {
+    const res = await axiosInstance.get(API_ROUTES.PACKAGE.GET_COLLABORATORS(pkgId));
+    return res.data.data;
+}
+
 export const createPackage = async(data) => {
     const res = await axiosInstance.post(API_ROUTES.PACKAGE.CREATE, data);
     return res.data.data;

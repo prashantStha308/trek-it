@@ -11,6 +11,7 @@ import {
     setBookingStatusService,
     cancleBookingService,
 } from "./bookings.service.js";
+import {BOOKING_STATUS_ENUM} from "../../constants/constants.js";
 
 
 
@@ -29,6 +30,8 @@ export const getAllBooking = async (req, res) => {
     const loggedInUser = req.user;
     const { limit, page, ...filter } = req.query;
     
+    const select = "_id name profilePicture age gender address"
+
     const bookings = await getAll(Booking, {
         limit, page,
         filter: {
@@ -40,13 +43,29 @@ export const getAllBooking = async (req, res) => {
         },
         sort: {
             createdAt: -1
-        }
+        },
+        populate: [
+            {path: "tourist", select},
+            {path: "guide", select},
+            {path: "package", select: "_id name thumbnail guide daysAlloted maxGroupSize verified requiresPermit regions keywords activities" }
+        ]
     });
 
     return ApiResponse.success(res, {
         data: bookings,
         message: "Retrived all the bookings"
     })
+}
+
+export const getActiveBookings = async (req, res) => {
+    req.query.filter = {
+        ...filter,
+        status: {
+            $nin: [BOOKING_STATUS_ENUM.completed, BOOKING_STATUS_ENUM.expired, BOOKING_STATUS_ENUM.cancelled]
+        }
+    }
+
+    await getAllBooking(req, res)
 }
 
 export const getBookingById = async (req, res) => {

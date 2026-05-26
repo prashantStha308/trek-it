@@ -1,11 +1,12 @@
 import { useRef, useEffect, useState } from "react";
 import { ChevronRight } from "lucide-react";
 
-export default function BreadCrumbs({}) {
+export default function BreadCrumbs({stops}) {
     const itemRefs = useRef([]);
     const [itemClasses, setItemClasses] = useState([]);
 
-    const stops = ["Kathmandu", "Pokhara", "Fanglung", "Fidim", "Illam", "Dharan", "Kathmandu", "Dharan", "Kathmandu"];
+    console.log("Stops: ", stops);
+
 
     const checkEdge = (element) => {
         const childRect = element.getBoundingClientRect();

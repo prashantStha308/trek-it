@@ -76,7 +76,7 @@ const Levels = ({currentLevel = 1, role = "", handleChange, formData, listItems,
 
 export default function Register() {
     
-    const [currentLevel, setCurrentLevel] = useState(3);
+    const [currentLevel, setCurrentLevel] = useState(1);
     const [formData, setFormData] = useState({
         // level 1
         name: "",
@@ -86,7 +86,7 @@ export default function Register() {
         age: "",
 
         // level 2
-        role: "guide",
+        role: "",
         address: {
             country: "",
             city: ""
@@ -164,13 +164,13 @@ export default function Register() {
             className="flex flex-1 justify-between align-bottom relative h-full w-full "
         >
             <section
-                className="flex flex-1 flex-col h-4/5 justify-between items-stretch h-full min-w-0 "
+                className="flex flex-1 flex-col justify-between items-stretch min-w-0 overflow-y-auto"
             >
                 <Header currentLevel={currentLevel} handleBack={handleBack} />
 
                 <form
                     onSubmit={handleSubmit}
-                    className="flex flex-1 flex-col justify-between gap-8 min-w-0 py-6"
+                    className="flex flex-1 flex-col justify-between gap-8 min-w-0 py-6 overflow-y-auto"
                 >
                     {/*<RegisterLevel1 />*/}
                     <Levels currentLevel={currentLevel} role={formData.role} handleChange={handleChange} formData={formData} listItems={activities} isListLoading={isListLoading} />

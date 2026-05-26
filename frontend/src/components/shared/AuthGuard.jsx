@@ -1,21 +1,37 @@
 "use client"
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useQueryClient } from "@tanstack/react-query";
+
+import { useGetMe } from "@/queries/auth.query";
 
 export default function AuthGuard({ children }) {
-    
-    const queryClient = useQueryClient();
-    const user = queryClient.getQueryData(["me"]);
 
     const router = useRouter();
 
-    // enable this later on
+    const {
+        data: user,
+        isLoading,
+        isError
+    } = useGetMe();
 
-    // if (!user) {
-    //     // prompt a model to display no login error later
-    //     router.push("/login") //create login page later
-    // }
+    useEffect(() => {
+
+        if (!isLoading && (!user || isError)) {
+            router.push("/login");
+        }
+
+    }, [user, isLoading, isError, router]);
+
+    if (isLoading) {
+        return (
+            <div className="w-full h-screen flex items-center justify-center">
+                Loading...
+            </div>
+        );
+    }
+
+    if (!user) return null;
 
     return children;
 }

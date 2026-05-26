@@ -1,79 +1,88 @@
 "use client"
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { MapPin, Tag, Star, ShieldAlert, ShieldCheck, Calendar, Users } from "lucide-react";
-import { useGetPackageById } from "@/queries/package.query";
+import {
+    useGetPackageById,
+    useGetPackageCollaborators,
+} from "@/queries/package.query";
 import { optimizeImageUrl } from "@/utils/utils.helper";
 import Badge from "@/components/ui/Badge";
 import BookingCard from "@/components/booking/BookingCard";
-import BreadCrumbs from "@/components/package/BreadCrumbs";
+import {LinkButton} from "@/components/ui/Button";
+import Avatar from "@/components/ui/Avatar";
+import GuideMiniCard from "@/components/guide/GuideMiniCard"
 
-import PackageHero from "@/components/package/PackageHero";
-import TripDetailsCard from "@/components/package/TripDetailsCard";
+function PackageDetails({pkg}){
 
-import Card from "@/components/layout/Card";
+    const fields = [
+        { name: "Group Size" , value: pkg?.maxGroupSize, pre:"", post:" person" },
+        { name: "Price per person" , value: pkg?.pricePerPerson, pre:"$.", post:"" },
+        { name: "Duration" , value: pkg?.daysAlloted, pre:"", post:"days" },
+    ]
 
+    return(
+        <section className="mx-2 flex flex-col gap-4">
+            <h2
+                className="text-primary font-semibold text-2xl"
+            >
+                Details
+            </h2>
 
-function MainContent({ data }) {
-    return (
-        <div className="flex-1 flex flex-col gap-4 min-w-0">
-            <Card title="Description">
-                <p className="text-text/70 text-sm leading-relaxed">
-                    {data?.description || "No description provided."}
-                </p>
-            </Card>
+            <article
+                className="flex flex-col gap-2 text-text"
+            >
+                {
+                    fields.map((field, index)=>(
+                        <div key={index} className="flex gap-2" >
+                            <span className="font-medium"> {field.name}: </span>
+                            <span > {field.pre}{field.value}{field.post} </span>
+                        </div>
 
-            <TripDetailsCard data={data} />
-            <ActivitiesCard activities={data?.activities} />
-            <GuideCard guide={data?.guide} />
-        </div>
-    );
+                    ))
+                }
+            </article>
+
+        </section>
+
+    )
 }
 
 
-function ActivitiesCard({ activities }) {
-    if (!activities?.length) return null;
-    return (
-        <Card title="Activities">
-            <div className="flex flex-wrap gap-2">
-                {activities?.map((a) => (
-                    <span key={a} className="text-xs capitalize border border-border px-3 py-1 rounded-full text-text/70">
-                        {a}
-                    </span>
-                ))}
-            </div>
-        </Card>
-    );
-}
+function PackageGuides({pkg}){
 
-function GuideCard({ guide }) {
-    if (!guide) return null;
-    const initials = guide?.name.split(" ").map((n) => n[0]).join("").toUpperCase();
-    return (
-        <Card title="Your guide">
-            <div className="flex items-center gap-3">
-                {guide?.profilePicture ? (
-                    <Image
-                        src={guide?.profilePicture?.src}
-                        alt={guide?.name}
-                        width={300}
-                        height={300}
-                        className="w-10 h-10 rounded-full object-cover flex-shrink-0"
-                    />
-                ) : (
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-sm font-medium text-primary flex-shrink-0">
-                        {initials}
-                    </div>
-                )}
-                <div>
-                    <p className="text-sm font-medium text-text">{guide?.name}</p>
-                    <p className="text-xs text-text/50 capitalize">{guide?.gender}</p>
+    let {data:collaborators, isLoading} = useGetPackageCollaborators(pkg?._id);
+
+    console.log("Collaborators: ",collaborators)
+
+    collaborators = collaborators?.docs;
+
+
+    return(
+        <section
+            className="flex flex-col gap-4"
+        >
+            <section
+                className="flex flex-col gap-4"
+            >
+                <h2 className="text-xl font-semibold text-primary " > Meet your Gudies </h2>
+                <GuideMiniCard guide={pkg?.guide} />
+            </section>
+
+            <section
+                className="flex flex-col gap-2"
+            >
+                <h2 className="text-lg font-medium text-primary" > Collaborators </h2>
+                <div className="text-text/60 text-xs flex flex-wrap" >
+                    {
+                        isLoading ? "Loading..." :
+                        collaborators?.length <= 0 ? "No collaborations" : (collaborators?.map((collaborator, idex)=> <Avatar key={index} src={collaborator?.profilePicture?.src} size={"xs"} /> )) 
+                    }
                 </div>
-            </div>
-        </Card>
-    );
-}
+            </section>
 
+        </section>
+    )
+}
 
 export default function PackagePage() {
     const { packageId } = useParams();
@@ -81,18 +90,78 @@ export default function PackagePage() {
 
     if (isLoading) return <p className="p-8 text-text/60">Loading...</p>;
 
+    console.log(data)
+
     const heroSrc = optimizeImageUrl(data?.thumbnail, 1080);
 
     return (
-        <section className="flex flex-col gap-6 px-4 pb-12">
-            <PackageHero data={data} heroSrc={heroSrc} />
-            
-            <BreadCrumbs stops={data?.regions} />
-            
-            <div className="flex gap-8 items-start">
-                <MainContent data={data} />
-                <BookingCard pkg={data} />
-            </div>
+        <section className="flex flex-col gap-6 px-4 pb-12 px-52">
+
+            <section
+                id="package-hero"
+                className="w-full mx-2 flex justify-between gap-32 p-4 rounded-lg "
+            >
+
+                <section
+                    className="flex flex-col gap-4"
+                >
+                    <section className="flex flex-col gap-4" >
+                        <h1 className=" text-xl lg:text-3xl text-primary font-bold" >
+                            {data?.name}
+                        </h1>
+
+                        <article
+                            id="package-description"
+                            className="flex flex-col gap-1"
+                        >
+                            <h2
+                                className="text-lg text-text font-semibold"
+                            >
+                                Description
+                            </h2>
+                            
+                            <p>
+                                {data?.description}
+                            </p>
+
+                        </article>
+                    </section>
+
+                    <section
+                        className="flex gap-4 "
+                    >
+                        <LinkButton href="/chat" size={"lg"} >
+                            Customize this package
+                        </LinkButton>
+
+                        <LinkButton variant="primary" href={`/booking/create/${data._id}`} size={"lg"} >
+                            Book Now!
+                        </LinkButton>
+
+                    </section>
+
+                </section>
+
+                <div className="w-9/12" >
+                    <Image
+                        src={optimizeImageUrl(data?.thumbnail, 1080)} alt={data?.name}
+                        width={400} height={700}
+                        className="w-full rounded-md "
+                    />
+                </div>
+
+            </section>
+
+
+            <section
+                id="details"
+                className="w-full flex justify-between gap-8"
+            >
+                <PackageDetails pkg={data} />
+
+                <PackageGuides pkg={data} />
+                
+            </section>
         </section>
     );
 }

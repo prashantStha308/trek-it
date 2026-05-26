@@ -75,7 +75,7 @@ export const getById = async (Model, id, {
 	const doc = await query.lean();
 
 	if (!doc) {
-		throw new ApiError(404,`${Model.toString()} not found`);
+		throw new ApiError(404,`${Model.modelName} not found`);
 	}
 
 	return doc;
