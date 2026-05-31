@@ -17,7 +17,7 @@ function NavbarUserSect() {
   return (
     <section className={`flex items-center gap-3`}>
       {data && data.role === "guide" && (
-        <LinkButton href={"explore/packages/create"}>Create Package</LinkButton>
+        <LinkButton variant="primary" href={"explore/packages/create"}>Create Package</LinkButton>
       )}
 
       <div className="flex text-text cursor-pointer hover:bg-secondary p-2 rounded-md">

@@ -5,7 +5,8 @@ export const toQueryString = (query = {})=>{
     Object.entries(query).forEach(([key, value])=>{
         if(Array.isArray(value)){
             value.forEach(val => params.append(key, val));
-        }else if(value !== undefined && value !== null && value !== ""){
+        }
+        else if(value !== undefined && value !== null && value !== ""){
             params.append(key, value)
         }
     })
@@ -49,6 +50,7 @@ const API_ROUTES = {
     PACKAGE: {
         GET_ALL: (query) => resolveRoute('/packages', null, query),
         GET: (id) => resolveRoute('/packages', id),
+        GET_GUIDE_PACKAGES: (guideId, query) => resolveRoute( "/packages/guide", guideId, query ),
         GET_COLLABORATORS: (pkgId) => resolveRoute('/packages/collaborators', pkgId),
         CREATE: "/packages",
         UPDATE: (id) => resolveRoute('/packages', id),
