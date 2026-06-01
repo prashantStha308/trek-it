@@ -116,7 +116,8 @@ export default function UserBookings({ user }) {
         {TABS.map((tab) => (
           <Button
             key={tab}
-            variant={activeTab === tab ? "primary" : "default"}
+            variant={activeTab === tab ? "primary" : "outline"}
+            color="green"
             onClick={() => setActiveTab(tab)}
             className="w-auto capitalize"
           >

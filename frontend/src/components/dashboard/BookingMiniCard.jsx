@@ -142,7 +142,7 @@ export default function BookingMiniCard({ booking }) {
               )
           }*/}
 
-          <LinkButton href={`/chat/${booking?.guide?._id}`} size="sm" variant="primary" >
+          <LinkButton href={`/chat/${booking?.guide?._id}`} size="sm" variant="primary" color="green" >
             Chat with Guide 
           </LinkButton>
 
