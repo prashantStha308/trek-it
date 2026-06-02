@@ -1,4 +1,6 @@
 "use client"
+import { Suspense } from "react";
+
 import { motion, AnimatePresence } from "motion/react";
 import { SlidersHorizontal } from "lucide-react";
 
@@ -69,8 +71,9 @@ const AnimatedTabWord = ({ word, variants, isActive }) => (
 
 // Main Page
 export default function ExplorePage() {
+
     const {
-        tab, handleTabChange,
+        tab, setTab, handleTabChange,
         currentSearch, handleSearchWords,
         currentFilter, setCurrentFilter,
         currentShowFilters, setCurrentShowFilters,

@@ -1,4 +1,10 @@
 export default function ChatTile({ user, lastMessage, notReadCount, isActive = false }) {
+    console.log("inside chattile user: ", user);
+    console.log("inside chattile lastMessage: ", lastMessage);
+    console.log("inside chattile notReadCount: ", notReadCount);
+    console.log("inside chattile isActive: ", isActive);
+    console.log();
+
     return (
         <article
             id={`chat-tile-${user?._id || ""}`}
@@ -21,7 +27,7 @@ export default function ChatTile({ user, lastMessage, notReadCount, isActive = f
             </section>
 
             <div>
-                option
+                {/*option*/}
             </div>
 
         </article>
