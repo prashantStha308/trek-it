@@ -16,8 +16,12 @@ const useChatStore = create((set, get) => ({
         }
     */
     chats: {},
+    setChats: (cts)=> set({chats: cts})  ,
+
     activeChatId: null,
+    setActiveChatId: (id)=> set({activeChatId: id}) ,
     messages: {},
+    setMessages: (msgs)=> set({messages: msgs}),
 
     ...chatActionSlice(set, get),
     ...chatEventsSlice(set, get),
