@@ -6,15 +6,8 @@ import { MapPin, Calendar, Clock, ArrowRight, Navigation, CalendarX, UserRound }
 import { Button, LinkButton } from "@/components/ui/Button";
 import { useGetUserBookings, useGetActiveBookings } from "@/queries/booking.query";
 import Avatar from "@/components/ui/Avatar";
+import BookingMiniCard from "@/components/dashboard/BookingMiniCard"
 
-const STATUS_CONFIG = {
-  active:    { label: "Active",    badge: "bg-success-subtle text-success",  card: "bg-success-subtle/30 border-success/25" },
-  confirmed: { label: "Confirmed", badge: "bg-primary-subtle text-primary",  card: "bg-primary-subtle/30 border-primary/25" },
-  pending:   { label: "Pending",   badge: "bg-warning-subtle text-warning",  card: "bg-warning-subtle/30 border-warning/25" },
-  completed: { label: "Completed", badge: "bg-muted-subtle text-muted",      card: "bg-surface border-border" },
-  cancelled: { label: "Cancelled", badge: "bg-danger-subtle text-danger",    card: "bg-surface border-border" },
-  expired:   { label: "Expired",   badge: "bg-danger-subtle text-danger",    card: "bg-surface border-border" },
-};
 
 const TABS = ["all", "pending", "confirmed", "completed", "cancelled"];
 const CURRENT_STATUSES = ["active", "pending", "confirmed"];
@@ -22,30 +15,7 @@ const CURRENT_STATUSES = ["active", "pending", "confirmed"];
 const formatDate = (date) =>
   new Date(date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
-function StatusBadge({ status }) {
-  const cfg = STATUS_CONFIG[status] ?? STATUS_CONFIG.pending;
-  return (
-    <span className={`inline-flex items-center text-[11px] font-medium px-2.5 py-0.5 rounded-full ${cfg.badge}`}>
-      {cfg.label}
-    </span>
-  );
-}
 
-function GuideInfo({ guide }) {
-  if (!guide)
-    return (
-      <span className="text-[13px] text-muted italic flex items-center gap-1.5">
-        <UserRound size={13} />
-        Guide pending assignment
-      </span>
-    );
-  return (
-    <div className="flex items-center gap-2">
-      <Avatar src={guide?.profilePicture?.src} alt={guide?.name} size="xs" />
-      <span className="text-[13px] text-muted">{guide.name}</span>
-    </div>
-  );
-}
 
 function MetricCard({ label, value }) {
   return (
@@ -78,75 +48,6 @@ function BookingCardSkeleton() {
   );
 }
 
-function BookingCard({ booking }) {
-  const isOngoing = booking?.status === "active";
-  const cfg = STATUS_CONFIG[booking?.status] ?? STATUS_CONFIG.pending;
-
-  return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: 6 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -6 }}
-      transition={{ duration: 0.18, ease: "easeOut" }}
-      className={`rounded-xl border p-4 transition-colors ${cfg.card} ${isOngoing ? "border-l-[3px] border-l-success" : ""}`}
-    >
-      <div className="flex justify-between items-start gap-3 flex-wrap">
-        <div className="flex-1 min-w-0">
-          {isOngoing && (
-            <div className="flex items-center gap-2 mb-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse" />
-              <span className="text-[11px] font-medium text-success">Ongoing trek</span>
-            </div>
-          )}
-          <p className="font-semibold text-[15px] text-foreground mb-0.5 truncate">
-            {booking?.package?.name}
-          </p>
-          <p className="text-[12px] text-muted mb-2.5 flex items-center gap-1">
-            <MapPin size={12} className="shrink-0" />
-            {booking?.package?.regions.map((item, index) => (
-              <span key={index}>{item}{index < booking.package.regions.length - 1 ? "," : ""} </span>
-            ))}
-          </p>
-          <GuideInfo guide={booking?.guide} />
-        </div>
-
-        <div className="flex flex-col items-end gap-2 shrink-0">
-          <StatusBadge status={booking?.status} />
-          <p className="text-[16px] font-bold text-foreground">
-            ${booking?.totalPrice.toLocaleString()}
-          </p>
-        </div>
-      </div>
-
-      <div className="border-t border-border/60 mt-3 pt-3 flex items-center justify-between flex-wrap gap-2">
-        <div className="flex items-center gap-4 flex-wrap">
-          <span className="text-[12px] text-muted flex items-center gap-1.5">
-            <Calendar size={12} />
-            {formatDate(booking?.date)}
-          </span>
-          <span className="text-[12px] text-muted flex items-center gap-1.5">
-            <Clock size={12} />
-            {booking?.package?.daysAlloted} days
-          </span>
-        </div>
-
-        <section className="flex items-center gap-6" >
-          
-          <LinkButton href={`/chat/${booking?.guide?._id}`} size="sm" variant="primary">
-            Chat with Guide 
-          </LinkButton>
-
-          <LinkButton href={`/booking/${booking?._id}`} size="sm" variant="outline">
-            View details <ArrowRight size={12} />
-          </LinkButton>
-
-        </section>
-
-      </div>
-    </motion.div>
-  );
-}
 
 function EmptyState({ tab }) {
   return (
@@ -206,7 +107,7 @@ export default function UserBookings({ user }) {
           <div className="flex flex-col gap-2.5">
             {activeBookingLoading
               ? <BookingCardSkeleton />
-              : activeBookings?.map((b) => <BookingCard key={b._id} booking={b} />)}
+              : activeBookings?.map((b) => <BookingMiniCard key={b._id} booking={b} />)}
           </div>
         </section>
       )}
@@ -215,7 +116,8 @@ export default function UserBookings({ user }) {
         {TABS.map((tab) => (
           <Button
             key={tab}
-            variant={activeTab === tab ? "primary" : "default"}
+            variant={activeTab === tab ? "primary" : "outline"}
+            color="green"
             onClick={() => setActiveTab(tab)}
             className="w-auto capitalize"
           >
@@ -244,7 +146,7 @@ export default function UserBookings({ user }) {
                 transition={{ duration: 0.18, ease: "easeOut" }}
                 className="flex flex-col gap-2.5"
               >
-                {filtered?.map((b) => <BookingCard key={b._id} booking={b} />)}
+                {filtered?.map((b) => <BookingMiniCard key={b._id} booking={b} />)}
               </motion.div>
             )}
           </AnimatePresence>

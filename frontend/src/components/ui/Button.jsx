@@ -1,4 +1,6 @@
 import Link from "next/link";
+import {THEME_COLOR, THEME_SIZE} from "@/constants/theme.constants.js";
+
 /**
  * @param {Object} props
  * @param {string} props.text
@@ -7,23 +9,17 @@ import Link from "next/link";
  */
 export const Button = ({
   variant = "outline",
+  color="green",
   type = "button",
   onClick,
   children,
   className,
   disabled = false,
 }) => {
-  const variants = {
-    primary:
-      "border-primary/60 py-1 text-sm bg-primary/85 text-white hover:bg-primary",
-    form: "border-accent/60 dark:border-secondary/60 py-1 text-sm bg-primary/75 dark:bg-primary/65 text-white hover:dark:bg-secondary/75 hover:bg-accent/75",
-    default: "border-primary/60 py-1 text-sm hover:bg-primary/85 hover:text-white",
-      critical: " border-red-500/60 py-1 text-sm bg-red-500/85 hover:bg-white text-white hover:text-text"
-  };
 
     return (
         <button
-            className={`border rounded-md px-4 cursor-pointer focus:outline-1 transition-colors ${variants[variant] ?? variants.default} flex items-center justify-center gap-2 flex ${className ? className : "w-full" } `}
+            className={`border rounded-md px-4 cursor-pointer focus:outline-1 transition-colors ${THEME_COLOR[color][variant] } flex items-center justify-center gap-2 flex ${className ? className : "w-full" } `}
             type={type}
             onClick={onClick}
         >
@@ -33,25 +29,12 @@ export const Button = ({
 }
 
 
-export const LinkButton = ({ variant = "default", size="sm" , href, children,  })=>{
-    
-    const sizes={
-        sm: "px-2 py-1 gap-1 text-xs",
-        md: "px-4 py-1 gap-2 text-sm",
-        lg: "px-6 py-2 gap-2 text-lg",
-        xl: "px-8 py-4 gap-4 text-xl"
-    }
-
-    const variants = {
-        primary: "border-primary/60 bg-primary/85 text-white hover:bg-primary",
-        form: "border-accent/60 dark:border-secondary/60 bg-primary/75 dark:bg-primary/65 text-white hover:dark:bg-secondary/75 hover:bg-accent/75",
-        default: "border-primary/60 hover:bg-primary/85 hover:text-white",
-    }
+export const LinkButton = ({ variant = "default", color="green", size="sm" , href, children, className = ""  })=>{
 
     return (
         <Link
             href={href}
-            className={`border rounded-md ${sizes[size]} cursor-pointer focus:outline-1 transition-colors ${variants[variant] ?? variants.default} flex items-center justify-between flex justify-center`}
+            className={`border rounded-md ${THEME_SIZE[size]} cursor-pointer focus:outline-1 transition-colors ${THEME_COLOR[color][variant]} flex items-center justify-between flex justify-center`}
         >
             {children}
         </Link>

@@ -1,33 +1,33 @@
 import { Package } from "../../models/index.js";
 import { Guide } from "../../models/index.js";
 
-import {
-    getAll,
-    getById,
-} from "../../utils/crud.service.js";
+import { getAll, getById } from "../../utils/crud.service.js";
 import ApiResponse from "../../utils/ApiResponse.js";
 import {
     createPackageService,
     createCustomPackageService,
     searchPackageService,
     deletePackageService,
-    updatePackageService
+    updatePackageService,
 } from "./package.service.js";
 
-export const createPackage = async (req, res) => {
 
+const GUIDE_SELECT = "_id name gender age profilePicture location languages specialities regions rating isVerified isTrusted"
+
+
+export const createPackage = async (req, res) => {
     const pkg = await createPackageService(req.body, req.user._id, req.files);
 
     ApiResponse.success(res, {
         status: 200,
         data: pkg,
-        message: "Package created Successfully. Currently being verified"
-    })
-}
+        message: "Package created Successfully. Currently being verified",
+    });
+};
 
 export const curatePackage = async (req, res) => {
     // curate a custom package based on user's request
-}
+};
 
 export const createCustomPackage = async (req, res) => {
     const pkg = await createCustomPackageService(req.user, req.body, req.files);
@@ -35,90 +35,129 @@ export const createCustomPackage = async (req, res) => {
     ApiResponse.success(res, {
         status: 201,
         data: pkg,
-        message: "Custom package created successfully. The tourist and guide have been notified."
+        message:
+            "Custom package created successfully. The tourist and guide have been notified.",
     });
-}
+};
 
 export const getAllPacakages = async (req, res) => {
     const { limit, page, ...filter } = req.query;
 
     const packages = await getAll(Package, {
-        limit, page,
+        limit,
+        page,
         filter,
         sort: { rating: -1 },
         populate: [
-            { path: "guide", select: "_id name profilePicture languages specialities regions gender age location" },
-            { path: "collaborators", select: "_id name profilePicture languages specialities regions gender age location" }
-        ]
+            {
+                path: "guide",
+                select: GUIDE_SELECT,
+            },
+            {
+                path: "collaborators",
+                select: GUIDE_SELECT,
+            },
+        ],
     });
 
     ApiResponse.success(res, {
         data: packages,
-        message: "Packages retrived successfully"
+        message: "Packages retrived successfully",
     });
-}
+};
+
+export const getPackagesByGuide = async (req, res) => {
+    let { limit, page, sort, ...filter } = req.query;
+    const {guideId} = req.params;
+
+    const packages = await getAll(Package, {
+        limit,
+        page,
+        filter: {...filter, guide: guideId},
+        sort: { rating: -1 },
+        populate: [
+            {
+                path: "guide",
+                select: GUIDE_SELECT,
+            },
+            {
+                path: "collaborators",
+                select: GUIDE_SELECT,
+            },
+        ],
+    });
+
+    ApiResponse.success(res, {
+        data: packages,
+        message: "Packages retrived successfully",
+    });
+
+};
 
 export const searchPackages = async (req, res) => {
     const pkg = await searchPackageService(req.query);
-    return ApiResponse.success(res,{
+    return ApiResponse.success(res, {
         data: pkg,
-    })
-}
+    });
+};
 
-export const serachPackageInPriceRange = ()=>{
+export const serachPackageInPriceRange = () => {
     // make this later
-}
+};
 
 export const getPackageById = async (req, res) => {
     const pkg = await getById(Package, req.params.packageId, {
         populate: {
             path: "guide",
-            select: "name profilePicture gender age languages isVerified rating"
-        }
+            select: GUIDE_SELECT,
+        },
     });
 
     ApiResponse.success(res, {
         data: pkg,
-        message: "Package retrived successfully"
+        message: "Package retrived successfully",
     });
+};
 
-}
-
-export const getAllCollaborators = async(req, res)=>{
-    const {packageId} = req.params;
+export const getAllCollaborators = async (req, res) => {
+    const { packageId } = req.params;
     const { limit, page, ...filter } = req.query;
 
     filter["collaborations"] = packageId;
 
     const collaborators = await getAll(Guide, {
-        limit, page,
+        limit,
+        page,
         filter,
         sort: { rating: -1 },
-        select: "_id name profilePicture languages specialities regions gender age location isVerified isTrusted"
+        select: GUIDE_SELECT,
     });
 
     ApiResponse.success(res, {
         data: collaborators,
-        message: "Collaborators retrived successfully"
+        message: "Collaborators retrived successfully",
     });
-}
+};
 
 export const updatePackage = async (req, res) => {
-    const pkg = await updatePackageService(req.user._id, req.params.packageId, req.body, req.files);
+    const pkg = await updatePackageService(
+        req.user._id,
+        req.params.packageId,
+        req.body,
+        req.files,
+    );
 
     ApiResponse.success(res, {
         data: pkg,
-        message: "Package updated successfully"
+        message: "Package updated successfully",
     });
-}
+};
 
 export const deletePackage = async (req, res) => {
     const pkg = await deletePackageService(req.params.packageId);
 
     ApiResponse.success(res, {
         data: pkg,
-        message: "Package deleted successfully"
-    })
-}
-
-
+        message: "Package deleted successfully",
+    });
+};
