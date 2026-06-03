@@ -103,7 +103,8 @@ export default function PackageCard({guide}){
 
                 <LinkButton
                     variant="primary"
-                    href={`/explore/guide/${guide._id}`}
+                    size="md"
+                    href={`/guide/${guide._id}`}
                 > 
                     Visit Guide
                 </LinkButton> 

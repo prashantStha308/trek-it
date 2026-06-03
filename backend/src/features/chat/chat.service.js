@@ -15,6 +15,24 @@ export const createChatService = async (participants = [], type = "direct") => {
     return newChat;
 }
 
+
+export const findChatOrCreateService = async (participants = []) => {
+    if (participants.length <= 0) throw new Error("participants cannot be empty");
+
+    const chat = await Chat.findOne({
+        type: "direct",
+        participants: { $all: participants, $size: participants.length }
+    }).populate("participants", "name profilePicture role")
+    .populate("lastMessage", "_id sender receiver content createdAt");
+
+    if (chat) return chat;
+
+    const type = participants.length > 2 ? "group" : "direct";
+    const newChat = await createChatService(participants, type);
+    return newChat;
+}
+
+
 export const addParticipantService = async (participantId, chatId) => {
     if (!mongoose.Types.ObjectId.isValid(chatId) || !mongoose.Types.ObjectId.isValid(participantId)) {
         throw new Error(404, "Invalid Participant Id OR Conversation Id ");
@@ -33,16 +51,30 @@ export const addParticipantService = async (participantId, chatId) => {
     return chatRes;
 }
 
-export const sendMessageService = async (messageObj) => {
+
+export const sendMessageService = async (messageObj, chatId) => {
     if (messageObj === null || messageObj.content === null || messageObj.content.trim() === "") {
         throw new ApiError(404, "Message cannot be empty");
     }
 
-    const newMessage = await Message.create(messageObj);
+    const [newMessage, chat] = await Promise.all([
+        Message.create(messageObj),
+        Chat.findById(chatId)
+    ]);
+
+    chat.lastMessage = newMessage._id;
+
+    await Promise.all([
+        chat.save(),
+        newMessage.populate([
+            {path: "sender", select: "_id name profilePicture"}
+        ])
+    ]);
 
     console.log("Sending Message: ", messageObj);
     return newMessage;
 }
+
 
 export const updateMessageService = async({messageId, content, type})=>{
     const targetMsg = await Message.findById(messageId);
@@ -64,12 +96,16 @@ export const readService = async (chatId, userId)=>{
     });
 }
 
+
 export const joinChatService = async(chatId, userId)=>{
     if (!mongoose.Types.ObjectId.isValid(chatId) || !mongoose.Types.ObjectId.isValid(userId)) {
         throw new ApiError(400,"Invalid chatId OR userId");
     }
 
-    const chat = await Chat.findById(chatId);
+    const chat = await Chat.findById(chatId)
+        .populate("participants", "name profilePicture role")
+        .populate("lastMessage", "_id sender receiver content createdAt");
+
     if(!chat) throw new ApiError(404, "Chat not found");
 
     const userNotInChat = !chat.participants.find((person) => person._id.toString() == userId.toString());
@@ -82,18 +118,28 @@ export const joinChatService = async(chatId, userId)=>{
     return chat;
 }
 
+
 export const leaveChatService = async (chatId, userId) => {
     if (!mongoose.Types.ObjectId.isValid(chatId) || !mongoose.Types.ObjectId.isValid(userId)) {
-        throw new ApiError(400,"Invalid chatId OR userId");
+        throw new ApiError(400, "Invalid chatId OR userId");
     }
 
-    const updatedChat = await Chat.updateOne(
-        { _id: chatId },
-        { $pull: { participants: userId } }
+    const updatedChat = await Chat.findByIdAndUpdate(
+        chatId,
+        { $pull: { participants: userId } },
+        { new: true }
     );
+
+    if (!updatedChat) throw new ApiError(404, "Chat not found");
+
+    // if no participants remain, delete the chat
+    if (updatedChat.participants.length === 0) {
+        await Chat.findByIdAndDelete(chatId);
+    }
 
     return updatedChat.modifiedCount;
 }
+
 
 export const deleteMessageService = async(messageId)=>{
     if (!mongoose.Types.ObjectId.isValid(messageId)) {

@@ -24,10 +24,18 @@ const chatSchema = new mongoose.Schema({
 		},
 		default: "direct"
 	},
-	lastSeen:[{
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User'
-	}]
+	lastSeen: [{
+	    user: {
+	        type: mongoose.Schema.Types.ObjectId,
+	        ref: "User"
+	    },
+	    seenAt: {
+	        type: Date,
+	        default: Date.now
+	    }
+	}],
+},{
+	timestamps: true
 });
 
 // By default, set the ChatName to the list of participants. This only runs in creation and never after.

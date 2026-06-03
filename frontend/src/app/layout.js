@@ -1,6 +1,9 @@
-import SocketClient from "@/config/SocketClient";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
+
+import SocketClient from "@/config/SocketClient";
+import ChatSocketClient from "@/config/ChatSocketClient";
+
 import QueryProvider from "@/config/QueryProvider";
 import Toast from "@/components/ui/Toast";
 
@@ -23,6 +26,7 @@ export default function RootLayout({ children }) {
         >
           <QueryProvider>
             <SocketClient />
+            <ChatSocketClient />
             <Toast />
             {children}
           </QueryProvider>

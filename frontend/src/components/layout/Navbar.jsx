@@ -10,9 +10,14 @@ import Avatar from "@/components/ui/Avatar";
 
 import { optimizeImageUrl } from "@/utils/utils.helper";
 import { useGetMe } from "@/queries/auth.query";
+import useChatStore from "@/store/chat/chat.store.js";
+
 
 function NavbarUserSect() {
   const { data, isLoading, isError, error } = useGetMe();
+  const hasNewMessages = useChatStore(store => 
+      Object.values(store.newMessageCount).some(count => count > 0)
+  );
 
   return (
     <section className={`flex items-center gap-3`}>
@@ -27,9 +32,14 @@ function NavbarUserSect() {
         <>
           <Link
             href={"/chat"}
-            className="text-text  hover:bg-secondary p-2 rounded-md"
+            className="text-text  hover:bg-secondary p-2 rounded-md relative"
           >
             <MessageCircle size={20} />
+
+            <div
+              className={`rounded-full h-2 w-2 bg-red-500 absolute top-2 right-2 ${hasNewMessages ? "opacity-100" : "opacity-0" } `}
+            />
+
           </Link>
 
           <Link

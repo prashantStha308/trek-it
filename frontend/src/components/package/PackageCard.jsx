@@ -65,6 +65,7 @@ export function PackageCard({ item }) {
                     <LinkButton
                         href={`/explore/packages/${item?._id}`}
                         variant="primary"
+                        size="md"
                     >
                         Book Now 
                     </LinkButton>

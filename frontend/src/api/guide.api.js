@@ -10,7 +10,7 @@ export const getAllGuides = async ({ limit = 10, page = 1, ...query }) => {
 
 export const getGuideById = async (id) => {
     const res = await axiosInstance.get(API_ROUTES.GUIDE.GET(id))
-    return res.data;
+    return res.data.data;
 }
 
 export const searchGuides = async (query) => {

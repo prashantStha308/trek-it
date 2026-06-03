@@ -1,23 +1,14 @@
-// config/imgLoader.js
 export default function cloudinaryLoader({ src, width, quality }) {
-  // Local public folder images — return as-is
-  if (src.startsWith("/") || src.startsWith("./")) {
-    return src
-  }
 
-  const params = [
-    "f_auto",
-    "c_limit",
-    `w_${width}`,
-    `q_${quality || "auto"}`,
-  ].join(",")
+    if (!src) return "/assets/svg/defaultPfp.svg";
+    if (src.startsWith("/") || src.startsWith("./")) return src;
 
-  // Already a full Cloudinary URL — inject transforms
-  if (src.includes("res.cloudinary.com")) {
-    return src.replace("/upload/", `/upload/${params}/`)
-  }
+    const params = ["f_auto", "c_limit", `w_${width}`, `q_${quality || "auto"}`].join(",");
 
-  // Raw public_id
-  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
-  return `https://res.cloudinary.com/${cloudName}/image/upload/${params}/${src}`
+    if (src.includes("res.cloudinary.com")) {
+        return src.replace("/upload/", `/upload/${params}/`);
+    }
+
+    console.warn("cloudinaryLoader received a non-URL src:", src);
+    return src;
 }

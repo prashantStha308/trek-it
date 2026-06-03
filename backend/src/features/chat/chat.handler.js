@@ -22,21 +22,26 @@ function chatHandler(io, socket) {
     const gateway = chatGateway(io, socket);
 
     const join = async ({ chatId }) => {
-        const userId = socket.data.user._id;
-        
-        const chat = await joinChatService(chatId, userId);
+        console.log(
+            `JOIN REQUEST: ${socket.id} -> ${chatId}`
+        );
+
+
+        const user = socket.data.user;        
+        const chat = await joinChatService(chatId, user._id);
 
         gateway.joinChat(chat);
-        gateway.emitToSocket("chat:joined", { chat });
-        gateway.emitToChat("chat:userJoined", userId);
+        gateway.emitToSocket("chat:joined", chat);
+        gateway.emitToChat("chat:userJoined", {chatId: chat._id, user});
     };
 
-    const leave = async () => {
-        await leaveChatService( socket.data.currentChat._id, socket.data.user._id );
+    const leave = async ({chatId}) => {
+        await leaveChatService( chatId, socket.data.user._id );
 
         gateway.leaveChat();
-        gateway.emitToSocket("chat:left");
-    };
+        gateway.emitToSocket("chat:left", chatId);
+        gateway.emitToChat("chat:userLeft", {chatId, userId: socket.data.user._id});
+    }
 
     const createChat = async (data) => {
         let { participants=[], type = "direct" } = data;
@@ -53,23 +58,33 @@ function chatHandler(io, socket) {
         gateway.emitToSocket("chat:created", { chat });
 
         // handle notification
-    };
+    }
 
     const sendMessage = async (messageData) => {
+        
+        console.log(
+            "SEND MESSAGE FROM",
+            socket.data.user._id.toString(),
+            "ROOM",
+            socket.data.currentChat?._id
+        );
+        // Validate messageData Object
+        validateObject(messageData, ["content", "type"]);
 
-        validateObject(messageData, ["title", "content", "type"]);
-
+        // Get participants
         const userId = socket.data.user._id;
         const chatId = socket.data.currentChat._id;
 
         if (!chatId) throw new ApiError(400, "Not in a chat");
         
+        // Construct message obj
         const message = {
             chat: chatId,
             sender: userId,
             ...messageData
         }
-        const messageRes = await sendMessageService(message);
+        // send message
+        const messageRes = await sendMessageService(message, chatId);
 
         gateway.emitToSocket("chat:messageSent", messageRes);
         gateway.emitToChat("chat:messageReceived", messageRes);
@@ -88,7 +103,7 @@ function chatHandler(io, socket) {
                 })
             )
         );
-    };
+    }
 
     const readLatest = async ()=>{
         await readService(socket.data.currentChat._id,socket.data.user._id);

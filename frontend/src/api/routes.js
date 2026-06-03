@@ -96,6 +96,8 @@ const API_ROUTES = {
     CHAT: {
         GET_ALL: (query) => resolveRoute('/chat', null, query),
         GET: (id) => resolveRoute('/chat', id),
+        GET_MESSAGES: (chatId, query)=> resolveRoute('/chat/messages', chatId, query),
+        GET_OR_CREATE: '/chat/direct',
     },
     META:{
         REGIONS: (query) => resolveRoute("/meta/regions", null, query),
