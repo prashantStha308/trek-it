@@ -1,7 +1,8 @@
 export const THEME_COLOR = {
   green: {
-    primary: "bg-primary text-white hover:bg-primary/80 border border-primary",
-    outline: "border border-primary text-text bg-transparent hover:bg-primary/10",
+    primary: "bg-primary text-white  hover:bg-primary/80 border border-primary",
+    outline: "border border-primary text-text bg-transparent hover:bg-primary hover:text-white",
+    form: "bg-primary text-white hover:bg-accent/80 border border-accent",
     badge:   "bg-primary/10 text-primary hover:bg-primary/20",
   },
   amber: {
@@ -31,9 +32,9 @@ export const THEME_COLOR = {
 };
 
 export const THEME_SIZE = {
-  xs: "px-1.5 py-0 text-[10px] gap-1",
-  sm: "px-2 py-0.5 text-xs gap-1",
-  md: "px-3 py-1 text-xs gap-1.5",
-  lg: "px-4 py-1.5 text-sm gap-1.5",
-  xl: "px-5 py-2 text-sm gap-2",
+  xs: "px-1.5 py-0.5 text-[10px] gap-1",
+  sm: "px-2 py-1 text-xs gap-1",
+  md: "px-3 py-1.5 text-sm gap-1.5",
+  lg: "px-4 py-3 text-base gap-1.5",
+  xl: "px-5 py-4 text-lg gap-2",
 };

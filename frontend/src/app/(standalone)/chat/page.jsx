@@ -1,17 +1,26 @@
 "use client"
+import {useEffect} from "react";
 
-import ChatWindow from "@/components/chat/ChatWindow";
+import ChatWindow from "@/components/chat/chatWindow/ChatWindow";
 import ChatList from "@/components/chat/ChatList";
 import { useState } from "react";
 import {useGetMe} from "@/queries/auth.query.js";
 import {
-    useGetAllUserChats,
     useGetChatById,
 } from "@/queries/chat.query.js";
+import useChatStore from "@/store/chat/chat.store.js"
+
 
 export default function Chat() {
     const {data:loggedInUser, isLoading} = useGetMe();
-    const {data:allChats, isLoading:chatsLoading, isError, error} = useGetAllUserChats();
+
+    const setActiveChat = useChatStore(store => store.setActiveChat);
+
+    useEffect(() => {
+        return () => {
+            setActiveChat(null);
+        }
+    }, []);
 
     return (
         <section className="h-full w-full flex">

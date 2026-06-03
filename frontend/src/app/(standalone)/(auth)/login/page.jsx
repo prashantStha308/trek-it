@@ -129,7 +129,7 @@ export default function Login() {
                         callback={toggglePasswordVisibility}
                     />
 
-                    <Button type={"submit"} variant="form"> Login </Button>
+                    <Button type={"submit"} variant="form" color="green" > Login </Button>
 
                 </section>
 

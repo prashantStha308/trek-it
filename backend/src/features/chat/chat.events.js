@@ -4,6 +4,14 @@ import { socketErrorHandler } from "../../middlewares/errorHandler.js"
 function chatEvents(io, socket){
     console.log("registering chat events for", socket.id);
     
+    socket.onAny((event, ...args) => {
+        console.log(
+            "SERVER RECEIVED EVENT:",
+            event,
+            args
+        );
+    });
+    
 	const handler = chatHandler(io, socket);
 
 	socket.on("chat:create", socketErrorHandler(socket, handler.createChat) );
