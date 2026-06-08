@@ -26,16 +26,17 @@ export default function ChatInput({ onSubmit }){
             <RoundedBg ele={<Smile size={25} strokeWidth={1.5} className="text-text/75" />} />
             <RoundedBg ele={<CirclePlus size={25} strokeWidth={1.5} className="text-text/75" />} />
 
-            <div className="flex-1 rounded-full bg-accent/20 dark:bg-background-dark px-4 py-1.5">
+            <div className="flex-1 rounded-lg bg-accent/20 dark:bg-background-dark px-4 py-1.5">
 
                 <label htmlFor="message" className="sr-only" >Message</label>
                 
-                <input
+                <textarea
                     id="message"
                     name="messageContent"
                     type="text"
-                    className="w-full outline-none bg-transparent text-sm"
+                    className="w-full outline-none bg-transparent text-sm resize-none"
                     placeholder="Type a message..."
+                    autoComplete="off"
                 />
             </div>
 

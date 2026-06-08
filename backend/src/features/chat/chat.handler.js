@@ -61,13 +61,6 @@ function chatHandler(io, socket) {
     }
 
     const sendMessage = async (messageData) => {
-        
-        console.log(
-            "SEND MESSAGE FROM",
-            socket.data.user._id.toString(),
-            "ROOM",
-            socket.data.currentChat?._id
-        );
         // Validate messageData Object
         validateObject(messageData, ["content", "type"]);
 
@@ -104,6 +97,7 @@ function chatHandler(io, socket) {
             )
         );
     }
+
 
     const readLatest = async ()=>{
         await readService(socket.data.currentChat._id,socket.data.user._id);

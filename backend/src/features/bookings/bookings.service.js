@@ -1,9 +1,12 @@
 import mongoose from "mongoose";
 import { Booking, Package, Guide } from "../../models/index.js";
+
 import {
     BOOKING_STATUS_ENUM,
 } from '../../constants/constants.js';
 import { ROLE_ENUM } from "../../constants/constants.js";
+import {NOTIFICATION_TITLE, NOTIFICATION_EVENTS} from "../../constants/constants.js"
+
 import {
     getNextNDates,
     getTotalPrice,
@@ -86,13 +89,13 @@ export const createBookingService = async (tourist, body, { guideId } = {}) => {
 
     const promises = [];
 
-    promises.push(sendNotificationService("notification:bookingCreated", booking.tourist, {
+    promises.push(sendNotificationService(NOTIFICATION_EVENTS.bookingCreated, booking.tourist, {
         title: `Booking Created: ${booking.name}`,
         message: `Your booking for package: ${targetPackage.name} has been successfully booked. You have been assigned a guide: ${targetGuide.name}, id: ${targetGuide.id}`,
         meta
     }));
 
-    promises.push(sendNotificationService("notification:newBooking", booking.guide, {
+    promises.push(sendNotificationService(NOTIFICATION_EVENTS.newBookingRequest, booking.guide, {
         title: `A new booking request has been made.`,
         message: `A new booking for ${targetPackage.name} has been made by ${tourist.name}(id: ${tourist._id}) on ${Date.now()} `,
         meta
@@ -113,7 +116,12 @@ export const setBookingStatusService = async (bookingId, status) => {
     await booking.save();
 
     const bookingStatus = booking.status;
-    const event = "notification:booking"+bookingStatus.charAt(0).toUpperCase() + bookingStatus.slice(1)
+
+    const event = NOTIFICATION_EVENTS[`booking${bookingStatus.charAt(0).toUpperCase() + bookingStatus.slice(1)}`]
+
+    if(!NOTIFICATION_TITLE.includes(event)){
+        throw new ApiError(500, "Invalid event encountered");
+    }
     
     await broadcastNotificationService(event, [booking.tourist, booking.guide], {
         title: `Booking ${bookingStatus}`,
@@ -164,7 +172,7 @@ export const cancleBookingService = async (bookingId, user) => {
     await assignGuide.save();
 
 
-    // handle payment/refund/punish
+    // handle payment refund/punish
     switch (user.role) {
         case ROLE_ENUM.guide:
             // guide logic
@@ -184,9 +192,9 @@ export const cancleBookingService = async (bookingId, user) => {
     await booking.save();
 
     // set notification
-    await broadcastNotificationService("notification:bookingCancelled", [booking.tourist, booking.guide], {
+    await broadcastNotificationService(NOTIFICATION_EVENTS.bookingCancelled, [booking.tourist, booking.guide], {
         title: `Booking Cancelled - ${booking.name}`,
-        message: `Booking for ${booking.package.name} has been cancelled on by ${user.role} : ${user._id}`,
+        message: `Booking for ${booking.package.name} has been cancelled on by ${user.role} : ${user.name}, ${user._id}`,
         meta: {
             booking: {
                 _id: booking._id,

@@ -22,6 +22,12 @@ export default function ChatTile({ currentUser, chat, isActive = false }) {
     const displayPicture = getDisplayPicture(chat, currentUser);
     const lastMessagePreview = chat?.lastMessage?.content ?? "Say Hi 👋";
 
+
+    const handleOptions = (e)=>{
+        e.preventDefault();
+        e.stopPropagation()
+    }
+
 console.log("ChatTile render, lastMessage:", chat?.lastMessage);
 
     return (
@@ -46,6 +52,7 @@ console.log("ChatTile render, lastMessage:", chat?.lastMessage);
             >
                 <button
                     className="text-text/75 p-2 cursor-pointer bg-transparent hover:bg-accent/15"
+                    onClick={handleOptions}
                 >
                     <EllipsisVertical size={15} />
                 </button>

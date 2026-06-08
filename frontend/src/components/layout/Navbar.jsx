@@ -10,11 +10,14 @@ import Avatar from "@/components/ui/Avatar";
 
 import { optimizeImageUrl } from "@/utils/utils.helper";
 import { useGetMe } from "@/queries/auth.query";
-import useChatStore from "@/store/chat/chat.store.js";
 
+import useChatStore from "@/store/chat/chat.store.js";
+import {toggleNotification} from "@/store/notification/notification.store.js";
 
 function NavbarUserSect() {
   const { data, isLoading, isError, error } = useGetMe();
+
+
   const hasNewMessages = useChatStore(store => 
       Object.values(store.newMessageCount).some(count => count > 0)
   );
@@ -42,12 +45,13 @@ function NavbarUserSect() {
 
           </Link>
 
-          <Link
-            href={"/notifications"}
-            className="text-text hover:bg-secondary p-2 rounded-md"
+          <button
+            type="button"
+            onClick={toggleNotification}
+            className="text-text hover:bg-secondary p-2 rounded-md cursor-pointer "
           >
             <Bell size={20} />
-          </Link>
+          </button>
 
           <Link
             href={`/dashboard`}
@@ -77,7 +81,7 @@ function NavbarUserSect() {
 
 export default function Navbar() {
   return (
-    <header className=" flex justify-between items-center bg-secondary/35 dark:bg-secondary/15 backdrop-blur-3xl py-2 px-9 z-50">
+    <header className=" flex justify-between items-center bg-secondary/35 dark:bg-secondary/15 backdrop-blur-3xl py-2 px-9 z-30">
       <NavDropdown />
 
       <NavbarUserSect />

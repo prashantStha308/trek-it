@@ -17,22 +17,29 @@ import { getIo } from "../../utils/io.socket.js";
  * @returns {Promise<Object>} - Notification document
  */
 export const sendNotificationService = async (event, recipient, {
-    title, message="", link = "", meta = {}
-}) => {
+        title, message="", link = "", meta = {}
+    },
+    persist=true
+) => {
     const io = getIo();
 
-    console.log("emitting event:", event, "to:", recipient.toString());
+    const finalEvent = `notification:${event}`;
+    console.log("emitting event:", finalEvent, "to:", recipient.toString());
 
-    const notification = await Notification.create({
+    let notification = {
         recipient,
         title,
         message,
         link,
-        meta: {...meta, event}
-    })
+        meta: {...meta, finalEvent}
+    }
+
+    if(persist){
+        notification = await Notification.create( notification );
+    }
 
     // sends to client, but if offline, this fires nothing, but notificaiton is persisted in db
-    io.to(recipient.toString()).emit(event, { notification });
+    io.to(recipient.toString()).emit(finalEvent, { notification });
     
     return notification;
 }
@@ -54,11 +61,11 @@ export const sendNotificationService = async (event, recipient, {
  * 
  */
 export const broadcastNotificationService = async (event, recipients = [], {
-    title, message = "", link = "", meta = {}
+    title, message = "", link = "", meta = {}, persist = true
 }) => {
     const notifications = await Promise.all(
         recipients.map(recipient =>
-            sendNotificationService(event, recipient, { title, message, link, meta })
+            sendNotificationService(event, recipient, { title, message, link, meta }, persist)
         )
     );
 
