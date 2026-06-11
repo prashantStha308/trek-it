@@ -12,9 +12,14 @@ import {
 
 
 export const useGetAllUserChats = (query)=>{
+    const queryClient = useQueryClient();
+
+    const currentUser = queryClient.getQueryData(["me"])
+
     return useQuery({
         queryKey: ["chats"],
-        queryFn: () => getAllUserChats(query)
+        queryFn: () => getAllUserChats(query),
+        enabled: !!currentUser
     })
 }
 
@@ -27,17 +32,14 @@ export const useGetChatById = (id)=>{
 
 export const useGetChatMessages = (chatId, {limit= 30, page = 1, ...filters})=>{
     const queryClient = useQueryClient();
-
-    const cachedMsg = queryClient.getQueriesData({queryFn:["messages", chatId, {limit, page, filters}]})
-        .flatMap(([, data]) => data?.docs ?? [])
-        .find(msg => msg.chat === chatId);
+    const cached = queryClient.getQueryData(["messages", chatId, { limit, page, filters }]);
 
     return useQuery({
-        queryKey: ["messages", chatId, {limit, page, filters}],
-        queryFn: () => getChatMessages(packageId),
-        initialData: cachedMsg,
+        queryKey: ["messages", chatId, { limit, page, filters }],
+        queryFn: () => getChatMessages(chatId, { limit, page, ...filters }),
+        initialData: cached,
         enabled: !!chatId,
-    })
+    });
 }
 
 export const useGetOrCreateDirectChat = () => {

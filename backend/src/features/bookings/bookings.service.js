@@ -92,13 +92,16 @@ export const createBookingService = async (tourist, body, { guideId } = {}) => {
     promises.push(sendNotificationService(NOTIFICATION_EVENTS.bookingCreated, booking.tourist, {
         title: `Booking Created: ${booking.name}`,
         message: `Your booking for package: ${targetPackage.name} has been successfully booked. You have been assigned a guide: ${targetGuide.name}, id: ${targetGuide.id}`,
-        meta
+        meta,
+        priority: 1
+
     }));
 
     promises.push(sendNotificationService(NOTIFICATION_EVENTS.newBookingRequest, booking.guide, {
         title: `A new booking request has been made.`,
         message: `A new booking for ${targetPackage.name} has been made by ${tourist.name}(id: ${tourist._id}) on ${Date.now()} `,
-        meta
+        meta,
+        priority: 1
     }));
 
     await Promise.all(promises);
@@ -126,6 +129,7 @@ export const setBookingStatusService = async (bookingId, status) => {
     await broadcastNotificationService(event, [booking.tourist, booking.guide], {
         title: `Booking ${bookingStatus}`,
         message: `Booking for package: ${booking.package} has moved to ${bookingStatus} stage.`,
+        priority: 1,
         meta: {
             bookingId: booking._id,
             packageId: booking.package,
@@ -195,6 +199,7 @@ export const cancleBookingService = async (bookingId, user) => {
     await broadcastNotificationService(NOTIFICATION_EVENTS.bookingCancelled, [booking.tourist, booking.guide], {
         title: `Booking Cancelled - ${booking.name}`,
         message: `Booking for ${booking.package.name} has been cancelled on by ${user.role} : ${user.name}, ${user._id}`,
+        priority: 1,
         meta: {
             booking: {
                 _id: booking._id,

@@ -22,10 +22,6 @@ function chatHandler(io, socket) {
     const gateway = chatGateway(io, socket);
 
     const join = async ({ chatId }) => {
-        console.log(
-            `JOIN REQUEST: ${socket.id} -> ${chatId}`
-        );
-
 
         const user = socket.data.user;        
         const chat = await joinChatService(chatId, user._id);
@@ -92,7 +88,8 @@ function chatHandler(io, socket) {
             recipients.map(recipient =>
                 sendNotificationService(NOTIFICATION_EVENTS.messageReceived, recipient, {
                     title: NOTIFICATION_TITLE.messageReceived,
-                    meta: { chatId, messageId: messageRes._id }
+                    meta: { chatId, messageId: messageRes._id },
+                    priority: -1
                 })
             )
         );

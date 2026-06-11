@@ -23,6 +23,14 @@ const notificationSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    priority:{
+        type: Number,
+        default: 0,
+        enum: {
+            values: [-1, 0 , 1],
+            message: "Notification.priority can only be [-1,0,1]"
+        }
+    },
     meta: {
         type: mongoose.Schema.Types.Mixed,
         default: {}

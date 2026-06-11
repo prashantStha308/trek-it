@@ -17,7 +17,7 @@ import { getIo } from "../../utils/io.socket.js";
  * @returns {Promise<Object>} - Notification document
  */
 export const sendNotificationService = async (event, recipient, {
-        title, message="", link = "", meta = {}
+        title, message="", link = "", meta = {}, priority=0
     },
     persist=true
 ) => {
@@ -61,7 +61,7 @@ export const sendNotificationService = async (event, recipient, {
  * 
  */
 export const broadcastNotificationService = async (event, recipients = [], {
-    title, message = "", link = "", meta = {}, persist = true
+    title, message = "", link = "", meta = {}, priority=0, persist = true
 }) => {
     const notifications = await Promise.all(
         recipients.map(recipient =>

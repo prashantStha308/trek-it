@@ -87,7 +87,7 @@ const API_ROUTES = {
 	},
 	
     NOTIFICATION: {
-        GET_ALL: (query) => resolveRoute('/notification', null, query),
+        GET_ALL: () => resolveRoute('/notification'),
       // TODO: implement this in backend later
         MARK_READ: (id) => resolveRoute("/notification/read", id),
         MARK_ALL_READ: "/notification/read-all",

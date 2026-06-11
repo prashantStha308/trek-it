@@ -3,6 +3,7 @@ import {motion} from "motion/react"
 
 import {BellElectric} from "lucide-react"
 
+import {useGetMe} from "@/queries/auth.query.js";
 import {useGetAllNotifications} from "@/queries/notification.query.js";
 import useNotificationStore from "@/store/notification/notification.store.js";
 
@@ -13,12 +14,15 @@ export default function Notifications({
 	notificationType
 }){
 
+	const { data:currentUser, isLoading:userLoading } = useGetMe();
 	const { data:notifs, isLoading:notifsLoading } = useGetAllNotifications();
 
 	const notifications = useNotificationStore(store => store.notifications);
 	const { loadNotifications } = useNotificationStore.getState();
 
     useEffect(()=>{
+    	if(!currentUser) return;
+
     	loadNotifications(notifs);
     },[notifs])
 

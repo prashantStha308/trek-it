@@ -5,16 +5,6 @@ export default function chatGateway(io, socket) {
         socket.join(chat._id.toString());
         socket.data.currentChat = chat;
         console.log(`Socket ${socket.id.toString()}, User: ${user._id} joined Chat: ${chat._id}`);
-
-        console.log(
-            "SOCKET",
-            socket.id,
-            "USER",
-            socket.data.user._id.toString(),
-            "JOINED",
-            chat._id
-        );
-
     };
 
     const leaveChat = () => {
@@ -29,12 +19,6 @@ export default function chatGateway(io, socket) {
     };
 
     const emitToChat = (event, data) => {
-        console.log(
-            "EMITTING TO ROOM",
-            socket.data.currentChat?._id.toString(),
-            event
-        );
-
         io.to(socket.data.currentChat._id.toString()).emit(event, data);
     };
 

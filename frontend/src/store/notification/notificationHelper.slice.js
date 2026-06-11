@@ -13,7 +13,12 @@ const notificationHelperSlice = (set, get) => ({
 	        new Map(merged.map(notif => [notif._id, notif])).values()
 	    );
 
-	    set({ notifications: deduped });
+		const sorted = deduped.sort((a, b) => {
+			if (b.priority !== a.priority) return b.priority - a.priority;
+			return b.createdAt - a.createdAt;
+		});
+
+	    set({ notifications: sorted });
 	}
 
 })

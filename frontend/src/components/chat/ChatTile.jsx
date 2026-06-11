@@ -28,8 +28,6 @@ export default function ChatTile({ currentUser, chat, isActive = false }) {
         e.stopPropagation()
     }
 
-console.log("ChatTile render, lastMessage:", chat?.lastMessage);
-
     return (
         <article
             id={`chat-tile-${chat._id}`}
