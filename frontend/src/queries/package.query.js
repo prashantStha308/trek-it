@@ -9,6 +9,7 @@ import {
     getAllPackages,
     getPackageById,
     searchPackages,
+    getGuidePackages,
     getPackageCollaborators,
 
     // POST
@@ -58,6 +59,12 @@ export const usePackageSearchQuery = (query) => {
     })
 }
 
+export const useGetGuidePackages = (guideId)=>{
+    return useQuery({
+        queryKey: ["packages", guideId],
+        queryFn: ()=> getGuidePackages(guideId)
+    })
+}
 
 export const useGetPackageCollaborators = (pkgId) => {
     return useQuery({

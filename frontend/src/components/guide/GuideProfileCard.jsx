@@ -17,7 +17,7 @@ export default function PackageCard({guide}){
     return(
         <section className="w-56 md:w-60 lg:w-64 xl:w-72 2xl:w-80 rounded-lg px-4 py-2 overflow-hidden flex flex-col rounded-t-lg">
 
-            <header className="relative w-full py-2 flex flex-col items-center gap-1 bg-secondary/75 rounded-t-lg border border-border border-b-transparent"  >
+            <header className="relative w-full py-2 flex flex-col items-center gap-1 bg-neutral-900/15 rounded-t-lg border border-border/60 border-b-transparent"  >
 
                 <div className="flex justify-end w-full relative px-3" >
                     <Badge variant={isAvailable ? "green" : "amber" } size={"xs"} >
@@ -103,7 +103,8 @@ export default function PackageCard({guide}){
 
                 <LinkButton
                     variant="primary"
-                    href={`/explore/guide/${guide._id}`}
+                    size="md"
+                    href={`/guide/${guide._id}`}
                 > 
                     Visit Guide
                 </LinkButton> 

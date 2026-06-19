@@ -51,12 +51,13 @@ export default function SelectInput ({
         return () => document.removeEventListener("mousedown", handler);
     }, [open]);
 
-    useEffect(() => {
-        if (!open) return;
-        const handler = (e) => e.key === "Escape" && setOpen(false);
-        document.addEventListener("keydown", handler);
-        return () => document.removeEventListener("keydown", handler);
-    }, [open]);
+    // useEffect(() => {
+    //     if (!open) return;
+    //     const handler = (e) => e.key === "Escape" && setOpen(false);
+    //     document.addEventListener("keydown", handler);
+    //     return () => document.removeEventListener("keydown", handler);
+    // }, [open]);
+
 
     return (
         <div className={`flex flex-col gap-1 ${className ?? "min-w-44 max-w-44"}`}>

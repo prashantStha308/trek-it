@@ -49,10 +49,7 @@ function PackageDetails({pkg}){
 
 
 function PackageGuides({pkg}){
-
     let {data:collaborators, isLoading} = useGetPackageCollaborators(pkg?._id);
-
-    console.log("Collaborators: ",collaborators)
 
     collaborators = collaborators?.docs;
 
@@ -90,10 +87,6 @@ export default function PackagePage() {
 
     if (isLoading) return <p className="p-8 text-text/60">Loading...</p>;
 
-    console.log(data)
-
-    const heroSrc = optimizeImageUrl(data?.thumbnail, 1080);
-
     return (
         <section className="flex flex-col gap-6 px-4 pb-12 px-52">
 
@@ -130,7 +123,7 @@ export default function PackagePage() {
                     <section
                         className="flex gap-4 "
                     >
-                        <LinkButton href="/chat" size={"lg"} >
+                        <LinkButton href="/chat" variant={"outline"} size={"lg"} >
                             Customize this package
                         </LinkButton>
 
@@ -145,7 +138,7 @@ export default function PackagePage() {
                 <div className="w-9/12" >
                     <Image
                         src={optimizeImageUrl(data?.thumbnail, 1080)} alt={data?.name}
-                        width={400} height={700}
+                        width={400} height={400}
                         className="w-full rounded-md "
                     />
                 </div>

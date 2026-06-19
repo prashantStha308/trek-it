@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+import { useSearchParams } from "next/navigation";
+import { useState, useRef, useEffect } from "react";
 import { usePackageSearchQuery, useGetAllPackages } from "@/queries/package.query";
 import { useGuideSearchQuery, useGetAllGuides } from "@/queries/guide.query";
 import { useGetRegions, useGetActivities, useGetSpecialities } from "@/queries/meta.query";
@@ -18,6 +19,12 @@ const DEFAULT_FILTERS = {
 export { TABS };
 
 export const useExploreState = () => {
+
+    const searchParams = useSearchParams();
+    console.log(searchParams.get("tab"));
+    const initialTab = searchParams.get("tab") ?? TABS.package;
+
+
     const [tab, setTab] = useState(TABS.package);
     const [showFilters, setShowFilters] = useState({ [TABS.package]: false, [TABS.guide]: false });
     const [search, setSearch] = useState({ [TABS.package]: "", [TABS.guide]: "" });
@@ -106,9 +113,18 @@ export const useExploreState = () => {
         setTab(newTab);
     };
 
+    useEffect(() => {
+        const tabParam = searchParams.get("tab");
+        if (tabParam && TABS[tabParam]) {
+            setTab(tabParam);
+        }
+    }, [searchParams,setTab]);
+
+
     return {
         // tab
         tab,
+        setTab,
         handleTabChange,
         isPackageTab,
         isGuideTab,

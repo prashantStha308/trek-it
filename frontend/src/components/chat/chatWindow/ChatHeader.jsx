@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Settings } from "lucide-react";
 import { Search } from "lucide-react";
 
@@ -18,12 +20,17 @@ export default function ChatHeader({user}) {
                 <article
                     className="flex flex-col justify-start "
                 >
-                    <h1
-                        className="font-medium text-text"
-                    >{user?.name}</h1>
+                    <Link
+                        href={`/guide/${user?._id}`}
+                        className="font-medium text-text hover:underline"
+                    >
+                        {user?.name}
+                    </Link>
                     <h2
                         className="text-xs text-text/75 capitalize"
-                    > {user?.role} </h2>
+                    >
+                        {user?.role}
+                    </h2>
                 </article>
 
             </section>

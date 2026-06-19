@@ -2,9 +2,9 @@ export default function chatGateway(io, socket) {
     const user = socket.data.user;
 
     const joinChat = (chat) => {
-        socket.join(chat._id);
+        socket.join(chat._id.toString());
         socket.data.currentChat = chat;
-        console.log(`Socket ${socket.id}, User: ${user._id} joined Chat: ${chat._id}`);
+        console.log(`Socket ${socket.id.toString()}, User: ${user._id} joined Chat: ${chat._id}`);
     };
 
     const leaveChat = () => {
@@ -19,7 +19,7 @@ export default function chatGateway(io, socket) {
     };
 
     const emitToChat = (event, data) => {
-        io.to(socket.data.currentChat._id).emit(event, data);
+        io.to(socket.data.currentChat._id.toString()).emit(event, data);
     };
 
     const emitToSocket = (event, data) => {
@@ -27,7 +27,7 @@ export default function chatGateway(io, socket) {
     };
 
     const getAllActiveUserIds = async ()=>{
-        const socketsInRoom = await io.in(chat._id).fetchSockets();
+        const socketsInRoom = await io.in(chat._id.toString()).fetchSockets();
         const activeUserIds = socketsInRoom.map(s => s.data.user._id);
 
         return activeUserIds;

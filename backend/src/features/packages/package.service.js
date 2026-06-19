@@ -113,6 +113,7 @@ export const createCustomPackageService = async (guide, body, files) => {
     await broadcastNotificationService("notification:customPackageCreated", recipients, {
         title: "Custom package prepared",
         message: `A custom package has been created by ${guide.name || 'your guide'}. Please review the package details before confirming booking.`,
+        priority: 1,
         meta: {
             packageId: newPackage._id,
             guideId: guide._id,

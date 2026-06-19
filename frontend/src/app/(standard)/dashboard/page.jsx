@@ -1,77 +1,45 @@
-"use client"
+"use client";
+import { useRouter } from "next/navigation";
+import { useGetMe } from "@/queries/auth.query";
+import { showToast } from "@/store/ui.store";
+import { useEffect } from "react";
+import GuideDashboard from "./guide/GuideDashboard";
+import TouristDashboard from "./tourist/TouristDashboard";
+import AdminDashboard from "./admin/AdminDashboard";
 
-import {useRouter} from "next/navigation";
-import {
-	useGetMe,
-	useLogout
-} from "@/queries/auth.query";
-import {
-	useGetUserBookings,
-	useGetActiveBookings,
-} from "@/queries/booking.query";
-import AuthGuard from "@/components/shared/AuthGuard";
-
-import Avatar from "@/components/ui/Avatar";
-import UserBookings from "@/components/booking/UserBookings";
-import {Button} from "@/components/ui/Button";
-
-function DashboardHero({user}){
-
-	const logout = useLogout();
-	const router = useRouter();
-
-	const handleLogout = () => {
-		logout.mutate();
-		router.push("/")
-	}
-
-	return(
-		<header
-			className="flex items-start gap-14 px-52 "
-		>
-			<Avatar src={user?.profilePicture?.src} size={"lg"} />
-
-			<section className="flex flex-col gap-4" >
-				<section className="flex flex-col gap-0.5" >
-					<h1 className="text-3xl text-primary font-bold font-mono" > {user?.name} </h1>
-					<span className="capitalize text-sm text-text/60" > {user?.role} </span>
-					{/*<span className="capitalize text-sm text-text/60" > {user?.email} </span>*/}
-				</section>
-				
-				<textarea
-					className="text-sm text-text/85 resize-none w-sm outline-none caret-transparent"
-					value={user?.description || "User has not set a description"}
-					readOnly
-				></textarea>
-
-			</section>
-			<Button
-				variant={"critical"}
-				className={"w-fit"}
-				onClick = {handleLogout}
-			>
-				Logout
-			</Button>
-
-
-		</header>
-	)
+function getUserDashboard(user) {
+    switch (user.role) {
+        case "guide":
+            return <GuideDashboard user={user} />;
+        case "tourist":
+            return <TouristDashboard user={user} />;
+        case "admin":
+            return <AdminDashboard user={user} />;
+        default:
+            return null;
+    }
 }
 
-export default function DashboardPage(){
-    const {data, isLoading, isError, error} = useGetMe();
+export default function DashboardPage() {
+    const { data: user, isLoading } = useGetMe();
+    const router = useRouter();
 
+    const dashboard = user ? getUserDashboard(user) : null;
 
-	return(
-		<AuthGuard>
-			<section
-				className="px-20 flex flex-col gap-20 "
-			>
-				<DashboardHero user={data} />
+    useEffect(() => {
+        if (isLoading) return;
+        if (!user) {
+            router.replace("/login");
+            return;
+        }
+        if (!dashboard) {
+            showToast({ title: "Error occurred", message: "Invalid role" });
+            router.replace("/");
+        }
+    }, [user, isLoading, dashboard, router]);
 
-				<UserBookings user={data} />
+    if (isLoading) return "Loading...";
+    if (!dashboard) return null;
 
-			</section>
-		</AuthGuard>
-	)
+    return dashboard;
 }

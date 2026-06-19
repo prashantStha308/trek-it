@@ -10,10 +10,10 @@ import { metaR } from "../features/meta/meta.routes.js"
 
 export const routers = [
     { base: "/api/auth", router: authR },
-    { base: "/api/users", router: userR },
-    { base: "/api/guides", router: guidesR },
-    { base: "/api/packages", router: packageR },
-    { base: "/api/reviews", router: reviewR },
+    { base: "/api/user", router: userR },
+    { base: "/api/guide", router: guidesR },
+    { base: "/api/package", router: packageR },
+    { base: "/api/review", router: reviewR },
     { base: "/api/chat", router: chatR },
     { base: "/api/booking", router: bookingR },
     { base: "/api/notification", router: notificationR },

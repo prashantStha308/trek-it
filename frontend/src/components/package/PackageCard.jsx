@@ -44,13 +44,13 @@ export function PackageCard({ item }) {
 
                 <div className="flex flex-wrap gap-1.5">
                     {item?.guide?.languages.map((lang, index) => (
-                        <Badge key={index} variant="green" > {lang} </Badge>
+                        <Badge key={index} size="sm" variant="green" > {lang} </Badge>
                     ))}
                 </div>
 
                 <div className="flex flex-wrap gap-1.5">
                     {item?.regions.map((region, index) => (
-                        <Badge key={index} variant="blue" > {region} </Badge>
+                        <Badge key={index} size="sm" variant="blue" > {region} </Badge>
                     ))}
                 </div>
 
@@ -65,6 +65,7 @@ export function PackageCard({ item }) {
                     <LinkButton
                         href={`/explore/packages/${item?._id}`}
                         variant="primary"
+                        size="md"
                     >
                         Book Now 
                     </LinkButton>

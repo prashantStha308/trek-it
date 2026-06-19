@@ -1,4 +1,14 @@
-export const NOTIFICATION_TITLE = Object.freeze({
+/*** 
+ * @description notification titles that are sent by backend. Before being sent, it's prefixed by "notification:__event__"
+ * 
+ * @example 
+ *  
+ * sendNotificationService(NOTIFICATION_TITLE.bookingCreated, recepitant, {...})
+ * internally, sendNotificationService sends "notification:bookingCreated"
+ * 
+ * */
+
+export const NOTIFICATION_EVENTS = Object.freeze({
     bookingCreated: "Your Booking has been created successfully",
     newBookingRequest: "You have a new booking request",
     bookingRejected: "Your booking request has been rejected",
@@ -17,8 +27,8 @@ export const NOTIFICATION_TITLE = Object.freeze({
     paymentRefunded: "Your payment has been successfully refunded",
 });
 
-export const NOTIFICATION_EVENTS = Object.freeze(
-    Object.keys(NOTIFICATION_TITLE).reduce((acc, key) => {
+export const NOTIFICATION_TITLE = Object.freeze(
+    Object.keys(NOTIFICATION_EVENTS).reduce((acc, key) => {
         acc[key] = key;
         return acc;
     }, {})

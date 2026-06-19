@@ -2,7 +2,6 @@ import chatHandler from "./chat.handler.js";
 import { socketErrorHandler } from "../../middlewares/errorHandler.js"
 
 function chatEvents(io, socket){
-    console.log("registering chat events for", socket.id);
     
 	const handler = chatHandler(io, socket);
 

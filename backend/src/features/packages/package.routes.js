@@ -1,13 +1,17 @@
 import express from 'express'
 import {
     createPackage,
+    createCustomPackage,
+
     getAllPacakages,
-    getPackageById,
+    getPackagesByGuide,
     getAllCollaborators,
+    
+    getPackageById,
+    searchPackages,
+
     updatePackage,
     deletePackage,
-    searchPackages,
-    createCustomPackage,
 } from "./package.controller.js";
 import { parseFormFields } from "../../middlewares/package.middleware.js";
 import { authorize } from "../../middlewares/authorize.js";
@@ -29,6 +33,7 @@ packageR.post('/custom', authorize(["guide", "admin"]), bufferUpload.array("pack
 packageR.get('/', validatePackageQuery, validate, getAllPacakages);
 packageR.get('/search', validatePackageQuery, validate, searchPackages);
 
+packageR.get('/guide/:guideId', validatePackageQuery, validate, getPackagesByGuide);
 packageR.get('/collaborators/:packageId', validatePackageQuery, validate, getAllCollaborators);
 
 packageR.get('/:packageId', validatePackageParams, validate, getPackageById);

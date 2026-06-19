@@ -1,4 +1,3 @@
-// store/useSocketStore.js
 import { create } from "zustand";
 import { io } from "socket.io-client";
 import { BASE } from "@/constants/config.constant";
@@ -30,6 +29,7 @@ const useSocketStore = create((set, get) => ({
 
 	on: (event, handler) => {
 		const { socket } = get();
+
 		if (!socket) return () => { };
 
 		socket.on(event, handler);
@@ -38,8 +38,7 @@ const useSocketStore = create((set, get) => ({
 	},
 
 	emit: (event, data) => {
-		const { socket } = get();
-
+		const { socket } = get();		
 		if (socket) {
 			socket.emit(event, data);
 		}
