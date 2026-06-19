@@ -16,7 +16,7 @@ export default function SearchBar({ value, onChange, placeholder }){
 				type="text"
 				value={value}
 				onChange={onChange}
-				placeholder={ placeholder || "Search packages, guides..."}
+				placeholder={ placeholder || "Search places, destinations..."}
 			/>
 
 			<RightIcon rightIcon = {<Search size={20} />} />

@@ -71,7 +71,6 @@ export const sendMessageService = async (messageObj, chatId) => {
         ])
     ]);
 
-    console.log("Sending Message: ", messageObj);
     return newMessage;
 }
 

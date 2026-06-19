@@ -4,18 +4,18 @@ import { Suspense } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { SlidersHorizontal } from "lucide-react";
 
-import SearchBar from "@/components/explore/SearchBar";
 import { PackageCard } from "@/components/package/PackageCard.jsx";
 import GuideProfileCard from "@/components/guide/GuideProfileCard.jsx";
-import { FilterPanel } from "@/components/explore/FilterPanel.jsx";
+
+// Sub-components
+import SearchPanel from "@/components/explore/SearchPanel";
+import AnimatedTabWord from "@/components/explore/AnimatedTabWord";
+
 import { useExploreState, TABS } from "@/hooks/useExploreState";
 
 
 // Animation variants
-const container = {
-    hidden: {},
-    show: { transition: { staggerChildren: 0.05 } }
-};
+
 
 const childPackage = {
     hidden: { y: 50 },
@@ -27,50 +27,10 @@ const childGuide = {
     show: { y: -36 }
 };
 
-// Sub component
-const SearchPanel = ({ search, onChange, showFilters, setShowFilters, filter, setFilter, tab, metaData, isMetaLoading }) => (
-    <motion.section className="flex flex-col gap-8">
-        <div className="flex gap-4 items-center">
-            <SearchBar value={search} onChange={onChange} />
-            <button
-                className={`flex items-center gap-2 text-sm px-4 py-2 border rounded-lg cursor-pointer hover:border-primary ${
-                    showFilters ? "border-primary bg-primary text-white/75" : "border-secondary/75 bg-primary/5"
-                }`}
-                onClick={() => setShowFilters(prev => !prev)}
-            >
-                <SlidersHorizontal size={14} />
-                <span>Filters</span>
-            </button>
-        </div>
-        <AnimatePresence>
-            {showFilters && <FilterPanel filter={filter} setFilter={setFilter} tab={tab} metaData={metaData} isMetaLoading={isMetaLoading} />}
-        </AnimatePresence>
-    </motion.section>
-);
-
-const AnimatedTabWord = ({ word, variants, isActive }) => (
-    <motion.div
-        variants={container}
-        initial="hidden"
-        animate={isActive ? "show" : "hidden"}
-    >
-        {word.split("").map((char, index) => (
-            <motion.span
-                key={index}
-                variants={variants}
-                className="inline-block"
-                transition={{ type: "spring", stiffness: 80, damping: 10 }}
-            >
-                {char}
-            </motion.span>
-        ))}
-    </motion.div>
-);
-
 
 
 // Main Page
-export default function ExplorePage() {
+function ExplorePageMain() {
 
     const {
         tab, setTab, handleTabChange,
@@ -152,4 +112,12 @@ export default function ExplorePage() {
 
         </section>
     );
+}
+
+export default function ExplorePage(){
+    return(
+        <Suspense>
+            <ExplorePageMain />
+        </Suspense>
+    )
 }

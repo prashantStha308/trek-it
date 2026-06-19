@@ -134,17 +134,13 @@ export default function BookingMiniCard({ booking }) {
 
         <section className="flex items-center gap-6" >
 
-{/*          {
+          {
             (!isCancelled && !isExpired) && (
               <LinkButton href={`/chat/${booking?.guide?._id}`} size="sm" variant="primary" >
                 Chat with Guide 
               </LinkButton>
               )
-          }*/}
-
-          <LinkButton href={`/chat/${booking?.guide?._id}`} size="sm" variant="primary" color="green" >
-            Chat with Guide 
-          </LinkButton>
+          }
 
           <LinkButton href={`/booking/${booking?._id}`} size="sm" variant="outline">
             View details <ArrowRight size={12} />

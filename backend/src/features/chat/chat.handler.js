@@ -22,10 +22,6 @@ function chatHandler(io, socket) {
     const gateway = chatGateway(io, socket);
 
     const join = async ({ chatId }) => {
-        console.log(
-            `JOIN REQUEST: ${socket.id} -> ${chatId}`
-        );
-
 
         const user = socket.data.user;        
         const chat = await joinChatService(chatId, user._id);
@@ -61,13 +57,6 @@ function chatHandler(io, socket) {
     }
 
     const sendMessage = async (messageData) => {
-        
-        console.log(
-            "SEND MESSAGE FROM",
-            socket.data.user._id.toString(),
-            "ROOM",
-            socket.data.currentChat?._id
-        );
         // Validate messageData Object
         validateObject(messageData, ["content", "type"]);
 
@@ -99,11 +88,13 @@ function chatHandler(io, socket) {
             recipients.map(recipient =>
                 sendNotificationService(NOTIFICATION_EVENTS.messageReceived, recipient, {
                     title: NOTIFICATION_TITLE.messageReceived,
-                    meta: { chatId, messageId: messageRes._id }
+                    meta: { chatId, messageId: messageRes._id },
+                    priority: -1
                 })
             )
         );
     }
+
 
     const readLatest = async ()=>{
         await readService(socket.data.currentChat._id,socket.data.user._id);

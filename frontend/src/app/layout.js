@@ -3,6 +3,7 @@ import { ThemeProvider } from "next-themes";
 
 import SocketClient from "@/config/SocketClient";
 import ChatSocketClient from "@/config/ChatSocketClient";
+import NotificationSocketClient from "@/config/NotificationSocketClient";
 
 import QueryProvider from "@/config/QueryProvider";
 import Toast from "@/components/ui/Toast";
@@ -25,9 +26,14 @@ export default function RootLayout({ children }) {
           enableSystem
         >
           <QueryProvider>
+            {/*Sockets*/}
             <SocketClient />
+            <NotificationSocketClient />
             <ChatSocketClient />
+
+            {/*Global Components*/}
             <Toast />
+
             {children}
           </QueryProvider>
         </ThemeProvider>

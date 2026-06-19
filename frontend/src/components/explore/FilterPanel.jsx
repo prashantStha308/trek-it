@@ -2,7 +2,7 @@ import {motion} from "motion/react";
 import { useExploreState, TABS } from "@/hooks/useExploreState";
 
 
-export const FilterPill = ({ label, active, onClick }) => {
+export const Pill = ({ label, active, onClick }) => {
     return (
         <button
             onClick={onClick}
@@ -65,7 +65,7 @@ export const FilterPanel = ({filter, setFilter, tab}) => {
                         "Loading..." 
                         :
                         metaData.regions.map((item, index) => (
-                            <FilterPill
+                            <Pill
                                 key={index}
                                 label={item}
                                 active={filter?.regions?.includes(item)}
@@ -84,7 +84,7 @@ export const FilterPanel = ({filter, setFilter, tab}) => {
                 <div className="flex flex-wrap gap-2">
                     {tab === TABS.package
                         ? metaData?.activities?.slice(0,11).map((item, index) => (
-                            <FilterPill
+                            <Pill
                                 key={index}
                                 label={item}
                                 active={filter?.activities?.includes(item)}
@@ -92,7 +92,7 @@ export const FilterPanel = ({filter, setFilter, tab}) => {
                             />
                         ))
                         : metaData?.specialities?.slice(0,11).map((item, index) => (
-                            <FilterPill
+                            <Pill
                                 key={index}
                                 label={item}
                                 active={filter?.specialities?.includes(item)}

@@ -24,7 +24,7 @@ export default function Footer() {
         : '/assets/svg/ico_black.svg';
 
     return (
-        <footer className="bg-background border-t border-border text-text mt-20">
+        <footer className="bg-background border-t border-border text-text mt-20 isolate">
 
             {/* top accent line */}
             <HDivider />

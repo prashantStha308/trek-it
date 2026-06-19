@@ -17,6 +17,8 @@ import { optimizeImageUrl } from "@/utils/utils.helper";
 import TextInput from "@/components/input/TextInput";
 import {Button} from "@/components/ui/Button";
 
+
+
 export default function BookingPage(){
 
     const { packageId } = useParams();
