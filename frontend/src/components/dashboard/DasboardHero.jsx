@@ -36,7 +36,7 @@ export default function DashboardHero({ user }) {
           readOnly
         ></textarea>
       </section>
-      <Button variant={"primary"} color={"red"} className={"w-fit"} onClick={handleLogout}>
+      <Button variant={"primary"} color={"red"} size={"md"} className={"w-fit"} onClick={handleLogout}>
         Logout
       </Button>
     </header>

@@ -12,12 +12,17 @@ import {LinkButton} from "@/components/ui/Button";
 import Avatar from "@/components/ui/Avatar";
 import GuideMiniCard from "@/components/guide/GuideMiniCard"
 
+import Reviews from "@/components/review/Reviews"
+
+
+
+
 function PackageDetails({pkg}){
 
     const fields = [
-        { name: "Group Size" , value: pkg?.maxGroupSize, pre:"", post:" person" },
-        { name: "Price per person" , value: pkg?.pricePerPerson, pre:"$.", post:"" },
-        { name: "Duration" , value: pkg?.daysAlloted, pre:"", post:"days" },
+        { name: "Max Group Size" , value: pkg?.maxGroupSize, pre:"", post:" person" },
+        { name: "Price per person" , value: pkg?.pricePerPerson, pre:"$", post:" /person" },
+        { name: "Duration" , value: pkg?.daysAlloted, pre:"", post:" days" },
     ]
 
     return(
@@ -50,9 +55,8 @@ function PackageDetails({pkg}){
 
 function PackageGuides({pkg}){
     let {data:collaborators, isLoading} = useGetPackageCollaborators(pkg?._id);
-
+    
     collaborators = collaborators?.docs;
-
 
     return(
         <section
@@ -68,7 +72,7 @@ function PackageGuides({pkg}){
             <section
                 className="flex flex-col gap-2"
             >
-                <h2 className="text-lg font-medium text-primary" > Collaborators </h2>
+                <h2 className="text-lg font-medium text-text" > Collaborators </h2>
                 <div className="text-text/60 text-xs flex flex-wrap" >
                     {
                         isLoading ? "Loading..." :
@@ -88,32 +92,32 @@ export default function PackagePage() {
     if (isLoading) return <p className="p-8 text-text/60">Loading...</p>;
 
     return (
-        <section className="flex flex-col gap-6 px-4 pb-12 px-52">
+        <section className="flex flex-col gap-6 px-4 pb-12 lg:px-20">
 
             <section
                 id="package-hero"
-                className="w-full mx-2 flex justify-between gap-32 p-4 rounded-lg "
+                className="w-full mx-2 flex flex-col-reverse items-center lg:flex-row justify-between gap-8 lg:gap-32 p-4 rounded-lg "
             >
 
                 <section
                     className="flex flex-col gap-4"
                 >
-                    <section className="flex flex-col gap-4" >
+                    <section className="flex flex-col gap-2 lg:gap-4" >
                         <h1 className=" text-xl lg:text-3xl text-primary font-bold" >
                             {data?.name}
                         </h1>
 
                         <article
                             id="package-description"
-                            className="flex flex-col gap-1"
+                            className="flex flex-col gap-1.5"
                         >
                             <h2
-                                className="text-lg text-text font-semibold"
+                                className="text-base lg:text-xl text-text font-semibold"
                             >
                                 Description
                             </h2>
                             
-                            <p>
+                            <p className="text-sm md:text-base" >
                                 {data?.description}
                             </p>
 
@@ -121,13 +125,13 @@ export default function PackagePage() {
                     </section>
 
                     <section
-                        className="flex gap-4 "
+                        className="flex flex-col-reverse md:flex-row gap-4 "
                     >
                         <LinkButton href="/chat" variant={"outline"} size={"lg"} >
                             Customize this package
                         </LinkButton>
 
-                        <LinkButton variant="primary" href={`/booking/create/${data._id}`} size={"lg"} >
+                        <LinkButton variant="primary" href={`/booking/create/${packageId}`} size={"lg"} >
                             Book Now!
                         </LinkButton>
 
@@ -135,7 +139,7 @@ export default function PackagePage() {
 
                 </section>
 
-                <div className="w-9/12" >
+                <div className=" w-full lg:w-9/12" >
                     <Image
                         src={optimizeImageUrl(data?.thumbnail, 1080)} alt={data?.name}
                         width={400} height={400}
@@ -148,13 +152,16 @@ export default function PackagePage() {
 
             <section
                 id="details"
-                className="w-full flex justify-between gap-8"
+                className=" w-full flex flex-col items-start md:flex-row justify-between gap-8"
             >
                 <PackageDetails pkg={data} />
 
                 <PackageGuides pkg={data} />
                 
             </section>
+
+            <Reviews resource={data} resourceType="package" />
+
         </section>
     );
 }

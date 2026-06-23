@@ -79,7 +79,10 @@ const API_ROUTES = {
 	
     REVIEW: {
         GET_ALL: (query) => resolveRoute('/review', null, query),
-        GET: (id) => resolveRoute('/review', id),
+        GET_USER_ALL: (query) => resolveRoute('/review/me', null, query),
+        // GET: (id) => resolveRoute('/review', id), 
+        GET_AVG: (query) => resolveRoute('/review/avg', null, query),
+
         CREATE: "/review",
         UPDATE: (id) => resolveRoute('/review', id),
         DELETE: (id) => resolveRoute('/review', id),

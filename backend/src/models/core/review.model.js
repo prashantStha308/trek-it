@@ -9,39 +9,49 @@ const reviewSchema = new mongoose.Schema({
 		ref: 'User',
 		required: true
 	},
-	booking: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Booking',
-	},
+	// booking: {
+	// 	type: mongoose.Schema.Types.ObjectId,
+	// 	ref: 'Booking',
+	// },
 	// clear these later.
 	/*
 		Instead of binding review to either guide ot package, it would be better to bind with booking.
 		What this solves?
 		- Well, on first thought, it becomes easier to identify whih guide tourist had hired when a package was started... need ti think on this
 	*/
-	// guide:{
-	// 	type: mongoose.Schema.Types.ObjectId,
-	// 	ref: 'User',
-	// 	default: null
-	// },
-	// package:{
-	// 	type: mongoose.Schema.Types.ObjectId,
-	// 	ref: 'Package',
-	// 	default: null
-	// },
-	title:{
-		type: String,
-		required: true,
+	guide:{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
+		default: null
 	},
-	content:{
+	package:{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Package',
+		default: null
+	},
+	comment:{
 		type: String,
 		required: true,
 	},
 	rating:{
-		type: Number,
-		min: 0,
-		max: 5,
-		required: true
+		services:{
+			type: Number,
+			min: 0,
+			max: 5,
+			default: 0
+		},
+		interactivity:{
+			type: Number,
+			min: 0,
+			max: 5,
+			default: 0
+		},
+		activities:{
+			type: Number,
+			min: 0,
+			max: 5,
+			default: 0	
+		}
 	},
 	images:{
 		type: [{
@@ -54,7 +64,7 @@ const reviewSchema = new mongoose.Schema({
 				default: ""
 			}
 		}],
-		default: []
+		default: [{ src: "", publicId: "" }]
 	}
 },{
 	timestamps: true
@@ -62,8 +72,34 @@ const reviewSchema = new mongoose.Schema({
 
 // Indexes
 reviewSchema.index({ rating: 1 });
-reviewSchema.index({ booking: 1, reviewer: 1 },  {unique: true});
+reviewSchema.index(
+	{
+		package: 1,
+		reviewer: 1
+	},
+	{
+		unique: true,
+		partialFilterExpression: {
+			package: {
+				$exists: true, 
+				$ne: null
+			}
+		}
+	}
+);
 
+reviewSchema.index(
+	{ guide: 1, reviewer: 1 },
+	{
+		unique: true,
+		partialFilterExpression: {
+			guide: {
+				$exists: true,
+				$ne: null
+			}
+		}
+	}
+);
 
 const updateRelated = async (doc) => {
     if (!doc) return;
