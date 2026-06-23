@@ -5,7 +5,7 @@ import { LinkButton } from "../ui/Button";
 import NavDropdown from "./NavDropdown";
 import Image from "next/image";
 import Link from "next/link";
-import { Bell, MessageCircle } from "lucide-react";
+import { Bell, MessageCircle, Plus } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
 
 import { optimizeImageUrl } from "@/utils/utils.helper";
@@ -25,7 +25,13 @@ function NavbarUserSect() {
   return (
     <section className={`flex items-center gap-3`}>
       {data && data.role === "guide" && (
-        <LinkButton variant="primary" href={"explore/packages/create"}>Create Package</LinkButton>
+        <LinkButton size={"sm"} variant="outline" href={"explore/packages/create"}>
+          <div className="flex gap-2 items-center" >
+            Create Package
+            <span> <Plus size={15} /> </span>
+
+          </div>
+        </LinkButton>
       )}
 
       <div className="flex text-text cursor-pointer hover:bg-secondary p-2 rounded-md">
