@@ -11,6 +11,7 @@ export const Button = ({
   variant = "outline",
   color="green",
   type = "button",
+  size="sm",
   onClick,
   children,
   className,
@@ -19,7 +20,7 @@ export const Button = ({
 
     return (
         <button
-            className={`border rounded-md px-4 cursor-pointer focus:outline-1 transition-colors ${THEME_COLOR[color][variant] } flex items-center justify-center gap-2 flex ${className ? className : "w-full" } `}
+            className={`border rounded-md ${THEME_SIZE[size]} cursor-pointer focus:outline-1 transition-colors ${THEME_COLOR[color][variant] } flex items-center justify-center gap-2 flex ${className ? className : "w-full" } `}
             type={type}
             onClick={onClick}
         >

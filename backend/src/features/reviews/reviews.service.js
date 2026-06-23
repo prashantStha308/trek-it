@@ -16,43 +16,113 @@ import ApiError from "../../utils/ApiError.js";
 
 
 export const createReviewService = async (body, reviewer, files) => {
-    // validateObject(body, ["title", "content", "rating"]);
-    
-    // if ( (!body.guide && !body.package) || (body.guide && body.package) ) {
-    //     throw new ApiError(400, "review body must any and only one of ['guide', 'package'].");
+
+    const {
+        comment, ratings, packageId, guideId
+    } = body;
+
+    /* This was when booking ref was used instead of package and guide refs */
+    // const [booking, review] = await Promise.all(
+    //     [Booking.findOne({ _id: body.booking, tourist: reviewer, status: 'completed' }),
+    //     Review.findOne({ reviewer, booking: body.booking, })]
+    // );
+
+    // if (!booking) {
+    //     throw new ApiError(400, "User is not eligible to post a review. Tourist not found in booking's user list")
     // }
-    // const query = body.guide ? {guideId: body.guide} : {packageId: body.package}
-    // await checkValidBooking(reviewer, query);
 
-    const [booking, review] = await Promise.all(
-        [Booking.findOne({ _id: body.booking, tourist: reviewer, status: 'completed' }),
-        Review.findOne({ reviewer, booking: body.booking, })]
-    );
+    const target = packageId
+        ? { package: packageId }
+        : { guide: guideId };
 
-    if (!booking) {
-        throw new ApiError(400, "User is not eligible to post a review. Tourist not found in booking's user list")
-    }
+    const review = await Review.findOne({
+        reviewer,
+        ...target
+    });
 
     if (review) {
         throw new ApiError(400, "Cannot create duplicate review");
     }
     
-    let images = [];
+    let images = [{ src: "", publicId: "" }];
     if (files?.length) {
         images = await uploadImages(files);
     }
 
+    const input = {
+        reviewer,
+        comment,
+        ratings,
+        ...target,
+        images
+    }
+
+    console.log(input);
+
     const newReview = await Review.create({
         reviewer,
-        ...body,
+        comment,
+        ratings,
+        ...target,
         images
     });
 
     return newReview;
 }
 
+
+export const getRatingAverageService = async(query) => {
+    const {guideId, packageId} = query;
+
+    const target = packageId
+        ? { package: packageId }
+        : { guide: guideId };
+
+
+    const [stats] = await Review.aggregate([
+        {
+            $match: target
+        },
+        {
+            $group: {
+                _id: null,
+                avgServices: { $avg: "$ratings.services" },
+                avgInteractivity: { $avg: "$ratings.interactivity" },
+                avgActivities: { $avg: "$ratings.activities" },
+                totalReviews: { $sum: 1 }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                avgServices: 1,
+                avgInteractivity: 1,
+                avgActivities: 1,
+                totalReviews: 1,
+                overallAverage: {
+                    $avg: [
+                        "$avgServices",
+                        "$avgInteractivity",
+                        "$avgActivities"
+                    ]
+                }
+            }
+        }
+    ]);
+
+
+    return stats ?? {
+        avgServices: 0,
+        avgInteractivity: 0,
+        avgActivities: 0,
+        overallAverage: 0,
+        totalReviews: 0
+    };
+}
+
+
 export const updateReviewService = async (body, reviewId) => {
-    // validateObject(body, ["title", "content", "rating"], {isUpdate: true});
+    // validateObject(body, ["title", "comment", "rating"], {isUpdate: true});
 
     const review = await Review.findByIdAndUpdate(
         reviewId,

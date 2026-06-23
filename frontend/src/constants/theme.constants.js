@@ -8,7 +8,7 @@ export const THEME_COLOR = {
   amber: {
     primary: "bg-amber-400 text-amber-900 hover:bg-amber-400/80 border border-amber-400",
     outline: "border border-amber-400 text-text bg-transparent hover:bg-amber-400/10",
-    badge:   "bg-amber-400/10 text-amber-700 hover:bg-amber-400/20",
+    badge:   "bg-amber-400/20 text-amber-700 dark:text-amber-500 hover:bg-amber-400/20",
   },
   blue: {
     primary: "bg-accent text-white hover:bg-accent/80 border border-accent ",
