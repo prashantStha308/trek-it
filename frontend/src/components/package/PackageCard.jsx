@@ -10,7 +10,7 @@ import Avatar from "@/components/ui/Avatar";
 export function PackageCard({ item }) {
 
     return (
-        <article className="w-96 bg-secondary/16 rounded-xl border border-black/10 overflow-hidden">
+        <article className=" w-xs lg:w-sm bg-secondary/16 rounded-xl border border-black/10 overflow-hidden">
 
             <div className="relative w-full h-44">
                 <Image
@@ -42,13 +42,13 @@ export function PackageCard({ item }) {
                     <span className="text-xs text-text/75">{item?.guide?.name}</span>
                 </div>
 
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1">
                     {item?.guide?.languages.map((lang, index) => (
                         <Badge key={index} size="sm" variant="green" > {lang} </Badge>
                     ))}
                 </div>
 
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1">
                     {item?.regions.map((region, index) => (
                         <Badge key={index} size="sm" variant="blue" > {region} </Badge>
                     ))}

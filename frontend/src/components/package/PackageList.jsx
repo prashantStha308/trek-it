@@ -29,7 +29,7 @@ const PackageList = ({label = "Packages", query, ...props}) => {
             </h2>
 
             <section
-                className='w-full grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4'
+                className='w-full grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 justify-items-center'
             >
                 {
                     // pkgs.slice(0,4).map((p, index) => (

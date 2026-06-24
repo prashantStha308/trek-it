@@ -1,23 +1,26 @@
 import { useEffect,useRef } from "react";
 import Link from "next/link";
 
-import useChatStore from "@/store/chat/chat.store.js";
+import useChatStore, {toggleIsChatListActive} from "@/store/chat/chat.store";
 import { useShallow } from "zustand/react/shallow";
 
 import ChatHeader from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import ChatSection from "./ChatSection";
-
 import Avatar from "@/components/ui/Avatar";
+import {ListCollapse} from "lucide-react";
 
 import {
     getReciptant
 } from "@/utils/chat.helper.js";
 
+import useBreakpoint from "@/hooks/useBreakpoint";
 
 
 
 export default function ChatWindow({currentUser}) {
+    const isMobile = useBreakpoint(640);
+
     const { activeChat, messages, loadMessages } = useChatStore(useShallow(store => ({
         activeChat: store.activeChat,
         messages: store.messages,
@@ -78,9 +81,19 @@ export default function ChatWindow({currentUser}) {
                         </>
                     ) :
                     <section
-                        className="text-primary flex justify-center items-center h-full w-full text-3xl font-black"
-
+                        className={`${isMobile && "relative"} text-primary flex justify-center items-center h-full w-full text-3xl font-black`}
                     >
+                        {
+                            isMobile && (
+                                <button
+                                    className=" absolute top-5 left-5 cursor-pointer text-text/75 hover:text-white hover:bg-primary active:bg-primary p-2 rounded-md border border-primary/65 "
+                                    onClick={toggleIsChatListActive}
+                                >
+                                    <ListCollapse size={20} />
+                                </button>
+                            )
+                        }
+
                         <p className="w-6/12 text-center" >
                             Select a chat to start a conversation
                         </p>

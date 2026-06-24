@@ -15,7 +15,7 @@ export default function PackageCard({guide}){
     const regions = guide?.regions.slice(0,4) ?? [];
 
     return(
-        <section className="w-56 md:w-60 lg:w-64 xl:w-72 2xl:w-80 rounded-lg px-4 py-2 overflow-hidden flex flex-col rounded-t-lg">
+        <section className="w-xs lg:w-sm 2xl:w-lg 2xl:w-80 rounded-lg px-4 py-2 overflow-hidden flex flex-col rounded-t-lg">
 
             <header className="relative w-full py-2 flex flex-col items-center gap-1 bg-neutral-900/15 rounded-t-lg border border-border/60 border-b-transparent"  >
 
