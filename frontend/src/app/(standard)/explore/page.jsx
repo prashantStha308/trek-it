@@ -69,7 +69,12 @@ function ExplorePageMain() {
                     className="w-full h-12 flex flex-col justify-end gap-1 overflow-hidden"
                     initial={{ width: 0 }}
                     animate={{ width: "100%" }}
-                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                    // transition={{ duration: 0.8, ease: "easeInOut" }}
+                    transition={{
+                        type: "spring",
+                        stiffness: 180,
+                        damping: 20,
+                    }}
                 >
                     <div className="flex gap-2">
                         {Object.keys(TABS).map(_tab => (
@@ -100,7 +105,12 @@ function ExplorePageMain() {
             </section>
 
             {/* Results grid */}
-            <section className={`grid gap-14 ${tab === "package" ? "grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5" : "grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6" } w-full justify-items-center`}>
+            <section className={`grid gap-14 ${tab === "package" ?
+                    "grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5" 
+                : 
+                    "grid-cols-1 md:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-6"
+                } w-full justify-items-center`}
+            >
                 {isLoading
                     ? <h1>Loading</h1>
                     : tab === "package" ?

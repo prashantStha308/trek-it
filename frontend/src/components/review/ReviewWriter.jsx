@@ -5,7 +5,7 @@ import { usePostReview } from "@/queries/review.query.js";
 
 import StarSelector from "./StarSelector";
 import MiniCard from "@/components/ui/MiniCard";
-import {Button} from "@/components/ui/Button";
+import {Button, LinkButton} from "@/components/ui/Button";
 import {Star} from "./ReviewStars.jsx";
 
 import { showToast } from "@/store/ui.store";
@@ -85,56 +85,80 @@ export default function ReviewWriter({ resourceType, resourceId }){
 		<section
 			className="w-full flex flex-col items-center justify-center"
 		>
-			<form
-				onSubmit={handleCommentSubmission}	
-				className="flex flex-col gap-8 lg:gap-2"
-			>
-				<MiniCard person={me} subtitle={me?.role} options={{border: true, star: false}} />
+			{
+				me ? (
+					<form
+						onSubmit={handleCommentSubmission}	
+						className="flex flex-col gap-8 lg:gap-2"
+					>
+						<MiniCard person={me} subtitle={me?.role} options={{border: true, star: false}} />
 
-				<section className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-					<StarSelector
-						label="Services"
-						rating={reviewData.ratings.services}
-						setRating={(val) => handleRatingChange(val, "services")}
-					/>
-					<StarSelector
-						label="Interativity"
-						rating={reviewData.ratings.interativity}
-						setRating={(val) => handleRatingChange(val, "interativity")}
-					/>
-					<StarSelector
-						label="Activities"
-						rating={reviewData.ratings.activities}
-						setRating={(val) => handleRatingChange(val, "activities")}
-					/>
-				</section>
+						<section className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+							<StarSelector
+								label="Services"
+								rating={reviewData.ratings.services}
+								setRating={(val) => handleRatingChange(val, "services")}
+							/>
+							<StarSelector
+								label="Interativity"
+								rating={reviewData.ratings.interativity}
+								setRating={(val) => handleRatingChange(val, "interativity")}
+							/>
+							<StarSelector
+								label="Activities"
+								rating={reviewData.ratings.activities}
+								setRating={(val) => handleRatingChange(val, "activities")}
+							/>
+						</section>
 
-				<div
-					className="border border-text/25 focus-within:border-primary px-4 py-2 rounded-sm flex flex-col"
-				>
-					<textarea
-						name="review"
-						id="review"
-						placeholder="Leave a review..."
-						className="outline-none resize-none"
-						cols={30}
-						rows={4}
-						value={reviewData.comment}
-						onChange={(e) => handleChange(e.target.value, "comment")}
-					></textarea>
+						<div
+							className="border border-text/25 focus-within:border-primary px-4 py-2 rounded-sm flex flex-col"
+						>
+							<textarea
+								name="review"
+								id="review"
+								placeholder="Leave a review..."
+								className="outline-none resize-none"
+								cols={30}
+								rows={4}
+								value={reviewData.comment}
+								onChange={(e) => handleChange(e.target.value, "comment")}
+							></textarea>
 
-					<div className="flex justify-between items-center pt-2 border-t border-text/25">
+							<div className="flex justify-between items-center pt-2 border-t border-text/25">
 
-						<span className="text-xs w-8/12 text-red-500">
-							{/**Note: You must have booked this package to submit a review*/}
-						</span>
+								<span className="text-xs w-8/12 text-red-500">
+									{/**Note: You must have booked this package to submit a review*/}
+								</span>
 
-						<Button variant={"primary"} size={"md"} type="submit" className="w-fit">
-							Submit 
-						</Button>
-					</div>
-				</div>
-			</form>
+								<Button variant={"primary"} size={"md"} type="submit" className="w-fit">
+									Submit 
+								</Button>
+							</div>
+						</div>
+					</form>
+				) : (
+
+					<section
+						className=" relative w-xs py-10 flex flex-col gap-8 items-center border border-primary/75 rounded-md bg-primary/15"
+					>
+						<h1 className="text-lg font-semibold text-primary text-center" >
+							Login to leave a Review
+						</h1>
+
+						<LinkButton
+							href="/login"
+							size="md"
+							color="green"
+							variant="primary"
+						>
+							Login
+						</LinkButton>
+
+					</section>
+
+				)
+			}
 		</section>
 	)
 }

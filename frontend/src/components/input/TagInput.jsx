@@ -17,11 +17,8 @@ function Tag({ label, onRemove }) {
   )
 }
 
-/**
- * Multi-tag input.
- * Press Enter or comma to add a tag. Backspace on empty input removes the last tag.
- */
-export default function TagInput({ tags, onChange, placeholder }) {
+
+export default function TagInput({ label = "" ,tags, onChange, placeholder }) {
   const [input, setInput] = useState("")
 
   const addTag = () => {
@@ -40,18 +37,30 @@ export default function TagInput({ tags, onChange, placeholder }) {
   }
 
   return (
-    <div className="flex flex-wrap gap-2 p-2 border border-border rounded-lg bg-background min-h-[42px] focus-within:ring-2 focus-within:ring-(--color-primary)/30 focus-within:border-(--color-primary) transition-all">
-      {tags.map((t) => (
-        <Tag key={t} label={t} onRemove={() => onChange(tags.filter((x) => x !== t))} />
-      ))}
-      <input
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={handleKey}
-        onBlur={addTag}
-        placeholder={tags.length === 0 ? placeholder : ""}
-        className="flex-1 min-w-[120px] bg-transparent outline-none text-sm text-foreground placeholder:text-muted-foreground"
-      />
+    <div
+        className="flex flex-col gap-1"
+    >
+        <span className="pl-1.5 text-xs text-text/75" >
+            {label}
+        </span>
+
+      <div className="flex flex-wrap gap-2 p-2 border border-border rounded-lg bg-primary/5 min-h-[42px]  focus-within:border-primary transition-all">
+
+          {
+              tags.map((tag) => (
+                  <Tag key={tag} label={tag} onRemove={() => onChange(tags.filter((tg) => tg !== tag))} />
+              ))
+          }
+
+          <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKey}
+          onBlur={addTag}
+          placeholder={tags.length === 0 ? placeholder : ""}
+          className="flex-1 min-w-[120px] bg-transparent outline-none text-sm text-foreground placeholder:text-muted-foreground"
+          />
+      </div>
     </div>
   )
 }

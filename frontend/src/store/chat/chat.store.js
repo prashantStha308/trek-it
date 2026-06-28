@@ -54,7 +54,7 @@ const useChatStore = create((set, get) => ({
         do not derive active room from anything else.
     */
     activeChat: null,
-    setActiveChat: (id) => set({ activeChat: id }),
+    setActiveChat: (chat) => set({ activeChat: chat }),
 
     /*
         newMessageCount tracks unread message counts per chat room, keyed by chatId.
@@ -72,7 +72,16 @@ const useChatStore = create((set, get) => ({
     ...chatActionSlice(set, get),
     ...chatEventsSlice(set, get),
     ...chatHelperSlice(set, get),
+
+
+    // THis is only for mobile
+
+    isChatListActive: true,
+    setIsChatListActice: (state) => set({isChatListActive: state}),
+    toggleIsChatListActive: ()=> set((state) => ({...state, isChatListActive: !state.isChatListActive})),
+
 }));
 
+export const toggleIsChatListActive = useChatStore.getState().toggleIsChatListActive;
 
 export default useChatStore;

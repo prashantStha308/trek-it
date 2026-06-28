@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import HDivider from "./HDivider";
+import TrekItLogo from "@/components/ui/TrekItLogo";
 
 const PAGES = [
     { name: "Home", href: "/" },
@@ -34,12 +35,7 @@ export default function Footer() {
 
                     {/* Brand */}
                     <div className="flex flex-col gap-4">
-                        <Link href="/" className="flex items-center gap-3 w-fit">
-                            <Image src={logoSrc} alt="Trek-It Logo" width={40} height={40} />
-                            <span className="text-2xl font-bold tracking-tight text-text">
-                                Trek<span className="text-primary">-It</span>
-                            </span>
-                        </Link>
+                        <TrekItLogo size={40} src={logoSrc} />
 
                         <article className="flex flex-col gap-2" >
 

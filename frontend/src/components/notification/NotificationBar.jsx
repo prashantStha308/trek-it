@@ -23,7 +23,7 @@ import Notifications from "./Notifications";
 
 export default function NotificationBar({}){
 	const sideBarRef = useRef(null);
-	const [notificationType, setNotificationType] = useState(false);
+	const [notificationType, setNotificationType] = useState(null);
 
 	const { data:currentUser, isLoading } = useGetMe();
 
@@ -52,7 +52,7 @@ export default function NotificationBar({}){
 				visualDuration: 0.3,
 				bounce: 0.1
 			}}
-			className={`z-50 fixed right-0 top-0 bottom-0 box-border flex flex-col h-full ${isNotificationOpen ? "w-md" : "w-0"} bg-background border-l-1 border-secondary overflow-hidden`}
+			className={`z-50 fixed right-0 top-0 bottom-0 box-border flex flex-col h-full ${isNotificationOpen ? "w-sm md:w-md" : "w-0"} bg-background border-l-1 border-secondary overflow-hidden`}
 		>
 			<section
 				id="notificationBar"

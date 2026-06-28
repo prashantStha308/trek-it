@@ -64,8 +64,10 @@ const API_ROUTES = {
         GET: (id) => resolveRoute('/booking', id),
         GET_ACTIVE: (query) =>  resolveRoute('/booking/active', null, query),
         CREATE: "/booking",
-        UPDATE: (id, query) => resolveRoute('/booking', id, query),
+
+        UPDATE_STATUS: (id, query) => resolveRoute('/booking/status', id, query),
         CANCEL: (id) => resolveRoute("/booking/cancel", id),
+        
         BASE: "/booking"
 	},
 	

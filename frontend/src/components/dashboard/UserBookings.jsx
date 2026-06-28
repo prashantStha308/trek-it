@@ -6,8 +6,9 @@ import { MapPin, Calendar, Clock, ArrowRight, Navigation, CalendarX, UserRound }
 import { Button, LinkButton } from "@/components/ui/Button";
 import { useGetUserBookings, useGetActiveBookings } from "@/queries/booking.query";
 import Avatar from "@/components/ui/Avatar";
-import BookingMiniCard from "@/components/dashboard/BookingMiniCard"
 
+import BookingMiniCard from "@/components/dashboard/BookingMiniCard"
+import BookingCardSkeleton from "@/components/loaders/BookingCardSkeleton";
 
 const TABS = ["all", "pending", "confirmed", "completed", "cancelled"];
 const CURRENT_STATUSES = ["active", "pending", "confirmed"];
@@ -26,28 +27,6 @@ function MetricCard({ label, value }) {
   );
 }
 
-function BookingCardSkeleton() {
-  return (
-    <div className="rounded-xl border border-border p-4 animate-pulse bg-surface">
-      <div className="flex justify-between items-start gap-3">
-        <div className="flex-1 space-y-2">
-          <div className="h-4 w-48 bg-muted/30 rounded-lg" />
-          <div className="h-3 w-32 bg-muted/20 rounded-lg" />
-          <div className="h-3 w-28 bg-muted/20 rounded-lg" />
-        </div>
-        <div className="space-y-2">
-          <div className="h-5 w-16 bg-muted/20 rounded-full" />
-          <div className="h-4 w-24 bg-muted/30 rounded-lg" />
-        </div>
-      </div>
-      <div className="mt-3 pt-3 border-t border-border flex justify-between">
-        <div className="h-3 w-48 bg-muted/20 rounded-lg" />
-        <div className="h-6 w-24 bg-muted/20 rounded-lg" />
-      </div>
-    </div>
-  );
-}
-
 
 function EmptyState({ tab }) {
   return (
@@ -60,10 +39,11 @@ function EmptyState({ tab }) {
       className="flex flex-col items-center justify-center py-16 text-muted"
     >
       <CalendarX size={36} className="mb-3 opacity-30" />
-      <p className="text-[14px]">No {tab === "all" ? "current" : tab} bookings found</p>
+      <p className="text-sm">No {tab === "all" ? "current" : tab} bookings found</p>
     </motion.div>
   );
 }
+
 
 export default function UserBookings({ user }) {
   const [activeTab, setActiveTab] = useState("all");

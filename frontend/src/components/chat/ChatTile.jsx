@@ -1,7 +1,7 @@
 import { getChatName, getDisplayPicture } from "@/utils/chat.helper";
-import useChatStore from "@/store/chat/chat.store";
-import Avatar from "@/components/ui/Avatar";
+import useChatStore, {toggleIsChatListActive} from "@/store/chat/chat.store";
 
+import Avatar from "@/components/ui/Avatar";
 import {
     EllipsisVertical,
 } from "lucide-react"
@@ -16,12 +16,18 @@ function UnreadBadge({ count }) {
 export default function ChatTile({ currentUser, chat, isActive = false }) {
 
     const newMessageCount = useChatStore(state => state.newMessageCount[chat._id] ?? 0);
-    const switchChatRoom = useChatStore(store => store.switchChatRoom);
+    const {switchChatRoom} = useChatStore.getState();
 
     const displayName = getChatName(chat, currentUser);
     const displayPicture = getDisplayPicture(chat, currentUser);
     const lastMessagePreview = chat?.lastMessage?.content ?? "Say Hi 👋";
 
+    const handleClick = ()=>{
+        console.log("Switching to a chatroom")
+        
+        switchChatRoom(chat);
+        toggleIsChatListActive();
+    }
 
     const handleOptions = (e)=>{
         e.preventDefault();
@@ -31,7 +37,7 @@ export default function ChatTile({ currentUser, chat, isActive = false }) {
     return (
         <article
             id={`chat-tile-${chat._id}`}
-            onClick={() => switchChatRoom(chat)}
+            onClick={handleClick}
             className={`px-3 py-3 rounded-md cursor-pointer flex items-center gap-3 w-full transition-colors ease-out duration-70 ${isActive ? "bg-accent/15" : "bg-transparent hover:bg-accent/5"}`}
         >
             <Avatar src={displayPicture} alt={displayName} size="sm" />

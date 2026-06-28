@@ -1,12 +1,15 @@
 import { useEffect } from "react"
+import {useRouter} from "next/navigation";
+
+import useChatStore from "@/store/chat/chat.store";
+
 import NavDropdown from "../layout/NavDropdown";
 import ThemeToggle from "../layout/ThemeToggle";
 import ChatTile from "./ChatTile";
-import useChatStore from "@/store/chat/chat.store";
 import { useGetAllUserChats } from "@/queries/chat.query.js";
-import { LinkButton } from "@/components/ui/Button";
+import { LinkButton, Button } from "@/components/ui/Button";
 
-function ChatHeader() {
+export const ChatHeader = () => {
     return (
         <section className="sticky top-0 left-0 right-0 bg-background z-50" >
             <header className=" bg-accent/10 dark:bg-background-dark flex items-center justify-between p-4">
@@ -17,7 +20,7 @@ function ChatHeader() {
     )
 }
 
-function ChatFooter({ currentUser }) {
+export const ChatFooter = ({ currentUser }) => {
     return (
         <footer className="sticky bottom-0 left-0 right-0 bg-background border-t-4 border-background p-4 flex items-center justify-start gap-4">
             <div
@@ -36,7 +39,7 @@ function ChatFooter({ currentUser }) {
     )
 }
 
-function ChatListSkeleton() {
+export const ChatListSkeleton = () => {
     return (
         <div className="flex flex-col gap-2">
             {Array.from({ length: 6 }).map((_, i) => (
@@ -53,7 +56,14 @@ function ChatListSkeleton() {
     );
 }
 
-function PlaceholderText({ currentUser }) {
+export const PlaceholderText = ({ currentUser }) => {
+
+    const router = useRouter();
+
+    const handleGoBack = ()=>{
+        router.back();
+    }
+
     return (
         <section className="h-full flex flex-col gap-4 items-center justify-center w-full">
             {currentUser?.role === "tourist" ? (
@@ -66,9 +76,21 @@ function PlaceholderText({ currentUser }) {
                     </LinkButton>
                 </>
             ) : (
-                <h1 className="text-3xl font-bold text-primary text-center">
-                    Your conversations will appear here.
-                </h1>
+                <div className="flex flex-col items-center gap-4" >
+                    <h1 className="text-3xl font-bold text-primary text-center">
+                        Your conversations will appear here.
+                    </h1>
+
+                    <Button
+                        size={"md"}
+                        color={"blue"}
+                        variant={"primary"}
+                        className="w-fit"
+                        onClick={handleGoBack}
+                    >
+                        Go back
+                    </Button>
+                </div>
             )}
         </section>
     )
@@ -88,6 +110,7 @@ export default function ChatList({currentUser}) {
                 acc[chat._id] = chat;
                 return acc;
             }, {});
+            
             setChats(chatsMap);
         }
 

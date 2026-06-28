@@ -14,14 +14,22 @@ export default function notificationHandler(io, socket) {
         socket.emit("notification:read", { notificationId: notif._id })
     }
 
-    const handleReadAll = async () => {
-        await Notification.updateMany(
+    const handleReadAll = async ({readCount = 10}) => {
+        const toUpdate = await Notification.find(
             { recipient: user._id, isRead: false },
+            { _id: 1 },
+            { sort: { createdAt: -1 }, limit: readCount }
+        );
+
+        const ids = toUpdate.map(notif => notif._id);
+
+        await Notification.updateMany(
+            { _id: { $in: ids } },
             { $set: { isRead: true } }
         );
 
-        socket.emit("notification:readAll", null)
-    }
+        socket.emit("notification:readAll", null);
+    };
 
     return {
         handleRead,

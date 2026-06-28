@@ -56,6 +56,9 @@ export const chatHelperSlice = (set, get) => ({
      * @param {String} chatId - The chat whose messages should be loaded
      */
     loadMessages: async (chatId) => {
+        
+        if (get().messages[chatId]) return;
+
         const res = await getChatMessages(chatId, { limit: 30, page: 1 });
         const msgs = [...res.docs].reverse();
         set(state => ({

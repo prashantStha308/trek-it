@@ -8,7 +8,6 @@ const useSocketStore = create((set, get) => ({
 	isConnected: false,
 
 	connect: () => {
-
 		if (get().socket) return;
 
 		const socket = io(BASE, {withCredentials: true});
@@ -17,6 +16,8 @@ const useSocketStore = create((set, get) => ({
 		socket.on("disconnect", () => set({ isConnected: false }));
 
 		set({ socket });
+
+		console.log("Socket connected");
 	},
 
 	disconnect: () => {
@@ -25,6 +26,8 @@ const useSocketStore = create((set, get) => ({
 			socket.disconnect();
 			set({ socket: null, isConnected: false });
 		}
+
+		console.log("Socket disconnected");
 	},
 
 	on: (event, handler) => {
@@ -35,6 +38,16 @@ const useSocketStore = create((set, get) => ({
 		socket.on(event, handler);
 
 		return () => socket.off(event, handler);
+	},
+
+	onAny: (handler) => {
+	    const { socket } = get();
+	    if (!socket) return () => {};
+
+	    const wrapper = (eventName, ...args) => handler(eventName, ...args);
+	    socket.onAny(wrapper);
+
+	    return () => socket.offAny(wrapper);
 	},
 
 	emit: (event, data) => {

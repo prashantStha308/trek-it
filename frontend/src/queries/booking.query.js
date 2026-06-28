@@ -3,9 +3,14 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
     createBooking,
     getUserBookings,
+    getBookingById,
     getActiveBookings,
+
+    cancleBooking,
+    updateBookingStatus,
 } from "@/api/booking.api";
 import { showToast } from "@/store/ui.store";
+
 
 export const useCreateBooking = () => {
     const queryClient = useQueryClient();
@@ -33,6 +38,7 @@ export const useCreateBooking = () => {
     });
 };
 
+
 export const useGetUserBookings = ({page = 1, limit = 10, ...filters} = {}, options) => {
     return useQuery({
         queryKey: ["booking", {page: 1, limit: 10, ...filters}],
@@ -41,6 +47,16 @@ export const useGetUserBookings = ({page = 1, limit = 10, ...filters} = {}, opti
     })
 }
 
+export const useGetBookingById = (id, options) => {
+    return useQuery({
+        queryKey: ["booking", id],
+        queryFn: ()=> getBookingById(id),
+        enabled: !!id,
+        ...options
+    })
+}
+
+
 export const useGetActiveBookings = ({page = 1, limit = 10, ...filters} = {}, options) => {
     return useQuery({
         queryKey: ["booking", {page: 1, limit: 10, ...filters}],
@@ -48,3 +64,18 @@ export const useGetActiveBookings = ({page = 1, limit = 10, ...filters} = {}, op
         ...options
     })
 }
+
+
+
+// updates
+export const useCancleBooking = () => (
+    useMutation({
+        mutationFn: (id)=> cancleBooking(id)
+    })
+)
+
+export const useUpdateBookingStatus = () => (
+    useMutation({
+        mutationFn: (id, status)=> updateBookingStatus(id, status)
+    })
+)

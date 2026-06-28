@@ -5,7 +5,8 @@ import { usePathname } from 'next/navigation';
 import { ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import DropdownMenu from '@/components/ui/DropdownMenu';
-import Image from 'next/image';
+import TrekItLogo from "@/components/ui/TrekItLogo";
+
 
 const PAGES = [
     { name: "Home", href: "/" },
@@ -38,15 +39,15 @@ export default function NavDropdown() {
 
     return (
         <div id="logo" className=" flex gap-4 items-center ">
-            <Link href={'/'} className="hidden md:flex" >
-                <Image src="/assets/svg/ico_3.svg" alt="trek-it-logo" width={30} height={30} aria-hidden={true} />
-            </Link>
+
+            <TrekItLogo size={30} withText={false} />
+
             <nav aria-label="Site navigation" ref={dropdownRef} className="relative flex items-center gap-1">
                 <button
                     onClick={() => setOpen((prev) => !prev)}
-                    className="flex items-center gap-1 text-xs md:text-base lg:text-lg xl:text-xl font-medium cursor-pointer relative group pb-0.5"
+                    className="text-accent flex items-center gap-1 text-xs md:text-base lg:text-lg xl:text-xl font-medium cursor-pointer relative group pb-0.5"
                 >
-                    Trek-It
+                    <span className="text-primary" >Trek</span>-It
                     <ChevronDown
                         size={18}
                         className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
@@ -72,7 +73,7 @@ export default function NavDropdown() {
                 </DropdownMenu>
             </nav>
 
-            <span aria-hidden={true} className="text-xs md:text-sm cursor-pointer text-text/65 bg-secondary/50  px-3 py-0.5 rounded-full ">
+            <span aria-hidden={true} className="hidden lg:block text-xs md:text-sm cursor-pointer text-text/65 bg-secondary/50  px-3 py-0.5 rounded-full ">
                 {selectedPage}
             </span>
         </div>
