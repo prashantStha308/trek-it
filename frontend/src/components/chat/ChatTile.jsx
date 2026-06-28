@@ -16,13 +16,15 @@ function UnreadBadge({ count }) {
 export default function ChatTile({ currentUser, chat, isActive = false }) {
 
     const newMessageCount = useChatStore(state => state.newMessageCount[chat._id] ?? 0);
-    const switchChatRoom = useChatStore(store => store.switchChatRoom);
+    const {switchChatRoom} = useChatStore.getState();
 
     const displayName = getChatName(chat, currentUser);
     const displayPicture = getDisplayPicture(chat, currentUser);
     const lastMessagePreview = chat?.lastMessage?.content ?? "Say Hi 👋";
 
     const handleClick = ()=>{
+        console.log("Switching to a chatroom")
+        
         switchChatRoom(chat);
         toggleIsChatListActive();
     }

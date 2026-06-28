@@ -10,10 +10,11 @@ export const getAllNotifications = async (req, res) => {
 
     const user = req.user;
     // TODO: validate filter later
-    const { limit, page, ...filter } = req.query;
+    const { limit, page, sort = -1, ...filter } = req.query;
 
     const notifications = await getAll(Notification, {
         limit, page,
+        sort: {createdAt: Number(sort)},
         filter: {
             ...filter,
             recipient: user._id

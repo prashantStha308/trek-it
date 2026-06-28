@@ -23,7 +23,7 @@ import Notifications from "./Notifications";
 
 export default function NotificationBar({}){
 	const sideBarRef = useRef(null);
-	const [notificationType, setNotificationType] = useState(false);
+	const [notificationType, setNotificationType] = useState(null);
 
 	const { data:currentUser, isLoading } = useGetMe();
 

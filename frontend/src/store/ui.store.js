@@ -12,7 +12,7 @@ const useUIStore = create((set) => ({
     setIsNotificationOpen: (state)=> set({ isNotificationOpen: state }),
     toggleNotificationOpen: () => set( state => ({ isNotificationOpen: !state.isNotificationOpen }) ),
 
-    showToast: ({ title = "", message = "" } = {}) => {
+    showToast: ({ title = "Success", message = "" } = {}) => {
         set({
             isToastOpen: true,
             toastData: { title, message }

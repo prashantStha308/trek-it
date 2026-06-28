@@ -45,9 +45,9 @@ export default function NavDropdown() {
             <nav aria-label="Site navigation" ref={dropdownRef} className="relative flex items-center gap-1">
                 <button
                     onClick={() => setOpen((prev) => !prev)}
-                    className="flex items-center gap-1 text-xs md:text-base lg:text-lg xl:text-xl font-medium cursor-pointer relative group pb-0.5"
+                    className="text-accent flex items-center gap-1 text-xs md:text-base lg:text-lg xl:text-xl font-medium cursor-pointer relative group pb-0.5"
                 >
-                    Trek-It
+                    <span className="text-primary" >Trek</span>-It
                     <ChevronDown
                         size={18}
                         className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}

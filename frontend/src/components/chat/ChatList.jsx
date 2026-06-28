@@ -1,10 +1,11 @@
 import { useEffect } from "react"
 import {useRouter} from "next/navigation";
 
+import useChatStore from "@/store/chat/chat.store";
+
 import NavDropdown from "../layout/NavDropdown";
 import ThemeToggle from "../layout/ThemeToggle";
 import ChatTile from "./ChatTile";
-import useChatStore from "@/store/chat/chat.store";
 import { useGetAllUserChats } from "@/queries/chat.query.js";
 import { LinkButton, Button } from "@/components/ui/Button";
 
@@ -109,6 +110,7 @@ export default function ChatList({currentUser}) {
                 acc[chat._id] = chat;
                 return acc;
             }, {});
+            
             setChats(chatsMap);
         }
 

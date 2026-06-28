@@ -7,6 +7,6 @@ export default function notificationEvents(io, socket) {
 
     socket.join(userId);
 
-    socket.on("notification:markAllRead", socketErrorHandler( handler.handleReadAll ));
-    socket.on("notification:markRead", socketErrorHandler( handler.handleRead ));
+    socket.on("notification:markAllRead", socketErrorHandler(socket, handler.handleReadAll ));
+    socket.on("notification:markRead", socketErrorHandler( socket, handler.handleRead ));
 }

@@ -22,9 +22,7 @@ export const sendNotificationService = async (event, recipient, {
     persist=true
 ) => {
     const io = getIo();
-
     const finalEvent = `notification:${event}`;
-    console.log("emitting event:", finalEvent, "to:", recipient.toString());
 
     let notification = {
         recipient,
@@ -39,7 +37,7 @@ export const sendNotificationService = async (event, recipient, {
     }
 
     // sends to client, but if offline, this fires nothing, but notificaiton is persisted in db
-    io.to(recipient.toString()).emit(finalEvent, { notification });
+    io.to(recipient.toString()).emit(finalEvent, notification);
     
     return notification;
 }

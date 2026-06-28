@@ -100,10 +100,7 @@ export default function CreatePackagePage(){
 		            </div>
 		        </div>
 
-		        <div>
-		        	<label htmlFor="keywords">Keywords (press Enter to add)</label>
-		        	<TagInput tags={formData.keywords} onChange={(v) => set("keywords", v)} placeholder="adventure, scenic..." />
-		        </div>
+	        	<TagInput label={"Keywords (press Enter to add)"} tags={formData.keywords} onChange={(v) => set("keywords", v)} placeholder="adventure, scenic..." />
 
 			</form>
 			

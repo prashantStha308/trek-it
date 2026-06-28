@@ -21,13 +21,10 @@ import useBreakpoint from "@/hooks/useBreakpoint";
 export default function ChatWindow({currentUser}) {
     const isMobile = useBreakpoint(640);
 
-    const { activeChat, messages, loadMessages } = useChatStore(useShallow(store => ({
-        activeChat: store.activeChat,
-        messages: store.messages,
-        loadMessages: store.loadMessages
-    })));
+    const activeChat = useChatStore(store => store.activeChat);
+    const messages = useChatStore(store => store.messages);
 
-    const { sendMessage } = useChatStore.getState();
+    const { sendMessage, loadMessages } = useChatStore.getState();
 
     const chatMessages = messages[activeChat?._id];
     const recipitient = getReciptant(activeChat, currentUser);
@@ -54,7 +51,7 @@ export default function ChatWindow({currentUser}) {
         if (activeChat?._id) {
             loadMessages(activeChat._id);
         }
-    }, [activeChat?._id]);
+    }, [activeChat, loadMessages]);
 
     return (
         <main

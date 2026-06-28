@@ -89,7 +89,7 @@ export const createBookingService = async (tourist, body, { guideId } = {}) => {
 
     const promises = [];
 
-    promises.push(sendNotificationService(NOTIFICATION_EVENTS.bookingCreated, booking.tourist, {
+    promises.push(sendNotificationService(NOTIFICATION_TITLE.bookingCreated, booking.tourist, {
         title: `Booking Created: ${booking.name}`,
         message: `Your booking for package: ${targetPackage.name} has been successfully booked. You have been assigned a guide: ${targetGuide.name}, id: ${targetGuide.id}`,
         meta,
@@ -97,7 +97,7 @@ export const createBookingService = async (tourist, body, { guideId } = {}) => {
 
     }));
 
-    promises.push(sendNotificationService(NOTIFICATION_EVENTS.newBookingRequest, booking.guide, {
+    promises.push(sendNotificationService(NOTIFICATION_TITLE.newBookingRequest, booking.guide, {
         title: `A new booking request has been made.`,
         message: `A new booking for ${targetPackage.name} has been made by ${tourist.name}(id: ${tourist._id}) on ${Date.now()} `,
         meta,
@@ -120,9 +120,9 @@ export const setBookingStatusService = async (bookingId, status) => {
 
     const bookingStatus = booking.status;
 
-    const event = NOTIFICATION_EVENTS[`booking${bookingStatus.charAt(0).toUpperCase() + bookingStatus.slice(1)}`]
+    const event = NOTIFICATION_TITLE[`booking${bookingStatus.charAt(0).toUpperCase() + bookingStatus.slice(1)}`]
 
-    if(!NOTIFICATION_TITLE.includes(event)){
+    if(!NOTIFICATION_EVENTS.includes(event)){
         throw new ApiError(500, "Invalid event encountered");
     }
     
@@ -180,13 +180,16 @@ export const cancleBookingService = async (bookingId, user) => {
     switch (user.role) {
         case ROLE_ENUM.guide:
             // guide logic
+            console.log("Guide cancelled a booking");
             break;
         case ROLE_ENUM.tourist:
             // tourist logic
+            console.log("Tourist cancelled a booking");
             break;
         case ROLE_ENUM.admin:
             // handle admin logic
             // will admin even need to cancle it?
+            console.log("Admin cancelled a booking");
             break;
         default:
             throw new ApiError(403, "Unidentified user role. Cancellation process terminated");
@@ -196,7 +199,7 @@ export const cancleBookingService = async (bookingId, user) => {
     await booking.save();
 
     // set notification
-    await broadcastNotificationService(NOTIFICATION_EVENTS.bookingCancelled, [booking.tourist, booking.guide], {
+    await broadcastNotificationService(NOTIFICATION_TITLE.bookingCancelled, [booking.tourist, booking.guide], {
         title: `Booking Cancelled - ${booking.name}`,
         message: `Booking for ${booking.package.name} has been cancelled on by ${user.role} : ${user.name}, ${user._id}`,
         priority: 1,

@@ -7,50 +7,49 @@ import {
 } from "@/queries/package.query";
 import { optimizeImageUrl } from "@/utils/utils.helper";
 import Badge from "@/components/ui/Badge";
-import BookingCard from "@/components/booking/BookingCard";
 import {LinkButton} from "@/components/ui/Button";
 import Avatar from "@/components/ui/Avatar";
 import GuideMiniCard from "@/components/guide/GuideMiniCard"
 
 import Reviews from "@/components/review/Reviews"
+import PackageDetails from "@/components/package/PackageDetails";
 
 
 
+// function PackageDetails({pkg}){
 
-function PackageDetails({pkg}){
+//     const fields = [
+//         { name: "Max Group Size" , value: pkg?.maxGroupSize, pre:"", post:" person" },
+//         { name: "Price per person" , value: pkg?.pricePerPerson, pre:"$", post:" /person" },
+//         { name: "Duration" , value: pkg?.daysAlloted, pre:"", post:" days" },
+//     ]
 
-    const fields = [
-        { name: "Max Group Size" , value: pkg?.maxGroupSize, pre:"", post:" person" },
-        { name: "Price per person" , value: pkg?.pricePerPerson, pre:"$", post:" /person" },
-        { name: "Duration" , value: pkg?.daysAlloted, pre:"", post:" days" },
-    ]
+//     return(
+//         <section className="mx-2 flex flex-col gap-4">
+//             <h2
+//                 className="text-primary font-semibold text-2xl"
+//             >
+//                 Details
+//             </h2>
 
-    return(
-        <section className="mx-2 flex flex-col gap-4">
-            <h2
-                className="text-primary font-semibold text-2xl"
-            >
-                Details
-            </h2>
+//             <article
+//                 className="flex flex-col gap-2 text-text"
+//             >
+//                 {
+//                     fields.map((field, index)=>(
+//                         <div key={index} className="flex gap-2" >
+//                             <span className="font-medium"> {field.name}: </span>
+//                             <span > {field.pre}{field.value}{field.post} </span>
+//                         </div>
 
-            <article
-                className="flex flex-col gap-2 text-text"
-            >
-                {
-                    fields.map((field, index)=>(
-                        <div key={index} className="flex gap-2" >
-                            <span className="font-medium"> {field.name}: </span>
-                            <span > {field.pre}{field.value}{field.post} </span>
-                        </div>
+//                     ))
+//                 }
+//             </article>
 
-                    ))
-                }
-            </article>
+//         </section>
 
-        </section>
-
-    )
-}
+//     )
+// }
 
 
 function PackageGuides({pkg}){
@@ -152,9 +151,11 @@ export default function PackagePage() {
 
             <section
                 id="details"
-                className=" w-full flex flex-col items-start md:flex-row justify-between gap-8"
+                className=" w-full flex flex-col items-start md:flex-row justify-between gap-16"
             >
-                <PackageDetails pkg={data} />
+                <div className="flex-1 w-full" >
+                    <PackageDetails pkg={data} />
+                </div>
 
                 <PackageGuides pkg={data} />
                 

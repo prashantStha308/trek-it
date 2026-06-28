@@ -54,7 +54,7 @@ const useChatStore = create((set, get) => ({
         do not derive active room from anything else.
     */
     activeChat: null,
-    setActiveChat: (id) => set({ activeChat: id }),
+    setActiveChat: (chat) => set({ activeChat: chat }),
 
     /*
         newMessageCount tracks unread message counts per chat room, keyed by chatId.

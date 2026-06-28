@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import notificationEventsSlice from "./notificationEvents.slice.js";
 import notificationHelperSlice from "./notificationHelper.slice.js";
+import notificationActionSlice from "./notificationAction.slice.js";
 
 
 const useNotificationStore = create((set, get)=>({
@@ -12,9 +13,11 @@ const useNotificationStore = create((set, get)=>({
 	notifications: [],
 	setNotifications: (notifArray) => set({ notifications: notifArray }),
 
+	notificationToasts: [],
 
 	...notificationEventsSlice(set, get),
-	...notificationHelperSlice(set,get),
+	...notificationHelperSlice(set, get),
+	...notificationActionSlice(set, get),
 
 }))
 

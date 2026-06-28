@@ -17,7 +17,7 @@ export const THEME_COLOR = {
   },
   red: {
     primary: "bg-red-500 text-white hover:bg-red-500/80 border border-red-500 ",
-    outline: "border border-red-500 text-text bg-transparent hover:bg-red-500/10",
+    outline: "border border-red-500 text-text bg-transparent hover:bg-red-500 hover:text-white",
     badge:   "bg-red-500/10 text-red-500 hover:bg-red-500/20",
   },
   default: {
@@ -38,3 +38,11 @@ export const THEME_SIZE = {
   lg: "px-4 py-3 text-base gap-1.5",
   xl: "px-5 py-4 text-lg gap-2",
 };
+
+
+export const STATUS_VARIANT = {
+  pending: "amber",
+  confirmed: "blue",
+  completed: "green",
+  cancelled: "red",
+}

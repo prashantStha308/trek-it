@@ -14,9 +14,10 @@ import {
 import {BOOKING_STATUS_ENUM} from "../../constants/constants.js";
 
 
+const USER_SELECT = "_id name profilePicture age gender address"
 
+// Create a booking. Executed from tourist side only
 export const createBooking = async (req, res) => {
-    // this function is executed in tourist's side
     const booking = await createBookingService(req.user, req.body, { guideId: req.body.guideId });
     
     return ApiResponse.success(res, {
@@ -26,11 +27,11 @@ export const createBooking = async (req, res) => {
     })
 }
 
+// Get all bookings
 export const getAllBooking = async (req, res) => {
     const loggedInUser = req.user;
     const { limit, page, ...filter } = req.query;
     
-    const select = "_id name profilePicture age gender address"
 
     const bookings = await getAll(Booking, {
         limit, page,
@@ -45,8 +46,8 @@ export const getAllBooking = async (req, res) => {
             createdAt: -1
         },
         populate: [
-            {path: "tourist", select},
-            {path: "guide", select},
+            {path: "tourist", USER_SELECT},
+            {path: "guide", USER_SELECT},
             {path: "package", select: "_id name thumbnail guide daysAlloted maxGroupSize verified requiresPermit regions keywords activities" }
         ]
     });
@@ -77,7 +78,13 @@ export const getBookingById = async (req, res) => {
                 { guide: loggedInUser._id },
                 { tourist: loggedInUser._id }
             ]
-        }
+        },
+        populate: [
+            {path: "tourist", USER_SELECT},
+            {path: "guide", USER_SELECT},
+            {path: "package", select: "_id name guide thumbnail daysAlloted maxGroupSize pricePerPerson verified requiresPermit regions keywords activities" }
+        ]
+
     });
 
     return ApiResponse.success(res, {
@@ -96,6 +103,9 @@ export const setBookingStatus = async (req, res) => {
 }
 
 export const cancelBooking = async (req, res) => {
+console.log("cacleing")
+
+    
     const booking = await cancleBookingService(req.params.bookingId, req.user);
 
     return ApiResponse.success(res, {
