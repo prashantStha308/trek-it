@@ -15,43 +15,6 @@ import Reviews from "@/components/review/Reviews"
 import PackageDetails from "@/components/package/PackageDetails";
 
 
-
-// function PackageDetails({pkg}){
-
-//     const fields = [
-//         { name: "Max Group Size" , value: pkg?.maxGroupSize, pre:"", post:" person" },
-//         { name: "Price per person" , value: pkg?.pricePerPerson, pre:"$", post:" /person" },
-//         { name: "Duration" , value: pkg?.daysAlloted, pre:"", post:" days" },
-//     ]
-
-//     return(
-//         <section className="mx-2 flex flex-col gap-4">
-//             <h2
-//                 className="text-primary font-semibold text-2xl"
-//             >
-//                 Details
-//             </h2>
-
-//             <article
-//                 className="flex flex-col gap-2 text-text"
-//             >
-//                 {
-//                     fields.map((field, index)=>(
-//                         <div key={index} className="flex gap-2" >
-//                             <span className="font-medium"> {field.name}: </span>
-//                             <span > {field.pre}{field.value}{field.post} </span>
-//                         </div>
-
-//                     ))
-//                 }
-//             </article>
-
-//         </section>
-
-//     )
-// }
-
-
 function PackageGuides({pkg}){
     let {data:collaborators, isLoading} = useGetPackageCollaborators(pkg?._id);
     
@@ -138,11 +101,11 @@ export default function PackagePage() {
 
                 </section>
 
-                <div className=" w-full lg:w-9/12" >
+                <div className=" w-full lg:w-6/12 " >
                     <Image
-                        src={optimizeImageUrl(data?.thumbnail, 1080)} alt={data?.name}
+                        src={optimizeImageUrl(data?.thumbnail?.src ?? data?.thumbnail, 1080)} alt={data?.name}
                         width={400} height={400}
-                        className="w-full rounded-md "
+                        className="w-full h-96 object-contain rounded-md "
                     />
                 </div>
 

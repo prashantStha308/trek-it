@@ -12,32 +12,22 @@ const packageSchema = new mongoose.Schema({
 		type: String,
 		required: [true, () => requiredError("Package.description")],
 	},
+
 	guide: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',
 		required: [true, () => requiredError("Package.guide")],
 	},
-	customRequest: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'CustomRequest',
-		default: null,
-	},
 	collaborators: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',
 	}],
+	
 	keywords: {
 		type: [String],
 		validate: {
 			validator: (v) => Array.isArray(v) && v.length >= 1,
 			message: "At least one keyword is required"
-		}
-	},
-	regions: {
-		type: [String],
-		validate: {
-			validator: (v) => Array.isArray(v) && v.length >= 1,
-			message: "At least one region is required"
 		}
 	},
 	activities: {
@@ -47,56 +37,70 @@ const packageSchema = new mongoose.Schema({
 			message: "At least one activity is required"
 		}
 	},
-	type: {
-		type: String,
-		enum: {
-			values: PACKAGE_TYPES,
-			message: `{VALUE} must be one of [${PACKAGE_TYPES.join(" ,")}]`
-		},
-		default: PACKAGE_TYPES[0]
+	regions: {
+		type: [String],
+		validate: {
+			validator: (v) => Array.isArray(v) && v.length >= 1,
+			message: "At least one activity is required"
+		}
 	},
+
 	startingPrice: {
 		type: Number,
-		min: [10, "Starting price must be at least 10"],
-		required: [true, () => requiredError("Package.startingPrice")]
+		required: [true, () => requiredError("Package.startingPrice")]		
 	},
 	pricePerPerson: {
 		type: Number,
-		min: 10,
 		required: [true, () => requiredError("Package.pricePerPerson")]
+	},
+
+	minGroupSize: {
+		type: Number,
+		required: [true, () => requiredError("Package.minGroupSize")]
 	},
 	maxGroupSize: {
 		type: Number,
 		required: [true, () => requiredError("Package.maxGroupSize")]
 	},
+
 	daysAlloted: {
 		type: Number,
 		min: [1, "Package.daysAlloted must be at least 1"],
 		required: [true, () => requiredError("Package.daysAlloted")],
 	},
 
-	/*
-		is it necessary to set dates? Need to re think on this model
+	stops:{
+		type:[{
+		    day: { 
+		    	type: Number,
+			    default: 1
+			},
+		    landmark: {
+		    	type: String,
+		    	default: ""
+			},
+			
+		    nearestCity: {
+			    name: {
+			    	type: String,
+			    	default: ""
+			    },
+			    lat: { type: Number },
+			    long: { type: Number },
+		    },
 
-		This was removed as adhering to this would mean our model will abandon private guides and move to more shared/public package model.
-	*/
-	// dates: [{
-	// 	date: { type: Date, required: [true, () => requiredError("Package.dates.date")] },
-	// 	spotsTotal: { type: Number, required: [true, () => requiredError("Package.dates.spotsTotal")] },
-	// 	spotsLeft: { type: Number, required: [true, () => requiredError("Package.dates.spotsLeft")] },
-	// 	isOpen: { type: Boolean, default: true }
-	// }],
+		    type: {
+		    	type: String,
+		    	default: ""
+		    },
+		    customType: {
+		    	type: String,
+		    	default: ""
+		    },
+		}],
+		default: []
+	},
 
-	rating: {
-		type: Number,
-		min: 0,
-		max: 5,
-		default: 0
-	},
-	bookingCount: {
-		type: Number,
-		default: 0
-	},
 	images: [{
 		src: {
 			type: String,
@@ -108,18 +112,30 @@ const packageSchema = new mongoose.Schema({
 		}
 	}],
 	thumbnail: {
+		src: {
+			type: String,
+			default: ""
+		},
+		publicId: {
+			type: String,
+			default: ""
+		}
+	},
+
+	requiresPermit: {
+		type: Boolean,
+		default: false
+	},
+	permitDetails:{
 		type: String,
 		default: ""
 	},
+
 	verified: {
 		type: Boolean,
 		default: false
 	},
-	requiresPermit: {
-		type: Boolean,
-		default: false
-	}
-
+	
 }, { timestamps: true });
 
 packageSchema.index({ guide: 1 });

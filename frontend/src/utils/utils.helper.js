@@ -1,5 +1,8 @@
 export const optimizeImageUrl = (url, width=1080) => {
     if (!url) return '';
+
+    console.log("optimizeImageUrl: ", url);
+
     return url.replace('/upload/', `/upload/w_${width},q_auto,f_auto/`);
 }
 

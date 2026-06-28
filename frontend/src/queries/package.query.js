@@ -25,7 +25,7 @@ import {
 
 // GET
 export const useGetAllPackages = ({
-    limit = 10,
+    limit = 20,
     page = 1,
     ...filter
 }, options = {}) => {

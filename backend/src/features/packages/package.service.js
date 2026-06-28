@@ -8,7 +8,8 @@ import {
 // utils and helpers
 import {getAll} from "../../utils/crud.service.js"
 import {
-    uploadImages
+    uploadImages,
+    uploadImage,
 } from "../../utils/cloudinary.services.js";
 import ApiError from "../../utils/ApiError.js";
 import { TREKIT_COMMISSION } from "../../constants/booking.constant.js";
@@ -21,35 +22,46 @@ import { CUSTOM_STATES } from "../../models/requests/customRequest.model.js";
 // --------------------------------------------------------------------------------
 
 export const createPackageService = async (body, guideId, files) => {
-    let images = [];
-    let thumbnail = "";
+    let images = [{src:"", publicId: ""}];
+    let thumbnail = images[0];
 
-    if (files?.length) {
-        images = await uploadImages(files);
-        thumbnail = images[0]?.src ?? "";
+    if (files) {
+        thumbnail = await uploadImage(files.thumbnail[0]);
+        images = await uploadImages(files.images);
     }
+
+    const regions = Array.from( new Set( body.stops.map(stop => stop.nearestCity?.name ?? stop.nearestCity )))
 
     const newPackage = await Package.create({
         name: body.name,
         description: body.description,
         guide: guideId,
+
         keywords: body.keywords,
-        regions: body.regions,
         activities: body.activities,
-        type: body.type || PACKAGE_TYPE_ENUM.regular,
-        startingPrice: body.startingPrice,
-        pricePerPerson: body.pricePerPerson,
-        maxGroupSize: body.maxGroupSize,
-        daysAlloted: body.daysAlloted,
+        regions,
+
+        minGroupSize: Math.max(1, Number(body.minGroupSize)),
+        maxGroupSize: Number(body.maxGroupSize),
+        daysAlloted: Number(body.daysAlloted),
+
+        pricePerPerson: Number(body.pricePerPerson),
+        startingPrice: Number(body.minGroupSize) * Number(body.pricePerPerson),
+
+        stops: body.stops,
+
         images,
         thumbnail,
-        requiresPermit: body.requiresPermit,
+        requiresPermit: body.requiresPermit || false,
+        permitDetails: body.permitDetails || "",
         verified: false
     });
 
     return newPackage;
 };
 
+
+// Depreciated
 export const createCustomPackageService = async (guide, body, files) => {
     const customRequestId = body.customRequest;
     const directTouristId = body.tourist;

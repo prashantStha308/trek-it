@@ -27,7 +27,7 @@ function NavbarUserSect() {
   return (
     <section className={`flex items-center gap-3`}>
       {data && data.role === "guide" && (
-        <LinkButton size={"sm"} variant="outline" href={"explore/packages/create"}>
+        <LinkButton size={"sm"} variant="outline" href={"/explore/packages/create"}>
           <div className="flex gap-2 items-center" >
             Create Package
             <span> <Plus size={15} /> </span>
