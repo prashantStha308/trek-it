@@ -11,10 +11,10 @@ import AdminDashboard from "./admin/AdminDashboard";
 
 function getUserDashboard(user) {
 
-    if(user.role === "guide"){
+    if(user.role === "tourist"){
         return <TouristDashboard user={user} />
     }
-    else if( user.role === "tourist" ){
+    else if( user.role === "guide" ){
         return <GuideDashboard user={user} />
     }
     else if(user.role === "admin") {

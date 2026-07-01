@@ -17,15 +17,6 @@ export const Pill = ({ label, active, onClick }) => {
     );
 }
 
-export const FilterPillSkeleton = ()=>{
-    return(
-
-        <motion.div>
-            
-        </motion.div>
-    )
-}
-
 
 export const FilterPanel = ({filter, setFilter, tab}) => {
 

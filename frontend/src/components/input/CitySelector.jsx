@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import useCitiesStore from "@/store/cities.store.js";
 import { ChevronDown, Pin } from "lucide-react";
 
-export default function CitySelector({ city, setCity }) {
+export default function CitySelector({ city, setCity, label="" }) {
     const [open, setOpen] = useState(false);
     const [coords, setCoords] = useState({});
     const [isLoading, setIsLoading] = useState(false);
@@ -120,7 +120,9 @@ export default function CitySelector({ city, setCity }) {
 
     return (
         <div className="flex flex-col gap-1 min-w-44 max-w-44">
-            <label className="text-xs text-text/75 pl-1">Cities:</label>
+            <label className="text-xs text-text/75 pl-1">
+                {label}
+            </label>
             <div
                 ref={triggerRef}
                 onClick={handleOpen}

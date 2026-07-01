@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { io } from "socket.io-client";
-import { BASE } from "@/constants/config.constant";
+import { BASE } from "@/constants/config.constants";
 
 
 const useSocketStore = create((set, get) => ({

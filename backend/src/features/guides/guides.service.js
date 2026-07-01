@@ -311,7 +311,9 @@ export const searchGuidesService = async (query) => {
         filter.$or = [
             { name: regexOpt },
             { specialities: { $elemMatch: regexOpt } },
-            { regions: { $elemMatch: regexOpt } }
+            { regions: { $elemMatch: regexOpt } },
+            { gender: name },
+            { languages: { $elemMatch: regexOpt } },
         ];
     }
 
@@ -342,6 +344,9 @@ export const searchGuidesService = async (query) => {
         sort: { rating: -1 },
     });
 };
+
+
+
 // ============================================================================================
 // GET UNVERIFIED GUIDES (Admin only)
 export const getUnverifiedGuidesService = async (limit = 10, page = 1) => {

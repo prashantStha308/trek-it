@@ -1,6 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import {
+    DEFAULT_LIMIT,
+    DEFAULT_PAGE
+} from "@/constants/config.constants.js"
+
+import {
     createBooking,
     getUserBookings,
     getBookingById,
@@ -9,6 +14,7 @@ import {
     cancleBooking,
     updateBookingStatus,
 } from "@/api/booking.api";
+
 import { showToast } from "@/store/ui.store";
 
 
@@ -39,10 +45,10 @@ export const useCreateBooking = () => {
 };
 
 
-export const useGetUserBookings = ({page = 1, limit = 10, ...filters} = {}, options) => {
+export const useGetUserBookings = ({page = DEFAULT_PAGE, limit = DEFAULT_LIMIT, ...filters} = {}, options) => {
     return useQuery({
-        queryKey: ["booking", {page: 1, limit: 10, ...filters}],
-        queryFn: ()=> getUserBookings({page: 1, limit: 10, ...filters}),
+        queryKey: ["booking", {page: page, limit: limit, ...filters}],
+        queryFn: ()=> getUserBookings({page: page, limit: limit, ...filters}),
         ...options
     })
 }
@@ -57,10 +63,10 @@ export const useGetBookingById = (id, options) => {
 }
 
 
-export const useGetActiveBookings = ({page = 1, limit = 10, ...filters} = {}, options) => {
+export const useGetActiveBookings = ({page = DEFAULT_PAGE, limit = DEFAULT_LIMIT, ...filters} = {}, options) => {
     return useQuery({
-        queryKey: ["booking", {page: 1, limit: 10, ...filters}],
-        queryFn: ()=> getActiveBookings({page: 1, limit: 10, ...filters}),
+        queryKey: ["booking", {page: page, limit: limit, ...filters}],
+        queryFn: ()=> getActiveBookings({page: page, limit: limit, ...filters}),
         ...options
     })
 }

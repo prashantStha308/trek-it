@@ -9,21 +9,32 @@ export default function TextInput ({
     callback,
     pattern,
     value, handleChange,
-    required=false
+    required=false,
+    error= ""
 }){
     return (
         <div
             className="flex flex-col gap-1 w-full"
         >
-            {
-                label &&
-                <label
-                    htmlFor="email"
-                    className="text-xs text-text/75 pl-1"
-                >
-                    {label}:
-                </label>
-            }
+            <div className="flex gap-1 items-center" >
+                {
+                    label &&
+                    <label
+                        htmlFor="email"
+                        className="text-xs text-text/75 pl-1"
+                    >
+                        {label}:
+                    </label>
+                }
+
+                {
+                    (error && error.trim().length !== 0) && (
+                        <span className="text-xs text-red-500" >
+                            ({error})
+                        </span>
+                    )
+                }
+            </div>
             
             <div
                 className="flex items-center gap-4 text-sm justify-between border border-border focus-within:border-primary bg-primary/5 rounded-lg px-4 py-1 overflow-y-hidden group"

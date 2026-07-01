@@ -27,8 +27,18 @@ import { bufferUpload } from "../../config/multer.config.js";
 
 const packageR = express.Router();
 
-packageR.post('/', authorize(["guide", "admin"]), bufferUpload.array("packageImage", 10), parseFormFields, validatePackageBody, validate, createPackage);
-packageR.post('/custom', authorize(["guide", "admin"]), bufferUpload.array("packageImage", 10), parseFormFields, validateCustomPackageMeta, validatePackageBody, validate, createCustomPackage);
+packageR.post(
+    '/', authorize(["guide", "admin"]),
+    bufferUpload.fields([
+        { name: "thumbnail", maxCount: 1 },
+        { name: "images", maxCount: 5 }
+    ]),
+    parseFormFields("keywords", "activities", "stops"),
+    validatePackageBody, validate,
+    createPackage
+);
+
+// packageR.post('/custom', authorize(["guide", "admin"]), bufferUpload.array("packageImage", 10), parseFormFields, validateCustomPackageMeta, validatePackageBody, validate, createCustomPackage);
 
 packageR.get('/', validatePackageQuery, validate, getAllPacakages);
 packageR.get('/search', validatePackageQuery, validate, searchPackages);
