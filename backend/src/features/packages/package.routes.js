@@ -1,7 +1,6 @@
 import express from 'express'
 import {
     createPackage,
-    createCustomPackage,
 
     getAllPacakages,
     getPackagesByGuide,
@@ -38,7 +37,6 @@ packageR.post(
     createPackage
 );
 
-// packageR.post('/custom', authorize(["guide", "admin"]), bufferUpload.array("packageImage", 10), parseFormFields, validateCustomPackageMeta, validatePackageBody, validate, createCustomPackage);
 
 packageR.get('/', validatePackageQuery, validate, getAllPacakages);
 packageR.get('/search', validatePackageQuery, validate, searchPackages);

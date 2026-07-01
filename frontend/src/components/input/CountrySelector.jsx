@@ -118,7 +118,7 @@ export default function CountrySelector({ country, setCountry }) {
         : null;
 
     return (
-        <div className="flex flex-col gap-1 min-w-44 max-w-44">
+        <div className="flex flex-col gap-1 w-full">
             <label className="text-xs text-text/75 pl-1">Country:</label>
 
             <div

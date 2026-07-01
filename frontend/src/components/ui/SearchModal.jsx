@@ -5,7 +5,7 @@ import ModalWrapper from "@/components/layout/ModalWrapper";
 import {useGlobalSearch} from "@/hooks/useGlobalSearch.jsx";
 import useUIStore from "@/store/ui.store.js";
 
-import { Ghost, Wind, Compass, MapPinOff } from "lucide-react"
+import { MapPinOff } from "lucide-react"
 import DataSection from "@/components/explore/DataSection";
 
 

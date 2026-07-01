@@ -5,7 +5,6 @@ import { getAll, getById } from "../../utils/crud.service.js";
 import ApiResponse from "../../utils/ApiResponse.js";
 import {
     createPackageService,
-    createCustomPackageService,
     searchPackageService,
     deletePackageService,
     updatePackageService,
@@ -29,16 +28,6 @@ export const curatePackage = async (req, res) => {
     // curate a custom package based on user's request
 };
 
-export const createCustomPackage = async (req, res) => {
-    const pkg = await createCustomPackageService(req.user, req.body, req.files);
-
-    ApiResponse.success(res, {
-        status: 201,
-        data: pkg,
-        message:
-            "Custom package created successfully. The tourist and guide have been notified.",
-    });
-};
 
 export const getAllPacakages = async (req, res) => {
     const { limit, page, ...filter } = req.query;
@@ -141,7 +130,7 @@ export const getAllCollaborators = async (req, res) => {
 
 export const updatePackage = async (req, res) => {
     const pkg = await updatePackageService(
-        req.user._id,
+        req.user,
         req.params.packageId,
         req.body,
         req.files,

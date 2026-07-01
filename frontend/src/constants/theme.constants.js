@@ -42,6 +42,7 @@ export const THEME_SIZE = {
 
 export const STATUS_VARIANT = {
   pending: "amber",
+  paid: "green",
   confirmed: "blue",
   completed: "green",
   cancelled: "red",

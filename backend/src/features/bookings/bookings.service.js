@@ -2,10 +2,15 @@ import mongoose from "mongoose";
 import { Booking, Package, Guide } from "../../models/index.js";
 
 import {
+    ROLE_ENUM,
+
     BOOKING_STATUS_ENUM,
-} from '../../constants/constants.js';
-import { ROLE_ENUM } from "../../constants/constants.js";
-import {NOTIFICATION_TITLE, NOTIFICATION_EVENTS} from "../../constants/constants.js"
+    BOOKING_STATUS_PERMISSIONS,
+
+    NOTIFICATION_TITLE,
+    NOTIFICATION_EVENTS
+
+} from "../../constants/constants.js"
 
 import {
     getNextNDates,
@@ -91,7 +96,12 @@ export const createBookingService = async (tourist, body, { guideId } = {}) => {
 
     promises.push(sendNotificationService(NOTIFICATION_TITLE.bookingCreated, booking.tourist, {
         title: `Booking Created: ${booking.name}`,
-        message: `Your booking for package: ${targetPackage.name} has been successfully booked. You have been assigned a guide: ${targetGuide.name}, id: ${targetGuide.id}`,
+        message: `Your booking for package: ${targetPackage.name} has been successfully booked. You have been assigned a guide: ${targetGuide.name}, id: ${targetGuide._id}`,
+        link: `/booking/${booking._id}`,
+       actions: [
+            { label: "View Booking", href: `/booking/${booking._id}` },
+            { label: "Open Chat", href: `/chat/${targetGuide._id}` }
+        ],
         meta,
         priority: 1
 
@@ -100,6 +110,10 @@ export const createBookingService = async (tourist, body, { guideId } = {}) => {
     promises.push(sendNotificationService(NOTIFICATION_TITLE.newBookingRequest, booking.guide, {
         title: `A new booking request has been made.`,
         message: `A new booking for ${targetPackage.name} has been made by ${tourist.name}(id: ${tourist._id}) on ${Date.now()} `,
+        link: `/booking/${booking._id}`,
+        actions: [
+            { label: "View Booking", href: `/booking/${booking._id}` },
+        ],
         meta,
         priority: 1
     }));
@@ -109,23 +123,37 @@ export const createBookingService = async (tourist, body, { guideId } = {}) => {
 }
 
 
-export const setBookingStatusService = async (bookingId, status) => {
-    // only responsible for updating status of the booking. NOTHING ELSE
-
+export const setBookingStatusService = async (bookingId, status, user) => {
     const booking = await Booking.findById(bookingId);
     if (!booking) throw new ApiError(404, "Booking not found");
+
+    // 1. role can set this status?
+    const allowed = BOOKING_STATUS_PERMISSIONS[user.role] ?? [];
+    if (!allowed.includes(status)) {
+        throw new ApiError(403, `${user.role} cannot set booking status to ${status}`);
+    }
+
+    // 2. Is part of this booking?
+    const isGuide = booking.guide.toString() === user._id.toString();
+    const isTourist = booking.tourist.toString() === user._id.toString();
+    if (user.role !== "admin" && !isGuide && !isTourist) {
+        throw new ApiError(403, "You are not part of this booking");
+    }
+
+    // 3. guide can only act on their own bookings
+    if (user.role === "guide" && !isGuide) {
+        throw new ApiError(403, "This booking is not assigned to you");
+    }
 
     booking.status = status;
     await booking.save();
 
     const bookingStatus = booking.status;
-
-    const event = NOTIFICATION_TITLE[`booking${bookingStatus.charAt(0).toUpperCase() + bookingStatus.slice(1)}`]
-
-    if(!NOTIFICATION_EVENTS.includes(event)){
+    const event = NOTIFICATION_TITLE[`booking${bookingStatus.charAt(0).toUpperCase() + bookingStatus.slice(1)}`];
+    if (!NOTIFICATION_EVENTS.includes(event)) {
         throw new ApiError(500, "Invalid event encountered");
     }
-    
+
     await broadcastNotificationService(event, [booking.tourist, booking.guide], {
         title: `Booking ${bookingStatus}`,
         message: `Booking for package: ${booking.package} has moved to ${bookingStatus} stage.`,
@@ -141,7 +169,6 @@ export const setBookingStatusService = async (bookingId, status) => {
 
     return booking;
 }
-
 
 export const cancleBookingService = async (bookingId, user) => {
 

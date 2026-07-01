@@ -8,7 +8,7 @@ import { getIo } from "../../utils/io.socket.js";
  * @description emits an event AND sends a newly created notification
  * 
  * @param {String} event - Event to emit via socket 
- * @param {String} recipient - Receiving user's ObjectId 
+ * @param {String} recipientId - Receiving user's ObjectId 
  * @param {Object} [content]
  * @param {String} [content.title] - Title of the notification 
  * @param {String} [content.message] - Notification message
@@ -16,8 +16,8 @@ import { getIo } from "../../utils/io.socket.js";
  * @param {Object} [content.meta] - metadata to the message. Can have ObjectIds to different models for example   
  * @returns {Promise<Object>} - Notification document
  */
-export const sendNotificationService = async (event, recipient, {
-        title, message="", link = "", meta = {}, priority=0
+export const sendNotificationService = async (event, recipientId, {
+        title, message="", link = "", actions=[], meta = {}, priority=0
     },
     persist=true
 ) => {
@@ -25,10 +25,11 @@ export const sendNotificationService = async (event, recipient, {
     const finalEvent = `notification:${event}`;
 
     let notification = {
-        recipient,
+        recipientId,
         title,
         message,
         link,
+        actions,
         meta: {...meta, finalEvent}
     }
 
@@ -37,7 +38,7 @@ export const sendNotificationService = async (event, recipient, {
     }
 
     // sends to client, but if offline, this fires nothing, but notificaiton is persisted in db
-    io.to(recipient.toString()).emit(finalEvent, notification);
+    io.to(recipientId.toString()).emit(finalEvent, notification);
     
     return notification;
 }
@@ -47,7 +48,7 @@ export const sendNotificationService = async (event, recipient, {
  * @description - Broadcasts a notification to multiple recipients.
  * 
  * @param {String} event - Event to emit via socket 
- * @param {String[]} recipients - Array of recipient user ObjectIds
+ * @param {String[]} recipientIds - Array of recipient user ObjectIds
  * @param {Object} content
  * @param {string} content.title - Title of the notification
  * @param {string} [content.message=""] - Notification message
@@ -58,41 +59,41 @@ export const sendNotificationService = async (event, recipient, {
  * @example await broadcastNotificationService("bookingCancelled", [guideId, touristId], {title: "Booking cancelled", message: "A booking has been cancelled ", meta:{ guideId, touristId, packageId, bookingId }})
  * 
  */
-export const broadcastNotificationService = async (event, recipients = [], {
-    title, message = "", link = "", meta = {}, priority=0, persist = true
+export const broadcastNotificationService = async (event, recipientIds = [], {
+    title, message = "", link = "", actions =[], meta = {}, priority=0, persist = true
 }) => {
     const notifications = await Promise.all(
-        recipients.map(recipient =>
-            sendNotificationService(event, recipient, { title, message, link, meta }, persist)
+        recipientIds.map(recipientId =>
+            sendNotificationService(event, recipientId, { title, message, link, actions, meta }, persist)
         )
     );
 
     return notifications;
 }
 
-export const deleteNotificationService = async (notificationId, recipient) => {
+export const deleteNotificationService = async (notificationId, recipientId) => {
     const io = getIo();
 
     const notification = await Notification.deleteOne({
         _id: notificationId,
-        recipient
+        recipientId
     });
 
     if (notification.deletedCount === 0) {
         throw new ApiError(404, "Notification not found");
     }
 
-    io.to(recipient.toString()).emit("notification:deleted", { notificationId });
+    io.to(recipientId.toString()).emit("notification:deleted", { notificationId });
     return notification
 }
 
 
-export const deleteBulkNotificationService = async (recipient, {
+export const deleteBulkNotificationService = async (recipientId, {
     amount = 10,
     order = "latest", // "latest" | "oldest"
 } = {}) => {
 
-    const filter = { recipient };
+    const filter = { recipient: recipientId };
 
     const sort = order === "latest" ? { createdAt: -1 } : { createdAt: 1 };
 
@@ -107,7 +108,7 @@ export const deleteBulkNotificationService = async (recipient, {
 
     const io = getIo();
 
-    io.to(recipient.toString()).emit("notification:bulkDeleted", { deletedCount: result.deletedCount });
+    io.to(recipientId.toString()).emit("notification:bulkDeleted", { deletedCount: result.deletedCount });
 
     return result;
 }
