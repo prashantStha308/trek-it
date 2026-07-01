@@ -1,5 +1,6 @@
 import {useRouter} from "next/navigation"
 
+import {useGetMe} from "@/queries/auth.query.js"
 import { useCancleBooking } from "@/queries/booking.query.js"
 import { showToast } from "@/store/ui.store";
 
@@ -15,7 +16,10 @@ import {STATUS_VARIANT} from "@/constants/theme.constants.js";
 export default function PostBookingCard ({booking}){
     const router = useRouter();
 
+    const {data:me, isLoading} = useGetMe();
     const cancleBooking = useCancleBooking();
+
+    const bookingIsCancelled = booking.status == "cancelled";
 
     const handleCancellation = ()=>{
         cancleBooking.mutate(booking._id,{
@@ -56,9 +60,14 @@ export default function PostBookingCard ({booking}){
                     <span className="text-sm font-semibold text-text">
                         Total
                     </span>
-                    <span className="text-lg font-bold text-primary">
+
+                <div className="relative inline-block">
+                    <span className={`text-lg font-bold ${bookingIsCancelled ? "text-red-500" : "text-primary"}`}>
                         ${booking?.totalPrice}
                     </span>
+
+                    {bookingIsCancelled && <div className="absolute left-0 right-0 top-1/2 h-0.5 -translate-y-1/2 bg-red-500" />}
+                </div>
 
                 </div>
 
@@ -85,7 +94,7 @@ export default function PostBookingCard ({booking}){
 
                 <div className="flex flex-col gap-2 mt-2">
                     {
-                        (!booking?.payment && booking.status !== "cancelled") && (
+                        ((me.role !== "guide") && (!booking?.payment && !bookingIsCancelled )) && (
                             <Button variant="primary" size="sm">Pay now</Button>
                         )
                     }

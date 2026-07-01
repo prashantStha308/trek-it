@@ -5,14 +5,19 @@ import {
 } from "@tanstack/react-query";
 
 import {
+    DEFAULT_LIMIT,
+    DEFAULT_PAGE
+} from "@/constants/config.constants.js"
+
+import {
     getAllGuides,
     getGuideById,
     searchGuides,
 } from "@/api/guide.api";
 
 export const useGetAllGuides = ({
-    limit = 10,
-    page = 1,
+    limit = DEFAULT_LIMIT,
+    page = DEFAULT_PAGE,
     ...filter
 }, options = {}) => {
     return useQuery({

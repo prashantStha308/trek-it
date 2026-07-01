@@ -76,7 +76,7 @@ export default function BookingPage(){
 
                 <div className="w-full lg:w-1/2">
                     <Image
-                        src={optimizeImageUrl(pkg?.thumbnail, 1080)}
+                        src={optimizeImageUrl(pkg?.thumbnail, 1080) || "/assets/svg/placeholder-white.svg"}
                         alt={pkg?.name}
                         width={600}
                         height={400}
@@ -194,7 +194,7 @@ export default function BookingPage(){
                     />
 
                     <section
-                        className="flex flex-col gap-4 items-center justify-between mt-2 w-full"
+                        className="flex flex-col gap-4 items-center justify-between items-center mt-2 w-full"
                     >
 
                         <div

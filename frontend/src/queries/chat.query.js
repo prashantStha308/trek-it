@@ -3,6 +3,12 @@ import {
     useQuery,
     useMutation
  } from "@tanstack/react-query";
+
+import {
+    DEFAULT_LIMIT,
+    DEFAULT_PAGE
+} from "@/constants/config.constants.js"
+
 import {
     getAllUserChats,
     getChatById,
@@ -30,7 +36,7 @@ export const useGetChatById = (id)=>{
     })
 }
 
-export const useGetChatMessages = (chatId, {limit= 30, page = 1, ...filters})=>{
+export const useGetChatMessages = (chatId, {limit= DEFAULT_LIMIT, page = DEFAULT_PAGE, ...filters})=>{
     const queryClient = useQueryClient();
     const cached = queryClient.getQueryData(["messages", chatId, { limit, page, filters }]);
 

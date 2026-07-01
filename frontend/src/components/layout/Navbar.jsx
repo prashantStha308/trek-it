@@ -1,17 +1,23 @@
 "use client";
-
-import ThemeToggle from "./ThemeToggle";
-import { LinkButton } from "../ui/Button";
-import NavDropdown from "./NavDropdown";
+import { useRef, useState } from "react"
 import Image from "next/image";
 import Link from "next/link";
-import { Bell, MessageCircle, Plus } from "lucide-react";
-import Avatar from "@/components/ui/Avatar";
 
 import { optimizeImageUrl } from "@/utils/utils.helper";
 import { useGetMe } from "@/queries/auth.query";
 
 import useChatStore from "@/store/chat/chat.store.js";
+import useUIStore from "@/store/ui.store.js";
+import {MIN_SEARCH_WORD_LENGTH} from "@/hooks/useGlobalSearch";
+
+import { Bell, MessageCircle, Plus } from "lucide-react";
+import Avatar from "@/components/ui/Avatar";
+
+import ThemeToggle from "./ThemeToggle";
+import NavDropdown from "./NavDropdown";
+import SearchBar from "@/components/explore/SearchBar";
+
+import { LinkButton } from "../ui/Button";
 import {toggleNotification} from "@/store/notification/notification.store.js";
 
 
@@ -88,9 +94,38 @@ function NavbarUserSect() {
 }
 
 export default function Navbar() {
+
+  const [inputValue, setInputValue] = useState("");
+  const debounce = useRef(null);
+
+  const setSearchModalWord = useUIStore((s) => s.setSearchModalWord);
+  const setIsSearchModalOpen = useUIStore((s) => s.setIsSearchModalOpen);
+
+  const handleSearchWords = (e) => {
+      const value = e.target.value;
+      setInputValue(value);
+      
+      clearTimeout(debounce.current);
+      debounce.current = setTimeout(() => {
+        setSearchModalWord(value);
+        setIsSearchModalOpen(value.trim().length >= MIN_SEARCH_WORD_LENGTH);
+      }, 300);
+  };
+
+
   return (
-    <header className=" flex justify-between items-center bg-secondary/35 dark:bg-secondary/15 backdrop-blur-3xl py-2 px-9 z-30">
+    <header className=" flex justify-between items-center gap-8 bg-secondary/35 dark:bg-secondary/15 backdrop-blur-3xl py-2 px-9 z-30">
       <NavDropdown />
+
+      <div className="flex-1 hidden md:flex" >
+
+        <SearchBar
+          value={inputValue}
+          onChange={handleSearchWords}
+          // onFocus={() => setIsSearchModalOpen(true)}
+        />
+
+      </div>
 
       <NavbarUserSect />
     </header>

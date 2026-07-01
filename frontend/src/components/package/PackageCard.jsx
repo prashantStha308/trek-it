@@ -7,14 +7,14 @@ import Badge from "@/components/ui/Badge"
 import Avatar from "@/components/ui/Avatar";
 
 
-export function PackageCard({ item }) {
+export default function PackageCard({ item }) {
 
     return (
-        <article className=" w-xs lg:w-sm bg-secondary/16 rounded-xl border border-black/10 overflow-hidden">
+        <article className=" w-xs bg-secondary/16 rounded-xl border border-black/10 overflow-hidden">
 
-            <div className="relative w-full h-44">
+            <div className="relative w-full h-44 bg-black/15 ">
                 <Image
-                    src={optimizeImageUrl(item?.thumbnail?.src ?? item?.thumbnail, 800) || null}
+                    src={optimizeImageUrl(item?.thumbnail?.src ?? item?.thumbnail, 800) || "/assets/svg/placeholder-white.svg"}
                     alt={item?.name}
                     fill
                     className="object-cover"
@@ -58,7 +58,7 @@ export function PackageCard({ item }) {
                     <div>
                         <p className="text-xs text-text/75">Starting from</p>
                         <p className="text-base font-medium text-text">
-                            ${item?.startingPrice}{" "}
+                            NRS. {item?.startingPrice}{" "}
                         </p>
                     </div>
                     

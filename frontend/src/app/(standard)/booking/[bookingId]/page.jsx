@@ -33,23 +33,23 @@ export default function BookingPage() {
             <section className="px-4 pt-3 flex flex-wrap gap-2">
                 {
                     pkg?.regions.map((region) => (
-                        <Badge key={region} variant="green" size="xs">{region}</Badge>
+                        <Badge key={region} variant="green" size="sm">{region}</Badge>
                     ))
                 }
                 {
                     pkg?.keywords.map((keyword) => (
-                        <Badge key={keyword} variant="blue" size="xs">{keyword}</Badge>
+                        <Badge key={keyword} variant="blue" size="sm">{keyword}</Badge>
                     ))
                 }
                 {
                     pkg?.requiresPermit && (
-                        <Badge variant="red" size="xs">Permit required</Badge>
+                        <Badge variant="red" size="sm">Permit required</Badge>
                     )
                 }
 
                 {
                     pkg?.verified && (
-                        <Badge variant="green" size="xs">Verified</Badge>
+                        <Badge variant="green" size="sm">Verified</Badge>
                     )
                 }
             </section>

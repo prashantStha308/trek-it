@@ -18,7 +18,7 @@ export default function PackageTimeLine ({timeLines}){
                                 {lbl.label}
                             </p>
                             <p className="text-sm font-medium text-text">
-                                {formatDate(lbl.date)}
+                                {formatDate(lbl?.date) || ""}
                             </p>
                         </div>
                     </div>

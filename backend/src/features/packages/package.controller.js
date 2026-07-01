@@ -12,7 +12,7 @@ import {
 } from "./package.service.js";
 
 
-const GUIDE_SELECT = "_id name gender age profilePicture location languages specialities regions rating isVerified isTrusted"
+const GUIDE_SELECT = "_id name gender age profilePicture role location languages specialities regions rating isVerified isTrusted"
 
 
 export const createPackage = async (req, res) => {
