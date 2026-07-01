@@ -1,9 +1,11 @@
 import { useSearchParams } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
+
 import { usePackageSearchQuery, useGetAllPackages } from "@/queries/package.query";
 import { useGuideSearchQuery, useGetAllGuides } from "@/queries/guide.query";
 import { useGetRegions, useGetActivities, useGetSpecialities } from "@/queries/meta.query";
 
+import {MIN_SEARCH_WORD_LENGTH} from "@/hooks/useGlobalSearch";
 
 
 const TABS = {
@@ -21,14 +23,22 @@ export { TABS };
 export const useExploreState = () => {
 
     const searchParams = useSearchParams();
-    console.log(searchParams.get("tab"));
     const initialTab = searchParams.get("tab") ?? TABS.package;
+    const initialSearch = searchParams.get("search") ?? "";
 
 
     const [tab, setTab] = useState(TABS.package);
     const [showFilters, setShowFilters] = useState({ [TABS.package]: false, [TABS.guide]: false });
-    const [search, setSearch] = useState({ [TABS.package]: "", [TABS.guide]: "" });
+
+    const [search, setSearch] = useState({ [TABS.package]: initialSearch, [TABS.guide]: initialSearch });
     const [page, setPage] = useState({ [TABS.package]: 1, [TABS.guide]: 1 });
+
+
+    const DEFAULT_FILTERS = {
+        [TABS.package]: { regions: [], activities: [], name: initialSearch },
+        [TABS.guide]: { regions: [], specialities: [], gender: "", minAge: null, maxAge: null, name: initialSearch }
+    };
+
     const [filter, setFilter] = useState(DEFAULT_FILTERS);
     const debounce = useRef(null);
 
@@ -42,8 +52,8 @@ export const useExploreState = () => {
 
     const currentSearch = search[tab];
     const currentFilter = filter[tab];
-    const currentPage = page[tab];
     const currentShowFilters = showFilters[tab];
+    const currentPage = page[tab];
 
     const setCurrentSearch = (val) => updateTabState(setSearch, val);
     const setCurrentFilter = (val) => updateTabState(setFilter, val);
@@ -55,7 +65,7 @@ export const useExploreState = () => {
     const isGuideTab = tab === TABS.guide;
 
     const hasFilters = !!(
-        currentFilter.name?.length >= 2 ||
+        currentFilter.name?.length >= MIN_SEARCH_WORD_LENGTH ||
         currentFilter.regions?.length ||
         currentFilter.activities?.length ||
         currentFilter.specialities?.length ||
@@ -103,6 +113,7 @@ export const useExploreState = () => {
     const handleSearchWords = (e) => {
         const value = e.target.value;
         setCurrentSearch(value);
+        
         clearTimeout(debounce.current);
         debounce.current = setTimeout(() => {
             setCurrentFilter(prev => ({ ...prev, name: value }));

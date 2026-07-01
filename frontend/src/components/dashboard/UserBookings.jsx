@@ -2,136 +2,212 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { MapPin, Calendar, Clock, ArrowRight, Navigation, CalendarX, UserRound } from "lucide-react";
-import { Button, LinkButton } from "@/components/ui/Button";
-import { useGetUserBookings, useGetActiveBookings } from "@/queries/booking.query";
-import Avatar from "@/components/ui/Avatar";
+import {
+    Navigation,
+    CalendarX,
+} from "lucide-react";
 
-import BookingMiniCard from "@/components/dashboard/BookingMiniCard"
+import { Button } from "@/components/ui/Button";
+import {
+    useGetUserBookings,
+    useGetActiveBookings,
+} from "@/queries/booking.query";
+
+import BookingMiniCard from "@/components/dashboard/BookingMiniCard";
 import BookingCardSkeleton from "@/components/loaders/BookingCardSkeleton";
 
 const TABS = ["all", "pending", "confirmed", "completed", "cancelled"];
 const CURRENT_STATUSES = ["active", "pending", "confirmed"];
 
-const formatDate = (date) =>
-  new Date(date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-
-
-
 function MetricCard({ label, value }) {
-  return (
-    <div className="bg-surface rounded-xl p-4 border border-border">
-      <p className="text-[11px] uppercase tracking-wide text-muted mb-1.5">{label}</p>
-      <p className="text-[26px] font-semibold text-foreground leading-none">{value ?? 0}</p>
-    </div>
-  );
-}
+    return (
+        <div className="bg-surface rounded-xl p-4 border border-border">
+            <p className="text-[11px] uppercase tracking-wide text-muted mb-1.5">
+                {label}
+            </p>
 
+            <p className="text-[26px] font-semibold text-foreground leading-none">
+                {value ?? 0}
+            </p>
+        </div>
+    );
+}
 
 function EmptyState({ tab }) {
-  return (
-    <motion.div
-      key="empty"
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
-      className="flex flex-col items-center justify-center py-16 text-muted"
-    >
-      <CalendarX size={36} className="mb-3 opacity-30" />
-      <p className="text-sm">No {tab === "all" ? "current" : tab} bookings found</p>
-    </motion.div>
-  );
+    return (
+        <motion.div
+            key="empty"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="flex flex-col items-center justify-center py-16 text-muted"
+        >
+            <CalendarX size={36} className="mb-3 opacity-30" />
+
+            <p className="text-sm">
+                No {tab === "all" ? "current" : tab} bookings found
+            </p>
+        </motion.div>
+    );
 }
 
+export default function UserBookings() {
+    const [activeTab, setActiveTab] = useState("all");
 
-export default function UserBookings({ user }) {
-  const [activeTab, setActiveTab] = useState("all");
+    let { data: bookingsData, isLoading: bookingsLoading } =
+        useGetUserBookings();
 
-  let { data: bookings, isLoading: bookingsLoading } = useGetUserBookings();
-  let { data: activeBookings, isLoading: activeBookingLoading } = useGetActiveBookings();
+    let { data: activeBookingsData, isLoading: activeBookingLoading } =
+        useGetActiveBookings();
 
-  bookings = bookings?.docs;
-  activeBookings = activeBookings?.docs?.filter((b) => b.status === "active");
+    const bookings = bookingsData?.docs;
 
-  const isLoading = bookingsLoading || activeBookingLoading;
+    const activeBookings = activeBookingsData?.docs?.filter(
+        (booking) => booking.status === "active"
+    );
 
-  const filtered =
-    activeTab === "all"
-      ? bookings?.filter((b) => CURRENT_STATUSES.includes(b.status))
-      : bookings?.filter((b) => b.status === activeTab);
+    const isLoading = bookingsLoading || activeBookingLoading;
 
-  const metrics = [
-    { label: "Total bookings", value: bookings?.length },
-    { label: "Active treks",   value: activeBookings?.length },
-    { label: "Upcoming",       value: bookings?.filter((b) => ["confirmed", "pending"].includes(b.status)).length },
-    { label: "Completed",      value: bookings?.filter((b) => b.status === "completed").length },
-  ];
+    const currentBookings = bookings?.filter((booking) =>
+        CURRENT_STATUSES.includes(booking.status)
+    );
 
-  return (
-    <section id="booking" className="flex flex-col gap-5">
-      <h2 className="text-xl text-primary font-semibold">Your Bookings</h2>
+    const filteredBookings =
+        activeTab === "all"
+            ? currentBookings
+            : bookings?.filter((booking) => booking.status === activeTab);
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {metrics?.map((m) => (
-          <MetricCard key={m.label} label={m.label} value={m.value} />
-        ))}
-      </div>
+    const metrics = [
+        {
+            label: "Total bookings",
+            value: bookings?.length,
+        },
+        {
+            label: "Active treks",
+            value: activeBookings?.length,
+        },
+        {
+            label: "Upcoming",
+            value: bookings?.filter((booking) =>
+                ["confirmed", "pending"].includes(booking.status)
+            ).length,
+        },
+        {
+            label: "Completed",
+            value: bookings?.filter(
+                (booking) => booking.status === "completed"
+            ).length,
+        },
+    ];
 
-      {(activeBookingLoading || activeBookings?.length > 0) && (
-        <section>
-          <p className="text-[13px] font-medium text-success flex items-center gap-1.5 mb-3">
-            <Navigation size={14} />
-            Currently trekking
-          </p>
-          <div className="flex flex-col gap-2.5">
-            {activeBookingLoading
-              ? <BookingCardSkeleton />
-              : activeBookings?.map((b) => <BookingMiniCard key={b._id} booking={b} />)}
-          </div>
+    return (
+        <section id="booking" className="flex flex-col gap-5">
+            <h2 className="text-xl text-primary font-semibold">
+                Your Bookings
+            </h2>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {metrics.map((metric) => (
+                    <MetricCard
+                        key={metric.label}
+                        label={metric.label}
+                        value={metric.value}
+                    />
+                ))}
+            </div>
+
+            {
+                (activeBookingLoading || activeBookings?.length > 0) && (
+                    <section>
+                        <p className="text-[13px] font-medium text-success flex items-center gap-1.5 mb-3">
+                            <Navigation size={14} />
+                            Currently trekking
+                        </p>
+
+                        <div className="flex flex-col gap-2.5">
+                            {activeBookingLoading ? (
+                                <BookingCardSkeleton />
+                            ) : (
+                                activeBookings?.map((booking) => (
+                                    <BookingMiniCard
+                                        key={booking._id}
+                                        booking={booking}
+                                    />
+                                ))
+                            )}
+                        </div>
+                    </section>
+                )
+            }
+
+            <div className="flex items-center gap-1.5 flex-wrap">
+                {TABS.map((tab) => {
+                    const bookingCount =
+                        tab === "all"
+                            ? currentBookings?.length ?? 0
+                            : bookings?.filter((booking) => booking.status === tab).length ?? 0;
+
+                    return (
+                        <Button
+                            key={tab}
+                            variant={activeTab === tab ? "primary" : "outline"}
+                            color="green"
+                            onClick={() => setActiveTab(tab)}
+                            className="w-auto capitalize"
+                        >
+                            {tab === "all"
+                                ? `Current (${bookingCount})`
+                                : bookingCount > 0
+                                    ? `${tab} (${bookingCount})`
+                                    : tab}
+                        </Button>
+                    );
+                })}
+            </div>
+
+            <section>
+                {
+                    isLoading ? (
+                        <div className="flex flex-col gap-2.5">
+                            {
+                                Array.from({ length: 3 }).map((_, index) => (
+                                    <BookingCardSkeleton key={index} />
+                                ))
+                            }
+                        </div>
+                    ) : (
+                        <AnimatePresence mode="popLayout">
+                            {
+                                filteredBookings?.length === 0 ? (
+                                    <EmptyState key="empty" tab={activeTab} />
+                                ) : (
+                                    <motion.div
+                                        key={activeTab}
+                                        initial={{ opacity: 0, y: 6 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -6 }}
+                                        transition={{
+                                            duration: 0.18,
+                                            ease: "easeOut",
+                                        }}
+                                        className="flex flex-col gap-2.5"
+                                    >
+                                        {
+                                            filteredBookings?.map((booking) => (
+                                                <BookingMiniCard
+                                                    key={booking._id}
+                                                    booking={booking}
+                                                />
+                                            ))
+                                        }
+                                    </motion.div>
+                                )
+                            }
+                        </AnimatePresence>
+                    )
+                }
+            </section>
         </section>
-      )}
-
-      <div className="flex items-center gap-1.5 flex-wrap">
-        {TABS.map((tab) => (
-          <Button
-            key={tab}
-            variant={activeTab === tab ? "primary" : "outline"}
-            color="green"
-            onClick={() => setActiveTab(tab)}
-            className="w-auto capitalize"
-          >
-            {tab === "all"
-              ? `Current (${bookings?.filter((b) => CURRENT_STATUSES.includes(b.status)).length ?? 0})`
-              : tab}
-          </Button>
-        ))}
-      </div>
-
-      <section>
-        {isLoading ? (
-          <div className="flex flex-col gap-2.5">
-            {Array.from({ length: 3 }).map((_, i) => <BookingCardSkeleton key={i} />)}
-          </div>
-        ) : (
-          <AnimatePresence mode="popLayout">
-            {filtered?.length === 0 ? (
-              <EmptyState key="empty" tab={activeTab} />
-            ) : (
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.18, ease: "easeOut" }}
-                className="flex flex-col gap-2.5"
-              >
-                {filtered?.map((b) => <BookingMiniCard key={b._id} booking={b} />)}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        )}
-      </section>
-    </section>
-  );
+    );
 }

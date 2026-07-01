@@ -1,10 +1,18 @@
 import {Link} from "next/navigation";
 import {motion} from "motion/react";
+import {useRouter} from "next/navigation";
+
+import {useGetMe} from "@/queries/auth.query.js";
+import useChatStore from "@/store/chat/chat.store.js";
+
 import {
   MapPin, Calendar,
   Clock, ArrowRight, UserRound
 } from "lucide-react"
-import {LinkButton} from "@/components/ui/Button";
+import {
+  LinkButton,
+  Button
+} from "@/components/ui/Button";
 import Avatar from "@/components/ui/Avatar";
 import Badge from "@/components/ui/Badge";
 
@@ -21,22 +29,17 @@ const STATUS_CONFIG = {
 const formatDate = (date) => new Date(date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
 
-function StatusBadge({ status }) {
-  return (
-    <span className={`inline-flex items-center text-[11px] font-medium px-2.5 py-0.5 rounded-full ${status.badge}`}>
-      {status.label}
-    </span>
-  );
-}
 
 function GuideInfo({ guide }) {
   if (!guide)
     return (
       <span className="text-[13px] text-muted italic flex items-center gap-1.5">
-        <UserRound size={13} />
+      <Avatar size="xs" />
         Guide pending assignment
       </span>
     );
+
+
   return (
     <div className="flex items-center gap-2">
       <Avatar src={guide?.profilePicture?.src} alt={guide?.name} size="xs" />
@@ -45,33 +48,29 @@ function GuideInfo({ guide }) {
   );
 }
 
-const CButton = ({ href, children, status })=>{
-    
-    const variants = {
-        primary: "border-primary/60 bg-primary/85 text-white hover:bg-primary",
-        form: "border-accent/60 dark:border-secondary/60 bg-primary/75 dark:bg-primary/65 text-white hover:dark:bg-secondary/75 hover:bg-accent/75",
-        default: "border-primary/60 hover:bg-primary/85 hover:text-white",
-        custom: className
-    }
-
-    return (
-        <Link
-            href={href}
-            className={`border rounded-md ${sizes[size]} cursor-pointer focus:outline-1 transition-colors  flex items-center justify-between flex justify-center`}
-        >
-            {children}
-        </Link>
-    )
-}
-
 
 export default function BookingMiniCard({ booking }) {
-  // status haru
-  const isOngoing = booking?.status === "active";
-  const isCancelled = booking?.status === "cancelled";
-  const isExpired = booking?.status === "expired";
 
-  const cfg = STATUS_CONFIG[booking?.status] ?? STATUS_CONFIG.pending;
+    const { data:me, isLoading } = useGetMe();
+    const openDirectChat = useChatStore(store => store.openDirectChat);
+    const router = useRouter();
+
+    const handleChat = () => {
+        const target = me._id === booking.guide?._id ? booking.tourist : booking.guide;
+        openDirectChat(target, () => {
+            router.push('/chat');
+        });
+    };
+
+    // status haru
+    const isOngoing = booking?.status === "active";
+    const isCancelled = booking?.status === "cancelled";
+    const isExpired = booking?.status === "expired";
+
+    const cfg = STATUS_CONFIG[booking?.status] ?? STATUS_CONFIG.pending;
+
+    console.log("Booking tourist", booking.tourist);
+    console.log("Booking Guide", booking.guide);
 
   return (
     <motion.section
@@ -83,7 +82,6 @@ export default function BookingMiniCard({ booking }) {
       className={`rounded-xl border p-4 transition-colors ${cfg.card} ${isOngoing ? "border-l-[3px] border-l-success" : ""}`}
     >
       <section className="flex justify-between items-start gap-3 flex-wrap">
-
 
         <div className="flex-1 min-w-0">
           {isOngoing && (
@@ -99,9 +97,12 @@ export default function BookingMiniCard({ booking }) {
 
           <p className="text-[12px] text-muted mb-2.5 flex items-center gap-1">
             <MapPin size={12} className="shrink-0" />
-            {booking?.package?.regions.map((item, index) => (
-              <span key={index}>{item}{index < booking.package.regions.length - 1 ? "," : ""} </span>
-            ))}
+            {
+                booking?.package?.regions.map((item, index) => (
+                  <span key={index}>{item}{index < booking.package.regions.length - 1 ? "," : ""} </span>
+                ))
+            }
+
           </p>
           <GuideInfo guide={booking?.guide} />
         </div>
@@ -132,19 +133,24 @@ export default function BookingMiniCard({ booking }) {
           </span>
         </div>
 
-        <section className="flex items-center gap-6" >
+        <section className="flex-1 flex justify-end items-center gap-2" >
 
           {
             (!isCancelled && !isExpired) && (
-              <LinkButton href={`/chat/${booking?.guide?._id}`} size="sm" variant="primary" >
-                Chat with Guide 
-              </LinkButton>
+              <Button
+               size="sm"
+               variant="primary"
+               className="w-fit"
+               onClick={handleChat}
+             >
+                Chat with {me?._id === booking?.guide?._id ? "Tourist" : "Guide"}
+              </Button>
               )
           }
 
-          <LinkButton href={`/booking/${booking?._id}`} size="sm" variant="outline">
-            View details <ArrowRight size={12} />
-          </LinkButton>
+              <LinkButton href={`/booking/${booking?._id}`} size="sm" variant="outline">
+                    View details <ArrowRight size={12} />
+              </LinkButton>
 
         </section>
 

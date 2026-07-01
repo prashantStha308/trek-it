@@ -6,16 +6,18 @@ import Badge from "@/components/ui/Badge"
 import Avatar from "@/components/ui/Avatar";
 
 
-export default function PackageCard({guide}){
+export default function GuideProfileCard({item}){
 
-    const isAvailable = guide?.isAvailable ?? false ;
-    const isTrusted = guide?.isTrusted ?? false;
-    const isVerified = guide?.isVerified ?? false;
-    const languages = guide?.languages.slice(0,4) ?? [];
-    const regions = guide?.regions.slice(0,4) ?? [];
+    const isAvailable = item?.isAvailable ?? false ;
+    const isTrusted = item?.isTrusted ?? false;
+    const isVerified = item?.isVerified ?? false;
+    const languages = item?.languages.slice(0,4) ?? [];
+    const regions = item?.regions.slice(0,4) ?? [];
+
+
 
     return(
-        <section className="w-xs lg:w-sm 2xl:w-lg 2xl:w-80 rounded-lg px-4 py-2 overflow-hidden flex flex-col rounded-t-lg">
+        <section className="w-xs 2xl:w-lg 2xl:w-80 rounded-lg px-4 py-2 overflow-hidden flex flex-col rounded-t-lg">
 
             <header className="relative w-full py-2 flex flex-col items-center gap-1 bg-neutral-900/15 rounded-t-lg border border-border/60 border-b-transparent"  >
 
@@ -29,8 +31,8 @@ export default function PackageCard({guide}){
                 </div>
 
                 <Avatar
-                    src={guide?.profilePicture.src}
-                    alt={guide?.name || "Profile Picture"}
+                    src={item?.profilePicture.src || "/assets/svg/defaultPfp.svg" }
+                    alt={item?.name || "Profile Picture"}
                     size={"lg"}
                 />
 
@@ -53,7 +55,7 @@ export default function PackageCard({guide}){
             >
                 <article className="flex flex-col gap-1" >
                     <div className="text-sm text-text flex items-center justify-between " >
-                        <span>{guide?.name}</span>
+                        <span>{item?.name}</span>
 
                         {
                             isVerified && (
@@ -66,11 +68,11 @@ export default function PackageCard({guide}){
                     </div>
 
                     <div className="capitalize  text-xs text-text/75 flex items-center" >
-                        <span> {guide?.gender} </span>
+                        <span> {item?.gender} </span>
                         <Dot size={15}  />
-                        <span> {guide?.age} Yrs </span>
+                        <span> {item?.age} Yrs </span>
                         <Dot size={15}  />
-                        <span> {guide?.address.country} </span>
+                        <span> {item?.address.country} </span>
                     </div>
                 </article>
 
@@ -91,12 +93,12 @@ export default function PackageCard({guide}){
                 <article className="flex justify-between items-center">
                     <div className="flex flex-col items-center gap-0.5 bg-secondary/45 px-5 py-1 rounded-md ">
                         <span className="text-[10px] text-text/60 uppercase tracking-wide">Ratings</span>
-                        <span className="text-xs font-medium">{guide?.rating}/5</span>
+                        <span className="text-xs font-medium">{item?.rating}/5</span>
                     </div>
 
                     <div className="flex flex-col items-center gap-0.5 bg-secondary/45 px-5 py-1 rounded-md ">
                         <span className="text-[10px] text-text/60 uppercase tracking-wide"> Treks </span>
-                        <span className="text-xs font-medium"> {guide?.trekCount} </span>
+                        <span className="text-xs font-medium"> {item?.trekCount} </span>
                     </div>
 
                 </article>
@@ -104,7 +106,7 @@ export default function PackageCard({guide}){
                 <LinkButton
                     variant="primary"
                     size="md"
-                    href={`/guide/${guide._id}`}
+                    href={`/guide/${item?._id}`}
                 > 
                     Visit Guide
                 </LinkButton> 

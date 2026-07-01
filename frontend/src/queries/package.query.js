@@ -5,6 +5,12 @@ import {
 } from "@tanstack/react-query";
 
 import {
+    DEFAULT_LIMIT,
+    DEFAULT_PAGE
+} from "@/constants/config.constants.js"
+
+
+import {
     // GET
     getAllPackages,
     getPackageById,
@@ -25,8 +31,8 @@ import {
 
 // GET
 export const useGetAllPackages = ({
-    limit = 10,
-    page = 1,
+    limit = DEFAULT_LIMIT,
+    page = DEFAULT_PAGE,
     ...filter
 }, options = {}) => {
     return useQuery({

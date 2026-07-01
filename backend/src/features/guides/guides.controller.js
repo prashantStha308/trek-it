@@ -214,6 +214,7 @@ export const deleteGuide = async (req, res, next) => {
 // SEARCH GUIDES
 export const searchGuides = async (req, res, next) => {
     const guides = await searchGuidesService(req.query);
+    
     ApiResponse.success(res, {
         data: guides,
         message: `Search results fetched successfully`
