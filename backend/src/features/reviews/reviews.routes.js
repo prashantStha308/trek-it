@@ -1,7 +1,10 @@
 import express from "express";
 import {bufferUpload} from "../../config/multer.config.js";
+
 import {authorize} from "../../middlewares/authorize.js";
+import { parseFormFields } from "../../middlewares/body.middleware.js";
 import validate from "../../middlewares/validate.middleware.js";
+
 import {
     validateReviewBody,
     validateReviewBodyPatch,
@@ -26,7 +29,12 @@ import {
 // api/review
 const reviewR = express.Router();
 
-reviewR.post('/', authorize(['tourist', 'guide']), validateReviewBody, validate, bufferUpload.array('reviewImage', 10), createReview);
+reviewR.post('/', authorize(['tourist', 'guide']),
+    bufferUpload.array('images', 10),
+    parseFormFields("ratings"),
+    validateReviewBody, validate,
+    createReview
+);
 
 reviewR.get('/', validateReviewQuery, validate, getAllReviews);
 reviewR.get('/me', authorize(['tourist']), validateReviewQuery, validate, getUserReviews);

@@ -35,7 +35,7 @@ export default function ReviewCard({review}){
 
 	return(
 		<section
-			className="px-3 py-2 rounded-sm flex flex-col justify-start gap-3 w-xs lg:w-sm xl:w-md bg-primary/10 border border-primary/40"
+			className="px-3 py-2 rounded-sm flex flex-col flex-wrap justify-start gap-3 md:w-sm lg:w-lg bg-secondary/10 border border-primary/40"
 		>
 			<header
 				className="flex items-center justify-between pb-4 border-b border-text/25"

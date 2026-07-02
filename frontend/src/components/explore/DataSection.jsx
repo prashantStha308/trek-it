@@ -46,11 +46,6 @@ export default function DataSection({
 
     const isDataLoading = isLoading || dataLoading;
 
-    if(card === "guide"){
-        console.log("Query: ", query);
-        console.log("data: ", query.data);
-    }
-
 	return(
 		<motion.section
             initial="hidden"

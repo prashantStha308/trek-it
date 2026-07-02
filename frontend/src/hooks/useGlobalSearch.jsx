@@ -1,5 +1,3 @@
-import {useEffect} from "react"
-
 import { usePackageSearchQuery } from "@/queries/package.query.js";
 import { useGuideSearchQuery } from "@/queries/guide.query.js";
 import useUIStore from "@/store/ui.store.js";
@@ -24,17 +22,9 @@ export const useGlobalSearch = () => {
         { enabled }
     );
 
-    useEffect(()=>{
-
-        return ()=> {
-            setIsSearchModalOpen(false);
-            setSearchModalWord("")
-        }
-    },[])
-
     return {
         searchWord,
-        isOpen,
+        isOpen, setIsSearchModalOpen,
         hasMinLength: searchWord.trim().length >= MIN_SEARCH_WORD_LENGTH,
         packages: packageData?.docs ?? [],
         guides: guideData?.docs ?? [],

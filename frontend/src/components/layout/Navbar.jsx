@@ -108,7 +108,6 @@ export default function Navbar() {
       clearTimeout(debounce.current);
       debounce.current = setTimeout(() => {
         setSearchModalWord(value);
-        setIsSearchModalOpen(value.trim().length >= MIN_SEARCH_WORD_LENGTH);
       }, 300);
   };
 
@@ -122,7 +121,8 @@ export default function Navbar() {
         <SearchBar
           value={inputValue}
           onChange={handleSearchWords}
-          // onFocus={() => setIsSearchModalOpen(true)}
+          onFocus={()=> setIsSearchModalOpen(true)}
+          onBlur={()=> setIsSearchModalOpen(false)}
         />
 
       </div>
