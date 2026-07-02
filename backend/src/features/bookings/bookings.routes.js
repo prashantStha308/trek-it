@@ -35,7 +35,7 @@ bookingR.get('/:bookingId', validateBookingParams, validateBookingQuery, validat
 bookingR.patch('/cancel/:bookingId', (req,res, next)=> {console.log("cancelling"); next();} , validateBookingParams, validate, authorize(), cancelBooking);
 
 // update booking status
-bookingR.patch('/status/:bookingId', validateBookingParams, validateBookingStatusBody, validate, authorize([ 'tourist', 'guide', 'admin']), setBookingStatus);
+bookingR.patch('/status/:bookingId', validateBookingParams, validateBookingStatusBody, validate, authorize(['guide', 'admin']), setBookingStatus);
 
 // Delete booking
 bookingR.delete('/:bookingId', validateBookingParams, validate, authorize(["admin"]), deleteBooking);

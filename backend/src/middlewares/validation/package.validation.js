@@ -41,7 +41,6 @@ export const validatePackageBody = [
     body('stops.*.nearestCity.name').notEmpty().withMessage('City name is required').trim(),
     body('stops.*.nearestCity.lat').isFloat().withMessage('City latitude is required'),
     body('stops.*.nearestCity.long').isFloat().withMessage('City longitude is required'),
-    
 ];
 
 export const validateCustomPackageMeta = [

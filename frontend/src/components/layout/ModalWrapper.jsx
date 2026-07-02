@@ -24,7 +24,7 @@ export default function ModalWrapper({children}){
 				    damping: 30,
 				}}
 
-				className="h-full w-full p-8 pb-15 z-20"
+				className="h-full w-full p-8 pb-15 z-20 flex justify-center items-center "
 			>
 				{children}
 			</motion.section>

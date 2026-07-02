@@ -1,14 +1,29 @@
 "use client"
+import {useState} from "react";
+import Link from "next/link";
 
+import {
+    Eye,
+    Globe,
+    Mail,
+    FolderPen,
+    MapPin,
+    UserKey
+} from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import TextInput from "@/components/input/TextInput";
 import SelectInput from "@/components/input/SelectInput";
+import CountrySelector from "@/components/input/CountrySelector";
 
-import { Eye, Globe, Mail, FolderPen, MapPin, UserKey } from "lucide-react";
-import Link from "next/link";
-import { useState } from "react";
 
 export default function RegisterLevel2({ handleChange, formData}) {
+
+    const [selectedCountry, setSelectedCountry] = useState(null)
+
+    const handleCountry = (country) => {
+        setSelectedCountry(country)
+        handleChange({ target: { name: "address.country", value: country.name } })
+    }
 
     return (
         <section className="flex flex-1 justify-between flex-col gap-5 px-6 sm:px-12 lg:px-20 gap-10 pb-10">
@@ -39,18 +54,11 @@ export default function RegisterLevel2({ handleChange, formData}) {
                     className="w-full"
                 />
 
+                    <CountrySelector
+                        country={selectedCountry}
+                        setCountry={handleCountry}
+                    />
 
-
-                	<TextInput
-                		type={"text"}
-                		id={"country"}
-                		name={"address.country"}
-                		label={"Country"}
-                		placeholder={"Enter your country..."}
-                		handleChange={handleChange}
-	                    value={formData.address.country}
-                		leftIcon={<Globe size={16} />}
-                	/>
 
                 	<TextInput
                 		type={"text"}

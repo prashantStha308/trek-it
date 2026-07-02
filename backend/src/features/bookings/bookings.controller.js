@@ -94,7 +94,7 @@ export const getBookingById = async (req, res) => {
 }
 
 export const setBookingStatus = async (req, res) => {
-    const booking = await setBookingStatusService(req.params.bookingId, req.body.status);
+    const booking = await setBookingStatusService(req.params.bookingId, req.body.status, req.user);
 
     return ApiResponse.success(res, {
         data: booking._id,

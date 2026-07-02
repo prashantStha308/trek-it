@@ -5,23 +5,29 @@ import {
     CustomRequest,
     User,
 } from "../../models/index.js";
+
+import { CUSTOM_STATES } from "../../models/requests/customRequest.model.js";
 // utils and helpers
 import {getAll} from "../../utils/crud.service.js"
 import {
     uploadImages,
     uploadImage,
 } from "../../utils/cloudinary.services.js";
+
+// Constants
 import ApiError from "../../utils/ApiError.js";
 import { TREKIT_COMMISSION } from "../../constants/booking.constant.js";
 import { PACKAGE_TYPE_ENUM } from "../../constants/package.constant.js";
+import {NOTIFICATION_TITLE, NOTIFICATION_EVENTS} from "../../constants/constants.js"
+
 import {
+    sendNotificationService,
     broadcastNotificationService
 } from "../notifications/notifications.service.js";
-import { CUSTOM_STATES } from "../../models/requests/customRequest.model.js";
 
-// --------------------------------------------------------------------------------
 
-export const createPackageService = async (body, guideId, files) => {
+
+export const createPackageService = async (body, guide, files) => {
     let images = [{src:"", publicId: ""}];
     let thumbnail = images[0];
 
@@ -36,7 +42,7 @@ export const createPackageService = async (body, guideId, files) => {
     const newPackage = await Package.create({
         name: body.name,
         description: body.description,
-        guide: guideId,
+        guide: guide._id,
 
         keywords: body.keywords,
         activities: body.activities,
@@ -58,82 +64,26 @@ export const createPackageService = async (body, guideId, files) => {
         verified: false
     });
 
-    return newPackage;
-};
 
-
-// Depreciated
-export const createCustomPackageService = async (guide, body, files) => {
-    const customRequestId = body.customRequest;
-    const directTouristId = body.tourist;
-
-    let touristId = directTouristId;
-    let customRequest = null;
-
-    if (customRequestId) {
-        customRequest = await CustomRequest.findById(customRequestId);
-        if (!customRequest) throw new ApiError(404, "Custom request not found");
-        if (customRequest.guide.toString() !== guide._id.toString()) {
-            throw new ApiError(403, "Unauthorized. This custom request does not belong to the current guide.");
+    await sendNotificationService( NOTIFICATION_TITLE.packageCreated,guide._id, {
+        title: "Successfully created Packge",
+        message: NOTIFICATION_EVENTS.packageCreated,
+        actions:[
+            {label: "View Package", href:`/explore/packages/${newPackage._id}`}
+        ],
+        meta:{
+            guide: {
+                _id: guide._id,
+                name: guide.name,
+                profilePicture: guide.profilePicture,
+            },
+            package: {
+                _id: newPackage._id,
+                name: newPackage.name,
+                thumbnail: newPackage.thumbnail
+            }
         }
-        if ([CUSTOM_STATES.rejected, CUSTOM_STATES.expired].includes(customRequest.status)) {
-            throw new ApiError(400, `Cannot create a package from a ${customRequest.status} request`);
-        }
-        touristId = customRequest.tourist;
-
-        if (customRequest.status !== CUSTOM_STATES.accepted) {
-            customRequest.status = CUSTOM_STATES.accepted;
-            await customRequest.save();
-        }
-    }
-
-    if (!touristId) {
-        throw new ApiError(400, "Tourist id is required when customRequest is not provided");
-    }
-
-    const tourist = await User.findById(touristId).select('_id name profilePicture');
-    if (!tourist) throw new ApiError(404, "Tourist not found");
-
-    let images = [];
-    let thumbnail = "";
-
-    if (files?.length) {
-        images = await uploadImages(files);
-        thumbnail = images[0]?.src ?? "";
-    }
-
-    const newPackage = await Package.create({
-        name: body.name,
-        description: body.description,
-        guide: guide._id,
-        tourist: tourist._id,
-        customRequest: customRequest?._id ?? null,
-        keywords: body.keywords,
-        regions: body.regions,
-        activities: body.activities,
-        type: PACKAGE_TYPE_ENUM.custom,
-        startingPrice: body.startingPrice,
-        pricePerPerson: body.pricePerPerson,
-        maxGroupSize: body.maxGroupSize,
-        daysAlloted: body.daysAlloted,
-        images,
-        thumbnail,
-        requiresPermit: body.requiresPermit,
-        verified: false
-    });
-
-    const recipients = [guide._id, tourist._id];
-    await broadcastNotificationService("notification:customPackageCreated", recipients, {
-        title: "Custom package prepared",
-        message: `A custom package has been created by ${guide.name || 'your guide'}. Please review the package details before confirming booking.`,
-        priority: 1,
-        meta: {
-            packageId: newPackage._id,
-            guideId: guide._id,
-            touristId: tourist._id,
-            customRequestId: customRequest?._id ?? null
-        }
-    });
+    } );
 
     return newPackage;
 };
@@ -175,12 +125,14 @@ export const searchPackageService = async(query)=>{
     });
 }
 
-export const updatePackageService = async (guideId, packageId, body, files) => {
+
+export const updatePackageService = async (guide, packageId, body, files) => {
+
     const targetPackage = await Package.findById(packageId);
 
     if (!targetPackage) throw new ApiError(404, "Package not found");
 
-    if (targetPackage.guide !== guideId) {
+    if (targetPackage.guide.toString() !== guide._id.toString()) {
         throw new ApiError(403, "Unauthorized");
     }
 
@@ -191,7 +143,33 @@ export const updatePackageService = async (guideId, packageId, body, files) => {
     }
 
     Object.assign(targetPackage, body);
-    await targetPackage.save();
+
+    const promises = [];
+
+    promises.push(targetPackage.save());
+    promises.push(
+        sendNotificationService( NOTIFICATION_TITLE.packageUpdated,guide._id, {
+            title: "Successfully updated Packge",
+            message: NOTIFICATION_EVENTS.packageUpdated,
+            actions:[
+                {label: "View Package", href:`/explore/packages/${targetPackage._id}`}
+            ],
+            meta:{
+                guide: {
+                    _id: guide._id,
+                    name: guide.name,
+                    profilePicture: guide.profilePicture,
+                },
+                package: {
+                    _id: targetPackage._id,
+                    name: targetPackage.name,
+                    thumbnail: targetPackage.thumbnail
+                }
+            }
+        } )
+    );
+
+    await Promise.all(promises);
 
     return targetPackage;
 };

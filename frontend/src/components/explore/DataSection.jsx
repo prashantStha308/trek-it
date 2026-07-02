@@ -9,7 +9,7 @@ import PackageCard from "@/components/package/PackageCard.jsx";
 import GuideProfileCard from "@/components/guide/GuideProfileCard.jsx";
 
 import LoadingSection from "@/components/loaders/LoadingSection"
-
+import EmptySection from "@/components/layout/EmptySection";
 
 const containerVarient = {
     hidden: {
@@ -65,27 +65,30 @@ export default function DataSection({
 
             {
                 isDataLoading ? <LoadingSection card={card} /> :(
-                    
-                    <section
-                        className={`w-full grid gap-8 ${gridColsClasses} justify-items-center`}
-                    >
-                        {
-                            targetData.map((item, index) => (
-                                <motion.div
-                                    key={index}
-                                    variants={childVarient}
-                                >
-                                    {
-                                        card === "package" ? (
-                                            <PackageCard item={item} key={index}  />
-                                        ) : (
-                                            <GuideProfileCard item={item} key={index}  />
-                                        )
-                                    }
-                                </motion.div>
-                            ))
-                        }
-                    </section>
+                    queryData?.length > 0 ? (
+                        <section
+                            className={`w-full grid gap-8 ${gridColsClasses} justify-items-center`}
+                        >
+                            {
+                                targetData.map((item, index) => (
+                                    <motion.div
+                                        key={index}
+                                        variants={childVarient}
+                                    >
+                                        {
+                                            card === "package" ? (
+                                                <PackageCard item={item} key={index}  />
+                                            ) : (
+                                                <GuideProfileCard item={item} key={index}  />
+                                            )
+                                        }
+                                    </motion.div>
+                                ))
+                            }
+                        </section>
+                    ):(
+                        <EmptySection />
+                    )
                 )
             }
 

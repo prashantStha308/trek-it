@@ -16,6 +16,8 @@ export const NOTIFICATION_EVENTS = Object.freeze({
     bookingCancelled: "Your Booking has been cancelled",
     bookingCompleted: "Your Tour has been completed",
 
+    packageCreated: "Package successfully created",
+    packageUpdated: "Package successfully updated",
     packageVerified: "Your Package has been verified and now visible to everyone",
     packageVerification_failed: "Your package did not fulfill all requirements to be verified",
     packageDeleted: "One of your package has been deleted.",

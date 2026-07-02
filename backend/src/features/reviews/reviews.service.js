@@ -18,7 +18,7 @@ import ApiError from "../../utils/ApiError.js";
 export const createReviewService = async (body, reviewer, files) => {
 
     const {
-        comment, ratings, packageId, guideId
+        comment, rating, packageId, guideId
     } = body;
 
     /* This was when booking ref was used instead of package and guide refs */
@@ -52,20 +52,14 @@ export const createReviewService = async (body, reviewer, files) => {
     const input = {
         reviewer,
         comment,
-        ratings,
+        rating,
         ...target,
         images
     }
 
     console.log(input);
 
-    const newReview = await Review.create({
-        reviewer,
-        comment,
-        ratings,
-        ...target,
-        images
-    });
+    const newReview = await Review.create(input);
 
     return newReview;
 }

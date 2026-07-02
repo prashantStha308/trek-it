@@ -79,16 +79,10 @@ export default function PostBookingCard ({booking}){
             <Card title="Booking Status">
                 <div className="flex items-center gap-2">
 
-                    <Badge variant={STATUS_VARIANT[booking?.status]} size="sm">
+                    <Badge variant={STATUS_VARIANT[booking?.status]} color={"green"} size="sm">
                         {booking?.status}
                     </Badge>
                     
-                    <Badge
-                        variant={booking?.payment ? "green" : "red"}
-                        size="sm"
-                    >
-                        {booking?.payment ? "Paid" : "Unpaid"}
-                    </Badge>
 
                 </div>
 
