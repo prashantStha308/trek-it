@@ -180,10 +180,11 @@ export const rejectGuideService = async (guideId) => {
             throw new ApiError(404, "Guide not found");
         }
 
-        if (!guide.isVerified) {
-            throw new ApiError(400, "Guide is not verified yet");
+        if (guide.isVerified) {
+            throw new ApiError(400, "Cannot reject an already verified guide");
         }
 
+        guide.rejectionReason = "Rejected by admin";
         guide.isVerified = false;
         await guide.save();
 

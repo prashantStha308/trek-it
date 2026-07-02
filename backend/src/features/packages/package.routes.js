@@ -12,7 +12,7 @@ import {
     updatePackage,
     deletePackage,
 } from "./package.controller.js";
-import { parseFormFields } from "../../middlewares/package.middleware.js";
+import { parseFormFields } from "../../middlewares/body.middleware.js";
 import { authorize } from "../../middlewares/authorize.js";
 import {
     validatePackageBody,

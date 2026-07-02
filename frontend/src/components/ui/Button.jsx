@@ -1,6 +1,9 @@
 import Link from "next/link";
 import {THEME_COLOR, THEME_SIZE} from "@/constants/theme.constants.js";
 
+import {useGlobalSearch} from "@/hooks/useGlobalSearch.jsx";
+
+
 /**
  * @param {Object} props
  * @param {string} props.text
@@ -32,12 +35,16 @@ export const Button = ({
 
 export const LinkButton = ({ variant = "default", color="green", size="sm" , href, children, className = ""  })=>{
 
+    const { setIsSearchModalOpen } = useGlobalSearch();
+
     return (
         <Link
             href={href}
             className={`border rounded-md ${THEME_SIZE[size]} cursor-pointer focus:outline-1 transition-colors ${THEME_COLOR[color][variant]} flex items-center justify-between flex justify-center`}
         >
-            {children}
+            <div onClick={()=> setIsSearchModalOpen(false)} >
+                {children}
+            </div>
         </Link>
     )
 }

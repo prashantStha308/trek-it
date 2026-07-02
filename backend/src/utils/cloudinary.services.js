@@ -36,7 +36,8 @@ export const uploadToCloudinary = (file, {folder = "profilePicture", resourceTyp
             {
                 folder: folder,
                 type: 'upload',
-                resource_type: resourceType
+                resource_type: resourceType,
+                timeout: 120000,
             },
             (error, res) => {
                 if (error) {

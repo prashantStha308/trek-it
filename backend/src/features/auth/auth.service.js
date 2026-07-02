@@ -26,7 +26,7 @@ export const createUserService = async (body, Model, file) => {
 	if (!body.address && body['address.country']) {
 	    body.address = {
 	        country: body['address.country'],
-	        state: body['address.state'],
+	        city: body['address.city'],
 	    };
 	}
 	console.log("Body: ", body);
@@ -57,6 +57,8 @@ export const createUserService = async (body, Model, file) => {
 };
 
 export const loginService = async(body) => {
+console.log("Login servcice:", body);
+
     const email = body.email;
 
     const user = await User.findOne({ email }).select("+password").lean();

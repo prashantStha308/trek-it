@@ -83,7 +83,7 @@ export default function ReviewWriter({ resourceType, resourceId }){
 
 	return(
 		<section
-			className="w-full flex flex-col items-center justify-center"
+			className={`w-lg flex flex-col items-center justify-center`}
 		>
 			{
 				me ? (
@@ -140,7 +140,7 @@ export default function ReviewWriter({ resourceType, resourceId }){
 				) : (
 
 					<section
-						className=" relative w-xs py-10 flex flex-col gap-8 items-center border border-primary/75 rounded-md bg-primary/15"
+						className=" relative w-lg py-10 flex flex-col gap-8 items-center border border-primary/75 rounded-md bg-primary/15"
 					>
 						<h1 className="text-lg font-semibold text-primary text-center" >
 							Login to leave a Review

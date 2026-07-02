@@ -32,8 +32,9 @@ export const createPackageService = async (body, guide, files) => {
     let thumbnail = images[0];
 
     if (files) {
-        thumbnail = await uploadImage(files.thumbnail[0]);
-        images = await uploadImages(files.images);
+        if(files.images) images = await uploadImages(files.images);
+
+        if(files.thumbnail) thumbnail = await uploadImage(files.thumbnail[0]);
     }
 
     const regions = Array.from( new Set( body.stops.map(stop => stop.nearestCity?.name ?? stop.nearestCity )))
