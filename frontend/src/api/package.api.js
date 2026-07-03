@@ -52,7 +52,7 @@ export const getPackageById = async (id) => {
 }
 
 export const getGuidePackages = async(id, { limit=20, page=1, ...filters } = {} )=>{
-    const res = await axiosInstance.get(API_ROUTES.PACKAGE.GET_GUIDE_PACKAGES(id, {limit, page, filters}));
+    const res = await axiosInstance.get(API_ROUTES.PACKAGE.GET_GUIDE_PACKAGES(id, {limit, page, ...filters}));
     return res.data.data;
 }
 

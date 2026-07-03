@@ -128,13 +128,15 @@ export default function PackagePage() {
 
             <section
                 id="details"
-                className=" w-full flex flex-col items-start md:flex-row justify-between gap-16"
+                className=" w-full flex flex-col items-start md:flex-row justify-evenly gap-16"
             >
                 <div className="flex-1 w-full" >
                     <PackageDetails pkg={data} />
                 </div>
 
-                <PackageGuides pkg={data} />
+                <div className="w-xs" >
+                    <PackageGuides pkg={data} />
+                </div>
                 
             </section>
 

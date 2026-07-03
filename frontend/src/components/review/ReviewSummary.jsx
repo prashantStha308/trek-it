@@ -83,7 +83,7 @@ export default function ReviewSummary({resource, resourceType}){
 
 	return(
 		<section
-			className="flex flex-col lg:flex-row gap-2 lg:gap-8 items-center"
+			className="flex flex-col lg:flex-row gap-2 lg:gap-8 items-center px-10"
 		>
 			<div className="flex flex-col gap-2" >
 				<h1 className="text-5xl font-medium" >

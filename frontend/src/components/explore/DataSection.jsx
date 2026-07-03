@@ -64,29 +64,20 @@ export default function DataSection({
             </h2>
 
             {
-                isDataLoading ? <LoadingSection card={card} /> :(
-                    queryData?.length > 0 ? (
-                        <section
-                            className={`w-full grid gap-8 ${gridColsClasses} justify-items-center`}
-                        >
-                            {
-                                targetData.map((item, index) => (
-                                    <motion.div
-                                        key={index}
-                                        variants={childVarient}
-                                    >
-                                        {
-                                            card === "package" ? (
-                                                <PackageCard item={item} key={index}  />
-                                            ) : (
-                                                <GuideProfileCard item={item} key={index}  />
-                                            )
-                                        }
-                                    </motion.div>
-                                ))
-                            }
+                isDataLoading ? <LoadingSection card={card} /> : (
+                    targetData?.length > 0 ? (
+                        <section className={`w-full grid gap-8 ${gridColsClasses} justify-items-center`}>
+                            {targetData.map((item, index) => (
+                                <motion.div key={index} variants={childVarient}>
+                                    {card === "package" ? (
+                                        <PackageCard item={item} key={index} />
+                                    ) : (
+                                        <GuideProfileCard item={item} key={index} />
+                                    )}
+                                </motion.div>
+                            ))}
                         </section>
-                    ):(
+                    ) : (
                         <EmptySection />
                     )
                 )

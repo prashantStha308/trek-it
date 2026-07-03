@@ -16,8 +16,11 @@ import {
 import BookingMiniCard from "@/components/dashboard/BookingMiniCard";
 import BookingCardSkeleton from "@/components/loaders/BookingCardSkeleton";
 
-const TABS = ["all", "pending", "confirmed", "completed", "cancelled"];
+
+// CONSTANTS
+const TABS = ["confirmed", "pending", "completed", "cancelled"];
 const CURRENT_STATUSES = ["active", "pending", "confirmed"];
+
 
 function MetricCard({ label, value }) {
     return (
@@ -53,7 +56,7 @@ function EmptyState({ tab }) {
 }
 
 export default function UserBookings() {
-    const [activeTab, setActiveTab] = useState("all");
+    const [activeTab, setActiveTab] = useState("confirmed");
 
     let { data: bookingsData, isLoading: bookingsLoading } =
         useGetUserBookings();
@@ -73,10 +76,7 @@ export default function UserBookings() {
         CURRENT_STATUSES.includes(booking.status)
     );
 
-    const filteredBookings =
-        activeTab === "all"
-            ? currentBookings
-            : bookings?.filter((booking) => booking.status === activeTab);
+    const filteredBookings = bookings?.filter((booking) => booking.status === activeTab);
 
     const metrics = [
         {
@@ -143,10 +143,7 @@ export default function UserBookings() {
 
             <div className="flex items-center gap-1.5 flex-wrap">
                 {TABS.map((tab) => {
-                    const bookingCount =
-                        tab === "all"
-                            ? currentBookings?.length ?? 0
-                            : bookings?.filter((booking) => booking.status === tab).length ?? 0;
+                    const bookingCount = bookings?.filter((booking) => booking.status === tab).length ?? 0;
 
                     return (
                         <Button
@@ -156,11 +153,11 @@ export default function UserBookings() {
                             onClick={() => setActiveTab(tab)}
                             className="w-auto capitalize"
                         >
-                            {tab === "all"
-                                ? `Current (${bookingCount})`
-                                : bookingCount > 0
-                                    ? `${tab} (${bookingCount})`
-                                    : tab}
+                            {
+                                bookingCount > 0
+                                ? `${tab} (${bookingCount})`
+                                : tab
+                            }
                         </Button>
                     );
                 })}
@@ -171,7 +168,7 @@ export default function UserBookings() {
                     isLoading ? (
                         <div className="flex flex-col gap-2.5">
                             {
-                                Array.from({ length: 3 }).map((_, index) => (
+                                [1,2,3].map((_, index) => (
                                     <BookingCardSkeleton key={index} />
                                 ))
                             }
