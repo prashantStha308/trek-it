@@ -40,7 +40,7 @@ function BadgeRow({items = [], variant = "green"}){
 export default function PackageCard({ item }) {
 
     return (
-        <article className=" w-xs bg-secondary/16 rounded-xl border border-black/10 overflow-hidden">
+        <article className="w-xs bg-secondary/16 rounded-xl border border-black/10 overflow-hidden">
 
             <div className="relative w-full h-44 bg-black/15 ">
                 <Image

@@ -43,7 +43,10 @@ export const getGuideByIdService = async (id) => {
         const guide = await getById(Guide, id, {
             select: "-password",
             populate: [
-                { path: "collaborations", select: "name description price regions" },
+                {
+                    path: "collaborations",
+                    select: "name description regions activities keywords startingPrice pricePerPerson minGroupSize maxGroupSize daysAlloted thumbnail images requiresPermit permitDetails verified stops" 
+                },
             ]
         });
 

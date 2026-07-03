@@ -4,6 +4,9 @@ import useChatStore from "@/store/chat/chat.store.js";
 import {
   useGetOrCreateDirectChat,
 } from "@/queries/chat.query.js"
+import {useGetMe} from "@/queries/auth.query.js";
+import { showToast } from "@/store/ui.store";
+
 
 import Avatar from "@/components/ui/Avatar";
 import {Button} from "@/components/ui/Button";
@@ -11,9 +14,20 @@ import {Button} from "@/components/ui/Button";
 
 export default function GuidePageHeader({ guide }) {
   const openDirectChat = useChatStore(store => store.openDirectChat);
+  const { data:me, isLoading } = useGetMe();
+
   const router = useRouter();
 
   const handleChatWithGuide = () => {
+    if(!me){
+      showToast({
+        title: "Cannot perform this action",
+        message: "Please login to use this feature"
+      });
+
+      return;
+    }
+
       openDirectChat(guide, () => {
           router.push('/chat');
       });
