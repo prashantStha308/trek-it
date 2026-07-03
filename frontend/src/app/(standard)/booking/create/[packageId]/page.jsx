@@ -70,25 +70,25 @@ export default function BookingPage(){
             className="px-4 lg:px-52 py-8 flex flex-col gap-8"
         >
 
-            <section
+            <header
                 className="flex flex-col lg:flex-row gap-8"
             >
 
-                <div className="w-full lg:w-1/2">
+                <figure className="w-full lg:w-1/2">
                     <Image
-                        src={optimizeImageUrl(pkg?.thumbnail, 1080)}
+                        src={optimizeImageUrl(pkg?.thumbnail?.src, 1080) || "/assets/svg/placeholder-white.svg"}
                         alt={pkg?.name}
                         width={600}
                         height={400}
                         className="w-full rounded-lg object-cover"
                     />
-                </div>
+                </figure>
 
-                <section
+                <article
                     className="flex flex-col gap-4 flex-1"
                 >
 
-                    <div className="flex flex-col gap-2">
+                    <header className="flex flex-col gap-2">
                         <h1 className="text-3xl font-bold text-primary">
                             {pkg?.name}
                         </h1>
@@ -96,45 +96,34 @@ export default function BookingPage(){
                         <p className="text-text/70">
                             {pkg?.description}
                         </p>
-                    </div>
+                    </header>
 
                     <section
                         className="flex flex-col gap-2 text-text"
                     >
                         <div className="flex gap-2">
-                            <span className="font-medium">
-                                Duration:
-                            </span>
+                            <span className="font-medium"> Duration: </span>
 
-                            <span>
-                                {pkg?.daysAlloted} days
-                            </span>
+                            <span> {pkg?.daysAlloted} days </span>
                         </div>
 
                         <div className="flex gap-2">
-                            <span className="font-medium">
-                                Price per person:
-                            </span>
+                            <span className="font-medium"> Price per person: </span>
 
-                            <span>
-                                $.{pkg?.pricePerPerson}
-                            </span>
+                            <span> NRS. {pkg?.pricePerPerson} </span>
                         </div>
 
                         <div className="flex gap-2">
-                            <span className="font-medium">
-                                Max group size:
-                            </span>
+                            <span className="font-medium"> Max group size: </span>
 
-                            <span>
-                                {pkg?.maxGroupSize} person
-                            </span>
+                            <span> {pkg?.maxGroupSize} person </span>
+                        
                         </div>
                     </section>
 
-                </section>
+                </article>
+            </header>
 
-            </section>
 
             <section
                 className="bg-white dark:bg-secondary/15 border border-border rounded-lg p-4 flex flex-col gap-4"
@@ -152,35 +141,35 @@ export default function BookingPage(){
 
                 <form
                     onSubmit={handleSubmit}
-                    className="flex flex-col gap-4"
+                    className="flex flex-col gap-8 items-center"
                 >
 
-				<div
-				    className="flex flex-col gap-1 w-full"
-				>
-				    <label
-				        htmlFor="date"
-				        className="text-xs text-text/75 pl-1"
-				    >
-				        Starting Date
-				    </label>
+    				<fieldset
+    				    className="flex flex-col gap-1 w-full"
+    				>
+    				    <label
+    				        htmlFor="date"
+    				        className="text-xs text-text/75 pl-1"
+    				    >
+    				        Starting Date
+    				    </label>
 
-				<div
-				    onClick={() => document.getElementById("date").showPicker?.()}
-				    className="flex items-center gap-4 text-sm justify-between border border-border focus-within:border-primary bg-primary/5 rounded-lg px-4 py-3 cursor-pointer"
-				>
-				    <input
-				        type="date"
-				        name="date"
-				        id="date"
-				        value={formData.date}
-				        onChange={handleChange}
-				        min={new Date().toISOString().split("T")[0]}
-				        className="outline-none flex-1 bg-transparent pointer-events-none"
-				        required
-				    />
-				</div>
-				</div>
+        				<div
+        				    onClick={() => document.getElementById("date").showPicker?.()}
+        				    className="flex items-center gap-4 text-sm justify-between border border-border focus-within:border-primary bg-primary/5 rounded-lg px-4 py-3 cursor-pointer"
+        				>
+        				    <input
+        				        type="date"
+        				        name="date"
+        				        id="date"
+        				        value={formData.date}
+        				        onChange={handleChange}
+        				        min={new Date().toISOString().split("T")[0]}
+        				        className="outline-none flex-1 bg-transparent pointer-events-none"
+        				        required
+        				    />
+        				</div>
+    				</fieldset>
 
                     <TextInput
                         type="number"
@@ -194,23 +183,24 @@ export default function BookingPage(){
                     />
 
                     <section
-                        className="flex flex-col gap-4 items-center justify-between mt-2 w-full"
+                        className="flex flex-col gap-4 items-center justify-between items-center mt-2 w-full"
                     >
 
-                        <div
-                            className="flex justify-between w-full "
-                        >
+                        <fieldset className="flex justify-between w-full" >
+
+                            <legend className="text-xs font-semibold text-text/50 uppercase tracking-wide pb-2">Summary</legend>
+
                             <span className="text-sm text-text/60">
                                 Total Price
                             </span>
 
                             <span className="text-xl font-bold text-primary">
-                                $.{pkg?.pricePerPerson * formData.groupSize}
+                                NRS. {pkg?.pricePerPerson * formData.groupSize}
                             </span>
-                        </div>
-
+                        </fieldset>
+                        
                         <Button
-                        	variants={"form"}
+                            variant={"outline"}
                             type="submit"
                             size="lg"
                             disabled={createBooking.isPending}

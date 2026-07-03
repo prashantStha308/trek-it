@@ -13,6 +13,9 @@ export const chatEventsSlice = (set, get) => ({
             */
 
             on("chat:joined", (chat) => {
+
+                console.log("hi")
+
                 set(state => ({
                     chats: { ...state.chats, [chat._id]: { ...chat } },
                     activeChat: chat,
@@ -21,6 +24,9 @@ export const chatEventsSlice = (set, get) => ({
                         [chat._id]: 0
                     }
                 }))
+
+                console.log("chat room joined")
+
             }),
 
             /*
@@ -49,7 +55,7 @@ export const chatEventsSlice = (set, get) => ({
                     };
                 });
 
-                const currentChatId = get().activeChat._id
+                const currentChatId = get().activeChat._id ?? null
 
                 if (chatId !== currentChatId ) {
                     get().incrementNewMessageCount(chatId);

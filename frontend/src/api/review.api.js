@@ -38,9 +38,6 @@ export const getGuideAvgReviews = async(guideId) =>{
 // Get average reviews of the target package
 export const getPackageAvgReviews = async(packageId) =>{
 	const res = await axiosInstance.get(API_ROUTES.REVIEW.GET_AVG( { packageId:packageId }));
-
-	console.log("Package stat: ",res)
-
 	return res.data.data;
 }
 

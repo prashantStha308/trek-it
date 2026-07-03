@@ -43,7 +43,10 @@ export const getGuideByIdService = async (id) => {
         const guide = await getById(Guide, id, {
             select: "-password",
             populate: [
-                { path: "collaborations", select: "name description price regions" },
+                {
+                    path: "collaborations",
+                    select: "name description regions activities keywords startingPrice pricePerPerson minGroupSize maxGroupSize daysAlloted thumbnail images requiresPermit permitDetails verified stops" 
+                },
             ]
         });
 
@@ -180,10 +183,11 @@ export const rejectGuideService = async (guideId) => {
             throw new ApiError(404, "Guide not found");
         }
 
-        if (!guide.isVerified) {
-            throw new ApiError(400, "Guide is not verified yet");
+        if (guide.isVerified) {
+            throw new ApiError(400, "Cannot reject an already verified guide");
         }
 
+        guide.rejectionReason = "Rejected by admin";
         guide.isVerified = false;
         await guide.save();
 
@@ -310,7 +314,9 @@ export const searchGuidesService = async (query) => {
         filter.$or = [
             { name: regexOpt },
             { specialities: { $elemMatch: regexOpt } },
-            { regions: { $elemMatch: regexOpt } }
+            { regions: { $elemMatch: regexOpt } },
+            { gender: name },
+            { languages: { $elemMatch: regexOpt } },
         ];
     }
 
@@ -341,6 +347,9 @@ export const searchGuidesService = async (query) => {
         sort: { rating: -1 },
     });
 };
+
+
+
 // ============================================================================================
 // GET UNVERIFIED GUIDES (Admin only)
 export const getUnverifiedGuidesService = async (limit = 10, page = 1) => {

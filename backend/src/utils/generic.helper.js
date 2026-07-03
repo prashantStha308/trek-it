@@ -1,6 +1,7 @@
 import path from "node:path";
 
 export const validateFileExt = (file)=>{
+
      const allowedExtensions = [
         // images
         ".png", ".jpeg", ".jpg", ".webp",

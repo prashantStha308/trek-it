@@ -1,7 +1,6 @@
 import express from 'express'
 import {
     createPackage,
-    createCustomPackage,
 
     getAllPacakages,
     getPackagesByGuide,
@@ -13,7 +12,7 @@ import {
     updatePackage,
     deletePackage,
 } from "./package.controller.js";
-import { parseFormFields } from "../../middlewares/package.middleware.js";
+import { parseFormFields } from "../../middlewares/body.middleware.js";
 import { authorize } from "../../middlewares/authorize.js";
 import {
     validatePackageBody,
@@ -27,8 +26,17 @@ import { bufferUpload } from "../../config/multer.config.js";
 
 const packageR = express.Router();
 
-packageR.post('/', authorize(["guide", "admin"]), bufferUpload.array("packageImage", 10), parseFormFields, validatePackageBody, validate, createPackage);
-packageR.post('/custom', authorize(["guide", "admin"]), bufferUpload.array("packageImage", 10), parseFormFields, validateCustomPackageMeta, validatePackageBody, validate, createCustomPackage);
+packageR.post(
+    '/', authorize(["guide", "admin"]),
+    bufferUpload.fields([
+        { name: "thumbnail", maxCount: 1 },
+        { name: "images", maxCount: 5 }
+    ]),
+    parseFormFields("keywords", "activities", "stops"),
+    validatePackageBody, validate,
+    createPackage
+);
+
 
 packageR.get('/', validatePackageQuery, validate, getAllPacakages);
 packageR.get('/search', validatePackageQuery, validate, searchPackages);

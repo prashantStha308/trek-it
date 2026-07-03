@@ -1,61 +1,26 @@
 "use client"
 import Image from "next/image";
 import { useParams } from "next/navigation";
+
 import {
     useGetPackageById,
     useGetPackageCollaborators,
 } from "@/queries/package.query";
 import { optimizeImageUrl } from "@/utils/utils.helper";
+
 import Badge from "@/components/ui/Badge";
-import BookingCard from "@/components/booking/BookingCard";
 import {LinkButton} from "@/components/ui/Button";
+
 import Avatar from "@/components/ui/Avatar";
-import GuideMiniCard from "@/components/guide/GuideMiniCard"
+import MiniCard from "@/components/ui/MiniCard";
 
 import Reviews from "@/components/review/Reviews"
-
-
-
-
-function PackageDetails({pkg}){
-
-    const fields = [
-        { name: "Max Group Size" , value: pkg?.maxGroupSize, pre:"", post:" person" },
-        { name: "Price per person" , value: pkg?.pricePerPerson, pre:"$", post:" /person" },
-        { name: "Duration" , value: pkg?.daysAlloted, pre:"", post:" days" },
-    ]
-
-    return(
-        <section className="mx-2 flex flex-col gap-4">
-            <h2
-                className="text-primary font-semibold text-2xl"
-            >
-                Details
-            </h2>
-
-            <article
-                className="flex flex-col gap-2 text-text"
-            >
-                {
-                    fields.map((field, index)=>(
-                        <div key={index} className="flex gap-2" >
-                            <span className="font-medium"> {field.name}: </span>
-                            <span > {field.pre}{field.value}{field.post} </span>
-                        </div>
-
-                    ))
-                }
-            </article>
-
-        </section>
-
-    )
-}
+import PackageDetails from "@/components/package/PackageDetails";
 
 
 function PackageGuides({pkg}){
-    let {data:collaborators, isLoading} = useGetPackageCollaborators(pkg?._id);
-    
+
+    let {data:collaborators, isLoading} = useGetPackageCollaborators(pkg?._id);    
     collaborators = collaborators?.docs;
 
     return(
@@ -66,7 +31,8 @@ function PackageGuides({pkg}){
                 className="flex flex-col gap-4"
             >
                 <h2 className="text-xl font-semibold text-primary " > Meet your Gudies </h2>
-                <GuideMiniCard guide={pkg?.guide} />
+                <MiniCard person={pkg?.guide} subtitle="Lead Guide" />
+
             </section>
 
             <section
@@ -92,32 +58,32 @@ export default function PackagePage() {
     if (isLoading) return <p className="p-8 text-text/60">Loading...</p>;
 
     return (
-        <section className="flex flex-col gap-6 px-4 pb-12 lg:px-20">
+        <section className="flex flex-col gap-6 px-4 pb-12 ">
 
             <section
                 id="package-hero"
-                className="w-full mx-2 flex flex-col-reverse items-center lg:flex-row justify-between gap-8 lg:gap-32 p-4 rounded-lg "
+                className=" relative w-full h-96 flex flex-col-reverse items-center lg:flex-row justify-between gap-8 lg:gap-32 p-4 rounded-lg isolate"
             >
 
                 <section
                     className="flex flex-col gap-4"
                 >
-                    <section className="flex flex-col gap-2 lg:gap-4" >
-                        <h1 className=" text-xl lg:text-3xl text-primary font-bold" >
+                    <section className="flex flex-col gap-2 lg:gap-4  [&>*]:px-4 [&>*]:rounded-sm " >
+                        <h1 className=" text-xl lg:text-3xl text-primary font-bold w-fit" >
                             {data?.name}
                         </h1>
 
                         <article
                             id="package-description"
-                            className="flex flex-col gap-1.5"
+                            className="flex flex-col gap-1.5 w-lg"
                         >
                             <h2
-                                className="text-base lg:text-xl text-text font-semibold"
+                                className="text-base lg:text-xl text-white font-semibold"
                             >
                                 Description
                             </h2>
                             
-                            <p className="text-sm md:text-base" >
+                            <p className="text-sm md:text-base text-white" >
                                 {data?.description}
                             </p>
 
@@ -125,10 +91,12 @@ export default function PackagePage() {
                     </section>
 
                     <section
-                        className="flex flex-col-reverse md:flex-row gap-4 "
+                        className="flex flex-col-reverse md:flex-row gap-4 w-fit "
                     >
                         <LinkButton href="/chat" variant={"outline"} size={"lg"} >
-                            Customize this package
+                            <div className="text-white" >
+                                Customize this package
+                            </div>
                         </LinkButton>
 
                         <LinkButton variant="primary" href={`/booking/create/${packageId}`} size={"lg"} >
@@ -139,11 +107,19 @@ export default function PackagePage() {
 
                 </section>
 
-                <div className=" w-full lg:w-9/12" >
+                {/*decorators*/}
+                <div 
+                    className="absolute left-0 right-0 top-0 bottom-0 bg-black/15 -z-20"
+                />
+                <div
+                    className="absolute -z-10 left-0 right-0 top-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent "
+                />
+
+                <div className=" " >
                     <Image
-                        src={optimizeImageUrl(data?.thumbnail, 1080)} alt={data?.name}
-                        width={400} height={400}
-                        className="w-full rounded-md "
+                        src={optimizeImageUrl(data?.thumbnail?.src ?? data?.thumbnail, 1080) || "/assets/svg/placeholder-white.svg"} alt={data?.name}
+                        className=" object-cover rounded-md -z-30"
+                        fill
                     />
                 </div>
 
@@ -152,11 +128,15 @@ export default function PackagePage() {
 
             <section
                 id="details"
-                className=" w-full flex flex-col items-start md:flex-row justify-between gap-8"
+                className=" w-full flex flex-col items-start md:flex-row justify-evenly gap-16"
             >
-                <PackageDetails pkg={data} />
+                <div className="flex-1 w-full" >
+                    <PackageDetails pkg={data} />
+                </div>
 
-                <PackageGuides pkg={data} />
+                <div className="w-xs" >
+                    <PackageGuides pkg={data} />
+                </div>
                 
             </section>
 

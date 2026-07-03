@@ -27,7 +27,6 @@ export default function DashboardHero({ user }) {
             {" "}
             {user?.role}{" "}
           </span>
-          {/*<span className="capitalize text-sm text-text/60" > {user?.email} </span>*/}
         </section>
 
         <textarea

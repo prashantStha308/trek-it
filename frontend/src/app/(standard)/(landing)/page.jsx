@@ -1,12 +1,17 @@
 "use client"
-
-import { SearchBar } from "@/components/explore/SearchBar";
-import PackageList from "@/components/package/PackageList";
-import { useGetAllPackages } from "@/queries/package.query";
 import Image from "next/image";
 import { motion, spring } from "motion/react";
-import { ChevronRight } from "lucide-react";
 
+import { useGetAllPackages } from "@/queries/package.query";
+import { useGetAllGuides } from "@/queries/guide.query.js";
+
+import {
+    ChevronRight
+} from "lucide-react";
+import { SearchBar } from "@/components/explore/SearchBar";
+
+import DataSection from "@/components/explore/DataSection";
+import PackageCard from '@/components/package/PackageCard'
 
 
 const containerVarient = {
@@ -52,6 +57,7 @@ export const StaggeringBites = ({ top, bottom }) => {
         </motion.p> 
     )
 }
+
 
 export const StaggeringHeroText = () => {
     const firstText = "Search, Customize, Book.";
@@ -118,7 +124,7 @@ export const StaggeringHeroText = () => {
 
 // Main page
 export default function Home() {
-    const packageQuery = useGetAllPackages({ limit: 8, page: 1 });
+    const packageQuery = useGetAllPackages({ limit: 20, page: 1 });
     
     const biteData = [
         { top: "Search", bottom: "Packages and Destination" },
@@ -139,8 +145,6 @@ export default function Home() {
                     priority
                     className="object-cover object-top "
                 />
-
-
                     <StaggeringHeroText />
 
                 <article
@@ -154,7 +158,21 @@ export default function Home() {
             </section>
 
 
-            <PackageList label={"Package"} query={packageQuery} id="scrollHere" />
+            <DataSection
+                label="Trek-It Tops"
+                id="scrollHere"
+                query={useGetAllPackages}
+                card="package"
+                slice={8}
+            />
+
+            <DataSection
+                label="Top guides"
+                id="scrollHere"
+                query={useGetAllGuides}
+                card="guide"
+                slice={8}
+            />
 
         </main>
     );

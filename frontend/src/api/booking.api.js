@@ -13,8 +13,25 @@ export const getUserBookings = async(query) => {
     return res.data.data;
 }
 
+export const getBookingById = async(id) => {
+    const res = await axiosInstance.get(API_ROUTES.BOOKING.GET(id));
+
+    return res.data.data;
+}
+
+
 export const getActiveBookings = async(query) => {
     const res = await axiosInstance.get(API_ROUTES.BOOKING.GET_ACTIVE(query));
 
+    return res.data.data;
+}
+
+export const cancleBooking = async(id)=>{
+    const res = await axiosInstance.patch(API_ROUTES.BOOKING.CANCEL(id));
+    return res.data.data;
+}
+
+export const updateBookingStatus = async (id, status) => {
+    const res = await axiosInstance.patch(API_ROUTES.BOOKING.UPDATE_STATUS(id), {status} );
     return res.data.data;
 }

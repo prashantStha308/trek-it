@@ -3,20 +3,25 @@ import { useRouter } from "next/navigation";
 import { useGetMe } from "@/queries/auth.query";
 import { showToast } from "@/store/ui.store";
 import { useEffect } from "react";
-import GuideDashboard from "./guide/GuideDashboard";
+
+import Dashboard from "./Dashboard";
 import TouristDashboard from "./tourist/TouristDashboard";
+import GuideDashboard from "./guide/GuideDashboard";
 import AdminDashboard from "./admin/AdminDashboard";
 
 function getUserDashboard(user) {
-    switch (user.role) {
-        case "guide":
-            return <GuideDashboard user={user} />;
-        case "tourist":
-            return <TouristDashboard user={user} />;
-        case "admin":
-            return <AdminDashboard user={user} />;
-        default:
-            return null;
+
+    if(user.role === "tourist"){
+        return <TouristDashboard user={user} />
+    }
+    else if( user.role === "guide" ){
+        return <GuideDashboard user={user} />
+    }
+    else if(user.role === "admin") {
+        return <AdminDashboard user={user} />;
+    }
+    else{
+        return null;
     }
 }
 

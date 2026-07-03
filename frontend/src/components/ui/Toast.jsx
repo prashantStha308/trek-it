@@ -50,10 +50,10 @@ const Toast = () => {
                         }}
                     >
                         <div
-                            className="px-4 py-2 border border-border text-text rounded-lg bg-secondary/75 backdrop-blur-3xl w-xs h-fit relative flex flex-col gap-4"
+                            className="px-4 py-2 border border-border text-text rounded-lg bg-secondary/75 backdrop-blur-3xl w-xs h-fit relative flex flex-col gap-4 "
                         >
                             <header
-                                className="flex items-center justify-between"
+                                className="flex items-center justify-between  border-b border-b-text/55"
                             >
                                 <h3> {toastData.title} </h3>
 
@@ -61,7 +61,7 @@ const Toast = () => {
                                     className="cursor-pointer hover:bg-black/20 rounded-sm p-2 transition-colors ease-in-out duration-100"
                                     onClick={closeToast}
                                 >
-                                    <X />
+                                    <X size={20} />
                                 </button>
                             </header>
 

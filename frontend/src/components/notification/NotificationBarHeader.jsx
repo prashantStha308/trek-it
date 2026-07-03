@@ -2,6 +2,7 @@ import {motion} from "motion/react";
 import {
 	Bell,
 	PanelRightClose,
+	ChevronLeft,
 } from "lucide-react";
 
 import useNotificationStore from "@/store/notification/notification.store.js";
@@ -9,6 +10,7 @@ import useNotificationStore from "@/store/notification/notification.store.js";
 
 export default function NotificationBarHeader(){
 	const isNotificationOpen = useNotificationStore(store => store.isNotificationOpen);
+	const {setIsNotificationOpen} = useNotificationStore.getState();
 
 	return(
 		<header
@@ -17,6 +19,14 @@ export default function NotificationBarHeader(){
 		>
 
 			<div className="text-primary flex gap-4 items-center" >
+
+				<button
+					className="md:hidden p-2 cursor-pointer hover:bg-secondary rounded-full"
+					onClick={()=> setIsNotificationOpen(false) }
+				>
+					<ChevronLeft />
+				</button>
+
 				<h1 className="text-lg font-black" >
 					Notifications
 				</h1>

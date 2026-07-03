@@ -9,7 +9,7 @@ export default function NotificationSocketClient() {
     useEffect(() => {
         const unsubscribe = registerNotificationEvents();
 
-        return (() => unsubscribe())
+        return (() => unsubscribe());
     }, [])
 
     return null;

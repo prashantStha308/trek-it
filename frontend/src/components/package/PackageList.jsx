@@ -1,5 +1,5 @@
 import React from 'react'
-import { PackageCard } from './PackageCard'
+import PackageCard from './PackageCard'
 // import pkg from "../../../../data_store/mockPackage.js";
 
 const PackageList = ({label = "Packages", query, ...props}) => {
@@ -23,13 +23,13 @@ const PackageList = ({label = "Packages", query, ...props}) => {
             {...props}
         >
             <h2
-                className='text-neutral-800 dark:text-neutral-300 text-2xl font-bold text-left w-full'
+                className='text-text text-2xl font-bold text-left w-full'
             >
                 {label}
             </h2>
 
             <section
-                className='w-full grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4'
+                className='w-full grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 justify-items-center'
             >
                 {
                     // pkgs.slice(0,4).map((p, index) => (
@@ -38,6 +38,7 @@ const PackageList = ({label = "Packages", query, ...props}) => {
                     ))
                 }
             </section>
+            
         </section>
     )
 }

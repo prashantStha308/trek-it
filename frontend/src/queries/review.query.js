@@ -5,6 +5,11 @@ import {
 } from "@tanstack/react-query";
 
 import {
+    DEFAULT_LIMIT,
+    DEFAULT_PAGE
+} from "@/constants/config.constants.js"
+
+import {
 	getAllUserReviews,
 	// getReviewById,
 	getGuideReviews,
@@ -19,18 +24,18 @@ import {
 } from "@/api/review.api.js";
 
 
-export const useGetAllUserReviews = ({limit = 10, page = 1, ...filters} = {}) => useQuery({
+export const useGetAllUserReviews = ({limit = DEFAULT_LIMIT, page=DEFAULT_PAGE, ...filters} = {}) => useQuery({
 		queryKey: ["reviews", "me" ,{limit, page, filters}],
 		queryFn: ()=> getAllUserReviews({ limit, page, filters }),
 	})
 
-export const useGetPackageReviews = (pkgId, {limit=10, page=1} = {}) => useQuery({
+export const useGetPackageReviews = (pkgId, {limit = DEFAULT_LIMIT, page=DEFAULT_PAGE} = {}) => useQuery({
 		queryKey: ["reviews", "package" , {limit, page}],
 		queryFn: ()=> getPackageReviews(pkgId, {limit, page}),
 		enabled: !!pkgId
 	})
 
-export const useGetGuideReviews = (guideId, {limit=10, page=1} = {}) => useQuery({
+export const useGetGuideReviews = (guideId, {limit = DEFAULT_LIMIT, page=DEFAULT_PAGE} = {}) => useQuery({
 		queryKey: ["reviews", "guide" ,{limit, page}],
 		queryFn: ()=> getPackageReviews(guideId, {limit, page}),
 		enabled: !!guideId

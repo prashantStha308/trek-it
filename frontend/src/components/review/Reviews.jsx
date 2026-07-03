@@ -32,7 +32,7 @@ export default function Reviews({ resource, resourceType }){
 			</h1>
 
 			<div className="flex flex-col gap-8" >
-				<div className="w-full flex flex-col lg:flex-row justify-between items-center gap-12 " >
+				<div className="w-full flex flex-col lg:flex-row justify-between items-center gap-12 border-b border-b-secondary pb-8" >
 
 					<ReviewSummary resource={resource} resourceType={resourceType} />
 					<ReviewWriter resourceType={resourceType} resourceId={resource._id} />

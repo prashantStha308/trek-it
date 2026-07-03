@@ -1,0 +1,1752 @@
+[
+  {
+    "id": 1,
+    "name": "Afghanistan",
+    "phone_code": "93",
+    "lat": 33,
+    "long": 65
+  },
+  {
+    "id": 2,
+    "name": "Aland Islands",
+    "phone_code": "358",
+    "lat": 60.117,
+    "long": 19.9
+  },
+  {
+    "id": 3,
+    "name": "Albania",
+    "phone_code": "355",
+    "lat": 41,
+    "long": 20
+  },
+  {
+    "id": 4,
+    "name": "Algeria",
+    "phone_code": "213",
+    "lat": 28,
+    "long": 3
+  },
+  {
+    "id": 5,
+    "name": "American Samoa",
+    "phone_code": "1",
+    "lat": -14.333,
+    "long": -170
+  },
+  {
+    "id": 6,
+    "name": "Andorra",
+    "phone_code": "376",
+    "lat": 42.5,
+    "long": 1.5
+  },
+  {
+    "id": 7,
+    "name": "Angola",
+    "phone_code": "244",
+    "lat": -12.5,
+    "long": 18.5
+  },
+  {
+    "id": 8,
+    "name": "Anguilla",
+    "phone_code": "1",
+    "lat": 18.25,
+    "long": -63.167
+  },
+  {
+    "id": 9,
+    "name": "Antarctica",
+    "phone_code": "672",
+    "lat": -74.65,
+    "long": 4.48
+  },
+  {
+    "id": 10,
+    "name": "Antigua And Barbuda",
+    "phone_code": "1",
+    "lat": 17.05,
+    "long": -61.8
+  },
+  {
+    "id": 11,
+    "name": "Argentina",
+    "phone_code": "54",
+    "lat": -34,
+    "long": -64
+  },
+  {
+    "id": 12,
+    "name": "Armenia",
+    "phone_code": "374",
+    "lat": 40,
+    "long": 45
+  },
+  {
+    "id": 13,
+    "name": "Aruba",
+    "phone_code": "297",
+    "lat": 12.5,
+    "long": -69.967
+  },
+  {
+    "id": 14,
+    "name": "Australia",
+    "phone_code": "61",
+    "lat": -27,
+    "long": 133
+  },
+  {
+    "id": 15,
+    "name": "Austria",
+    "phone_code": "43",
+    "lat": 47.333,
+    "long": 13.333
+  },
+  {
+    "id": 16,
+    "name": "Azerbaijan",
+    "phone_code": "994",
+    "lat": 40.5,
+    "long": 47.5
+  },
+  {
+    "id": 18,
+    "name": "Bahrain",
+    "phone_code": "973",
+    "lat": 26,
+    "long": 50.55
+  },
+  {
+    "id": 19,
+    "name": "Bangladesh",
+    "phone_code": "880",
+    "lat": 24,
+    "long": 90
+  },
+  {
+    "id": 20,
+    "name": "Barbados",
+    "phone_code": "1",
+    "lat": 13.167,
+    "long": -59.533
+  },
+  {
+    "id": 21,
+    "name": "Belarus",
+    "phone_code": "375",
+    "lat": 53,
+    "long": 28
+  },
+  {
+    "id": 22,
+    "name": "Belgium",
+    "phone_code": "32",
+    "lat": 50.833,
+    "long": 4
+  },
+  {
+    "id": 23,
+    "name": "Belize",
+    "phone_code": "501",
+    "lat": 17.25,
+    "long": -88.75
+  },
+  {
+    "id": 24,
+    "name": "Benin",
+    "phone_code": "229",
+    "lat": 9.5,
+    "long": 2.25
+  },
+  {
+    "id": 25,
+    "name": "Bermuda",
+    "phone_code": "1",
+    "lat": 32.333,
+    "long": -64.75
+  },
+  {
+    "id": 26,
+    "name": "Bhutan",
+    "phone_code": "975",
+    "lat": 27.5,
+    "long": 90.5
+  },
+  {
+    "id": 27,
+    "name": "Bolivia",
+    "phone_code": "591",
+    "lat": -17,
+    "long": -65
+  },
+  {
+    "id": 155,
+    "name": "Bonaire, Sint Eustatius and Saba",
+    "phone_code": "599",
+    "lat": 12.15,
+    "long": -68.267
+  },
+  {
+    "id": 28,
+    "name": "Bosnia and Herzegovina",
+    "phone_code": "387",
+    "lat": 44,
+    "long": 18
+  },
+  {
+    "id": 29,
+    "name": "Botswana",
+    "phone_code": "267",
+    "lat": -22,
+    "long": 24
+  },
+  {
+    "id": 30,
+    "name": "Bouvet Island",
+    "phone_code": "55",
+    "lat": -54.433,
+    "long": 3.4
+  },
+  {
+    "id": 31,
+    "name": "Brazil",
+    "phone_code": "55",
+    "lat": -10,
+    "long": -55
+  },
+  {
+    "id": 32,
+    "name": "British Indian Ocean Territory",
+    "phone_code": "246",
+    "lat": -6,
+    "long": 71.5
+  },
+  {
+    "id": 33,
+    "name": "Brunei",
+    "phone_code": "673",
+    "lat": 4.5,
+    "long": 114.667
+  },
+  {
+    "id": 34,
+    "name": "Bulgaria",
+    "phone_code": "359",
+    "lat": 43,
+    "long": 25
+  },
+  {
+    "id": 35,
+    "name": "Burkina Faso",
+    "phone_code": "226",
+    "lat": 13,
+    "long": -2
+  },
+  {
+    "id": 36,
+    "name": "Burundi",
+    "phone_code": "257",
+    "lat": -3.5,
+    "long": 30
+  },
+  {
+    "id": 37,
+    "name": "Cambodia",
+    "phone_code": "855",
+    "lat": 13,
+    "long": 105
+  },
+  {
+    "id": 38,
+    "name": "Cameroon",
+    "phone_code": "237",
+    "lat": 6,
+    "long": 12
+  },
+  {
+    "id": 39,
+    "name": "Canada",
+    "phone_code": "1",
+    "lat": 60,
+    "long": -95
+  },
+  {
+    "id": 40,
+    "name": "Cape Verde",
+    "phone_code": "238",
+    "lat": 16,
+    "long": -24
+  },
+  {
+    "id": 41,
+    "name": "Cayman Islands",
+    "phone_code": "1",
+    "lat": 19.5,
+    "long": -80.5
+  },
+  {
+    "id": 42,
+    "name": "Central African Republic",
+    "phone_code": "236",
+    "lat": 7,
+    "long": 21
+  },
+  {
+    "id": 43,
+    "name": "Chad",
+    "phone_code": "235",
+    "lat": 15,
+    "long": 19
+  },
+  {
+    "id": 44,
+    "name": "Chile",
+    "phone_code": "56",
+    "lat": -30,
+    "long": -71
+  },
+  {
+    "id": 45,
+    "name": "China",
+    "phone_code": "86",
+    "lat": 35,
+    "long": 105
+  },
+  {
+    "id": 46,
+    "name": "Christmas Island",
+    "phone_code": "61",
+    "lat": -10.5,
+    "long": 105.667
+  },
+  {
+    "id": 47,
+    "name": "Cocos (Keeling) Islands",
+    "phone_code": "61",
+    "lat": -12.5,
+    "long": 96.833
+  },
+  {
+    "id": 48,
+    "name": "Colombia",
+    "phone_code": "57",
+    "lat": 4,
+    "long": -72
+  },
+  {
+    "id": 49,
+    "name": "Comoros",
+    "phone_code": "269",
+    "lat": -12.167,
+    "long": 44.25
+  },
+  {
+    "id": 50,
+    "name": "Congo",
+    "phone_code": "242",
+    "lat": -1,
+    "long": 15
+  },
+  {
+    "id": 52,
+    "name": "Cook Islands",
+    "phone_code": "682",
+    "lat": -21.233,
+    "long": -159.767
+  },
+  {
+    "id": 53,
+    "name": "Costa Rica",
+    "phone_code": "506",
+    "lat": 10,
+    "long": -84
+  },
+  {
+    "id": 54,
+    "name": "Cote D'Ivoire (Ivory Coast)",
+    "phone_code": "225",
+    "lat": 8,
+    "long": -5
+  },
+  {
+    "id": 55,
+    "name": "Croatia",
+    "phone_code": "385",
+    "lat": 45.167,
+    "long": 15.5
+  },
+  {
+    "id": 56,
+    "name": "Cuba",
+    "phone_code": "53",
+    "lat": 21.5,
+    "long": -80
+  },
+  {
+    "id": 249,
+    "name": "Curaçao",
+    "phone_code": "599",
+    "lat": 12.117,
+    "long": -68.933
+  },
+  {
+    "id": 57,
+    "name": "Cyprus",
+    "phone_code": "357",
+    "lat": 35,
+    "long": 33
+  },
+  {
+    "id": 58,
+    "name": "Czech Republic",
+    "phone_code": "420",
+    "lat": 49.75,
+    "long": 15.5
+  },
+  {
+    "id": 51,
+    "name": "Democratic Republic of the Congo",
+    "phone_code": "243",
+    "lat": 0,
+    "long": 25
+  },
+  {
+    "id": 59,
+    "name": "Denmark",
+    "phone_code": "45",
+    "lat": 56,
+    "long": 10
+  },
+  {
+    "id": 60,
+    "name": "Djibouti",
+    "phone_code": "253",
+    "lat": 11.5,
+    "long": 43
+  },
+  {
+    "id": 61,
+    "name": "Dominica",
+    "phone_code": "1",
+    "lat": 15.417,
+    "long": -61.333
+  },
+  {
+    "id": 62,
+    "name": "Dominican Republic",
+    "phone_code": "1",
+    "lat": 19,
+    "long": -70.667
+  },
+  {
+    "id": 63,
+    "name": "East Timor",
+    "phone_code": "670",
+    "lat": -8.833,
+    "long": 125.917
+  },
+  {
+    "id": 64,
+    "name": "Ecuador",
+    "phone_code": "593",
+    "lat": -2,
+    "long": -77.5
+  },
+  {
+    "id": 65,
+    "name": "Egypt",
+    "phone_code": "20",
+    "lat": 27,
+    "long": 30
+  },
+  {
+    "id": 66,
+    "name": "El Salvador",
+    "phone_code": "503",
+    "lat": 13.833,
+    "long": -88.917
+  },
+  {
+    "id": 67,
+    "name": "Equatorial Guinea",
+    "phone_code": "240",
+    "lat": 2,
+    "long": 10
+  },
+  {
+    "id": 68,
+    "name": "Eritrea",
+    "phone_code": "291",
+    "lat": 15,
+    "long": 39
+  },
+  {
+    "id": 69,
+    "name": "Estonia",
+    "phone_code": "372",
+    "lat": 59,
+    "long": 26
+  },
+  {
+    "id": 70,
+    "name": "Ethiopia",
+    "phone_code": "251",
+    "lat": 8,
+    "long": 38
+  },
+  {
+    "id": 71,
+    "name": "Falkland Islands",
+    "phone_code": "500",
+    "lat": -51.75,
+    "long": -59
+  },
+  {
+    "id": 72,
+    "name": "Faroe Islands",
+    "phone_code": "298",
+    "lat": 62,
+    "long": -7
+  },
+  {
+    "id": 73,
+    "name": "Fiji Islands",
+    "phone_code": "679",
+    "lat": -18,
+    "long": 175
+  },
+  {
+    "id": 74,
+    "name": "Finland",
+    "phone_code": "358",
+    "lat": 64,
+    "long": 26
+  },
+  {
+    "id": 75,
+    "name": "France",
+    "phone_code": "33",
+    "lat": 46,
+    "long": 2
+  },
+  {
+    "id": 76,
+    "name": "French Guiana",
+    "phone_code": "594",
+    "lat": 4,
+    "long": -53
+  },
+  {
+    "id": 77,
+    "name": "French Polynesia",
+    "phone_code": "689",
+    "lat": -15,
+    "long": -140
+  },
+  {
+    "id": 78,
+    "name": "French Southern Territories",
+    "phone_code": "262",
+    "lat": -49.25,
+    "long": 69.167
+  },
+  {
+    "id": 79,
+    "name": "Gabon",
+    "phone_code": "241",
+    "lat": -1,
+    "long": 11.75
+  },
+  {
+    "id": 80,
+    "name": "Gambia The",
+    "phone_code": "220",
+    "lat": 13.467,
+    "long": -16.567
+  },
+  {
+    "id": 81,
+    "name": "Georgia",
+    "phone_code": "995",
+    "lat": 42,
+    "long": 43.5
+  },
+  {
+    "id": 82,
+    "name": "Germany",
+    "phone_code": "49",
+    "lat": 51,
+    "long": 9
+  },
+  {
+    "id": 83,
+    "name": "Ghana",
+    "phone_code": "233",
+    "lat": 8,
+    "long": -2
+  },
+  {
+    "id": 84,
+    "name": "Gibraltar",
+    "phone_code": "350",
+    "lat": 36.133,
+    "long": -5.35
+  },
+  {
+    "id": 85,
+    "name": "Greece",
+    "phone_code": "30",
+    "lat": 39,
+    "long": 22
+  },
+  {
+    "id": 86,
+    "name": "Greenland",
+    "phone_code": "299",
+    "lat": 72,
+    "long": -40
+  },
+  {
+    "id": 87,
+    "name": "Grenada",
+    "phone_code": "1",
+    "lat": 12.117,
+    "long": -61.667
+  },
+  {
+    "id": 88,
+    "name": "Guadeloupe",
+    "phone_code": "590",
+    "lat": 16.25,
+    "long": -61.583
+  },
+  {
+    "id": 89,
+    "name": "Guam",
+    "phone_code": "1",
+    "lat": 13.467,
+    "long": 144.783
+  },
+  {
+    "id": 90,
+    "name": "Guatemala",
+    "phone_code": "502",
+    "lat": 15.5,
+    "long": -90.25
+  },
+  {
+    "id": 91,
+    "name": "Guernsey and Alderney",
+    "phone_code": "44",
+    "lat": 49.467,
+    "long": -2.583
+  },
+  {
+    "id": 92,
+    "name": "Guinea",
+    "phone_code": "224",
+    "lat": 11,
+    "long": -10
+  },
+  {
+    "id": 93,
+    "name": "Guinea-Bissau",
+    "phone_code": "245",
+    "lat": 12,
+    "long": -15
+  },
+  {
+    "id": 94,
+    "name": "Guyana",
+    "phone_code": "592",
+    "lat": 5,
+    "long": -59
+  },
+  {
+    "id": 95,
+    "name": "Haiti",
+    "phone_code": "509",
+    "lat": 19,
+    "long": -72.417
+  },
+  {
+    "id": 96,
+    "name": "Heard Island and McDonald Islands",
+    "phone_code": "672",
+    "lat": -53.1,
+    "long": 72.517
+  },
+  {
+    "id": 97,
+    "name": "Honduras",
+    "phone_code": "504",
+    "lat": 15,
+    "long": -86.5
+  },
+  {
+    "id": 98,
+    "name": "Hong Kong S.A.R.",
+    "phone_code": "852",
+    "lat": 22.25,
+    "long": 114.167
+  },
+  {
+    "id": 99,
+    "name": "Hungary",
+    "phone_code": "36",
+    "lat": 47,
+    "long": 20
+  },
+  {
+    "id": 100,
+    "name": "Iceland",
+    "phone_code": "354",
+    "lat": 65,
+    "long": -18
+  },
+  {
+    "id": 101,
+    "name": "India",
+    "phone_code": "91",
+    "lat": 20,
+    "long": 77
+  },
+  {
+    "id": 102,
+    "name": "Indonesia",
+    "phone_code": "62",
+    "lat": -5,
+    "long": 120
+  },
+  {
+    "id": 103,
+    "name": "Iran",
+    "phone_code": "98",
+    "lat": 32,
+    "long": 53
+  },
+  {
+    "id": 104,
+    "name": "Iraq",
+    "phone_code": "964",
+    "lat": 33,
+    "long": 44
+  },
+  {
+    "id": 105,
+    "name": "Ireland",
+    "phone_code": "353",
+    "lat": 53,
+    "long": -8
+  },
+  {
+    "id": 106,
+    "name": "Israel",
+    "phone_code": "972",
+    "lat": 31.5,
+    "long": 34.75
+  },
+  {
+    "id": 107,
+    "name": "Italy",
+    "phone_code": "39",
+    "lat": 42.833,
+    "long": 12.833
+  },
+  {
+    "id": 108,
+    "name": "Jamaica",
+    "phone_code": "1",
+    "lat": 18.25,
+    "long": -77.5
+  },
+  {
+    "id": 109,
+    "name": "Japan",
+    "phone_code": "81",
+    "lat": 36,
+    "long": 138
+  },
+  {
+    "id": 110,
+    "name": "Jersey",
+    "phone_code": "44",
+    "lat": 49.25,
+    "long": -2.167
+  },
+  {
+    "id": 111,
+    "name": "Jordan",
+    "phone_code": "962",
+    "lat": 31,
+    "long": 36
+  },
+  {
+    "id": 112,
+    "name": "Kazakhstan",
+    "phone_code": "7",
+    "lat": 48,
+    "long": 68
+  },
+  {
+    "id": 113,
+    "name": "Kenya",
+    "phone_code": "254",
+    "lat": 1,
+    "long": 38
+  },
+  {
+    "id": 114,
+    "name": "Kiribati",
+    "phone_code": "686",
+    "lat": 1.417,
+    "long": 173
+  },
+  {
+    "id": 248,
+    "name": "Kosovo",
+    "phone_code": "383",
+    "lat": 42.561,
+    "long": 20.34
+  },
+  {
+    "id": 117,
+    "name": "Kuwait",
+    "phone_code": "965",
+    "lat": 29.5,
+    "long": 45.75
+  },
+  {
+    "id": 118,
+    "name": "Kyrgyzstan",
+    "phone_code": "996",
+    "lat": 41,
+    "long": 75
+  },
+  {
+    "id": 119,
+    "name": "Laos",
+    "phone_code": "856",
+    "lat": 18,
+    "long": 105
+  },
+  {
+    "id": 120,
+    "name": "Latvia",
+    "phone_code": "371",
+    "lat": 57,
+    "long": 25
+  },
+  {
+    "id": 121,
+    "name": "Lebanon",
+    "phone_code": "961",
+    "lat": 33.833,
+    "long": 35.833
+  },
+  {
+    "id": 122,
+    "name": "Lesotho",
+    "phone_code": "266",
+    "lat": -29.5,
+    "long": 28.5
+  },
+  {
+    "id": 123,
+    "name": "Liberia",
+    "phone_code": "231",
+    "lat": 6.5,
+    "long": -9.5
+  },
+  {
+    "id": 124,
+    "name": "Libya",
+    "phone_code": "218",
+    "lat": 25,
+    "long": 17
+  },
+  {
+    "id": 125,
+    "name": "Liechtenstein",
+    "phone_code": "423",
+    "lat": 47.267,
+    "long": 9.533
+  },
+  {
+    "id": 126,
+    "name": "Lithuania",
+    "phone_code": "370",
+    "lat": 56,
+    "long": 24
+  },
+  {
+    "id": 127,
+    "name": "Luxembourg",
+    "phone_code": "352",
+    "lat": 49.75,
+    "long": 6.167
+  },
+  {
+    "id": 128,
+    "name": "Macau S.A.R.",
+    "phone_code": "853",
+    "lat": 22.167,
+    "long": 113.55
+  },
+  {
+    "id": 129,
+    "name": "Macedonia",
+    "phone_code": "389",
+    "lat": 41.833,
+    "long": 22
+  },
+  {
+    "id": 130,
+    "name": "Madagascar",
+    "phone_code": "261",
+    "lat": -20,
+    "long": 47
+  },
+  {
+    "id": 131,
+    "name": "Malawi",
+    "phone_code": "265",
+    "lat": -13.5,
+    "long": 34
+  },
+  {
+    "id": 132,
+    "name": "Malaysia",
+    "phone_code": "60",
+    "lat": 2.5,
+    "long": 112.5
+  },
+  {
+    "id": 133,
+    "name": "Maldives",
+    "phone_code": "960",
+    "lat": 3.25,
+    "long": 73
+  },
+  {
+    "id": 134,
+    "name": "Mali",
+    "phone_code": "223",
+    "lat": 17,
+    "long": -4
+  },
+  {
+    "id": 135,
+    "name": "Malta",
+    "phone_code": "356",
+    "lat": 35.833,
+    "long": 14.583
+  },
+  {
+    "id": 136,
+    "name": "Man (Isle of)",
+    "phone_code": "44",
+    "lat": 54.25,
+    "long": -4.5
+  },
+  {
+    "id": 137,
+    "name": "Marshall Islands",
+    "phone_code": "692",
+    "lat": 9,
+    "long": 168
+  },
+  {
+    "id": 138,
+    "name": "Martinique",
+    "phone_code": "596",
+    "lat": 14.667,
+    "long": -61
+  },
+  {
+    "id": 139,
+    "name": "Mauritania",
+    "phone_code": "222",
+    "lat": 20,
+    "long": -12
+  },
+  {
+    "id": 140,
+    "name": "Mauritius",
+    "phone_code": "230",
+    "lat": -20.283,
+    "long": 57.55
+  },
+  {
+    "id": 141,
+    "name": "Mayotte",
+    "phone_code": "262",
+    "lat": -12.833,
+    "long": 45.167
+  },
+  {
+    "id": 142,
+    "name": "Mexico",
+    "phone_code": "52",
+    "lat": 23,
+    "long": -102
+  },
+  {
+    "id": 143,
+    "name": "Micronesia",
+    "phone_code": "691",
+    "lat": 6.917,
+    "long": 158.25
+  },
+  {
+    "id": 144,
+    "name": "Moldova",
+    "phone_code": "373",
+    "lat": 47,
+    "long": 29
+  },
+  {
+    "id": 145,
+    "name": "Monaco",
+    "phone_code": "377",
+    "lat": 43.733,
+    "long": 7.4
+  },
+  {
+    "id": 146,
+    "name": "Mongolia",
+    "phone_code": "976",
+    "lat": 46,
+    "long": 105
+  },
+  {
+    "id": 147,
+    "name": "Montenegro",
+    "phone_code": "382",
+    "lat": 42.5,
+    "long": 19.3
+  },
+  {
+    "id": 148,
+    "name": "Montserrat",
+    "phone_code": "1",
+    "lat": 16.75,
+    "long": -62.2
+  },
+  {
+    "id": 149,
+    "name": "Morocco",
+    "phone_code": "212",
+    "lat": 32,
+    "long": -5
+  },
+  {
+    "id": 150,
+    "name": "Mozambique",
+    "phone_code": "258",
+    "lat": -18.25,
+    "long": 35
+  },
+  {
+    "id": 151,
+    "name": "Myanmar",
+    "phone_code": "95",
+    "lat": 22,
+    "long": 98
+  },
+  {
+    "id": 152,
+    "name": "Namibia",
+    "phone_code": "264",
+    "lat": -22,
+    "long": 17
+  },
+  {
+    "id": 153,
+    "name": "Nauru",
+    "phone_code": "674",
+    "lat": -0.533,
+    "long": 166.917
+  },
+  {
+    "id": 154,
+    "name": "Nepal",
+    "phone_code": "977",
+    "lat": 28,
+    "long": 84
+  },
+  {
+    "id": 156,
+    "name": "Netherlands",
+    "phone_code": "31",
+    "lat": 52.5,
+    "long": 5.75
+  },
+  {
+    "id": 157,
+    "name": "New Caledonia",
+    "phone_code": "687",
+    "lat": -21.5,
+    "long": 165.5
+  },
+  {
+    "id": 158,
+    "name": "New Zealand",
+    "phone_code": "64",
+    "lat": -41,
+    "long": 174
+  },
+  {
+    "id": 159,
+    "name": "Nicaragua",
+    "phone_code": "505",
+    "lat": 13,
+    "long": -85
+  },
+  {
+    "id": 160,
+    "name": "Niger",
+    "phone_code": "227",
+    "lat": 16,
+    "long": 8
+  },
+  {
+    "id": 161,
+    "name": "Nigeria",
+    "phone_code": "234",
+    "lat": 10,
+    "long": 8
+  },
+  {
+    "id": 162,
+    "name": "Niue",
+    "phone_code": "683",
+    "lat": -19.033,
+    "long": -169.867
+  },
+  {
+    "id": 163,
+    "name": "Norfolk Island",
+    "phone_code": "672",
+    "lat": -29.033,
+    "long": 167.95
+  },
+  {
+    "id": 115,
+    "name": "North Korea",
+    "phone_code": "850",
+    "lat": 40,
+    "long": 127
+  },
+  {
+    "id": 164,
+    "name": "Northern Mariana Islands",
+    "phone_code": "1",
+    "lat": 15.2,
+    "long": 145.75
+  },
+  {
+    "id": 165,
+    "name": "Norway",
+    "phone_code": "47",
+    "lat": 62,
+    "long": 10
+  },
+  {
+    "id": 166,
+    "name": "Oman",
+    "phone_code": "968",
+    "lat": 21,
+    "long": 57
+  },
+  {
+    "id": 167,
+    "name": "Pakistan",
+    "phone_code": "92",
+    "lat": 30,
+    "long": 70
+  },
+  {
+    "id": 168,
+    "name": "Palau",
+    "phone_code": "680",
+    "lat": 7.5,
+    "long": 134.5
+  },
+  {
+    "id": 169,
+    "name": "Palestinian Territory Occupied",
+    "phone_code": "970",
+    "lat": 31.9,
+    "long": 35.2
+  },
+  {
+    "id": 170,
+    "name": "Panama",
+    "phone_code": "507",
+    "lat": 9,
+    "long": -80
+  },
+  {
+    "id": 171,
+    "name": "Papua new Guinea",
+    "phone_code": "675",
+    "lat": -6,
+    "long": 147
+  },
+  {
+    "id": 172,
+    "name": "Paraguay",
+    "phone_code": "595",
+    "lat": -23,
+    "long": -58
+  },
+  {
+    "id": 173,
+    "name": "Peru",
+    "phone_code": "51",
+    "lat": -10,
+    "long": -76
+  },
+  {
+    "id": 174,
+    "name": "Philippines",
+    "phone_code": "63",
+    "lat": 13,
+    "long": 122
+  },
+  {
+    "id": 175,
+    "name": "Pitcairn Island",
+    "phone_code": "870",
+    "lat": -25.067,
+    "long": -130.1
+  },
+  {
+    "id": 176,
+    "name": "Poland",
+    "phone_code": "48",
+    "lat": 52,
+    "long": 20
+  },
+  {
+    "id": 177,
+    "name": "Portugal",
+    "phone_code": "351",
+    "lat": 39.5,
+    "long": -8
+  },
+  {
+    "id": 178,
+    "name": "Puerto Rico",
+    "phone_code": "1",
+    "lat": 18.25,
+    "long": -66.5
+  },
+  {
+    "id": 179,
+    "name": "Qatar",
+    "phone_code": "974",
+    "lat": 25.5,
+    "long": 51.25
+  },
+  {
+    "id": 180,
+    "name": "Reunion",
+    "phone_code": "262",
+    "lat": -21.15,
+    "long": 55.5
+  },
+  {
+    "id": 181,
+    "name": "Romania",
+    "phone_code": "40",
+    "lat": 46,
+    "long": 25
+  },
+  {
+    "id": 182,
+    "name": "Russia",
+    "phone_code": "7",
+    "lat": 60,
+    "long": 100
+  },
+  {
+    "id": 183,
+    "name": "Rwanda",
+    "phone_code": "250",
+    "lat": -2,
+    "long": 30
+  },
+  {
+    "id": 184,
+    "name": "Saint Helena",
+    "phone_code": "290",
+    "lat": -15.95,
+    "long": -5.7
+  },
+  {
+    "id": 185,
+    "name": "Saint Kitts And Nevis",
+    "phone_code": "1",
+    "lat": 17.333,
+    "long": -62.75
+  },
+  {
+    "id": 186,
+    "name": "Saint Lucia",
+    "phone_code": "1",
+    "lat": 13.883,
+    "long": -60.967
+  },
+  {
+    "id": 187,
+    "name": "Saint Pierre and Miquelon",
+    "phone_code": "508",
+    "lat": 46.833,
+    "long": -56.333
+  },
+  {
+    "id": 188,
+    "name": "Saint Vincent And The Grenadines",
+    "phone_code": "1",
+    "lat": 13.25,
+    "long": -61.2
+  },
+  {
+    "id": 189,
+    "name": "Saint-Barthelemy",
+    "phone_code": "590",
+    "lat": 18.5,
+    "long": -63.417
+  },
+  {
+    "id": 190,
+    "name": "Saint-Martin (French part)",
+    "phone_code": "590",
+    "lat": 18.083,
+    "long": -63.95
+  },
+  {
+    "id": 191,
+    "name": "Samoa",
+    "phone_code": "685",
+    "lat": -13.583,
+    "long": -172.333
+  },
+  {
+    "id": 192,
+    "name": "San Marino",
+    "phone_code": "378",
+    "lat": 43.767,
+    "long": 12.417
+  },
+  {
+    "id": 193,
+    "name": "Sao Tome and Principe",
+    "phone_code": "239",
+    "lat": 1,
+    "long": 7
+  },
+  {
+    "id": 194,
+    "name": "Saudi Arabia",
+    "phone_code": "966",
+    "lat": 25,
+    "long": 45
+  },
+  {
+    "id": 195,
+    "name": "Senegal",
+    "phone_code": "221",
+    "lat": 14,
+    "long": -14
+  },
+  {
+    "id": 196,
+    "name": "Serbia",
+    "phone_code": "381",
+    "lat": 44,
+    "long": 21
+  },
+  {
+    "id": 197,
+    "name": "Seychelles",
+    "phone_code": "248",
+    "lat": -4.583,
+    "long": 55.667
+  },
+  {
+    "id": 198,
+    "name": "Sierra Leone",
+    "phone_code": "232",
+    "lat": 8.5,
+    "long": -11.5
+  },
+  {
+    "id": 199,
+    "name": "Singapore",
+    "phone_code": "65",
+    "lat": 1.367,
+    "long": 103.8
+  },
+  {
+    "id": 250,
+    "name": "Sint Maarten (Dutch part)",
+    "phone_code": "1721",
+    "lat": 18.033,
+    "long": -63.05
+  },
+  {
+    "id": 200,
+    "name": "Slovakia",
+    "phone_code": "421",
+    "lat": 48.667,
+    "long": 19.5
+  },
+  {
+    "id": 201,
+    "name": "Slovenia",
+    "phone_code": "386",
+    "lat": 46.117,
+    "long": 14.817
+  },
+  {
+    "id": 202,
+    "name": "Solomon Islands",
+    "phone_code": "677",
+    "lat": -8,
+    "long": 159
+  },
+  {
+    "id": 203,
+    "name": "Somalia",
+    "phone_code": "252",
+    "lat": 10,
+    "long": 49
+  },
+  {
+    "id": 204,
+    "name": "South Africa",
+    "phone_code": "27",
+    "lat": -29,
+    "long": 24
+  },
+  {
+    "id": 205,
+    "name": "South Georgia",
+    "phone_code": "500",
+    "lat": -54.5,
+    "long": -37
+  },
+  {
+    "id": 116,
+    "name": "South Korea",
+    "phone_code": "82",
+    "lat": 37,
+    "long": 127.5
+  },
+  {
+    "id": 206,
+    "name": "South Sudan",
+    "phone_code": "211",
+    "lat": 7,
+    "long": 30
+  },
+  {
+    "id": 207,
+    "name": "Spain",
+    "phone_code": "34",
+    "lat": 40,
+    "long": -4
+  },
+  {
+    "id": 208,
+    "name": "Sri Lanka",
+    "phone_code": "94",
+    "lat": 7,
+    "long": 81
+  },
+  {
+    "id": 209,
+    "name": "Sudan",
+    "phone_code": "249",
+    "lat": 15,
+    "long": 30
+  },
+  {
+    "id": 210,
+    "name": "Suriname",
+    "phone_code": "597",
+    "lat": 4,
+    "long": -56
+  },
+  {
+    "id": 211,
+    "name": "Svalbard And Jan Mayen Islands",
+    "phone_code": "47",
+    "lat": 78,
+    "long": 20
+  },
+  {
+    "id": 212,
+    "name": "Swaziland",
+    "phone_code": "268",
+    "lat": -26.5,
+    "long": 31.5
+  },
+  {
+    "id": 213,
+    "name": "Sweden",
+    "phone_code": "46",
+    "lat": 62,
+    "long": 15
+  },
+  {
+    "id": 214,
+    "name": "Switzerland",
+    "phone_code": "41",
+    "lat": 47,
+    "long": 8
+  },
+  {
+    "id": 215,
+    "name": "Syria",
+    "phone_code": "963",
+    "lat": 35,
+    "long": 38
+  },
+  {
+    "id": 216,
+    "name": "Taiwan",
+    "phone_code": "886",
+    "lat": 23.5,
+    "long": 121
+  },
+  {
+    "id": 217,
+    "name": "Tajikistan",
+    "phone_code": "992",
+    "lat": 39,
+    "long": 71
+  },
+  {
+    "id": 218,
+    "name": "Tanzania",
+    "phone_code": "255",
+    "lat": -6,
+    "long": 35
+  },
+  {
+    "id": 219,
+    "name": "Thailand",
+    "phone_code": "66",
+    "lat": 15,
+    "long": 100
+  },
+  {
+    "id": 17,
+    "name": "The Bahamas",
+    "phone_code": "1",
+    "lat": 24.25,
+    "long": -76
+  },
+  {
+    "id": 220,
+    "name": "Togo",
+    "phone_code": "228",
+    "lat": 8,
+    "long": 1.167
+  },
+  {
+    "id": 221,
+    "name": "Tokelau",
+    "phone_code": "690",
+    "lat": -9,
+    "long": -172
+  },
+  {
+    "id": 222,
+    "name": "Tonga",
+    "phone_code": "676",
+    "lat": -20,
+    "long": -175
+  },
+  {
+    "id": 223,
+    "name": "Trinidad And Tobago",
+    "phone_code": "1",
+    "lat": 11,
+    "long": -61
+  },
+  {
+    "id": 224,
+    "name": "Tunisia",
+    "phone_code": "216",
+    "lat": 34,
+    "long": 9
+  },
+  {
+    "id": 225,
+    "name": "Turkey",
+    "phone_code": "90",
+    "lat": 39,
+    "long": 35
+  },
+  {
+    "id": 226,
+    "name": "Turkmenistan",
+    "phone_code": "993",
+    "lat": 40,
+    "long": 60
+  },
+  {
+    "id": 227,
+    "name": "Turks And Caicos Islands",
+    "phone_code": "1",
+    "lat": 21.75,
+    "long": -71.583
+  },
+  {
+    "id": 228,
+    "name": "Tuvalu",
+    "phone_code": "688",
+    "lat": -8,
+    "long": 178
+  },
+  {
+    "id": 229,
+    "name": "Uganda",
+    "phone_code": "256",
+    "lat": 1,
+    "long": 32
+  },
+  {
+    "id": 230,
+    "name": "Ukraine",
+    "phone_code": "380",
+    "lat": 49,
+    "long": 32
+  },
+  {
+    "id": 231,
+    "name": "United Arab Emirates",
+    "phone_code": "971",
+    "lat": 24,
+    "long": 54
+  },
+  {
+    "id": 232,
+    "name": "United Kingdom",
+    "phone_code": "44",
+    "lat": 54,
+    "long": -2
+  },
+  {
+    "id": 233,
+    "name": "United States",
+    "phone_code": "1",
+    "lat": 38,
+    "long": -97
+  },
+  {
+    "id": 234,
+    "name": "United States Minor Outlying Islands",
+    "phone_code": "1",
+    "lat": 0,
+    "long": 0
+  },
+  {
+    "id": 235,
+    "name": "Uruguay",
+    "phone_code": "598",
+    "lat": -33,
+    "long": -56
+  },
+  {
+    "id": 236,
+    "name": "Uzbekistan",
+    "phone_code": "998",
+    "lat": 41,
+    "long": 64
+  },
+  {
+    "id": 237,
+    "name": "Vanuatu",
+    "phone_code": "678",
+    "lat": -16,
+    "long": 167
+  },
+  {
+    "id": 238,
+    "name": "Vatican City State (Holy See)",
+    "phone_code": "379",
+    "lat": 41.9,
+    "long": 12.45
+  },
+  {
+    "id": 239,
+    "name": "Venezuela",
+    "phone_code": "58",
+    "lat": 8,
+    "long": -66
+  },
+  {
+    "id": 240,
+    "name": "Vietnam",
+    "phone_code": "84",
+    "lat": 16.167,
+    "long": 107.833
+  },
+  {
+    "id": 241,
+    "name": "Virgin Islands (British)",
+    "phone_code": "1",
+    "lat": 18.431,
+    "long": -64.623
+  },
+  {
+    "id": 242,
+    "name": "Virgin Islands (US)",
+    "phone_code": "1",
+    "lat": 18.34,
+    "long": -64.93
+  },
+  {
+    "id": 243,
+    "name": "Wallis And Futuna Islands",
+    "phone_code": "681",
+    "lat": -13.3,
+    "long": -176.2
+  },
+  {
+    "id": 244,
+    "name": "Western Sahara",
+    "phone_code": "212",
+    "lat": 24.5,
+    "long": -13
+  },
+  {
+    "id": 245,
+    "name": "Yemen",
+    "phone_code": "967",
+    "lat": 15,
+    "long": 48
+  },
+  {
+    "id": 246,
+    "name": "Zambia",
+    "phone_code": "260",
+    "lat": -15,
+    "long": 30
+  },
+  {
+    "id": 247,
+    "name": "Zimbabwe",
+    "phone_code": "263",
+    "lat": -20,
+    "long": 30
+  }
+]

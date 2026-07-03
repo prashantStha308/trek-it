@@ -21,7 +21,15 @@ export const BOOKING_STATUS_ENUM = Object.freeze({
     // The booking was cancelled
     cancelled: "cancelled",
 });
+
 export const BOOKING_STATUS = Object.values(BOOKING_STATUS_ENUM);
+
+
+export const BOOKING_STATUS_PERMISSIONS = {
+    guide: ["accepted", "rejected"],
+    tourist: [],
+    admin: ["accepted", "rejected", "completed", "expired"]
+}
 
 // 15% commission
 export const TREKIT_COMMISSION = 0.15;

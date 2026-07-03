@@ -57,7 +57,7 @@ guidesR.get("/:id/stats", getGuideStats);
 // GET /api/guides/admin/unverified
 guidesR.get(
     "/admin/unverified",
-    authorize("admin"),
+    authorize(["admin"]),
     getUnverifiedGuides
 );
 
@@ -65,7 +65,7 @@ guidesR.get(
 // PUT /api/guides/admin/:id/verify
 guidesR.put(
     "/admin/:id/verify",
-    authorize("admin"),
+    authorize(["admin"]),
     verifyGuide
 );
 
@@ -73,7 +73,7 @@ guidesR.put(
 // PUT /api/guides/admin/:id/reject
 guidesR.put(
     "/admin/:id/reject",
-    authorize("admin"),
+    authorize(["admin"]),
     rejectGuide
 );
 
@@ -84,7 +84,7 @@ guidesR.patch("/", authorize(["guide"]), toggleGuideAvailability);
 // DELETE /api/guides/admin/:id
 guidesR.delete(
     "/admin/:id",
-    authorize("admin"),
+    authorize(["admin"]),
     deleteGuide
 );
 

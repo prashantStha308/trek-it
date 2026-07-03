@@ -2,8 +2,8 @@ import { body, query } from 'express-validator';
 import { mongoIdParam } from './validation.helpers.js';
 
 const bodyRating = [
-    body("ratings").isObject().withMessage("reviewBody.ratings should be an Object"),
-    body("ratings.*").isInt({min:0, max:5}).withMessage("reviewBody.ratings.* should be an int(min:0, max:5)"),
+    body("rating").isObject().withMessage("reviewBody.rating should be an Object"),
+    body("rating.*").isInt({min:0, max:5}).withMessage("reviewBody.rating.* should be an int(min:0, max:5)"),
 ]
 
 
@@ -22,8 +22,8 @@ export const validateReviewBodyPatch = [
 ];
 
 export const validateReviewQuery = [
-    query('ratings').optional().isInt({ min: 0, max: 5 }),
-    query('sort').optional().isIn(['ratings', '-ratings', 'createdAt', '-createdAt']),
+    query('rating').optional().isInt({ min: 0, max: 5 }),
+    query('sort').optional().isIn(['rating', '-rating', 'createdAt', '-createdAt']),
 
     query('package').optional().isMongoId().withMessage("pacakge must be an Mongodb ObjectID"),
     query('guide').optional().isMongoId().withMessage("pacakge must be an Mongodb ObjectID"),

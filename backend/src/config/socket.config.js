@@ -26,6 +26,8 @@ const initSocket = (httpServer) => {
 
     io.on("connection", (socket)=>{
         console.log("connected:", socket.id, socket.data.user);
+        
+        socket.join(socket.data.user._id.toString());
 
         // Handle middleware errors
         socket.on("error", (err) => {

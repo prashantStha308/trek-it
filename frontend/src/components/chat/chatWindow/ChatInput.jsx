@@ -1,3 +1,5 @@
+import {useRef, useEffect} from "react";
+
 import {
     Smile,
     CirclePlus,
@@ -16,6 +18,17 @@ const RoundedBg = ({ele})=>{
 }
 
 export default function ChatInput({ onSubmit }){
+
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+
+            if (e.currentTarget.value.trim()) {
+                e.currentTarget.form.requestSubmit();
+            }
+        }
+    };
+
     return (
         <form
             id="input-chat"
@@ -37,6 +50,7 @@ export default function ChatInput({ onSubmit }){
                     className="w-full outline-none bg-transparent text-sm resize-none"
                     placeholder="Type a message..."
                     autoComplete="off"
+                    onKeyDown={handleKeyDown}
                 />
             </div>
 

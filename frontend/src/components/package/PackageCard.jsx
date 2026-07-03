@@ -1,20 +1,50 @@
 import Image from "next/image";
-import { Star } from "lucide-react";
-import { optimizeImageUrl } from "@/utils/utils.helper";
 import Link from "next/link";
+
+import { optimizeImageUrl } from "@/utils/utils.helper";
+import {THEME_COLOR} from "@/constants/theme.constants.js";
+
+import { Star } from "lucide-react";
 import { LinkButton } from "../ui/Button";
 import Badge from "@/components/ui/Badge"
 import Avatar from "@/components/ui/Avatar";
 
 
-export function PackageCard({ item }) {
+function BadgeRow({items = [], variant = "green"}){
+
+    return(
+        <div className="flex items-center flex-wrap gap-1">
+            {
+                items.length > 4 ? (
+                    <>
+                        {
+                            items.slice(0,3).map((itm, index) => (
+                                <Badge key={index} size="sm" variant={variant} > {itm} </Badge>
+                            ))
+                        }
+                        <div className={`${THEME_COLOR[variant].badge} text-text/75 font-semibold rounded-full p-1.5 text-xs `} >
+                            +{items.length - 3}
+                        </div>
+                    </>
+
+                ) :(
+                    items?.map((itm, index) => (
+                        <Badge key={index} size="sm" variant={variant} > {itm} </Badge>
+                    ))
+                )
+            }
+        </div>
+    )
+}
+
+export default function PackageCard({ item }) {
 
     return (
-        <article className="w-96 bg-secondary/16 rounded-xl border border-black/10 overflow-hidden">
+        <article className="w-xs bg-secondary/16 rounded-xl border border-black/10 overflow-hidden">
 
-            <div className="relative w-full h-44">
+            <div className="relative w-full h-44 bg-black/15 ">
                 <Image
-                    src={optimizeImageUrl(item?.thumbnail, 800) || null}
+                    src={optimizeImageUrl(item?.thumbnail?.src ?? item?.thumbnail, 800) || "/assets/svg/placeholder-white.svg"}
                     alt={item?.name}
                     fill
                     className="object-cover"
@@ -42,23 +72,27 @@ export function PackageCard({ item }) {
                     <span className="text-xs text-text/75">{item?.guide?.name}</span>
                 </div>
 
-                <div className="flex flex-wrap gap-1.5">
+                <BadgeRow variant="green" items={item?.guide?.languages} />
+
+                <BadgeRow variant="blue" items={item?.regions} />
+
+{/*                <div className="flex flex-wrap gap-1">
                     {item?.guide?.languages.map((lang, index) => (
                         <Badge key={index} size="sm" variant="green" > {lang} </Badge>
                     ))}
                 </div>
 
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1">
                     {item?.regions.map((region, index) => (
                         <Badge key={index} size="sm" variant="blue" > {region} </Badge>
                     ))}
-                </div>
+                </div>*/}
 
                 <div className="border-t border-black/8 pt-3 flex justify-between items-center">
                     <div>
                         <p className="text-xs text-text/75">Starting from</p>
                         <p className="text-base font-medium text-text">
-                            ${item?.startingPrice}{" "}
+                            NRS. {item?.startingPrice}{" "}
                         </p>
                     </div>
                     

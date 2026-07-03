@@ -24,7 +24,7 @@ export default function Notifications({
     	if(!currentUser) return;
 
     	loadNotifications(notifs);
-    },[notifs])
+    },[notifs, currentUser, loadNotifications])
 
 	const renderedNotifications = notificationType !== null ? (notifications.filter((notif) => notif.isRead === notificationType)) : notifications;
 
