@@ -53,8 +53,6 @@ export const createPackageService = async (body, guide, files) => {
         daysAlloted: Number(body.daysAlloted),
 
         pricePerPerson: Number(body.pricePerPerson),
-        startingPrice: Number(body.minGroupSize) * Number(body.pricePerPerson),
-
         stops: body.stops,
 
         images,
