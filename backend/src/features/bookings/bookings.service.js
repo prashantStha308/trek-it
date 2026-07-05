@@ -26,15 +26,16 @@ import {
 import ApiError from "../../utils/ApiError.js";
 
 
-export const createBookingService = async (tourist, body, { guideId } = {}) => {
+export const createBookingService = async (user, body, { guideId } = {}) => {
     const { packageId, date, groupSize, customRequest = null } = body;
+
 
     const targetPackage = await Package.findById(packageId);
     if (!targetPackage) throw new ApiError(404, "Package not found");
 
     // check if user has booked any other package
     const existingBooking = await Booking.exists({
-        tourist: tourist._id,
+        tourist: user._id,
         status: { $nin: [BOOKING_STATUS_ENUM.expired, BOOKING_STATUS_ENUM.completed, BOOKING_STATUS_ENUM.cancelled] }
     });
 
@@ -49,7 +50,7 @@ export const createBookingService = async (tourist, body, { guideId } = {}) => {
     const targetGuide = await assignGuide(targetPackage, pkgDates, guideId);
 
     const booking = await Booking.create({
-        tourist: tourist._id,
+        tourist: user._id,
         guide: targetGuide._id,
         package: packageId,
         date,
@@ -80,9 +81,9 @@ export const createBookingService = async (tourist, body, { guideId } = {}) => {
             profilePicture: targetGuide.profilePicture,
         },
         tourist: {
-            _id: tourist._id,
-            name: tourist.name,
-            profilePicture: tourist.profilePicture
+            _id: user._id,
+            name: user.name,
+            profilePicture: user.profilePicture
         },
         package: {
             _id: targetPackage._id,
@@ -108,7 +109,7 @@ export const createBookingService = async (tourist, body, { guideId } = {}) => {
 
     promises.push(sendNotificationService(NOTIFICATION_TITLE.newBookingRequest, booking.guide, {
         title: `A new booking request has been made.`,
-        message: `A new booking for ${targetPackage.name} has been made by ${tourist.name}(id: ${tourist._id}) on ${Date.now()} `,
+        message: `A new booking for ${targetPackage.name} has been made by ${user.name}(id: ${user._id}) on ${Date.now()} `,
         link: `/booking/${booking._id}`,
         actions: [
             { label: "View Booking", href: `/booking/${booking._id}` },

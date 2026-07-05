@@ -101,7 +101,7 @@ export default function PackageCard({ item }) {
                         variant="primary"
                         size="md"
                     >
-                        Book Now 
+                        View Details 
                     </LinkButton>
                 </div>
 

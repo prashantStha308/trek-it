@@ -210,7 +210,6 @@ export const getNextNDates = (startDate, n) => {
  */
 export const getTotalPrice = (pkg, groupSize) => {
     const perPersonCost = pkg.pricePerPerson * groupSize;
-    const baseCost = Math.max(perPersonCost, pkg.startingPrice);
-    const totalCost = baseCost + baseCost * TREKIT_COMMISSION;
+    const totalCost = perPersonCost + perPersonCost * TREKIT_COMMISSION;
     return totalCost;
 }

@@ -18,7 +18,7 @@ import BookingCardSkeleton from "@/components/loaders/BookingCardSkeleton";
 
 
 // CONSTANTS
-const TABS = ["confirmed", "pending", "completed", "cancelled"];
+const TABS = ["pending", "confirmed", "completed", "cancelled"];
 const CURRENT_STATUSES = ["active", "pending", "confirmed"];
 
 
@@ -56,7 +56,7 @@ function EmptyState({ tab }) {
 }
 
 export default function UserBookings() {
-    const [activeTab, setActiveTab] = useState("confirmed");
+    const [activeTab, setActiveTab] = useState("pending");
 
     let { data: bookingsData, isLoading: bookingsLoading } =
         useGetUserBookings();
