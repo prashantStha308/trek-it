@@ -49,7 +49,6 @@ export const createBookingService = async (tourist, body, { guideId } = {}) => {
     const targetGuide = await assignGuide(targetPackage, pkgDates, guideId);
 
     const booking = await Booking.create({
-        name: targetPackage.name,
         tourist: tourist._id,
         guide: targetGuide._id,
         package: packageId,

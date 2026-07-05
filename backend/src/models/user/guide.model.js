@@ -32,10 +32,6 @@ const guideSchema = new mongoose.Schema({
 		trim: true,
 		default: []
 	},
-	packageCount: {
-		type: Number,
-		default: 0,
-	},
 	isVerified:{
 		type: Boolean,
 		default: false
@@ -47,17 +43,6 @@ const guideSchema = new mongoose.Schema({
 	isTrusted:{
 		type: Boolean,
 		default: false
-	},
-	trekCount:{
-		type: Number,
-		min: 0,
-		default: 0
-	},
-	rating: {
-		type: Number,
-		min: 0,
-		max: 5,
-		default: 0
 	},
 	daysBooked: {
 		type: [Date],

@@ -44,11 +44,6 @@ const packageSchema = new mongoose.Schema({
 			message: "At least one activity is required"
 		}
 	},
-
-	startingPrice: {
-		type: Number,
-		required: [true, () => requiredError("Package.startingPrice")]		
-	},
 	pricePerPerson: {
 		type: Number,
 		required: [true, () => requiredError("Package.pricePerPerson")]
@@ -121,7 +116,10 @@ const packageSchema = new mongoose.Schema({
 			default: ""
 		}
 	},
-
+	isActive:{
+		type: Boolean,
+		default: false
+	},
 	requiresPermit: {
 		type: Boolean,
 		default: false
