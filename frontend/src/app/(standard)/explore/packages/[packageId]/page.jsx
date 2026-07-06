@@ -19,7 +19,7 @@ import MiniCard from "@/components/ui/MiniCard";
 
 import Reviews from "@/components/review/Reviews"
 import PackageDetails from "@/components/package/PackageDetails";
-import PackageTimeLine from "@/components/package/PackageTimeLine";
+import PackageTimeLineStops from "@/components/package/PackageTimeLineStops";
 
 
 function PackageGuides({pkg, currentUser}){
@@ -94,12 +94,13 @@ export default function PackagePage() {
 
     console.log(typeof data?.daysAlloted, data?.daysAlloted)
 
-const timeLines = data?.stops?.slice(0, data?.daysAlloted)?.map((stop) => ({
-    label: `Day ${stop.day}`,
-    date: null,
-    location: stop.nearestCity?.name,
-    color: "bg-primary",
-})) || [];
+    const timeLines = data?.stops?.slice(0, data?.daysAlloted)?.map((stop) => ({
+        label: `Day ${stop.day}`,
+        date: null,
+        location: stop.nearestCity?.name,
+        reason: stop.type === "other" ? (stop.customType || "Other") : stop.type,
+        color: "bg-primary",
+    })) || [];
 
     return (
         <section className="flex flex-col gap-6 px-4 pb-12 ">
@@ -176,7 +177,7 @@ const timeLines = data?.stops?.slice(0, data?.daysAlloted)?.map((stop) => ({
             >
                 <div className="flex-1 flex flex-col gap-4 w-full" >
                     <PackageDetails pkg={data} />
-                    <PackageTimeLine timeLines={timeLines} />
+                    <PackageTimeLineStops timeLines={timeLines} />
                 </div>
 
                 <div className="w-xs" >

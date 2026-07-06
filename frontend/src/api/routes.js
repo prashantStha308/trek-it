@@ -40,13 +40,14 @@ const API_ROUTES = {
         BASE: "/user"
 	},
 	
-	GUIDE: {
-		GET_ALL: (query) => resolveRoute("/guide", null, query),
-		GET: (id) => resolveRoute("/guide", id),
+    GUIDE: {
+        GET_ALL: (query) => resolveRoute("/guide", null, query),
+        GET: (id) => resolveRoute("/guide", id),
         GET_COLLABORATIONS: (guideId) => resolveRoute("/guide", `${guideId}/collaborations`),
         SEARCH: (query) => resolveRoute("/guide/search", null, query),
+        UPDATE: (id) => resolveRoute("/guide", id), // added
         BASE: "/guide"
-	},
+    },
 
     PACKAGE: {
         GET_ALL: (query) => resolveRoute('/package', null, query),

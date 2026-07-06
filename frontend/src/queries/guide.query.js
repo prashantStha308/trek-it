@@ -1,18 +1,17 @@
-import { 
+import {
     useQueryClient,
     useQuery,
     useMutation
 } from "@tanstack/react-query";
-
 import {
     DEFAULT_LIMIT,
     DEFAULT_PAGE
 } from "@/constants/config.constants.js"
-
 import {
     getAllGuides,
     getGuideById,
     searchGuides,
+    updateGuide,
 } from "@/api/guide.api";
 
 export const useGetAllGuides = ({
@@ -42,11 +41,23 @@ export const useGetGuideById = (guideId) => {
     });
 }
 
-
 export const useGuideSearchQuery = (query) => {
+
     return useQuery({
-        queryKey: ["guide" ,"search" ,query],
-    queryFn: () => searchGuides(query),
+        queryKey: ["guide", "search", query],
+        queryFn: () => searchGuides(query),
         enabled: !!(query?.name?.length >= 2 || query?.regions?.length || query?.specialitiies?.length),
     })
+}
+
+export const useUpdateGuideProfile = () => {
+    const queryClient = useQueryClient();
+    
+    return useMutation({
+        mutationFn: ({ id, ...payload }) => updateGuide(id, payload),
+        onSuccess: (data, { id }) => {
+            queryClient.invalidateQueries({ queryKey: ["guide", id] });
+            queryClient.invalidateQueries({ queryKey: ["guides"] });
+        },
+    });
 }

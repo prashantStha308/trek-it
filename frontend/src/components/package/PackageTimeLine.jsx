@@ -4,10 +4,10 @@ import { formatDate } from "@/utils/utils.helper.js";
 export default function PackageTimeLine({ timeLines }) {
     return (
         <Card title="Timeline">
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-wrap gap-3">
                 {
                     timeLines.map((lbl) => (
-                        <div key={lbl.label} className="flex items-center gap-3">
+                        <div key={lbl.label} className="flex items-center gap-3 bg-primary/15 rounded-sm px-4 py-2">
                             <span className={`w-2 h-2 rounded-full shrink-0 ${lbl.color}`} />
                             <div>
                                 <p className="text-xs text-text/50 uppercase tracking-wide">

@@ -18,7 +18,7 @@ export default function GuidePackagesSection({ packages = [], isLoading = false,
     }
 
     return (
-        <section className="flex flex-col gap-4">
+        <section className="grid grid-cols-2 gap-4">
             {packages.map((pkg) => (
                 <PackageDetailedCard key={pkg?._id} item={pkg} />
             ))}
