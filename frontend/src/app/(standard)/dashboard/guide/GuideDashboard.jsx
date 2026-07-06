@@ -8,6 +8,7 @@ import RoleGuard from "@/components/auth/RoleGuard";
 
 import CollabRequests from "@/components/dashboard/CollabRequests";
 import CollaboratingPackages from "@/components/package/CollaboratingPackages";
+import CustomRequests from "@/components/dashboard/CustomRequests";
 
 export default function GuideDashboard({ user }) {
     return (
@@ -15,6 +16,7 @@ export default function GuideDashboard({ user }) {
             <section className="flex flex-col gap-20" >
                 <DashboardHero user={user} />
                 <UserBookings user={user} />
+                <CustomRequests />
                 <CollabRequests />
                 <CollaboratingPackages />
             </section>

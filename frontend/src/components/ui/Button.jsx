@@ -23,9 +23,10 @@ export const Button = ({
 
     return (
         <button
-            className={`border rounded-md ${THEME_SIZE[size]} cursor-pointer focus:outline-1 transition-colors ${THEME_COLOR[color][variant] } flex items-center justify-center gap-2 flex ${className ? className : "w-full" } `}
+            className={`border rounded-md ${THEME_SIZE[size]} focus:outline-1 transition-colors ${THEME_COLOR[color][variant]} flex items-center justify-center gap-2 flex ${className ? className : "w-full"} disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer`}
             type={type}
             onClick={onClick}
+            disabled={disabled}
         >
             {children}
         </button>

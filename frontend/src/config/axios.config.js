@@ -20,18 +20,17 @@ axiosInstance.interceptors.response.use((res) => res,
 
         const status = error.response.status;
         const message = error.response.data?.message || "Something went wrong";
-        
+
         if (status >= 500) {
             console.log("Server error:", status);
         } else if (status >= 400) {
             console.log("Client error:", status);
         }
 
-        return Promise.reject({
-            status,
-            message,
-            original: error
-        });
+        const err = new Error(message);
+        err.status = status;
+        err.original = error;
+        return Promise.reject(err);
     }
 )
 
