@@ -7,14 +7,14 @@ import {
 } from "lucide-react";
 import MiniCard from "@/components/ui/MiniCard";
 
-import { useDeletePackage } from "@/queries/review.query.js";
+import { useDeleteReview } from "@/queries/review.query.js";
 import { showToast } from "@/store/ui.store";
 
 
 
-export default function ReviewCard({review}){
+export default function ReviewCard({review, currentUser}){
 
-	const deletePackage = useDeletePackage(); 
+	const deletePackage = useDeleteReview(); 
 
 	const handleDelete = ()=> {
 		deletePackage.mutate(review._id,{
@@ -59,13 +59,16 @@ export default function ReviewCard({review}){
 						</button>
 
 					</section>
-
-					<button
-						className="p-2 rounded-full hover:bg-secondary/65 text-text/75 hover:text-text cursor-pointer"
-						onClick={handleDelete}
-					>
-						<Trash size={20} />
-					</button>
+					{
+						currentUser?._id === review?.reviewer?._id && (
+							<button
+								className="p-2 rounded-full hover:bg-secondary/65 text-text/75 hover:text-text cursor-pointer"
+								onClick={handleDelete}
+							>
+								<Trash size={20} />
+							</button>
+						)
+					}
 
 				</section>
 
@@ -85,8 +88,8 @@ export default function ReviewCard({review}){
 					</div>
 
 					<div className="flex gap-2" >
-						<span className="text-xs text-text/75" > Interativity </span>
-						<ReviewStars rating={review?.rating?.interativity} />
+						<span className="text-xs text-text/75" > Interactivity </span>
+						<ReviewStars rating={review?.rating?.interactivity} />
 					</div>
 				</section>
 

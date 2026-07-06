@@ -30,7 +30,13 @@ export const createBookingService = async (user, body, { guideId } = {}) => {
     const { packageId, date, groupSize, customRequest = null } = body;
 
 
-    const targetPackage = await Package.findById(packageId);
+    const targetPackage = await Package.findById(packageId).populate({
+        path: "guide",
+        select: "_id name role gender age"
+    });
+
+    console.log("targetPackage",targetPackage);
+
     if (!targetPackage) throw new ApiError(404, "Package not found");
 
     // check if user has booked any other package
@@ -186,7 +192,7 @@ export const cancleBookingService = async (bookingId, user) => {
 
     if (!booking) throw new ApiError(404, "Booking associated with provided Ids was not found");
 
-    const assignGuide = await Guide.findById(booking.guide);
+    const assignGuide = await Guide.findById(booking.guide).select("_id name role gender age daysBooked");
 
     // remove booked dates from guide
     const bookedDates = getNextNDates(

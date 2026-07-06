@@ -1,24 +1,28 @@
 "use client"
 import Image from "next/image";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 
 import {
     useGetPackageById,
     useGetPackageCollaborators,
 } from "@/queries/package.query";
+import { useGetMe } from "@/queries/auth.query.js";
+
 import { optimizeImageUrl } from "@/utils/utils.helper";
 
 import Badge from "@/components/ui/Badge";
-import {LinkButton} from "@/components/ui/Button";
+import {LinkButton, Button} from "@/components/ui/Button";
 
 import Avatar from "@/components/ui/Avatar";
 import MiniCard from "@/components/ui/MiniCard";
 
 import Reviews from "@/components/review/Reviews"
 import PackageDetails from "@/components/package/PackageDetails";
+import PackageTimeLine from "@/components/package/PackageTimeLine";
 
 
-function PackageGuides({pkg}){
+function PackageGuides({pkg, currentUser}){
 
     let {data:collaborators, isLoading} = useGetPackageCollaborators(pkg?._id);    
     collaborators = collaborators?.docs;
@@ -42,10 +46,40 @@ function PackageGuides({pkg}){
                 <div className="text-text/60 text-xs flex flex-wrap" >
                     {
                         isLoading ? "Loading..." :
-                        collaborators?.length <= 0 ? "No collaborations" : (collaborators?.map((collaborator, idex)=> <Avatar key={index} src={collaborator?.profilePicture?.src} size={"xs"} /> )) 
+                            collaborators?.length <= 0
+                            ? "No collaborations"
+                            :
+                            (
+                                collaborators?.slice(0,4)?.map((collaborator, index)=>(
+                                    <Link
+                                        key={index}
+                                        href={`/guide/${collaborator?._id}`}
+                                        className="hover:opacity-55 transition-all ease-in-out"
+                                    >
+                                        <Avatar  src={collaborator?.profilePicture?.src} size={"sm"} />
+                                    </Link>
+                                )
+                            )
+                        )
                     }
+                    {
+                        collaborators?.length > 4 && (
+                            <div className="rounded-full w-6 h-6 bg-secondary" >
+                                +{collaborators?.length - 4}
+                            </div>
+                        )
+                    }
+
                 </div>
             </section>
+
+            {
+                currentUser?.role === "guide" && !pkg?.collaborators?.includes(currentUser._id) &&(
+                    <LinkButton href={`/collaborate/${pkg?._id}`} variant={"outline"} color={"green"}  >
+                        Be a collaborator
+                    </LinkButton>
+                )
+            }
 
         </section>
     )
@@ -54,8 +88,18 @@ function PackageGuides({pkg}){
 export default function PackagePage() {
     const { packageId } = useParams();
     const { data, isLoading } = useGetPackageById(packageId);
+    const { data:me, isLoading: meIsLoading } = useGetMe();
 
     if (isLoading) return <p className="p-8 text-text/60">Loading...</p>;
+
+    console.log(typeof data?.daysAlloted, data?.daysAlloted)
+
+const timeLines = data?.stops?.slice(0, data?.daysAlloted)?.map((stop) => ({
+    label: `Day ${stop.day}`,
+    date: null,
+    location: stop.nearestCity?.name,
+    color: "bg-primary",
+})) || [];
 
     return (
         <section className="flex flex-col gap-6 px-4 pb-12 ">
@@ -130,15 +174,16 @@ export default function PackagePage() {
                 id="details"
                 className=" w-full flex flex-col items-start md:flex-row justify-evenly gap-16"
             >
-                <div className="flex-1 w-full" >
+                <div className="flex-1 flex flex-col gap-4 w-full" >
                     <PackageDetails pkg={data} />
+                    <PackageTimeLine timeLines={timeLines} />
                 </div>
 
                 <div className="w-xs" >
-                    <PackageGuides pkg={data} />
+                    <PackageGuides pkg={data} currentUser={me} />
                 </div>
-                
             </section>
+
 
             <Reviews resource={data} resourceType="package" />
 

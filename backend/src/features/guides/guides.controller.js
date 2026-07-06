@@ -5,8 +5,10 @@ import {
     getVerifiedGuidesService,
     getGuidesByRegionService,
     getGuidesBySpecialityService,
+
     verifyGuideService,
     rejectGuideService,
+    
     updateGuideProfileService,
     getGuideStatsService,
     deleteGuideService,
@@ -155,6 +157,21 @@ export const rejectGuide = async (req, res, next) => {
     } catch (err) {
         next(err);
     }
+};
+
+
+export const getGuideCollaborations = async (req, res) => {
+    const guideProfile = await Guide.findById(req.params.guideId)
+        .populate({
+            path: "collaborations",
+            select: "name thumbnail regions daysAlloted guide isActive startingPrice pricePerPerson"
+        })
+        .lean();
+    if (!guideProfile) throw new ApiError(404, "Guide not found");
+    return ApiResponse.success(res, {
+        data: guideProfile.collaborations,
+        message: "Guide collaborations retrieved successfully"
+    });
 };
 
 // ============================================================================================

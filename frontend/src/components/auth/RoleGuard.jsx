@@ -3,6 +3,8 @@ import { useGetMe } from "@/queries/auth.query";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
+import {showToast} from "@/store/ui.store.js";
+
 export default function RoleGuard({ children, roles = [] }) {
     const { data: user, isLoading } = useGetMe();
     const router = useRouter();
@@ -16,7 +18,15 @@ export default function RoleGuard({ children, roles = [] }) {
     }, [isLoading, isAllowed, router]);
 
     if (isLoading) return "Loading...";
-    if (!isAllowed) return null;
+    if (!isAllowed){
+
+        showToast({
+            title: "Forbidden action",
+            message: "You are forbidden from accessing this page"
+        })
+
+        return null;
+    }
 
     return children;
 }

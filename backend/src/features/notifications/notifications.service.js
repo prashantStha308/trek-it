@@ -24,8 +24,10 @@ export const sendNotificationService = async (event, recipientId, {
     const io = getIo();
     const finalEvent = `notification:${event}`;
 
+    console.log("recipientId", recipientId)
+
     let notification = {
-        recipientId,
+        recipient: recipientId,
         title,
         message,
         link,

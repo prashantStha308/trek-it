@@ -42,7 +42,7 @@ export const LinkButton = ({ variant = "default", color="green", size="sm" , hre
             href={href}
             className={`border rounded-md ${THEME_SIZE[size]} cursor-pointer focus:outline-1 transition-colors ${THEME_COLOR[color][variant]} flex items-center justify-between flex justify-center`}
         >
-            <div onClick={()=> setIsSearchModalOpen(false)} >
+            <div onClick={()=> setIsSearchModalOpen(false) } >
                 {children}
             </div>
         </Link>

@@ -43,6 +43,7 @@ const API_ROUTES = {
 	GUIDE: {
 		GET_ALL: (query) => resolveRoute("/guide", null, query),
 		GET: (id) => resolveRoute("/guide", id),
+        GET_COLLABORATIONS: (guideId) => resolveRoute("/guide", `${guideId}/collaborations`),
         SEARCH: (query) => resolveRoute("/guide/search", null, query),
         BASE: "/guide"
 	},
@@ -108,7 +109,22 @@ const API_ROUTES = {
         REGIONS: (query) => resolveRoute("/meta/regions", null, query),
         ACTIVITIES:(query) => resolveRoute("meta/activities", null, query),
         SPECIALITIES: (query) => resolveRoute("meta/specialities", null, query),
-    }
+    },
+    COLLAB: {
+        GET_ALL: (query) => resolveRoute("/collaboration", null, query),
+        GET_MINE: (query) => resolveRoute("/collaboration/mine", null, query),
+        GET_COLLABORATING_PACKAGES: () => resolveRoute("/collaboration/packages"),
+
+        CREATE: "/collaboration",
+        
+        ACCEPT: (requestId) => resolveRoute("/collaboration", `${requestId}/accept`),
+        REJECT: (requestId) => resolveRoute("/collaboration", `${requestId}/reject`),
+        
+        WITHDRAW: (requestId) => resolveRoute("/collaboration", requestId),
+        BASE: "/collaboration",
+    },
+ 
+
 }
 
 export default API_ROUTES;

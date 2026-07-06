@@ -7,6 +7,7 @@ import {
 
 import {
     createBooking,
+    
     getUserBookings,
     getBookingById,
     getActiveBookings,
@@ -34,8 +35,6 @@ export const useCreateBooking = () => {
             });
         },
         onError: (error) => {
-
-            console.error(error)
             showToast({
                 title: "Booking failed",
                 message: error?.message || "Unable to create your booking right now."
