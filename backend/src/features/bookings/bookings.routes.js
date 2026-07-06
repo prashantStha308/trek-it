@@ -26,7 +26,7 @@ bookingR.get('/', validateBookingQuery, validate, authorize(["tourist"]), getAll
 bookingR.get('/active', validateBookingQuery, validate, authorize(), getActiveBookings);
 
 // create booking
-bookingR.post('/', validateBookingBody, validate, authorize(["admin", "tourist", "guide"]), createBooking);
+bookingR.post('/', validateBookingBody, validate, authorize(["admin", "tourist"]), createBooking);
 
 // dynamic routes
 bookingR.get('/:bookingId', validateBookingParams, validateBookingQuery, validate, authorize(), getBookingById);

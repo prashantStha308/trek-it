@@ -15,7 +15,7 @@ const createEmptyStop = ({ stopIndex, nearestCity = null, type = "meetpoint" }) 
 });
 
 
-function ItineraryStop({ stop, stopIndex, onStopChange, onStopRemove, onAddStop, isLastStop }) {
+function ItineraryStop({ stop, stopIndex, onStopChange, onStopRemove, onAddStop, isLastStop, atLimit }) {
 
     const handleFieldChange = ({ target: { name, value } }) => {
         onStopChange(stopIndex, { ...stop, [name]: value });
@@ -111,7 +111,7 @@ function ItineraryStop({ stop, stopIndex, onStopChange, onStopRemove, onAddStop,
                     setCity={handleNearestCityChange}
                 />
 
-                {isLastStop && (
+                {isLastStop && !atLimit && (
                     <Button
                         type="button"
                         size="sm"
@@ -128,20 +128,23 @@ function ItineraryStop({ stop, stopIndex, onStopChange, onStopRemove, onAddStop,
     );
 }
 
-export default function ItineraryBuilder({ stops, onChange }) {
+export default function ItineraryBuilder({ stops, daysAlloted, onChange }) {
+
+    const atLimit = daysAlloted > 0 && stops.length >= daysAlloted;
 
     const handleAddStop = () => {
-    	const lastStop = stops[stops.length - 1];
+        if (atLimit) return;
 
-	        onChange([
-	        	...stops,
-	        	createEmptyStop({
-		        	stopIndex: stops.length,
-		        	nearestCity: lastStop?.nearestCity ?? null,
-		        	type: lastStop?.type ?? "meetpoint" 
-		        })
-		    ]
-		);
+        const lastStop = stops[stops.length - 1];
+
+        onChange([
+            ...stops,
+            createEmptyStop({
+                stopIndex: stops.length,
+                nearestCity: lastStop?.nearestCity ?? null,
+                type: lastStop?.type ?? "meetpoint" 
+            })
+        ]);
     };
 
     const handleStopChange = (stopIndex, updatedStop) => {
@@ -180,9 +183,16 @@ export default function ItineraryBuilder({ stops, onChange }) {
                             onStopRemove={handleStopRemove}
                             onAddStop={handleAddStop}
                             isLastStop={stopIndex === stops.length - 1}
+                            atLimit={atLimit}
                         />
                     ))}
                 </div>
+            )}
+
+            {atLimit && (
+                <p className="text-xs text-text/50 pl-1">
+                    Max stops ({daysAlloted}) reached for the days allotted.
+                </p>
             )}
 
         </div>

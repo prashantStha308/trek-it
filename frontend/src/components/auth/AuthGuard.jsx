@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 
 import { useGetMe } from "@/queries/auth.query";
 
+import {showToast} from "@/store/ui.store.js";
+
 export default function AuthGuard({ children }) {
   const router = useRouter();
   const { data: user, isLoading, isError } = useGetMe();
@@ -23,7 +25,14 @@ export default function AuthGuard({ children }) {
     );
   }
 
-  if (!user) return null;
+  if (!user){
+    showToast({
+      title: "Login to continue",
+      message: "You must login to access this page"
+    })
+
+    return null;
+  }
 
   return children;
 }

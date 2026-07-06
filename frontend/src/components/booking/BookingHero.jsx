@@ -9,7 +9,7 @@ export default function BookingHero({booking}) {
     return(
         <section className="relative h-96 w-full overflow-hidden isolate">
             <Image
-                src={booking?.package?.thumbnail}
+                src={booking?.package?.thumbnail?.src}
                 alt={booking?.package?.name}
                 width={400}
                 height={400}

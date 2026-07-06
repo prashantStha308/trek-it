@@ -221,6 +221,7 @@ export default function CreatePackagePage() {
 
                     <ItineraryBuilder
                         stops={formData.stops}
+                        daysAlloted={Number(formData.daysAlloted)}
                         onChange={(value) => set("stops", value)}
                     />
 
