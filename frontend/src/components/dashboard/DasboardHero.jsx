@@ -10,6 +10,8 @@ export default function DashboardHero({ user }) {
 	const router = useRouter();
 
 	const handleLogout = () => {
+
+		
 		logout.mutate( undefined,{
 			onSettled: () => router.push("/")
 		} );

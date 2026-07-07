@@ -69,24 +69,17 @@ export default function PackageCard({ item }) {
 
                 <div className="flex items-center gap-2">
                     <Avatar src={item?.guide?.profilePicture?.src} alt={item?.guide?.name} size={"xs"} />
-                    <span className="text-xs text-text/75">{item?.guide?.name}</span>
+                    <Link
+                        href={`/guide/${item?.guide?._id}`}
+                        className="text-xs text-text/75 hover:underline"
+                    >
+                        {item?.guide?.name}
+                    </Link>
                 </div>
 
                 <BadgeRow variant="green" items={item?.guide?.languages} />
 
                 <BadgeRow variant="blue" items={item?.regions} />
-
-{/*                <div className="flex flex-wrap gap-1">
-                    {item?.guide?.languages.map((lang, index) => (
-                        <Badge key={index} size="sm" variant="green" > {lang} </Badge>
-                    ))}
-                </div>
-
-                <div className="flex flex-wrap gap-1">
-                    {item?.regions.map((region, index) => (
-                        <Badge key={index} size="sm" variant="blue" > {region} </Badge>
-                    ))}
-                </div>*/}
 
                 <div className="border-t border-black/8 pt-3 flex justify-between items-center">
                     <div>

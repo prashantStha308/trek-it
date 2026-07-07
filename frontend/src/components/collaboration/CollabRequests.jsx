@@ -20,9 +20,9 @@ import {
 const VIEWS = ["incoming", "outgoing"];
 
 const STATUS_BADGE_MAP = {
-    pending:  { label: "Pending",  color: "yellow" },
-    accepted: { label: "Accepted", color: "green"  },
-    rejected: { label: "Rejected", color: "red"    },
+    pending:  { label: "Pending",  color: "amber", bg: "bg-amber-400/20", border: "border-amber-400" },
+    accepted: { label: "Accepted", color: "green" , bg: "bg-primary/20", border: "border-primary" },
+    rejected: { label: "Rejected", color: "red", bg: "bg-red-500/20 ", border: "border-red-500" },
 };
 
 function EmptyState({ view }) {
@@ -59,6 +59,7 @@ function IncomingRequestCard({ request }) {
  
     const isPending = request?.status === "pending";
     const statusBadge = STATUS_BADGE_MAP[request?.status];
+
  
     return (
         <motion.article
@@ -67,10 +68,12 @@ function IncomingRequestCard({ request }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.18 }}
-            className="border border-secondary rounded-lg overflow-hidden"
+             className={`border ${statusBadge.border} rounded-lg overflow-hidden`}
         >
             {/* Package banner */}
-            <div className="flex items-center justify-between px-4 py-2 bg-secondary/20 border-b border-secondary">
+            <div
+                className={`flex items-center justify-between px-4 py-2 ${statusBadge.bg} border-b ${statusBadge.border}`}
+            >
                 <div className="flex items-center gap-2">
                     {request?.package?.thumbnail?.src && (
                         <Image
@@ -93,7 +96,7 @@ function IncomingRequestCard({ request }) {
                         </span>
                     </div>
                 </div>
-                <Badge color={statusBadge.color}>
+                <Badge variant={statusBadge.color}>
                     {statusBadge.label}
                 </Badge>
             </div>
@@ -155,13 +158,16 @@ function OutgoingRequestCard({ request }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.18 }}
-            className="border border-secondary rounded-lg overflow-hidden"
+            className={`border ${statusBadge.border} rounded-lg overflow-hidden`}
         >
             {/* Package banner */}
-            <div className="flex items-center justify-between px-4 py-2 bg-secondary/20 border-b border-secondary">
+            <div
+                className={`flex items-center justify-between px-4 py-2 ${statusBadge.bg} border-b ${statusBadge.border} `}>
                 <div className="flex items-center gap-2">
                     {request?.package?.thumbnail?.src && (
-                        <img
+                        <Image
+                            width={700}
+                            height={450}
                             src={request.package.thumbnail.src}
                             alt={request.package.name}
                             className="w-8 h-8 rounded-md object-cover"
@@ -170,7 +176,7 @@ function OutgoingRequestCard({ request }) {
                     <div className="flex flex-col">
                         <Link
                             className="text-sm font-semibold text-text hover:underline"
-                            hresf={`/explore/package/${request?.package?._id}`}
+                            href={`/explore/package/${request?.package?._id}`}
                         >
                             {request?.package?.name}
                         </Link>
@@ -179,7 +185,7 @@ function OutgoingRequestCard({ request }) {
                         </span>
                     </div>
                 </div>
-                <Badge color={statusBadge.color}>
+                <Badge variant={statusBadge.color}>
                     {statusBadge.label}
                 </Badge>
             </div>
@@ -233,20 +239,22 @@ export default function CollabRequests() {
             </div>
 
             <div className="flex items-center gap-1.5">
-                {VIEWS.map((view) => {
-                    const pendingCount = view === "incoming" ? pendingIncomingCount : pendingOutgoingCount;
-                    return (
-                        <Button
-                            key={view}
-                            variant={activeView === view ? "primary" : "outline"}
-                            color="green"
-                            onClick={() => setActiveView(view)}
-                            className="w-auto capitalize"
-                        >
-                            {pendingCount > 0 ? `${view} (${pendingCount})` : view}
-                        </Button>
-                    );
-                })}
+                {
+                    VIEWS.map((view) => {
+                        const pendingCount = view === "incoming" ? pendingIncomingCount : pendingOutgoingCount;
+                        return (
+                            <Button
+                                key={view}
+                                variant={activeView === view ? "primary" : "outline"}
+                                color="green"
+                                onClick={() => setActiveView(view)}
+                                className="w-auto capitalize"
+                            >
+                                {pendingCount > 0 ? `${view} (${pendingCount})` : view}
+                            </Button>
+                        );
+                    })
+                }
             </div>
 
             <section>

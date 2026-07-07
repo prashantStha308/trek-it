@@ -24,13 +24,13 @@ function BadgeRow({ items = [], variant = "green", limit = 4 }) {
     );
 }
 
-export default function PackageDetailedCard({ item }) {
+export default function PackageDetailedCard({ item, me }) {
     const stopCount = item?.stops?.length || 0;
 
     return (
-        <article className="w-full bg-secondary/16 rounded-xl border border-black/10 overflow-hidden flex flex-col sm:flex-row">
+        <article className="w-lg bg-secondary/16 rounded-xl border border-black/10 overflow-hidden flex flex-col">
 
-            <div className="relative w-full sm:w-64 h-52 sm:h-auto shrink-0 bg-black/15">
+            <div className="relative w-full h-44  shrink-0 bg-black/15">
                 <Image
                     src={optimizeImageUrl(item?.thumbnail?.src ?? item?.thumbnail, 800) || "/assets/svg/placeholder-white.svg"}
                     alt={item?.name}
@@ -54,12 +54,6 @@ export default function PackageDetailedCard({ item }) {
                     <p className="text-base font-medium text-text leading-snug">
                         {item?.name}
                     </p>
-                    <div className="flex flex-col items-end shrink-0">
-                        <p className="text-xs text-text/75">Starting from</p>
-                        <p className="text-base font-medium text-text">
-                            NRS. {item?.startingPrice}
-                        </p>
-                    </div>
                 </div>
 
                 <p className="text-sm text-text/70 line-clamp-2">
@@ -99,14 +93,37 @@ export default function PackageDetailedCard({ item }) {
                     </div>
                 )}
 
-                <div className="border-t border-black/8 pt-3 flex justify-end">
-                    <LinkButton
-                        href={`/explore/packages/${item?._id}`}
-                        variant="primary"
-                        size="md"
-                    >
-                        View Package
-                    </LinkButton>
+                <div className="flex flex-row-reverse justify-between pt-2 border-t border-text/15" >
+                    <div className=" pt-3 gap-4 flex justify-end">
+                        {
+                            (me && me?._id === item?.guide?._id) && (
+                                <LinkButton
+                                    href={`/explore/packages/${item?._id}/edit`}
+                                    variant="primary"
+                                    color={"blue"}
+                                    size="md"
+                                >
+                                    Edit Package
+                                </LinkButton>
+
+                            )
+                        }
+
+                        <LinkButton
+                            href={`/explore/packages/${item?._id}`}
+                            variant="primary"
+                            size="md"
+                        >
+                            View Package
+                        </LinkButton>
+                    </div>
+
+                    <div className="flex flex-col items-end shrink-0">
+                        <p className="text-xs text-text/65">Starting from</p>
+                        <p className="text-base font-medium text-text">
+                            NRS. {item?.startingPrice}
+                        </p>
+                    </div>
                 </div>
 
             </div>

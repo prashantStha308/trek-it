@@ -1,3 +1,4 @@
+import {mongoose} from "mongoose";
 // Models
 import { User } from "../../models/index.js";
 // helpers

@@ -15,9 +15,23 @@ const createEmptyStop = ({ stopIndex, nearestCity = null, type = "meetpoint" }) 
 });
 
 
-function ItineraryStop({ stop, stopIndex, onStopChange, onStopRemove, onAddStop, isLastStop, atLimit }) {
+function ItineraryStop({ stop, stopIndex, onStopChange, onStopRemove, onAddStop, isLastStop, daysAlloted }) {
 
     const handleFieldChange = ({ target: { name, value } }) => {
+        if (name === "day") {
+            let day = Number(value);
+
+            if (daysAlloted > 0 && day > daysAlloted) {
+                day = daysAlloted;
+            }
+            if (day < 1) {
+                day = value === "" ? "" : 1;
+            }
+
+            onStopChange(stopIndex, { ...stop, day });
+            return;
+        }
+
         onStopChange(stopIndex, { ...stop, [name]: value });
     };
 
@@ -62,6 +76,8 @@ function ItineraryStop({ stop, stopIndex, onStopChange, onStopRemove, onAddStop,
                     placeholder="1"
                     value={stop.day}
                     handleChange={handleFieldChange}
+                    min={1}
+                    max={daysAlloted > 0 ? daysAlloted : undefined}
                 />
 
                 <div className="flex flex-col gap-1 w-full">
@@ -111,7 +127,7 @@ function ItineraryStop({ stop, stopIndex, onStopChange, onStopRemove, onAddStop,
                     setCity={handleNearestCityChange}
                 />
 
-                {isLastStop && !atLimit && (
+                {isLastStop && (
                     <Button
                         type="button"
                         size="sm"
@@ -130,20 +146,24 @@ function ItineraryStop({ stop, stopIndex, onStopChange, onStopRemove, onAddStop,
 
 export default function ItineraryBuilder({ stops, daysAlloted, onChange }) {
 
-    const atLimit = daysAlloted > 0 && stops.length >= daysAlloted;
-
     const handleAddStop = () => {
-        if (atLimit) return;
-
         const lastStop = stops[stops.length - 1];
+
+        let nextDay = stops.length + 1;
+        if (daysAlloted > 0 && nextDay > daysAlloted) {
+            nextDay = daysAlloted;
+        }
 
         onChange([
             ...stops,
-            createEmptyStop({
-                stopIndex: stops.length,
-                nearestCity: lastStop?.nearestCity ?? null,
-                type: lastStop?.type ?? "meetpoint" 
-            })
+            {
+                ...createEmptyStop({
+                    stopIndex: stops.length,
+                    nearestCity: lastStop?.nearestCity ?? null,
+                    type: lastStop?.type ?? "meetpoint"
+                }),
+                day: nextDay,
+            }
         ]);
     };
 
@@ -183,16 +203,10 @@ export default function ItineraryBuilder({ stops, daysAlloted, onChange }) {
                             onStopRemove={handleStopRemove}
                             onAddStop={handleAddStop}
                             isLastStop={stopIndex === stops.length - 1}
-                            atLimit={atLimit}
+                            daysAlloted={daysAlloted}
                         />
                     ))}
                 </div>
-            )}
-
-            {atLimit && (
-                <p className="text-xs text-text/50 pl-1">
-                    Max stops ({daysAlloted}) reached for the days allotted.
-                </p>
             )}
 
         </div>

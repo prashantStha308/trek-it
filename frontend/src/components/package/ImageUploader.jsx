@@ -3,7 +3,6 @@ import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { Star, Trash2, Upload } from "lucide-react";
 
-const MAX_IMAGES = 5;
 
 const createImageEntry = (file, isThumbnail = false) => ({
     file,
@@ -11,7 +10,7 @@ const createImageEntry = (file, isThumbnail = false) => ({
     isThumbnail,
 });
 
-export default function ImageUploader({ onChange }) {
+export default function ImageUploader({ onChange, maxImage = 5 }) {
     const [uploadedImages, setUploadedImages] = useState([]);
     const [isDraggingOver, setIsDraggingOver] = useState(false);
     const fileInputRef = useRef();
@@ -34,7 +33,7 @@ export default function ImageUploader({ onChange }) {
         );
 
         setUploadedImages((previousImages) => {
-            const remainingSlotsCount = MAX_IMAGES - previousImages.length;
+            const remainingSlotsCount = maxImage - previousImages.length;
             const filesToAdd = validImageFiles.slice(0, remainingSlotsCount);
             const hasExistingThumbnail = previousImages.some((image) => image.isThumbnail);
 
@@ -98,13 +97,13 @@ export default function ImageUploader({ onChange }) {
         notifyParent(updatedImages);
     };
 
-    const isAtMaxCapacity = uploadedImages.length >= MAX_IMAGES;
+    const isAtMaxCapacity = uploadedImages.length >= maxImage;
 
     return (
         <div className="flex flex-col gap-3 w-full">
             <label className="text-xs text-text/75 pl-1">
                 Photos <span className="text-red-500">*</span>
-                <span className="text-text/40 ml-1">({uploadedImages.length}/{MAX_IMAGES} — star one as thumbnail)</span>
+                <span className="text-text/40 ml-1">({uploadedImages.length}/{maxImage} — star one as thumbnail)</span>
             </label>
 
             {!isAtMaxCapacity && (
@@ -121,7 +120,7 @@ export default function ImageUploader({ onChange }) {
                 >
                     <Upload size={22} />
                     <span className="text-sm">Drop images here</span>
-                    <span className="text-xs text-text/30">MAX {MAX_IMAGES} images</span>
+                    <span className="text-xs text-text/30">MAX {maxImage} images</span>
 
                     <input
                         ref={fileInputRef}
@@ -148,7 +147,7 @@ export default function ImageUploader({ onChange }) {
                                 height={700}
                                 src={image.previewUrl}
                                 alt={`Upload ${imageIndex + 1}`}
-                                className="w-full h-24 object-cover"
+                                className="w-full h-56 object-cover"
                                 unoptimized
                             />
 

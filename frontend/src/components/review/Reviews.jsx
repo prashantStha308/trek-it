@@ -44,12 +44,12 @@ export default function Reviews({ resource, resourceType }){
 				{
 					isLoading ? <span> Loading... </span>
 					: (
-						reviews.length > 0 ? (
+						reviews?.length > 0 ? (
 							<section
 								className="grid grid-cols-1 md:grid-cols-2 gap-8"
 							>
 								{
-									reviews.map((review, index) => <ReviewCard key={index} review={review} currentUser={me} />)
+									reviews?.map((review, index) => <ReviewCard key={index} review={review} currentUser={me} />)
 								}
 							</section>
 						) : (
