@@ -6,7 +6,8 @@ import { authorize } from "../../middlewares/authorize.js";
 import {
 	validateUserBody,
 	validateUserQuery,
-	validateUserParams
+	validateUserParams,
+	validateTouristUpdateBody
 } from "../../middlewares/validation/index.js"
 import validate from "../../middlewares/validate.middleware.js";
 // Controller
@@ -25,7 +26,7 @@ userR.get("/", validateUserQuery, validate, getAllUsers);
 userR.get("/me", authorize(), getMe );
 
 // UPDATE
-userR.patch("/", authorize(), validateUserBody, validate, bufferUpload.single("profilePicture"),  updateUser);
+userR.patch("/", authorize(), validateTouristUpdateBody, validate, bufferUpload.single("profilePicture"),  updateUser);
 
 //DELETE
 userR.delete("/", authorize(), deleteUser);

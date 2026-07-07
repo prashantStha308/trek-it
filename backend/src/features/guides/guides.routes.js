@@ -7,10 +7,13 @@ import {
     getVerifiedGuides,
     getGuidesByRegion,
     getGuidesBySpeciality,
+    getGuideStats,
+    getGuideCollaborations,
+
     verifyGuide,
     rejectGuide,
+    
     updateGuideProfile,
-    getGuideStats,
     deleteGuide,
     searchGuides,
     getUnverifiedGuides,
@@ -49,6 +52,8 @@ guidesR.get("/:id", getGuideById);
 // GET guide statistics
 // GET /api/guides/:id/stats
 guidesR.get("/:id/stats", getGuideStats);
+
+guidesR.get("/:guideId/collaborations", getGuideCollaborations);
 
 // ============================================================================================
 // ADMIN ONLY ROUTES - Requires admin authorization

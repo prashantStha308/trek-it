@@ -69,7 +69,7 @@ export const useUpdateReview = ()=>{
 	})
 }
 
-export const useDeletePackage = ()=>{
+export const useDeleteReview = ()=>{
 	return useMutation({
 		mutationFn: (id) => deleteReview(id)
 	})

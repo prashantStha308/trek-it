@@ -22,11 +22,11 @@ import {
 
 const bookingR = express.Router();
 
-bookingR.get('/', validateBookingQuery, validate, authorize(), getAllBooking);
-bookingR.get('/active', validateBookingQuery, validate, authorize(["guide", "admin"]), getActiveBookings);
+bookingR.get('/', validateBookingQuery, validate, authorize(["tourist"]), getAllBooking);
+bookingR.get('/active', validateBookingQuery, validate, authorize(), getActiveBookings);
 
 // create booking
-bookingR.post('/', validateBookingBody, validate, authorize(["admin", "tourist", "guide"]), createBooking);
+bookingR.post('/', validateBookingBody, validate, authorize(["admin", "tourist"]), createBooking);
 
 // dynamic routes
 bookingR.get('/:bookingId', validateBookingParams, validateBookingQuery, validate, authorize(), getBookingById);

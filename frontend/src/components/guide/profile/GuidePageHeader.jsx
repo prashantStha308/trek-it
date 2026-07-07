@@ -1,71 +1,75 @@
-import {useRouter} from "next/navigation";
-
+import { useRouter } from "next/navigation";
 import useChatStore from "@/store/chat/chat.store.js";
-import {
-  useGetOrCreateDirectChat,
-} from "@/queries/chat.query.js"
-import {useGetMe} from "@/queries/auth.query.js";
+import { useGetOrCreateDirectChat } from "@/queries/chat.query.js";
+import { useGetMe } from "@/queries/auth.query.js";
 import { showToast } from "@/store/ui.store";
-
-
 import Avatar from "@/components/ui/Avatar";
-import {Button} from "@/components/ui/Button";
+import { Button } from "@/components/ui/Button";
+import { Mountain } from "lucide-react";
 
+import GuideNameBadges from "./GuideNameBadges";
+import GuideMetaRow from "./GuideMetaRow";
+import GuideStatsRow from "./GuideStatsRow";
+import GuideAvailabilityBadge from "./GuideAvailabilityBadge";
+import GuideTagSection from "./GuideTagSection";
 
 export default function GuidePageHeader({ guide }) {
-  const openDirectChat = useChatStore(store => store.openDirectChat);
-  const { data:me, isLoading } = useGetMe();
+    const openDirectChat = useChatStore(store => store.openDirectChat);
+    const { data: me, isLoading } = useGetMe();
+    const router = useRouter();
 
-  const router = useRouter();
+    const handleChatWithGuide = () => {
+        if (!me) {
+            showToast({
+                title: "Cannot perform this action",
+                message: "Please login to use this feature"
+            });
 
-  const handleChatWithGuide = () => {
-    if(!me){
-      showToast({
-        title: "Cannot perform this action",
-        message: "Please login to use this feature"
-      });
+            return;
+        }
+        openDirectChat(guide, () => {
+            router.push('/chat');
+        });
+    };
 
-      return;
-    }
+    return (
+        <header className="flex flex-col md:flex-row items-center gap-8 md:px-24">
+            <Avatar src={guide?.profilePicture?.src} size={"lg"} />
 
-      openDirectChat(guide, () => {
-          router.push('/chat');
-      });
-  };
+            <section className="flex flex-col gap-4 flex-1">
 
-  return (
-    <header className="flex items-start gap-14 px-52 ">
-      <Avatar src={guide?.profilePicture?.src} size={"lg"} />
+                <section className="flex flex-col gap-1">
+                    <div className="flex items-center justify-between gap-4">
+                        <GuideNameBadges guide={guide} />
 
-      <section className="flex flex-col gap-4">
-        <section className="flex flex-col gap-0.5">
-          <h1 className="text-3xl text-primary font-bold font-mono">
-            {" "}
-            {guide?.name}{" "}
-          </h1>
-          <span className="capitalize text-sm text-text/60">
-            {" "}
-            {guide?.role}{" "}
-          </span>
-          {/*<span className="capitalize text-sm text-text/60" > {guide?.email} </span>*/}
-        </section>
+                        <Button
+                            variant={"primary"}
+                            color={"green"}
+                            size="md"
+                            className={"w-fit shrink-0"}
+                            onClick={handleChatWithGuide}
+                        >
+                            Chat with Guide
+                        </Button>
+                    </div>
 
-        <textarea
-          className="text-sm text-text/85 resize-none w-sm outline-none caret-transparent"
-          value={guide?.description || "User has not set a description"}
-          readOnly
-        ></textarea>
-      </section>
+                    <GuideMetaRow guide={guide} />
+                    <GuideStatsRow guide={guide} />
+                    <GuideAvailabilityBadge guide={guide} />
+                </section>
 
-      <Button
-        variant={"primary"}
-        color={"green"}
-        size="md"
-        className={"w-fit"}
-        onClick={handleChatWithGuide}
-      >
-        Chat with Guide
-      </Button>
-    </header>
-  );
+                <p className="text-sm text-text/85">
+                    {guide?.aboutMe || "User has not set a description"}
+                </p>
+
+                <div className="flex flex-wrap gap-6">
+                    <GuideTagSection title="Regions" items={guide?.regions} variant="blue" icon={Mountain} />
+                    <GuideTagSection title="Languages" items={guide?.languages} variant="default" capitalize />
+                    <GuideTagSection title="Specialities" items={guide?.specialities} variant="green" capitalize />
+
+                </div>
+
+            </section>
+        </header>
+    );
 }

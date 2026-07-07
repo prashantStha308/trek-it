@@ -4,6 +4,7 @@ const nextConfig = {
   /* config options here */
  reactStrictMode: false,
   images: {
+    unoptimized: true,
     loader: 'custom',
     loaderFile: './config/imgLoader.js',
     remotePatterns: [

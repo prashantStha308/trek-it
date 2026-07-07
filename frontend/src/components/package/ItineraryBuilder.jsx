@@ -15,9 +15,23 @@ const createEmptyStop = ({ stopIndex, nearestCity = null, type = "meetpoint" }) 
 });
 
 
-function ItineraryStop({ stop, stopIndex, onStopChange, onStopRemove, onAddStop, isLastStop }) {
+function ItineraryStop({ stop, stopIndex, onStopChange, onStopRemove, onAddStop, isLastStop, daysAlloted }) {
 
     const handleFieldChange = ({ target: { name, value } }) => {
+        if (name === "day") {
+            let day = Number(value);
+
+            if (daysAlloted > 0 && day > daysAlloted) {
+                day = daysAlloted;
+            }
+            if (day < 1) {
+                day = value === "" ? "" : 1;
+            }
+
+            onStopChange(stopIndex, { ...stop, day });
+            return;
+        }
+
         onStopChange(stopIndex, { ...stop, [name]: value });
     };
 
@@ -62,6 +76,8 @@ function ItineraryStop({ stop, stopIndex, onStopChange, onStopRemove, onAddStop,
                     placeholder="1"
                     value={stop.day}
                     handleChange={handleFieldChange}
+                    min={1}
+                    max={daysAlloted > 0 ? daysAlloted : undefined}
                 />
 
                 <div className="flex flex-col gap-1 w-full">
@@ -128,20 +144,27 @@ function ItineraryStop({ stop, stopIndex, onStopChange, onStopRemove, onAddStop,
     );
 }
 
-export default function ItineraryBuilder({ stops, onChange }) {
+export default function ItineraryBuilder({ stops, daysAlloted, onChange }) {
 
     const handleAddStop = () => {
-    	const lastStop = stops[stops.length - 1];
+        const lastStop = stops[stops.length - 1];
 
-	        onChange([
-	        	...stops,
-	        	createEmptyStop({
-		        	stopIndex: stops.length,
-		        	nearestCity: lastStop?.nearestCity ?? null,
-		        	type: lastStop?.type ?? "meetpoint" 
-		        })
-		    ]
-		);
+        let nextDay = stops.length + 1;
+        if (daysAlloted > 0 && nextDay > daysAlloted) {
+            nextDay = daysAlloted;
+        }
+
+        onChange([
+            ...stops,
+            {
+                ...createEmptyStop({
+                    stopIndex: stops.length,
+                    nearestCity: lastStop?.nearestCity ?? null,
+                    type: lastStop?.type ?? "meetpoint"
+                }),
+                day: nextDay,
+            }
+        ]);
     };
 
     const handleStopChange = (stopIndex, updatedStop) => {
@@ -180,6 +203,7 @@ export default function ItineraryBuilder({ stops, onChange }) {
                             onStopRemove={handleStopRemove}
                             onAddStop={handleAddStop}
                             isLastStop={stopIndex === stops.length - 1}
+                            daysAlloted={daysAlloted}
                         />
                     ))}
                 </div>

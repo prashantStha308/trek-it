@@ -34,7 +34,7 @@ export default function GuidePage() {
         >
             <GuidePageHeader guide={guide} />
 
-            <section className="flex flex-col gap-4 lg:px-52">
+            <section className="flex flex-col gap-4 lg:px-24">
                 <h2 className="text-2xl text-primary font-semibold text-text">
                     Packages
                 </h2>

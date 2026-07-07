@@ -44,15 +44,14 @@ export const useGetAllPackages = ({
 
 export const useGetPackageById = (packageId) => {
     const queryClient = useQueryClient();
-
     const cachedPackage = queryClient.getQueriesData({ queryKey: ["packages"] })
         .flatMap(([, data]) => data?.docs ?? [])
         .find(pkg => pkg._id === packageId);
 
     return useQuery({
-        queryKey: ["packages", packageId],
+        queryKey: ["packages", "byId", packageId],
         queryFn: () => getPackageById(packageId),
-        initialData: cachedPackage,
+        placeholderData: cachedPackage,
         enabled: !!packageId,
     });
 }
@@ -65,11 +64,11 @@ export const usePackageSearchQuery = (query) => {
     })
 }
 
-export const useGetGuidePackages = (guideId)=>{
+export const useGetGuidePackages = (guideId) => {
     return useQuery({
-        queryKey: ["packages", guideId],
-        queryFn: ()=> getGuidePackages(guideId)
-    })
+        queryKey: ["packages", "byGuide", guideId],
+        queryFn: () => getGuidePackages(guideId),
+    });
 }
 
 export const useGetPackageCollaborators = (pkgId) => {
@@ -79,13 +78,17 @@ export const useGetPackageCollaborators = (pkgId) => {
     })
 }
 
+
 // POST
-export const useCreatePackage = ()=>{
+export const useCreatePackage = () => {
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: (body) => createPackage(body),
-    })
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["packages"] });
+        },
+    });
 }
-
 
 // PUT
 export const useUpdatePackage = () => {
@@ -102,12 +105,13 @@ export const useUpdatePackage = () => {
 
 // DELETE
 export const useDeletePackage = () => {
-    const queryClient = useQueryClient()
-    
+    const queryClient = useQueryClient();
+
     return useMutation({
         mutationFn: (id) => deletePackage(id),
-        onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ["packages", id]})
-        }
-    })
+        onSuccess: (data, id) => {
+            queryClient.invalidateQueries({ queryKey: ["packages"] });
+            queryClient.removeQueries({ queryKey: ["packages", "byId", id] });
+        },
+    });
 }

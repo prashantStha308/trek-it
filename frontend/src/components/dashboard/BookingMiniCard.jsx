@@ -149,7 +149,9 @@ export default function BookingMiniCard({ booking }) {
           }
 
               <LinkButton href={`/booking/${booking?._id}`} size="sm" variant="outline">
-                    View details <ArrowRight size={12} />
+                <div className="flex  items-center gap-2" >
+                  View details <ArrowRight size={12} />
+                </div>
               </LinkButton>
 
         </section>

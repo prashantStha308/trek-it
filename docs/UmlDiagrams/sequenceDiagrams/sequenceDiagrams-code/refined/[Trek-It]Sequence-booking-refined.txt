@@ -1,0 +1,53 @@
+title Tourist Books a Package - Trek-It
+
+actor Tourist
+participant Frontend
+participant Booking
+participant Payment
+actor Guide
+
+
+Tourist->Frontend: Browse guides
+Frontend->Booking: GET /guides
+Booking-->Frontend: 200 OK - guides[]
+Frontend-->Tourist: Display guide listings
+
+Tourist->Frontend: Select guide
+Frontend->Booking: GET /guides/:id
+Booking-->Frontend: 200 OK - guide details
+Frontend-->Tourist: Display guide profile
+
+Tourist->Frontend: Click "Book Now"
+Frontend-->Tourist: Display booking form
+Tourist->Frontend: Submit booking form
+Frontend->Booking: POST /bookings
+
+alt guide available
+    Booking->Booking: Auto-assign guide
+    Booking->Guide: Send booking notification
+    Booking-->Frontend: 201 Created - booking details
+    Frontend-->Tourist: Booking confirmed, proceed to payment
+else guide unavailable
+    Booking-->Frontend: 409 Conflict - guide unavailable
+    Frontend-->Tourist: Show unavailability notice
+end
+
+Tourist->Frontend: Initialize payment
+Frontend->Payment: POST /payment/init
+Payment-->Frontend: 200 OK - checkout_url
+
+Frontend-->Tourist: Redirect to checkout page
+Tourist->Payment: Complete payment
+
+alt payment successful
+    Payment-->Booking: Payment confirmed - bookingId
+    Booking->Booking: Update booking status: PAID
+    Booking->Guide: Notify payment received
+    Booking-->Frontend: 200 OK - booking complete
+    Frontend-->Tourist: Return invoice
+else payment failed
+    Payment-->Booking: Payment failed - bookingId
+    Booking->Booking: Update booking status: CANCELLED
+    Booking-->Frontend: 402 Payment Required
+    Frontend-->Tourist: Show payment failure notice
+end

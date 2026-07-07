@@ -14,9 +14,10 @@ const collabRequestSchema = new mongoose.Schema({
 		type: String,
 		required: [true, ()=> requiredError("CollabRequest.description")]
 	},
-	isAccepted:{
-		type: Boolean,
-		default: false
+	status: {
+	    type: String,
+	    enum: ["pending", "accepted", "rejected"],
+	    default: "pending"
 	}
 },{
 	timestamps: true

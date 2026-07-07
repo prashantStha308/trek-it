@@ -122,7 +122,7 @@ export default function Navbar() {
           value={inputValue}
           onChange={handleSearchWords}
           onFocus={()=> setIsSearchModalOpen(true)}
-          onBlur={()=> setIsSearchModalOpen(false)}
+          // onBlur={()=> setIsSearchModalOpen(false)}
         />
 
       </div>

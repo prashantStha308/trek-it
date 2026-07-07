@@ -57,5 +57,14 @@ export const validateUserQuery = [
     query('age').optional().isInt({ min: 18, max: 80 }),
 ];
 
+export const validateTouristUpdateBody = [
+    body('name').optional().trim().escape().isLength({ min: 2, max: 50 }),
+    body('interests').optional().isArray(),
+    body('interests.*').trim().escape(),
+    body('preferredLanguages').optional().isArray(),
+    body('preferredLanguages.*').trim().escape(),
+];
+
+
 export const validateUserParams = mongoIdParam('userId');
 export const validateGuideParams = mongoIdParam('guideId');

@@ -23,9 +23,10 @@ export const Button = ({
 
     return (
         <button
-            className={`border rounded-md ${THEME_SIZE[size]} cursor-pointer focus:outline-1 transition-colors ${THEME_COLOR[color][variant] } flex items-center justify-center gap-2 flex ${className ? className : "w-full" } `}
+            className={`border rounded-md ${THEME_SIZE[size]} focus:outline-1 transition-colors ${THEME_COLOR[color][variant]} flex items-center justify-center gap-2 flex ${className ? className : "w-full"} disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer`}
             type={type}
             onClick={onClick}
+            disabled={disabled}
         >
             {children}
         </button>
@@ -42,7 +43,7 @@ export const LinkButton = ({ variant = "default", color="green", size="sm" , hre
             href={href}
             className={`border rounded-md ${THEME_SIZE[size]} cursor-pointer focus:outline-1 transition-colors ${THEME_COLOR[color][variant]} flex items-center justify-between flex justify-center`}
         >
-            <div onClick={()=> setIsSearchModalOpen(false)} >
+            <div onClick={()=> setIsSearchModalOpen(false) } >
                 {children}
             </div>
         </Link>

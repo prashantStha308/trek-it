@@ -1,16 +1,18 @@
 "use client";
-
 import { useGetMe } from "@/queries/auth.query";
 
-import UserBookings from "@/components/dashboard/UserBookings";
-import DashboardHero from "@/components/dashboard/DasboardHero";
 import RoleGuard from "@/components/auth/RoleGuard";
+
+import GuideDashboardHero from "@/components/dashboard/GuideDashboardHero";
+import GuideDashboardTab from "@/components/dashboard/guide/GuideDashboardTab";
+
+
 export default function GuideDashboard({ user }) {
     return (
         <RoleGuard roles={["guide"]}>
-            <section>
-                <DashboardHero user={user} />
-                <UserBookings user={user} />
+            <section className="flex flex-col gap-20" >
+                <GuideDashboardHero guide={user} />
+                <GuideDashboardTab user={user} />
             </section>
         </RoleGuard>
     );

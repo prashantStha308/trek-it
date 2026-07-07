@@ -25,7 +25,8 @@ export default function TextArea({
                     placeholder={placeholder}
                     value={value}
                     onChange = {handleChange}
-                    rows={4}
+                    rows={rows ?? 4}
+                    cols={cols}
                 />
             </div>
             

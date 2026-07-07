@@ -59,8 +59,9 @@ export const getAllBooking = async (req, res) => {
 }
 
 export const getActiveBookings = async (req, res) => {
+    
     req.query.filter = {
-        ...filter,
+        ...req.query.filter,
         status: {
             $nin: [BOOKING_STATUS_ENUM.completed, BOOKING_STATUS_ENUM.expired, BOOKING_STATUS_ENUM.cancelled]
         }

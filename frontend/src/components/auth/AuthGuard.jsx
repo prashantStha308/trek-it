@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import { useGetMe } from "@/queries/auth.query";
+import { showToast } from "@/store/ui.store.js";
 
 export default function AuthGuard({ children }) {
   const router = useRouter();
@@ -11,6 +12,10 @@ export default function AuthGuard({ children }) {
 
   useEffect(() => {
     if (!isLoading && (!user || isError)) {
+      showToast({
+        title: "Login to continue",
+        message: "You must login to access this page",
+      });
       router.push("/login");
     }
   }, [user, isLoading, isError, router]);

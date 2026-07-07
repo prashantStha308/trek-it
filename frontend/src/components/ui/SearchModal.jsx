@@ -63,7 +63,8 @@ const EmptySearchWord = ()=>{
 }
 
 export default function SearchModal() {
-    const { searchWord, hasMinLength, packages, guides, isLoading } = useGlobalSearch();
+    const { searchWord, hasMinLength, packages, guides, isLoading, setIsSearchModalOpen } = useGlobalSearch();
+
 
     const hasData = (packages.length + guides.length) > 0
 
@@ -72,13 +73,17 @@ export default function SearchModal() {
 		return ()=> document.body.style.setProperty("overflow", "auto");
 	})
 
+
     return (
         <ModalWrapper>
 
         	<div
         		className=" relative scrollbar-none w-full h-full rounded-lg bg-background border border-border/75 overflow-y-auto"
         	>
-	        	<div className="absolute top-3 right-5 text-text/75 border border-secondary hover:bg-accent/25 rounded-full cursor-pointer" >
+	        	<div
+	        		className="absolute top-3 right-5 text-text/75 border border-secondary hover:bg-accent/25 rounded-full cursor-pointer" 
+	        		onClick={()=>setIsSearchModalOpen(false)}
+	        	>
 	        		<X size={20} />
 	        	</div>
 

@@ -17,6 +17,8 @@ import { optimizeImageUrl } from "@/utils/utils.helper";
 import TextInput from "@/components/input/TextInput";
 import {Button} from "@/components/ui/Button";
 
+import {showToast} from "@/store/ui.store.js";
+
 
 
 export default function BookingPage(){
@@ -43,6 +45,14 @@ export default function BookingPage(){
 	const handleSubmit = (e) => {
 	    e.preventDefault();
 
+        if( formData.groupSize > pkg.maxGroupSize ){
+            showToast({
+                title: "Form Validation Error",
+                message: "Group Size cannot exceed the set Group Size of the package"
+            })
+            return;
+        }
+
 	    createBooking.mutate(
 	        {
 	            packageId,
@@ -51,7 +61,13 @@ export default function BookingPage(){
 	        },
 	        {
 	            onSuccess: () => {
-	                router.back();
+	                router.push(`/explore/pacakge/${packageId}`);
+
+                    showToast({
+                        title: "Booking created",
+                        message: "Your booking has been created"
+                    })
+
 	            }
 	        }
 	    );
