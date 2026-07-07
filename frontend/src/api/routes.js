@@ -54,10 +54,13 @@ const API_ROUTES = {
         GET: (id) => resolveRoute('/package', id),
         GET_GUIDE_PACKAGES: (guideId, query) => resolveRoute( "/package/guide", guideId, query ),
         GET_COLLABORATORS: (pkgId) => resolveRoute('/package/collaborators', pkgId),
+        SEARCH: (query)=> resolveRoute('/package/search', null, query),
+
         CREATE: "/package",
+        
         UPDATE: (id) => resolveRoute('/package', id),
         DELETE: (id) => resolveRoute('/package', id),
-        SEARCH: (query)=> resolveRoute('/package/search', null, query),
+        
         BASE: "/package"
 	},
 	

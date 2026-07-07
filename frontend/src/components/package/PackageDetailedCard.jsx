@@ -24,7 +24,7 @@ function BadgeRow({ items = [], variant = "green", limit = 4 }) {
     );
 }
 
-export default function PackageDetailedCard({ item }) {
+export default function PackageDetailedCard({ item, me }) {
     const stopCount = item?.stops?.length || 0;
 
     return (
@@ -94,7 +94,21 @@ export default function PackageDetailedCard({ item }) {
                 )}
 
                 <div className="flex flex-row-reverse justify-between pt-2 border-t border-text/15" >
-                    <div className="border-t border-black/8 pt-3 flex justify-end">
+                    <div className=" pt-3 gap-4 flex justify-end">
+                        {
+                            (me && me?._id === item?.guide?._id) && (
+                                <LinkButton
+                                    href={`/explore/packages/${item?._id}/edit`}
+                                    variant="primary"
+                                    color={"blue"}
+                                    size="md"
+                                >
+                                    Edit Package
+                                </LinkButton>
+
+                            )
+                        }
+
                         <LinkButton
                             href={`/explore/packages/${item?._id}`}
                             variant="primary"

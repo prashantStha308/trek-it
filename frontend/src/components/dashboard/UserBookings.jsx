@@ -5,7 +5,10 @@ import { motion, AnimatePresence } from "motion/react";
 import {
     Navigation,
     CalendarX,
+    CalendarDays
 } from "lucide-react";
+
+
 
 import { Button } from "@/components/ui/Button";
 import {
@@ -24,7 +27,7 @@ const CURRENT_STATUSES = ["active", "pending", "confirmed"];
 
 function MetricCard({ label, value }) {
     return (
-        <div className="bg-surface rounded-xl p-4 border border-border">
+        <div className="bg-surface rounded-lg p-4 border border-border">
             <p className="text-[11px] uppercase tracking-wide text-muted mb-1.5">
                 {label}
             </p>
@@ -103,7 +106,8 @@ export default function UserBookings() {
 
     return (
         <section id="booking" className="flex flex-col gap-5">
-            <h2 className="text-xl text-primary font-semibold">
+            <h2 className="text-xl text-primary font-semibold flex gap-3 items-center">
+                <CalendarDays />
                 Your Bookings
             </h2>
 

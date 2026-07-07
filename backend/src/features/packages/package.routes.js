@@ -47,7 +47,15 @@ packageR.get('/collaborators/:packageId', validatePackageQuery, validate, getAll
 packageR.get('/:packageId', validatePackageParams, validate, getPackageById);
 
 
-packageR.patch('/:packageId', authorize(["guide", "admin"]), validatePackageParams, validate, updatePackage);
+packageR.patch('/:packageId', authorize(["guide", "admin"]),
+    bufferUpload.fields([
+        { name: "thumbnail", maxCount: 1 },
+        { name: "images", maxCount: 5 }
+    ]),
+    parseFormFields("keywords", "activities", "stops"),
+    validatePackageBody, validate, updatePackage
+);
+
 packageR.delete('/:packageId', authorize(["guide", "admin"]), validatePackageParams, validate, deletePackage);
 
 export { packageR };

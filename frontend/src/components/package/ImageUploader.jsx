@@ -147,7 +147,7 @@ export default function ImageUploader({ onChange, maxImage = 5 }) {
                                 height={700}
                                 src={image.previewUrl}
                                 alt={`Upload ${imageIndex + 1}`}
-                                className="w-full h-24 object-cover"
+                                className="w-full h-56 object-cover"
                                 unoptimized
                             />
 

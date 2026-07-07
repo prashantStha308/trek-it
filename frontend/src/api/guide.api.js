@@ -35,5 +35,11 @@ export const updateGuide = async (id, payload) => {
 
 export const deleteUser = async () => {
     const res = await axiosInstance.delete(API_ROUTES.GUIDE.BASE)
-    return res.data;
+    return res.data.data;
+}
+
+
+export const toggleGuideAvailability = async()=>{
+    const res = await axiosInstance.patch(API_ROUTES.GUIDE.BASE);
+    return res.data.data;
 }

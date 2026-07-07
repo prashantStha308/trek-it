@@ -58,7 +58,7 @@ export default function GuideDashboardHero({ guide }) {
 					    type="button"
 					    onClick={() => {
 					        setMenuOpen(false);
-					        router.push("/dashboard/guide/edit");
+					        router.push("/dashboard/edit");
 					    }}
 					    className="w-full flex items-center gap-2 text-left text-sm px-3 py-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
 					>

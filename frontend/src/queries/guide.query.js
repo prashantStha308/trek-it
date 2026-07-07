@@ -12,6 +12,8 @@ import {
     getGuideById,
     searchGuides,
     updateGuide,
+
+    toggleGuideAvailability,
 } from "@/api/guide.api";
 
 export const useGetAllGuides = ({
@@ -58,6 +60,18 @@ export const useUpdateGuideProfile = () => {
         onSuccess: (data, { id }) => {
             queryClient.invalidateQueries({ queryKey: ["guide", id] });
             queryClient.invalidateQueries({ queryKey: ["guides"] });
+            queryClient.invalidateQueries({ queryKey: ["me"] });
         },
     });
+}
+
+export const useToggleGuideAvailaility = ()=>{
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: () => toggleGuideAvailability(),
+        onSuccess: ()=>{
+
+        }
+    })
 }

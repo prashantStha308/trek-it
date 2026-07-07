@@ -14,15 +14,16 @@ import TagInput from "@/components/input/TagInput";
 import { Button } from "@/components/ui/Button";
 import LoadingSection from "@/components/loaders/LoadingSection";
 
-import {showToast} from "@/store/ui.store.js";
+import { showToast } from "@/store/ui.store.js";
 
-export default function EditGuideProfilePage() {
+export default function GuideEditPage() {
     const router = useRouter();
 
     const { data: guide, isLoading } = useGetMe();
     const updateProfile = useUpdateGuideProfile();
 
     const [form, setForm] = useState(null);
+    const [changingPhoto, setChangingPhoto] = useState(false);
 
     useEffect(() => {
         if (!guide) return;
@@ -61,15 +62,15 @@ export default function EditGuideProfilePage() {
                     router.push("/dashboard");
                     showToast({
                         title: "Success",
-                        message: res.message ?? "Updated profile"
-                    })
+                        message: res.message ?? "Updated profile",
+                    });
                 },
-                onError: (err) =>{
+                onError: (err) => {
                     showToast({
                         title: "Failed",
-                        message: err.message ?? "Failed to updated profile"
-                    })   
-                }
+                        message: err.message ?? "Failed to updated profile",
+                    });
+                },
             }
         );
     };
@@ -82,35 +83,62 @@ export default function EditGuideProfilePage() {
             >
                 {/* Header */}
                 <div className="px-8 py-6 border-b border-neutral-100 dark:border-neutral-800">
-                    <h1 className="text-xl font-semibold">
-                        Edit Profile
-                    </h1>
-
+                    <h1 className="text-xl font-semibold">Edit Profile</h1>
                     <p className="text-sm text-neutral-500 mt-1">
                         This is what tourists see when they view your profile.
                     </p>
                 </div>
 
                 {/* Profile Photo */}
-                <div className="px-8 py-6 flex items-center gap-5 border-b border-neutral-100 dark:border-neutral-800">
-                    <ImageUploader
-                        value={form.profilePicture}
-                        maxImage={1}
-                        onChange={(img) =>
-                            handleFieldChange("profilePicture", img)
-                        }
-                    />
-
-                    <div>
-                        <p className="text-sm font-medium">
-                            Profile Photo
-                        </p>
-
-                        <p className="text-xs text-neutral-500">
-                            Clear face photos help tourists recognize and trust
-                            you.
-                        </p>
+                <div className="px-8 py-6 flex flex-col gap-4 border-b border-neutral-100 dark:border-neutral-800">
+                    <div className="flex items-center gap-5">
+                        {form.profilePicture?.src && !changingPhoto && (
+                            <img
+                                src={form.profilePicture.src}
+                                alt="Current profile photo"
+                                className="w-20 h-20 rounded-full object-cover border-2 border-primary"
+                            />
+                        )}
+                        <div>
+                            <p className="text-sm font-medium">Profile Photo</p>
+                            <p className="text-xs text-neutral-500">
+                                Clear face photos help tourists recognize and trust you.
+                            </p>
+                        </div>
                     </div>
+
+                    {!changingPhoto ? (
+                        <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            className="w-fit"
+                            onClick={() => setChangingPhoto(true)}
+                        >
+                            Change Photo
+                        </Button>
+                    ) : (
+                        <div className="flex flex-col gap-2">
+                            <ImageUploader
+                                maxImage={1}
+                                onChange={({ thumbnail }) =>
+                                    handleFieldChange("profilePicture", thumbnail)
+                                }
+                            />
+                            <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                className="w-fit"
+                                onClick={() => {
+                                    setChangingPhoto(false);
+                                    handleFieldChange("profilePicture", guide.profilePicture ?? null);
+                                }}
+                            >
+                                Keep Current Photo
+                            </Button>
+                        </div>
+                    )}
                 </div>
 
                 {/* Basic Information */}
@@ -119,18 +147,14 @@ export default function EditGuideProfilePage() {
                         label="Name"
                         placeholder="Your name"
                         value={form.name}
-                        handleChange={(e) =>
-                            handleFieldChange("name", e.target.value)
-                        }
+                        handleChange={(e) => handleFieldChange("name", e.target.value)}
                     />
 
                     <TextArea
                         label="About Me"
                         placeholder="Tell tourists about yourself, your guiding experience, and what makes trekking with you memorable."
                         value={form.aboutMe}
-                        handleChange={(e) =>
-                            handleFieldChange("aboutMe", e.target.value)
-                        }
+                        handleChange={(e) => handleFieldChange("aboutMe", e.target.value)}
                         rows={5}
                     />
                 </div>
@@ -141,19 +165,12 @@ export default function EditGuideProfilePage() {
                         <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
                             Languages
                         </label>
-
                         <p className="text-xs text-neutral-500 mb-2">
                             Languages you can communicate in.
                         </p>
-
                         <TagInput
                             tags={form.languages}
-                            onChange={(languages) =>
-                                handleFieldChange(
-                                    "languages",
-                                    languages
-                                )
-                            }
+                            onChange={(languages) => handleFieldChange("languages", languages)}
                         />
                     </div>
                 </div>
@@ -164,19 +181,12 @@ export default function EditGuideProfilePage() {
                         <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
                             Trekking Regions
                         </label>
-
                         <p className="text-xs text-neutral-500 mb-2">
                             Add the trekking regions you guide in.
                         </p>
-
                         <TagInput
                             tags={form.regions}
-                            onChange={(regions) =>
-                                handleFieldChange(
-                                    "regions",
-                                    regions
-                                )
-                            }
+                            onChange={(regions) => handleFieldChange("regions", regions)}
                         />
                     </div>
                 </div>
@@ -187,43 +197,23 @@ export default function EditGuideProfilePage() {
                         <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
                             Specialities
                         </label>
-
                         <p className="text-xs text-neutral-500 mb-2">
-                            Add your guiding expertise such as high-altitude
-                            trekking, climbing, camping, photography, wildlife,
-                            etc.
+                            Add your guiding expertise such as high-altitude trekking, climbing, camping, photography, wildlife, etc.
                         </p>
-
                         <TagInput
                             tags={form.specialities}
-                            onChange={(specialities) =>
-                                handleFieldChange(
-                                    "specialities",
-                                    specialities
-                                )
-                            }
+                            onChange={(specialities) => handleFieldChange("specialities", specialities)}
                         />
                     </div>
                 </div>
 
                 {/* Footer */}
                 <div className="px-8 py-5 bg-neutral-50 dark:bg-neutral-950/40 border-t border-neutral-100 dark:border-neutral-800 flex justify-end gap-3">
-                    <Button
-                        type="button"
-                        variant="ghost"
-                        onClick={() => router.back()}
-                    >
+                    <Button type="button" variant="ghost" onClick={() => router.back()}>
                         Cancel
                     </Button>
-
-                    <Button
-                        type="submit"
-                        variant="primary"
-                        disabled={updateProfile.isPending}
-                    >
-                        {updateProfile.isPending
-                            ? "Saving..."
-                            : "Save Changes"}
+                    <Button type="submit" variant="primary" disabled={updateProfile.isPending}>
+                        {updateProfile.isPending ? "Saving..." : "Save Changes"}
                     </Button>
                 </div>
             </form>

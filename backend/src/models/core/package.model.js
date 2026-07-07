@@ -118,7 +118,7 @@ const packageSchema = new mongoose.Schema({
 	},
 	isActive:{
 		type: Boolean,
-		default: false
+		default: true
 	},
 	requiresPermit: {
 		type: Boolean,

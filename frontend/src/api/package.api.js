@@ -61,11 +61,22 @@ export const getPackageCollaborators = async(pkgId) => {
     return res.data.data;
 }
 
-export const updatePackage = async () => {
-    const res = await axiosInstance.put(API_ROUTES.PACKAGE.BASE)
-    return res.data;
-}
+export const updatePackage = async ({ id, body }) => {
+    const res = await axiosInstance.patch(
+        `${API_ROUTES.PACKAGE.BASE}/${id}`,
+        body,
+        {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        }
+    );
 
-export const deletePackage = async () => {
-    const res = await axiosInstance.delete(API_ROUTES.PACKAGE.BASE)
+    return res.data;
+};
+
+// package.api.js
+export const deletePackage = async (id) => {
+    const res = await axiosInstance.delete(API_ROUTES.PACKAGE.DELETE(id));
+    return res.data;
 }

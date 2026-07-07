@@ -222,7 +222,7 @@ export const updateGuideProfileService = async (guideId, body, file) => {
         }
 
         // Update allowed fields
-        const allowedFields = ["name", "email", "age", "gender", "location", "regions", "specialities"];
+        const allowedFields = ["name", "aboutMe" , "email", "age", "gender", "location", "regions", "specialities"];
         Object.keys(body).forEach(key => {
             if (allowedFields.includes(key)) {
                 guide[key] = body[key];
