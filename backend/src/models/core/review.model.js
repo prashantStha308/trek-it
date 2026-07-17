@@ -9,16 +9,6 @@ const reviewSchema = new mongoose.Schema({
 		ref: 'User',
 		required: true
 	},
-	// booking: {
-	// 	type: mongoose.Schema.Types.ObjectId,
-	// 	ref: 'Booking',
-	// },
-	// clear these later.
-	/*
-		Instead of binding review to either guide ot package, it would be better to bind with booking.
-		What this solves?
-		- Well, on first thought, it becomes easier to identify whih guide tourist had hired when a package was started... need ti think on this
-	*/
 	guide:{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',
