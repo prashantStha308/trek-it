@@ -1,5 +1,7 @@
-import { Package } from "../../models/index.js";
-import { Guide } from "../../models/index.js";
+import {
+    Package,
+    Guide
+} from "../../models/index.js";
 
 import { getAll, getById } from "../../utils/crud.service.js";
 import ApiResponse from "../../utils/ApiResponse.js";

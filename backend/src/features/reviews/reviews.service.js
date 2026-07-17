@@ -18,18 +18,8 @@ import ApiError from "../../utils/ApiError.js";
 export const createReviewService = async (body, reviewer, files) => {
 
     const {
-        comment, rating, packageId, guideId
+        comment, ratings, packageId, guideId
     } = body;
-
-    /* This was when booking ref was used instead of package and guide refs */
-    // const [booking, review] = await Promise.all(
-    //     [Booking.findOne({ _id: body.booking, tourist: reviewer, status: 'completed' }),
-    //     Review.findOne({ reviewer, booking: body.booking, })]
-    // );
-
-    // if (!booking) {
-    //     throw new ApiError(400, "User is not eligible to post a review. Tourist not found in booking's user list")
-    // }
 
     const target = packageId
         ? { package: packageId }
@@ -52,7 +42,7 @@ export const createReviewService = async (body, reviewer, files) => {
     const input = {
         reviewer,
         comment,
-        rating,
+        rating: ratings,
         ...target,
         images
     }
@@ -65,45 +55,44 @@ export const createReviewService = async (body, reviewer, files) => {
 }
 
 
-export const getRatingAverageService = async(query) => {
-    const {guideId, packageId} = query;
+export const getRatingAverageService = async (query) => {
+    const { guideId, packageId } = query;
+
+    if (!packageId && !guideId) {
+        throw new Error("Either guideId or packageId is required");
+    }
 
     const target = packageId
-        ? { package: packageId }
-        : { guide: guideId };
-
+        ? { package: new mongoose.Types.ObjectId(packageId) }
+        : { guide: new mongoose.Types.ObjectId(guideId) };
 
     const [stats] = await Review.aggregate([
-        {
-            $match: target
-        },
+        { $match: target },
         {
             $group: {
                 _id: null,
-                avgServices: { $avg: "$ratings.services" },
-                avgInteractivity: { $avg: "$ratings.interactivity" },
-                avgActivities: { $avg: "$ratings.activities" },
+                avgServices: { $avg: "$rating.services" },
+                avgInteractivity: { $avg: "$rating.interactivity" },
+                avgActivities: { $avg: "$rating.activities" },
                 totalReviews: { $sum: 1 }
             }
         },
         {
             $project: {
                 _id: 0,
-                avgServices: 1,
-                avgInteractivity: 1,
-                avgActivities: 1,
+                avgServices: { $round: ["$avgServices", 1] },
+                avgInteractivity: { $round: ["$avgInteractivity", 1] },
+                avgActivities: { $round: ["$avgActivities", 1] },
                 totalReviews: 1,
                 overallAverage: {
-                    $avg: [
-                        "$avgServices",
-                        "$avgInteractivity",
-                        "$avgActivities"
+                    $round: [
+                        { $avg: ["$avgServices", "$avgInteractivity", "$avgActivities"] },
+                        1
                     ]
                 }
             }
         }
     ]);
-
 
     return stats ?? {
         avgServices: 0,
@@ -112,8 +101,7 @@ export const getRatingAverageService = async(query) => {
         overallAverage: 0,
         totalReviews: 0
     };
-}
-
+};
 
 export const updateReviewService = async (body, reviewId) => {
     // validateObject(body, ["title", "comment", "rating"], {isUpdate: true});

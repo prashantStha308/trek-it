@@ -23,7 +23,7 @@ export default function ReviewWriter({ resourceType, resourceId }){
 	const [ reviewData, setReviewData ] = useState({
 		ratings:{
 			services: 0,
-			interativity: 0,
+			interactivity: 0,
 			activities: 0,
 		},
 		comment: "",
@@ -73,7 +73,7 @@ export default function ReviewWriter({ resourceType, resourceId }){
 		setReviewData({
 			ratings:{
 				services: 0,
-				interativity: 0,
+				interactivity: 0,
 				activities: 0,
 			},
 			comment: "",
@@ -100,9 +100,9 @@ export default function ReviewWriter({ resourceType, resourceId }){
 								setRating={(val) => handleRatingChange(val, "services")}
 							/>
 							<StarSelector
-								label="Interativity"
-								rating={reviewData.ratings.interativity}
-								setRating={(val) => handleRatingChange(val, "interativity")}
+								label="Interactivity"
+								rating={reviewData.ratings.interactivity}
+								setRating={(val) => handleRatingChange(val, "interactivity")}
 							/>
 							<StarSelector
 								label="Activities"

@@ -19,9 +19,10 @@ export default function Reviews({ resource, resourceType }){
 	const {data:me, isLoading:isMeLoading} = useGetMe();
 
 	const { data, isLoading } = targetQuery(resource._id);
-	const reviews = data?.docs;
+	const reviews = data?.docs || [];
 
-	console.log(reviews);
+	const userReview = reviews.find((item) => (item?.reviewer?._id === me?._id)) ;
+	const filteredReviews = reviews?.filter( item => item?.reviewer?._id !== me?._id );
 
 	return(
 		<section
@@ -37,7 +38,18 @@ export default function Reviews({ resource, resourceType }){
 				<div className="w-full flex flex-col lg:flex-row justify-between items-center gap-12 border-b border-b-secondary pb-8" >
 
 					<ReviewSummary resource={resource} resourceType={resourceType} />
-					<ReviewWriter resourceType={resourceType} resourceId={resource._id} />
+					{
+						userReview ? (
+							<div className="flex flex-col gap-4" >
+								<span className="text-xl text-text font-bold" >
+									Your Review
+								</span>
+								<ReviewCard review={userReview} currentUser={me} />
+							</div>
+						) : (
+							<ReviewWriter resourceType={resourceType} resourceId={resource._id} />
+						)
+					}
 
 				</div>
 
@@ -49,7 +61,7 @@ export default function Reviews({ resource, resourceType }){
 								className="grid grid-cols-1 md:grid-cols-2 gap-8"
 							>
 								{
-									reviews?.map((review, index) => <ReviewCard key={index} review={review} currentUser={me} />)
+									filteredReviews?.map((review, index) => <ReviewCard key={index} review={review} currentUser={me} />)
 								}
 							</section>
 						) : (
