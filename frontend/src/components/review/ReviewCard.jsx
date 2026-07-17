@@ -4,6 +4,7 @@ import {
 	ThumbsUp,
 	ThumbsDown,
 	Trash,
+	Pen
 } from "lucide-react";
 import MiniCard from "@/components/ui/MiniCard";
 
@@ -13,7 +14,6 @@ import { showToast } from "@/store/ui.store";
 
 
 export default function ReviewCard({review, currentUser}){
-
 	const deletePackage = useDeleteReview(); 
 
 	const handleDelete = ()=> {
@@ -43,30 +43,40 @@ export default function ReviewCard({review, currentUser}){
 				<MiniCard person={review?.reviewer} subtitle={review?.reviewer?.role} options={{border: false, star: false}} />
 
 				<section className="flex gap-1" >
-					<section
-						className="flex gap-2 text-text/45"
-					>
-						<button
-							className="rounded-full p-2 hover:bg-secondary/65 cursor-pointer"
-						>
-							<ThumbsUp size={20} />
-						</button>
-
-						<button
-							className="rounded-full p-2 hover:bg-secondary/65 cursor-pointer"
-						>
-							<ThumbsDown size={20} />
-						</button>
-
-					</section>
 					{
-						currentUser?._id === review?.reviewer?._id && (
-							<button
-								className="p-2 rounded-full hover:bg-secondary/65 text-text/75 hover:text-text cursor-pointer"
-								onClick={handleDelete}
+						currentUser?._id === review?.reviewer?._id ? (
+							<section className="flex gap-4 text-text/45" >
+								<button
+									className="p-2 rounded-lg hover:bg-secondary/65 text-accent border border-accent/65 hover:text-text cursor-pointer"
+								>
+									<Pen size={20} />
+								</button>
+
+								<button
+									className="p-2 rounded-lg hover:bg-secondary/65 text-red-500 border border-red-500/65 hover:text-text cursor-pointer"
+									onClick={handleDelete}
+								>
+									<Trash size={20} />
+								</button>
+
+							</section>
+						) :(
+							<section
+								className="flex gap-2 text-text/45"
 							>
-								<Trash size={20} />
-							</button>
+								<button
+									className="rounded-full p-2 hover:bg-secondary/65 cursor-pointer"
+								>
+									<ThumbsUp size={20} />
+								</button>
+
+								<button
+									className="rounded-full p-2 hover:bg-secondary/65 cursor-pointer"
+								>
+									<ThumbsDown size={20} />
+								</button>
+
+							</section>
 						)
 					}
 
@@ -79,7 +89,7 @@ export default function ReviewCard({review, currentUser}){
 				<section className="grid grid-cols-1 lg:grid-cols-2 gap-1" >
 					<div className="flex gap-2" >
 						<span className="text-xs text-text/75" > Service </span>
-						<ReviewStars rating={review?.rating?.service} />
+						<ReviewStars rating={review?.rating?.services} />
 					</div>
 
 					<div className="flex gap-2" >

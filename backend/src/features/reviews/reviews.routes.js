@@ -31,7 +31,7 @@ const reviewR = express.Router();
 
 reviewR.post('/', authorize(['tourist', 'guide']),
     bufferUpload.array('images', 10),
-    parseFormFields("ratings"),
+    // parseFormFields("ratings"),
     validateReviewBody, validate,
     createReview
 );

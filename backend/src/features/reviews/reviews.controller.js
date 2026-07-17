@@ -64,8 +64,6 @@ export const getUserReviews = async (req, res) => {
 export const getAllReviews = async(req, res) => {
     let {limit, page, sort = {rating: -1}, ...filter} = req.query;
 
-    console.log("Queries: ", filter);
-
     const reviews = await getAll(Review, {
         limit, page,
         filter,
@@ -79,6 +77,7 @@ export const getAllReviews = async(req, res) => {
         message: "Reviews retrived successfully"
     });
 }
+
 
 // Get ONE review By its ID
 export const getReviewById = async (req, res) => {

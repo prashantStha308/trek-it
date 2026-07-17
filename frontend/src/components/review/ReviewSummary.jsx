@@ -81,17 +81,20 @@ export default function ReviewSummary({resource, resourceType}){
 		return <h1>Loading...</h1>
 	}
 
+	console.log("avgRatings: ", avgRatings)
+	console.log("totalReviews: ", avgRatings.totalReviews)
+
 	return(
 		<section
 			className="flex flex-col lg:flex-row gap-2 lg:gap-8 items-center px-10"
 		>
 			<div className="flex flex-col gap-2" >
 				<h1 className="text-5xl font-medium" >
-					{avgRatings?.overallAverage === 0 ? "0.0": avgRatings?.overallAverage }
+					{avgRatings?.overallAverage === 0 ? "0.0": avgRatings?.overallAverage || "0.0" }
 				</h1>
 				
 				<span className="text-text/75 text-sm" >
-					{avgRatings?.totalReviews} reviews
+					{avgRatings?.totalReviews || 0} reviews
 				</span>
 			</div>
 

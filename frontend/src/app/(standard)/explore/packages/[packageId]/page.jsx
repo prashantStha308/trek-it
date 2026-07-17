@@ -28,9 +28,6 @@ import PackageDetails from "@/components/package/PackageDetails";
 import PackageTimeLineStops from "@/components/package/PackageTimeLineStops";
 
 
-// ---------------------------------------------------------------------------
-// Customize Modal
-// ---------------------------------------------------------------------------
 
 function CustomizeModal({ pkg, onClose }) {
     const TREKIT_COMMISSION = 0.15;
@@ -153,9 +150,6 @@ function CustomizeModal({ pkg, onClose }) {
 }
 
 
-// ---------------------------------------------------------------------------
-// Package Guides sidebar
-// ---------------------------------------------------------------------------
 
 function PackageGuides({ pkg, currentUser }) {
     let { data: collaborators, isLoading } = useGetPackageCollaborators(pkg?._id);
@@ -201,9 +195,6 @@ function PackageGuides({ pkg, currentUser }) {
 }
 
 
-// ---------------------------------------------------------------------------
-// Page
-// ---------------------------------------------------------------------------
 
 export default function PackagePage() {
     const { packageId } = useParams();
@@ -222,7 +213,7 @@ export default function PackagePage() {
         reason: stop.type === "other" ? (stop.customType || "Other") : stop.type,
         color: "bg-primary",
     })) || [];
-    // Only tourists can send customization requests
+
     const canCustomize = me?.role === "tourist";
 
     return (
