@@ -32,6 +32,12 @@ routers.forEach(route => {
     app.use(route.base, route.router)
 });
 
+app.get("/api/check", (req, res) => {
+    return res.status(200).json({
+        status: "healthy"
+    })
+})
+
 // Keep at end
 app.use(errorHandler);
 
