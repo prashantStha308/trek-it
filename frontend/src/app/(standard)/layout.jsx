@@ -12,13 +12,27 @@ import { useGetMe } from "@/queries/auth.query";
 import useBreakpoint from "@/hooks/useBreakpoint";
 
 import useUIStore from "@/store/ui.store.js";
+import { useEffect, useState } from "react";
+import LoadingOvertake from "@/components/loaders/LoadingOvertake";
 
 
 export default function StandardLayout({ children }) {
     
+    const [serverOn, setServerOn] = useState(false);
+
     const isMobile = useBreakpoint(640);
     const {data:loggedInUser, isLoading} = useGetMe();
     const isSearchModalOpen = useUIStore((s) => s.isSearchModalOpen);
+
+    useEffect(()=>{
+        async function checkHealth(){
+            const res = await fetch( `${process.env.NEXT_PUBLIC_API_URL}/api/check` );
+
+            setServerOn(true);
+        }
+
+        checkHealth();
+    }, [])
 
     return (
         <>
@@ -32,6 +46,10 @@ export default function StandardLayout({ children }) {
                         <Navbar />
                     </div>
                 )
+            }
+
+            {
+                !serverOn && <LoadingOvertake />
             }
             
             <NotificationBar />
